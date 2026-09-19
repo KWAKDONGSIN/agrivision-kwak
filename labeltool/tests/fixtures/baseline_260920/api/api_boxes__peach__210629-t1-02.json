@@ -1,0 +1,23 @@
+{
+ "body": {
+  "at": null,
+  "boxes": [],
+  "by": null,
+  "classes": [
+   "fruit",
+   "bunch",
+   "other"
+  ],
+  "fruit": "peach",
+  "height": 1248,
+  "ok": true,
+  "saved": false,
+  "stem": "210629-t1-02",
+  "team": {
+   "박성문": 18,
+   "임성후": 18
+  },
+  "width": 1664
+ },
+ "http": 200
+}

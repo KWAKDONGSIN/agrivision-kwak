@@ -1,0 +1,23 @@
+6번 했습니다. 서버에 공용 폴더 만들어서 자료 다 모았습니다.
+
+위치: /data/project/2026summer/platform/
+
+뭐가 어디 있는지
+미팅 녹취 전부(0713~0813): platform/00_meetings/
+논문 레퍼런스 원문 PDF 55편: platform/01_references/pdf/
+논문 목록이랑 서지: platform/01_references/INDEX.md
+노션 백업: platform/01_references/notion/
+논문 LaTeX 원고: platform/02_paper/
+데이터셋 입구: platform/03_data/ (바로가기라 지우면 안 됩니다)
+코드랑 실험결과 입구: platform/04_experiments/
+각자 작업 폴더: platform/work/본인이름/
+
+작업규칙.md도 만들었습니다: platform/작업규칙.md
+7월 30일에 폴더 하나 지웠다가 링크 49212개 끊긴 사고 기준으로 썼습니다.
+핵심 세 개만 미리 말하면
+1. 작업은 work/본인이름 안에서만 하고 확인되면 공용에 반영
+2. 공용 폴더 파일 지우거나 옮기지 말기
+3. GPU 쓰기 전 nvidia-smi 확인하고 platform/GPU점유.md에 한 줄 적기
+
+각자 갖고 있는 자료는 platform/_inbox/ 에 올려주면 제가 정리합니다.
+주피터허브랑 계정 만드는 건 관리자 권한이라 다음 미팅 때 교수님께 요청해야 합니다.

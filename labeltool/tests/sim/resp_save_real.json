@@ -1,0 +1,1 @@
+{"at":"2026-09-17 14:50:01","boxes":[{"cls":"fruit","id":1,"src":"human","xyxy":[100,200,300,400]},{"cls":"bunch","id":2,"src":"human","xyxy":[10,10,60,80]},{"cls":"fruit","id":3,"src":"human","xyxy":[650,850,700,900]}],"dropped":2,"n_boxes":3,"ok":true,"over":0}

@@ -1,0 +1,66 @@
+{
+ "body": {
+  "ai_boxes_status": "saved",
+  "ai_status": "ok",
+  "at": "⟨지움⟩",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "confirmed": null,
+  "confirmed_boxes": {
+   "at": "⟨지움⟩",
+   "by": "기준선",
+   "note": "",
+   "status": "fixed"
+  },
+  "confirmed_instances": {
+   "at": "⟨지움⟩",
+   "by": "기준선",
+   "note": "",
+   "status": "ok"
+  },
+  "counts": {
+   "boxes": 2,
+   "conflict": true,
+   "human": null,
+   "instances": 10,
+   "seed_source": "team:박성문",
+   "source": "conflict",
+   "team_im": 10,
+   "team_park": 10
+  },
+  "dup_group": null,
+  "dup_member_confirmed": [],
+  "dup_member_status": [],
+  "dup_members": [],
+  "dup_rep": null,
+  "fruit": "peach",
+  "has_fixed": false,
+  "has_gt": true,
+  "has_proposal": true,
+  "height": 1248,
+  "inspection": {
+   "fg_frac": 0.0203547,
+   "hole_frac": 0.0,
+   "largest_comp_frac": 0.162976,
+   "n_components": 10,
+   "suspect": false,
+   "suspect_flags": "",
+   "tiny_comp_count": 0
+  },
+  "n_boxes": 2,
+  "n_inst": 10,
+  "note": "3회 검수 이상 없음",
+  "scores": {
+   "added_frac": 0.00164,
+   "dice_vs_gt": 0.826846,
+   "fg_gt_frac": 0.020355,
+   "fg_pred_frac": 0.017141,
+   "missed_frac": 0.004853,
+   "run_name": "peach_backbone_unet_mit_b2_p0_t3v4"
+  },
+  "src": "ai",
+  "status": "ok",
+  "stem": "210629-t1-03",
+  "width": 1664
+ },
+ "http": 200
+}

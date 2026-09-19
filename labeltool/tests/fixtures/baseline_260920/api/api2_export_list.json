@@ -1,0 +1,150 @@
+{
+ "body": {
+  "dir": "⟨지움⟩",
+  "fruits": {
+   "apple": {
+    "confirmed_counts": {
+     "exclude": 0,
+     "fixed": 0,
+     "flag": 0,
+     "ok": 1,
+     "unreviewed": 2
+    },
+    "confirmed_counts_boxes": {
+     "exclude": 0,
+     "fixed": 3,
+     "flag": 0,
+     "ok": 0,
+     "unreviewed": 0
+    },
+    "confirmed_counts_instances": {
+     "exclude": 0,
+     "fixed": 0,
+     "flag": 0,
+     "ok": 1,
+     "unreviewed": 2
+    },
+    "has_instances": true,
+    "has_mask": true,
+    "n_box_images": 3,
+    "n_confirmed": 1,
+    "n_confirmed_boxes": 3,
+    "n_confirmed_boxes_out": 3,
+    "n_confirmed_instances": 1,
+    "n_confirmed_instances_out": 1,
+    "n_confirmed_out": 1,
+    "n_images": 3
+   },
+   "blueberry": {
+    "confirmed_counts": {
+     "exclude": 0,
+     "fixed": 0,
+     "flag": 0,
+     "ok": 1,
+     "unreviewed": 2
+    },
+    "confirmed_counts_boxes": {
+     "exclude": 0,
+     "fixed": 3,
+     "flag": 0,
+     "ok": 0,
+     "unreviewed": 0
+    },
+    "confirmed_counts_instances": {
+     "exclude": 0,
+     "fixed": 0,
+     "flag": 0,
+     "ok": 1,
+     "unreviewed": 2
+    },
+    "has_instances": true,
+    "has_mask": true,
+    "n_box_images": 3,
+    "n_confirmed": 1,
+    "n_confirmed_boxes": 3,
+    "n_confirmed_boxes_out": 3,
+    "n_confirmed_instances": 1,
+    "n_confirmed_instances_out": 1,
+    "n_confirmed_out": 1,
+    "n_images": 3
+   },
+   "grape": {
+    "confirmed_counts": {
+     "exclude": 0,
+     "fixed": 0,
+     "flag": 0,
+     "ok": 1,
+     "unreviewed": 2
+    },
+    "confirmed_counts_boxes": {
+     "exclude": 0,
+     "fixed": 3,
+     "flag": 0,
+     "ok": 0,
+     "unreviewed": 0
+    },
+    "confirmed_counts_instances": {
+     "exclude": 0,
+     "fixed": 0,
+     "flag": 0,
+     "ok": 1,
+     "unreviewed": 2
+    },
+    "has_instances": false,
+    "has_mask": true,
+    "n_box_images": 4,
+    "n_confirmed": 1,
+    "n_confirmed_boxes": 3,
+    "n_confirmed_boxes_out": 3,
+    "n_confirmed_instances": 1,
+    "n_confirmed_instances_out": 1,
+    "n_confirmed_out": 1,
+    "n_images": 3
+   },
+   "peach": {
+    "confirmed_counts": {
+     "exclude": 0,
+     "fixed": 0,
+     "flag": 0,
+     "ok": 1,
+     "unreviewed": 2
+    },
+    "confirmed_counts_boxes": {
+     "exclude": 0,
+     "fixed": 3,
+     "flag": 0,
+     "ok": 0,
+     "unreviewed": 0
+    },
+    "confirmed_counts_instances": {
+     "exclude": 0,
+     "fixed": 0,
+     "flag": 0,
+     "ok": 1,
+     "unreviewed": 2
+    },
+    "has_instances": true,
+    "has_mask": true,
+    "n_box_images": 4,
+    "n_confirmed": 1,
+    "n_confirmed_boxes": 3,
+    "n_confirmed_boxes_out": 3,
+    "n_confirmed_instances": 1,
+    "n_confirmed_instances_out": 1,
+    "n_confirmed_out": 1,
+    "n_images": 3
+   }
+  },
+  "items": [],
+  "kinds": [
+   "mask",
+   "instances",
+   "boxes",
+   "counts"
+  ],
+  "n_all": 0,
+  "ok": true,
+  "running": []
+ },
+ "http": 200
+}

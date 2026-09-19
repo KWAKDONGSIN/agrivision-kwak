@@ -1,0 +1,1100 @@
+{
+ "1027": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "사람 검수 필요: [missing_bunch] dice 0.77 — 송이 일부만 라벨(규칙 판정)",
+  "status": "flag"
+ },
+ "104": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "사진 교체(불일치 교정). 마스크는 그대로",
+  "status": "fixed"
+ },
+ "1051": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: 1023",
+  "status": "exclude"
+ },
+ "1080": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "사진 교체(불일치 교정). 마스크는 그대로",
+  "status": "fixed"
+ },
+ "1116": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: 1044",
+  "status": "exclude"
+ },
+ "1148": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "사람 검수 필요: [missing_bunch] AI 와 거의 안 겹침(dice 0.55) — GT 가 실제 송이를 놓쳤거나 엉뚱한 곳에 칠함(규칙 판정)",
+  "status": "flag"
+ },
+ "1161": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "사람 검수 필요: [other] 네모난 큰 블록(extent>=0.80) — 자동 탐지, 2차 신규 지표",
+  "status": "flag"
+ },
+ "1183": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "사람 검수 필요: [missing_bunch] dice 0.73 — 송이 일부만 라벨(규칙 판정)",
+  "status": "flag"
+ },
+ "1187": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: 1180",
+  "status": "exclude"
+ },
+ "1190": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: 1117",
+  "status": "exclude"
+ },
+ "1191": {
+  "at": "2026-09-17 00:27",
+  "by": "AI 사이클4 3차(Fable)",
+  "note": "중복: 763 (사이클4 추가 발견, 해밍 11)",
+  "status": "exclude"
+ },
+ "1202": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: 1084",
+  "status": "exclude"
+ },
+ "1203": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: 919",
+  "status": "exclude"
+ },
+ "1235": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "사진 교체(불일치 교정). 마스크는 그대로",
+  "status": "fixed"
+ },
+ "1245": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "사람 검수 필요: [missing_bunch] dice 0.78 — 송이 일부만 라벨(규칙 판정)",
+  "status": "flag"
+ },
+ "1258": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: 392",
+  "status": "exclude"
+ },
+ "1262": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: 405",
+  "status": "exclude"
+ },
+ "1278": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "포도 사진이 아님 — 손에 든 표지판이 화면 대부분. 학습에 쓸 수 없음",
+  "status": "exclude"
+ },
+ "1282": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: 22",
+  "status": "exclude"
+ },
+ "1289": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "사람 검수 필요: [missing_bunch] dice 0.79 — 송이 일부만 라벨(규칙 판정)",
+  "status": "flag"
+ },
+ "1309": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "사람 검수 필요: [other] 네모난 큰 블록(extent>=0.80) — 자동 탐지, 2차 신규 지표",
+  "status": "flag"
+ },
+ "1351": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "사람 검수 필요: [other] 사진 위쪽 절반이 통째로 칠해짐(전경 52.7%)",
+  "status": "flag"
+ },
+ "1366": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "사진 교체(불일치 교정). 마스크는 그대로",
+  "status": "fixed"
+ },
+ "1374": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "사진 교체(불일치 교정). 마스크는 그대로",
+  "status": "fixed"
+ },
+ "1385": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "사진 교체(불일치 교정). 마스크는 그대로",
+  "status": "fixed"
+ },
+ "1390": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "사람 검수 필요: [missing_bunch] dice 0.74 — 송이 일부만 라벨(규칙 판정)",
+  "status": "flag"
+ },
+ "142": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "사람 검수 필요: [missing_bunch] dice 0.78 — 송이 일부만 라벨(규칙 판정)",
+  "status": "flag"
+ },
+ "1426": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "사람 검수 필요: [missing_bunch] dice 0.79 — 송이 일부만 라벨(규칙 판정)",
+  "status": "flag"
+ },
+ "1429": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "사람 검수 필요: [other] 네모 자국이 보임",
+  "status": "flag"
+ },
+ "1436": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "사람 검수 필요: [other] 네모난 블록이 잎 위에 칠해져 있음",
+  "status": "flag"
+ },
+ "1437": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "사람 검수 필요: [other] 네모난 블록",
+  "status": "flag"
+ },
+ "1438": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "사람 검수 필요: [other] 작은 송이 둘레를 네모로 칠함",
+  "status": "flag"
+ },
+ "1439": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "사람 검수 필요: [missing_bunch] dice 0.69 — 송이 일부만 라벨(규칙 판정)",
+  "status": "flag"
+ },
+ "1450": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "사람 검수 필요: [other] 네모난 블록",
+  "status": "flag"
+ },
+ "1460": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "사람 검수 필요: [other] 큰 블록이 잎까지 덮음",
+  "status": "flag"
+ },
+ "151": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: 2031",
+  "status": "exclude"
+ },
+ "1541": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "사람 검수 필요: [missing_bunch] dice 0.77 — 송이 일부만 라벨(규칙 판정)",
+  "status": "flag"
+ },
+ "1556": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "사람 검수 필요: [missing_bunch] dice 0.78 — 송이 일부만 라벨(규칙 판정)",
+  "status": "flag"
+ },
+ "1570": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "사람 검수 필요: [missing_bunch] dice 0.80 — 송이 일부만 라벨(규칙 판정)",
+  "status": "flag"
+ },
+ "163": {
+  "at": "2026-09-16 23:18",
+  "by": "AI 사이클1 3차(Fable)",
+  "note": "중복: 2047 (사이클1 추가 발견)",
+  "status": "exclude"
+ },
+ "1658": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: 1973",
+  "status": "exclude"
+ },
+ "167": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: 2148",
+  "status": "exclude"
+ },
+ "1671": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: 481",
+  "status": "exclude"
+ },
+ "17": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: 1435",
+  "status": "exclude"
+ },
+ "1721": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: 1669",
+  "status": "exclude"
+ },
+ "1736": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "사람 검수 필요: [missing_bunch] dice 0.78 — 송이 일부만 라벨(규칙 판정)",
+  "status": "flag"
+ },
+ "174": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: 2064",
+  "status": "exclude"
+ },
+ "1761": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: 1695",
+  "status": "exclude"
+ },
+ "1764": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: 1696",
+  "status": "exclude"
+ },
+ "1766": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: 1697",
+  "status": "exclude"
+ },
+ "1773": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: 1701",
+  "status": "exclude"
+ },
+ "1781": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: 1709",
+  "status": "exclude"
+ },
+ "1805": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "사람 검수 필요: [missing_bunch] dice 0.73 — 송이 일부만 라벨(규칙 판정)",
+  "status": "flag"
+ },
+ "1812": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: 1508",
+  "status": "exclude"
+ },
+ "1813": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: 1509",
+  "status": "exclude"
+ },
+ "1817": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: 1876",
+  "status": "exclude"
+ },
+ "1826": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "사람 검수 필요: [missing_bunch] dice 0.75 — 송이 일부만 라벨(규칙 판정)",
+  "status": "flag"
+ },
+ "1843": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: 301",
+  "status": "exclude"
+ },
+ "1866": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: 1803",
+  "status": "exclude"
+ },
+ "1892": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: 300",
+  "status": "exclude"
+ },
+ "190": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: 2090",
+  "status": "exclude"
+ },
+ "1900": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: 307",
+  "status": "exclude"
+ },
+ "1903": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: 311",
+  "status": "exclude"
+ },
+ "1920": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: 340",
+  "status": "exclude"
+ },
+ "1936": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: 365",
+  "status": "exclude"
+ },
+ "194": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: 2100",
+  "status": "exclude"
+ },
+ "1943": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: 374",
+  "status": "exclude"
+ },
+ "198": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "사진 교체(불일치 교정). 마스크는 그대로",
+  "status": "fixed"
+ },
+ "2025": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: 148",
+  "status": "exclude"
+ },
+ "2055": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: 76",
+  "status": "exclude"
+ },
+ "2061": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: 171",
+  "status": "exclude"
+ },
+ "2062": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: 173",
+  "status": "exclude"
+ },
+ "2083": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: 93",
+  "status": "exclude"
+ },
+ "2088": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: 188",
+  "status": "exclude"
+ },
+ "2089": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: 103",
+  "status": "exclude"
+ },
+ "2091": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: 191",
+  "status": "exclude"
+ },
+ "2106": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: 204",
+  "status": "exclude"
+ },
+ "2109": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "사진 교체(불일치 교정). 마스크는 그대로",
+  "status": "fixed"
+ },
+ "2111": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: 213",
+  "status": "exclude"
+ },
+ "2112": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "사진 교체(불일치 교정). 마스크는 그대로",
+  "status": "fixed"
+ },
+ "2114": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: 215",
+  "status": "exclude"
+ },
+ "2146": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: 154",
+  "status": "exclude"
+ },
+ "2147": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: 166",
+  "status": "exclude"
+ },
+ "2174": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: 259",
+  "status": "exclude"
+ },
+ "218": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: 2118",
+  "status": "exclude"
+ },
+ "2187": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: 274",
+  "status": "exclude"
+ },
+ "2201": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "사진 교체(불일치 교정). 마스크는 그대로",
+  "status": "fixed"
+ },
+ "2206": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: 294",
+  "status": "exclude"
+ },
+ "2219": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "사람 검수 필요: [missing_bunch] dice 0.69 — 송이 일부만 라벨(규칙 판정)",
+  "status": "flag"
+ },
+ "2228": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "사람 검수 필요: [missing_bunch] dice 0.63 — 송이 일부만 라벨(규칙 판정)",
+  "status": "flag"
+ },
+ "2232": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "사람 검수 필요: [missing_bunch] dice 0.70 — 송이 일부만 라벨(규칙 판정)",
+  "status": "flag"
+ },
+ "2233": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "사람 검수 필요: [missing_bunch] dice 0.75 — 송이 일부만 라벨(규칙 판정)",
+  "status": "flag"
+ },
+ "2241": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "사진 교체(불일치 교정). 마스크는 그대로",
+  "status": "fixed"
+ },
+ "2246": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "사람 검수 필요: [missing_bunch] AI 와 거의 안 겹침(dice 0.45) — GT 가 실제 송이를 놓쳤거나 엉뚱한 곳에 칠함(규칙 판정)",
+  "status": "flag"
+ },
+ "2248": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "사람 검수 필요: [missing_bunch] dice 0.72 — 송이 일부만 라벨(규칙 판정)",
+  "status": "flag"
+ },
+ "2250": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "사람 검수 필요: [missing_bunch] dice 0.69 — 송이 일부만 라벨(규칙 판정)",
+  "status": "flag"
+ },
+ "2256": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "사람 검수 필요: [missing_bunch] dice 0.67 — 송이 일부만 라벨(규칙 판정)",
+  "status": "flag"
+ },
+ "2257": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "사람 검수 필요: [missing_bunch] dice 0.59 — 송이 일부만 라벨(규칙 판정)",
+  "status": "flag"
+ },
+ "2260": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "사람 검수 필요: [missing_bunch] dice 0.74 — 송이 일부만 라벨(규칙 판정)",
+  "status": "flag"
+ },
+ "2261": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "사람 검수 필요: [missing_bunch] dice 0.76 — 송이 일부만 라벨(규칙 판정)",
+  "status": "flag"
+ },
+ "2283": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "사람 검수 필요: [missing_bunch] dice 0.80 — 송이 일부만 라벨(규칙 판정)",
+  "status": "flag"
+ },
+ "2318": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "사람 검수 필요: [missing_bunch] dice 0.69 — 송이 일부만 라벨(규칙 판정)",
+  "status": "flag"
+ },
+ "2319": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "사람 검수 필요: [missing_bunch] dice 0.75 — 송이 일부만 라벨(규칙 판정)",
+  "status": "flag"
+ },
+ "232": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: 2132",
+  "status": "exclude"
+ },
+ "2321": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "사람 검수 필요: [missing_bunch] dice 0.75 — 송이 일부만 라벨(규칙 판정)",
+  "status": "flag"
+ },
+ "2323": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "사람 검수 필요: [missing_bunch] dice 0.68 — 송이 일부만 라벨(규칙 판정)",
+  "status": "flag"
+ },
+ "2324": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: 2326",
+  "status": "exclude"
+ },
+ "2325": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: 2326",
+  "status": "exclude"
+ },
+ "2326": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "사람 검수 필요: [missing_bunch] AI 와 거의 안 겹침(dice 0.43) — GT 가 실제 송이를 놓쳤거나 엉뚱한 곳에 칠함(규칙 판정)",
+  "status": "flag"
+ },
+ "2327": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: 2326",
+  "status": "exclude"
+ },
+ "2328": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: 2326",
+  "status": "exclude"
+ },
+ "233": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "사진 교체(불일치 교정). 마스크는 그대로",
+  "status": "fixed"
+ },
+ "2331": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "사람 검수 필요: [missing_bunch] dice 0.78 — 송이 일부만 라벨(규칙 판정)",
+  "status": "flag"
+ },
+ "2333": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "사람 검수 필요: [missing_bunch] dice 0.79 — 송이 일부만 라벨(규칙 판정)",
+  "status": "flag"
+ },
+ "237": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: 2135",
+  "status": "exclude"
+ },
+ "2376": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "사람 검수 필요: [missing_bunch] dice 0.79 — 송이 일부만 라벨(규칙 판정)",
+  "status": "flag"
+ },
+ "2377": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "사람 검수 필요: [missing_bunch] dice 0.75 — 송이 일부만 라벨(규칙 판정)",
+  "status": "flag"
+ },
+ "2398": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: 108",
+  "status": "exclude"
+ },
+ "241": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: 2159",
+  "status": "exclude"
+ },
+ "2449": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: 1233",
+  "status": "exclude"
+ },
+ "250": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: 2162",
+  "status": "exclude"
+ },
+ "276": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: 2188",
+  "status": "exclude"
+ },
+ "286": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: 2197",
+  "status": "exclude"
+ },
+ "30": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: 16",
+  "status": "exclude"
+ },
+ "304": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: 1897",
+  "status": "exclude"
+ },
+ "320": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: 1909",
+  "status": "exclude"
+ },
+ "347": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: 1926",
+  "status": "exclude"
+ },
+ "37": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: 1997",
+  "status": "exclude"
+ },
+ "380": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: 1255",
+  "status": "exclude"
+ },
+ "383": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: 1112",
+  "status": "exclude"
+ },
+ "429": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: 1263",
+  "status": "exclude"
+ },
+ "447": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: 1661",
+  "status": "exclude"
+ },
+ "466": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "사람 검수 필요: [missing_bunch] dice 0.80 — 송이 일부만 라벨(규칙 판정)",
+  "status": "flag"
+ },
+ "467": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "사람 검수 필요: [missing_bunch] dice 0.78 — 송이 일부만 라벨(규칙 판정)",
+  "status": "flag"
+ },
+ "482": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: 1673",
+  "status": "exclude"
+ },
+ "491": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "사람 검수 필요: [missing_bunch] dice 0.72 — 송이 일부만 라벨(규칙 판정)",
+  "status": "flag"
+ },
+ "518": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "사람 검수 필요: [missing_bunch] dice 0.75 — 송이 일부만 라벨(규칙 판정)",
+  "status": "flag"
+ },
+ "533": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "사람 검수 필요: [missing_bunch] dice 0.58 — 송이 일부만 라벨(규칙 판정)",
+  "status": "flag"
+ },
+ "534": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "사람 검수 필요: [missing_bunch] dice 0.74 — 송이 일부만 라벨(규칙 판정)",
+  "status": "flag"
+ },
+ "535": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "사람 검수 필요: [missing_bunch] dice 0.79 — 송이 일부만 라벨(규칙 판정)",
+  "status": "flag"
+ },
+ "548": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: 1615",
+  "status": "exclude"
+ },
+ "555": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "사람 검수 필요: [missing_bunch] dice 0.75 — 송이 일부만 라벨(규칙 판정)",
+  "status": "flag"
+ },
+ "56": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: 2487",
+  "status": "exclude"
+ },
+ "568": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: 1035",
+  "status": "exclude"
+ },
+ "57": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: 2022",
+  "status": "exclude"
+ },
+ "577": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: 1037",
+  "status": "exclude"
+ },
+ "582": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: 1043",
+  "status": "exclude"
+ },
+ "593": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: 1055",
+  "status": "exclude"
+ },
+ "60": {
+  "at": "2026-09-16 23:18",
+  "by": "AI 사이클1 3차(Fable)",
+  "note": "중복: 2030 (사이클1 추가 발견)",
+  "status": "exclude"
+ },
+ "606": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "사람 검수 필요: [missing_bunch] dice 0.75 — 송이 일부만 라벨(규칙 판정)",
+  "status": "flag"
+ },
+ "648": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "사람 검수 필요: [other] 네모에 가까운 큰 블록",
+  "status": "flag"
+ },
+ "656": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: 1095",
+  "status": "exclude"
+ },
+ "658": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "사람 검수 필요: [missing_bunch] dice 0.73 — 송이 일부만 라벨(규칙 판정)",
+  "status": "flag"
+ },
+ "66": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: 2040",
+  "status": "exclude"
+ },
+ "669": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "사람 검수 필요: [missing_bunch] AI 와 거의 안 겹침(dice 0.53) — GT 가 실제 송이를 놓쳤거나 엉뚱한 곳에 칠함(규칙 판정)",
+  "status": "flag"
+ },
+ "671": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "사람 검수 필요: [missing_bunch] dice 0.58 — 송이 일부만 라벨(규칙 판정)",
+  "status": "flag"
+ },
+ "678": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: 1020",
+  "status": "exclude"
+ },
+ "687": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "사람 검수 필요: [missing_bunch] dice 0.79 — 송이 일부만 라벨(규칙 판정)",
+  "status": "flag"
+ },
+ "70": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: 2046",
+  "status": "exclude"
+ },
+ "741": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "사람 검수 필요: [missing_bunch] dice 0.78 — 송이 일부만 라벨(규칙 판정)",
+  "status": "flag"
+ },
+ "743": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "사람 검수 필요: [missing_bunch] dice 0.74 — 송이 일부만 라벨(규칙 판정)",
+  "status": "flag"
+ },
+ "751": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: 1846",
+  "status": "exclude"
+ },
+ "759": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "사람 검수 필요: [missing_bunch] dice 0.73 — 송이 일부만 라벨(규칙 판정)",
+  "status": "flag"
+ },
+ "774": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: 1850",
+  "status": "exclude"
+ },
+ "775": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: 1180",
+  "status": "exclude"
+ },
+ "788": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "사람 검수 필요: [missing_bunch] dice 0.77 — 송이 일부만 라벨(규칙 판정)",
+  "status": "flag"
+ },
+ "8": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: 1",
+  "status": "exclude"
+ },
+ "803": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "사람 검수 필요: [missing_bunch] 왼쪽 위 큰 송이가 통째로 라벨 없음. AI 가 잡음",
+  "status": "flag"
+ },
+ "817": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "사람 검수 필요: [missing_bunch] dice 0.67 — 송이 일부만 라벨(규칙 판정)",
+  "status": "flag"
+ },
+ "825": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "사람 검수 필요: [missing_bunch] dice 0.67 — 송이 일부만 라벨(규칙 판정)",
+  "status": "flag"
+ },
+ "84": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: 2071",
+  "status": "exclude"
+ },
+ "853": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: 4",
+  "status": "exclude"
+ },
+ "880": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: 11",
+  "status": "exclude"
+ },
+ "893": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: 1121",
+  "status": "exclude"
+ },
+ "915": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: 1142",
+  "status": "exclude"
+ },
+ "941": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "사람 검수 필요: [other] 완전한 직사각형 두 개(extent=1.00). 라벨이 아니라 사각형 칠",
+  "status": "flag"
+ },
+ "942": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "사람 검수 필요: [other] 둥근 사각형 블록이 송이+잎을 덮음",
+  "status": "flag"
+ },
+ "944": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "사람 검수 필요: [missing_bunch] dice 0.60 — 송이 일부만 라벨(규칙 판정)",
+  "status": "flag"
+ },
+ "950": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "사람 검수 필요: [missing_bunch] dice 0.75 — 송이 일부만 라벨(규칙 판정)",
+  "status": "flag"
+ },
+ "96": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: 2084",
+  "status": "exclude"
+ },
+ "962": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "사람 검수 필요: [missing_bunch] 실제 송이 왼쪽 빈 곳이 칠해짐",
+  "status": "flag"
+ },
+ "972": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "사람 검수 필요: [missing_bunch] dice 0.76 — 송이 일부만 라벨(규칙 판정)",
+  "status": "flag"
+ },
+ "997": {
+  "at": "2026-09-16 11:24",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: 834",
+  "status": "exclude"
+ }
+}

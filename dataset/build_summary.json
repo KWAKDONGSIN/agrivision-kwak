@@ -1,0 +1,1125 @@
+{
+ "allow_missing_input": false,
+ "box_crosscheck": {
+  "apple": {
+   "examples": [
+    {
+     "lsh": 93,
+     "psm_gt": 95,
+     "stem": "20150919_174151_image1"
+    },
+    {
+     "lsh": 95,
+     "psm_gt": 101,
+     "stem": "20150919_174151_image86"
+    },
+    {
+     "lsh": 103,
+     "psm_gt": 106,
+     "stem": "20150919_174151_image116"
+    },
+    {
+     "lsh": 124,
+     "psm_gt": 123,
+     "stem": "20150919_174151_image161"
+    },
+    {
+     "lsh": 95,
+     "psm_gt": 96,
+     "stem": "20150919_174151_image201"
+    }
+   ],
+   "mean_abs_diff": 2.78,
+   "n_both": 429,
+   "n_count_differs": 330
+  },
+  "grape": {
+   "examples": [
+    {
+     "lsh": 14,
+     "psm_gt": 8,
+     "stem": "0"
+    },
+    {
+     "lsh": 8,
+     "psm_gt": 5,
+     "stem": "1"
+    },
+    {
+     "lsh": 6,
+     "psm_gt": 5,
+     "stem": "2"
+    },
+    {
+     "lsh": 9,
+     "psm_gt": 6,
+     "stem": "3"
+    },
+    {
+     "lsh": 7,
+     "psm_gt": 6,
+     "stem": "4"
+    }
+   ],
+   "mean_abs_diff": 3.14,
+   "n_both": 2403,
+   "n_count_differs": 1857
+  },
+  "peach": {
+   "examples": [
+    {
+     "lsh": 12,
+     "psm_gt": 14,
+     "stem": "210629-t1-07"
+    },
+    {
+     "lsh": 24,
+     "psm_gt": 25,
+     "stem": "210629-t1-10"
+    },
+    {
+     "lsh": 10,
+     "psm_gt": 11,
+     "stem": "210629-t1-11"
+    },
+    {
+     "lsh": 19,
+     "psm_gt": 21,
+     "stem": "210629-t1-17"
+    },
+    {
+     "lsh": 14,
+     "psm_gt": 15,
+     "stem": "210629-t1-19"
+    }
+   ],
+   "mean_abs_diff": 1.41,
+   "n_both": 125,
+   "n_count_differs": 27
+  }
+ },
+ "built_at": "2026-09-18 19:23:56",
+ "counts": {
+  "apple": {
+   "actions": {
+    "keep": 378,
+    "needs_human": 51
+   },
+   "boxes_sources": {
+    "psm_gt": 429
+   },
+   "n_apple_check": 122,
+   "n_boxes": 429,
+   "n_instances": 429,
+   "n_keep": 429,
+   "n_manifest": 1001,
+   "n_mask_audit": 18,
+   "n_peach_dup": 0,
+   "n_revived": 0,
+   "n_rule_pending": 17,
+   "n_sessions": 17,
+   "n_split_groups": 99,
+   "peach_dup_groups": 0,
+   "reasons": {
+    "reviewed_duplicate": 572
+   },
+   "sources": {
+    "ai": 53,
+    "reviewed": 376
+   }
+  },
+  "blueberry": {
+   "actions": {
+    "keep": 1110,
+    "needs_human": 4
+   },
+   "boxes_sources": {
+    "lsh": 1114
+   },
+   "n_apple_check": 0,
+   "n_boxes": 1114,
+   "n_instances": 1114,
+   "n_keep": 1114,
+   "n_manifest": 1195,
+   "n_mask_audit": 59,
+   "n_peach_dup": 0,
+   "n_revived": 0,
+   "n_rule_pending": 218,
+   "n_sessions": 288,
+   "n_split_groups": 1055,
+   "peach_dup_groups": 0,
+   "reasons": {
+    "reviewed_duplicate": 81
+   },
+   "sources": {
+    "ai": 6,
+    "reviewed": 1108
+   }
+  },
+  "grape": {
+   "actions": {
+    "image_replaced": 12,
+    "keep": 2319,
+    "needs_human": 72
+   },
+   "boxes_sources": {
+    "psm_gt": 2403
+   },
+   "n_apple_check": 0,
+   "n_boxes": 2403,
+   "n_instances": 0,
+   "n_keep": 2403,
+   "n_manifest": 2502,
+   "n_mask_audit": 122,
+   "n_peach_dup": 0,
+   "n_revived": 0,
+   "n_rule_pending": 0,
+   "n_sessions": 2403,
+   "n_split_groups": 2403,
+   "peach_dup_groups": 0,
+   "reasons": {
+    "reviewed_duplicate": 98,
+    "reviewed_not_grape": 1
+   },
+   "sources": {
+    "ai": 84,
+    "reviewed": 2319
+   }
+  },
+  "peach": {
+   "actions": {
+    "keep": 77,
+    "mask_fixed": 39,
+    "needs_human": 9
+   },
+   "boxes_sources": {
+    "psm_gt": 125
+   },
+   "n_apple_check": 0,
+   "n_boxes": 125,
+   "n_instances": 0,
+   "n_keep": 125,
+   "n_manifest": 125,
+   "n_mask_audit": 6,
+   "n_peach_dup": 55,
+   "n_revived": 0,
+   "n_rule_pending": 0,
+   "n_sessions": 4,
+   "n_split_groups": 4,
+   "peach_dup_groups": 13,
+   "reasons": {},
+   "sources": {
+    "ai": 125
+   }
+  }
+ },
+ "date_arg": "260918",
+ "date_iso": "2026-09-18",
+ "elapsed_sec": 596.9,
+ "fruits": [
+  "apple",
+  "grape",
+  "peach",
+  "blueberry"
+ ],
+ "input_changes": [],
+ "input_registry": {
+  "cih:mask_audit:mask_stats.csv": {
+   "exists": true,
+   "fingerprint": "content",
+   "kind": "file",
+   "mtime": "2026-09-08 12:54:53",
+   "n_rows": 4823,
+   "owner": "cih0210",
+   "path": "/data/project/2026summer/platform/work/choi_inhun/mask_audit_260908/mask_stats.csv",
+   "sha256": "d159268047260ebd120dfb11cc04d0a1a20699eb0deb20c9c1e137c13f6c43eb",
+   "size": 299927,
+   "used_for": "참고 — reason 칸 없음(전체 마스크 통계)"
+  },
+  "cih:mask_audit:summary.json": {
+   "exists": true,
+   "fingerprint": "content",
+   "kind": "file",
+   "mtime": "2026-09-08 12:54:54",
+   "owner": "cih0210",
+   "path": "/data/project/2026summer/platform/work/choi_inhun/mask_audit_260908/summary.json",
+   "sha256": "a4dfe1d06b526463485e490ee52a767b661792cf2e4f1f40b211ebd96592505b",
+   "size": 952,
+   "used_for": "참고"
+  },
+  "cih:mask_audit:suspects.csv": {
+   "exists": true,
+   "fingerprint": "content",
+   "kind": "file",
+   "mtime": "2026-09-08 12:54:54",
+   "n_rows": 240,
+   "owner": "cih0210",
+   "path": "/data/project/2026summer/platform/work/choi_inhun/mask_audit_260908/suspects.csv",
+   "sha256": "9f2765bd70fdd3b4c61518171bc07ed3507f53337a0b31b2773985137664d307",
+   "size": 19264,
+   "used_for": "mask_audit_reason (reason 칸이 있는 것은 이 파일이다)"
+  },
+  "cih:peach_dup:REPORT.md": {
+   "exists": true,
+   "fingerprint": "content",
+   "kind": "file",
+   "mtime": "2026-09-17 15:10:19",
+   "owner": "cih0210",
+   "path": "/data/project/2026summer/platform/work/choi_inhun/dup_audit_260917/peach/REPORT.md",
+   "sha256": "c1d5a98610f1ff514a615b2629872dbbf3ad3dae109c1453935da9dd949f08e5",
+   "size": 5796,
+   "used_for": "근거 문서(버스트 9그룹 45장)"
+  },
+  "cih:peach_dup:clusters.txt": {
+   "exists": true,
+   "fingerprint": "content",
+   "kind": "file",
+   "mtime": "2026-09-17 15:06:04",
+   "owner": "cih0210",
+   "path": "/data/project/2026summer/platform/work/choi_inhun/dup_audit_260917/peach/clusters.txt",
+   "sha256": "b07f5a5cfff25ace853e29fbf777d06bd0fd009a8a9f502b3af2adfe2e28ff33",
+   "size": 2521,
+   "used_for": "참고(해밍 22 묶음 — 너무 거칠어 반영 안 함)"
+  },
+  "cih:peach_dup:similar_pairs.csv": {
+   "exists": true,
+   "fingerprint": "content",
+   "kind": "file",
+   "mtime": "2026-09-17 15:06:04",
+   "n_rows": 169,
+   "owner": "cih0210",
+   "path": "/data/project/2026summer/platform/work/choi_inhun/dup_audit_260917/peach/similar_pairs.csv",
+   "sha256": "fc7ffa2819bb49cf9517b94c75e1015da80bd297c514ec418690e686eed46e19",
+   "size": 9041,
+   "used_for": "peach_dup_candidate 의 pair_* 그룹"
+  },
+  "lsh:apple:all.json": {
+   "exists": true,
+   "fingerprint": "names+size+mtime",
+   "kind": "dir",
+   "latest_mtime": "2026-09-07 17:27:03",
+   "n_files": 1001,
+   "owner": "lsh0616",
+   "path": "/data/project/2026summer/platform/work/im_seonghu/bbox_outputs/apple/all/json",
+   "sha256": "0fcc9894015659f1cf5187dec4654793c31259eabc5313e398f9be1b474bd2da",
+   "used_for": "boxes_source=lsh (박성문 gt 가 없는 과일에서만)"
+  },
+  "lsh:blueberry:all.json": {
+   "exists": true,
+   "fingerprint": "names+size+mtime",
+   "kind": "dir",
+   "latest_mtime": "2026-09-07 17:26:41",
+   "n_files": 1195,
+   "owner": "lsh0616",
+   "path": "/data/project/2026summer/platform/work/im_seonghu/bbox_outputs/blueberry/all/json",
+   "sha256": "8a893f6da60503c0a8698a7551db2200460c98034a310c059c82f1c07235f7ef",
+   "used_for": "boxes_source=lsh (박성문 gt 가 없는 과일에서만)"
+  },
+  "lsh:grape:all.json": {
+   "exists": true,
+   "fingerprint": "names+size+mtime",
+   "kind": "dir",
+   "latest_mtime": "2026-09-07 17:31:11",
+   "n_files": 2502,
+   "owner": "lsh0616",
+   "path": "/data/project/2026summer/platform/work/im_seonghu/bbox_outputs/grape/all/json",
+   "sha256": "e2e195ad3f6cde84f852deea7712580fd5c4e5899b5f21f4ee4673d62de0cb4c",
+   "used_for": "boxes_source=lsh (박성문 gt 가 없는 과일에서만)"
+  },
+  "lsh:peach:all.json": {
+   "exists": true,
+   "fingerprint": "names+size+mtime",
+   "kind": "dir",
+   "latest_mtime": "2026-09-07 17:22:53",
+   "n_files": 125,
+   "owner": "lsh0616",
+   "path": "/data/project/2026summer/platform/work/im_seonghu/bbox_outputs/peach/all/json",
+   "sha256": "051ff831d4f77c5d5bed973ffaaa69e4408fdc6b0397bc15457b167489d6eb1a",
+   "used_for": "boxes_source=lsh (박성문 gt 가 없는 과일에서만)"
+  },
+  "original:apple:images": {
+   "exists": true,
+   "fingerprint": "names+size+mtime",
+   "kind": "dir",
+   "latest_mtime": "2026-08-06 21:24:48",
+   "n_files": 1001,
+   "owner": "kds0206",
+   "path": "/data/project/2026summer/kds0206/datasets_resized_2mp/apple/images",
+   "sha256": "8a4ecee03f2ad859abdcc58e00c8a2d3fb9d8cfd3f00f58cddfc05fb6ab623bd",
+   "used_for": "되살린 사진의 출처(image_source=resized_2mp)"
+  },
+  "original:apple:masks": {
+   "exists": true,
+   "fingerprint": "names+size+mtime",
+   "kind": "dir",
+   "latest_mtime": "2026-08-06 21:24:48",
+   "n_files": 1001,
+   "owner": "kds0206",
+   "path": "/data/project/2026summer/kds0206/datasets_resized_2mp/apple/masks",
+   "sha256": "8fdb4c667172f604fc7dfc4e75e2f7b4e6fffca56ceb1b984a523e6e993cd8e1",
+   "used_for": "되살린 마스크의 출처"
+  },
+  "original:blueberry:images": {
+   "exists": true,
+   "fingerprint": "names+size+mtime",
+   "kind": "dir",
+   "latest_mtime": "2026-08-08 12:54:09",
+   "n_files": 1195,
+   "owner": "kds0206",
+   "path": "/data/project/2026summer/kds0206/datasets_resized_2mp/blueberry/images",
+   "sha256": "2ce3cc41093035c59d86f7dc40d82cddee9ba09c285fea911b4f66f774ee4892",
+   "used_for": "되살린 사진의 출처(image_source=resized_2mp)"
+  },
+  "original:blueberry:masks": {
+   "exists": true,
+   "fingerprint": "names+size+mtime",
+   "kind": "dir",
+   "latest_mtime": "2026-08-08 12:54:09",
+   "n_files": 1195,
+   "owner": "kds0206",
+   "path": "/data/project/2026summer/kds0206/datasets_resized_2mp/blueberry/masks",
+   "sha256": "de7894f2e3068ab31fa308b42c291fbd0cdb9f2baf34c151a6cf34bbec50953e",
+   "used_for": "되살린 마스크의 출처"
+  },
+  "original:grape:images": {
+   "exists": true,
+   "fingerprint": "names+size+mtime",
+   "kind": "dir",
+   "latest_mtime": "2026-08-07 20:19:40",
+   "n_files": 2502,
+   "owner": "kds0206",
+   "path": "/data/project/2026summer/kds0206/datasets_resized_2mp/grape/images",
+   "sha256": "c6f64f8d8e502598c9a19a711b73f53eedd6f2d8d4902757253c70bc1115bff6",
+   "used_for": "되살린 사진의 출처(image_source=resized_2mp)"
+  },
+  "original:grape:masks": {
+   "exists": true,
+   "fingerprint": "names+size+mtime",
+   "kind": "dir",
+   "latest_mtime": "2026-08-07 20:19:40",
+   "n_files": 2502,
+   "owner": "kds0206",
+   "path": "/data/project/2026summer/kds0206/datasets_resized_2mp/grape/masks",
+   "sha256": "20c7515d1a0fe26ff58f88ebf6664919d7f3989b1b09c6110cfab4dffc0a0cc2",
+   "used_for": "되살린 마스크의 출처"
+  },
+  "original:peach:images": {
+   "exists": true,
+   "fingerprint": "names+size+mtime",
+   "kind": "dir",
+   "latest_mtime": "2026-08-06 21:25:04",
+   "n_files": 125,
+   "owner": "kds0206",
+   "path": "/data/project/2026summer/kds0206/datasets_resized_2mp/peach/images",
+   "sha256": "37c6ddfe8b1a949e988d88c41463e8ccad8da8a3837282d6d2a47852749e5f93",
+   "used_for": "되살린 사진의 출처(image_source=resized_2mp)"
+  },
+  "original:peach:masks": {
+   "exists": true,
+   "fingerprint": "names+size+mtime",
+   "kind": "dir",
+   "latest_mtime": "2026-08-06 21:25:04",
+   "n_files": 125,
+   "owner": "kds0206",
+   "path": "/data/project/2026summer/kds0206/datasets_resized_2mp/peach/masks",
+   "sha256": "b4c7f48c6f9dd90da257151a0068b98b91815eaf942faeb1016375a80a27a34c",
+   "used_for": "되살린 마스크의 출처"
+  },
+  "psm:apple:all.instance_maps": {
+   "exists": true,
+   "fingerprint": "names+size+mtime",
+   "kind": "dir",
+   "latest_mtime": "2026-09-07 17:27:03",
+   "n_files": 1001,
+   "owner": "psm0717",
+   "path": "/data/project/2026summer/platform/work/park_seongmoon/bbox_outputs/apple/all/instance_maps",
+   "sha256": "3f8ecc66f06976739dde2b22d2370a7e7c7ee6304c3315e2f80effd47b9b5390",
+   "used_for": "블루베리만 사용(instances_source=detect_seed) · 나머지 과일은 쓰지 않음"
+  },
+  "psm:apple:all.json": {
+   "exists": true,
+   "fingerprint": "names+size+mtime",
+   "kind": "dir",
+   "latest_mtime": "2026-09-07 17:27:03",
+   "n_files": 1001,
+   "owner": "psm0717",
+   "path": "/data/project/2026summer/platform/work/park_seongmoon/bbox_outputs/apple/all/json",
+   "sha256": "0fcc9894015659f1cf5187dec4654793c31259eabc5313e398f9be1b474bd2da",
+   "used_for": "참고 — 임성후 판과 바이트 동일(watershed 추정, 미검증)"
+  },
+  "psm:apple:gt_boxes.json": {
+   "exists": true,
+   "fingerprint": "names+size+mtime",
+   "kind": "dir",
+   "latest_mtime": "2026-09-12 23:53:30",
+   "n_files": 1001,
+   "owner": "psm0717",
+   "path": "/data/project/2026summer/platform/work/park_seongmoon/bbox_outputs/apple/gt_boxes/json",
+   "sha256": "e72d13e871ad628273dfd91feedd4be99c12d16fe25f45b7a174847c1d1bbf3d",
+   "used_for": "boxes_source=psm_gt (정답 마스크에서 뽑은 상자)"
+  },
+  "psm:apple:gt_boxes.summary": {
+   "exists": true,
+   "fingerprint": "content",
+   "kind": "file",
+   "mtime": "2026-09-12 23:53:31",
+   "owner": "psm0717",
+   "path": "/data/project/2026summer/platform/work/park_seongmoon/bbox_outputs/apple/gt_boxes/summary.md",
+   "sha256": "fc430c856a9fee7cab5b28e6a0b811ba05bef48a95c995b5fd86eb005ffd0273",
+   "size": 315,
+   "used_for": "참고(설명)"
+  },
+  "psm:apple:gt_boxes.yolo": {
+   "exists": true,
+   "fingerprint": "names+size+mtime",
+   "kind": "dir",
+   "latest_mtime": "2026-09-12 23:53:30",
+   "n_files": 1001,
+   "owner": "psm0717",
+   "path": "/data/project/2026summer/platform/work/park_seongmoon/bbox_outputs/apple/gt_boxes/yolo_labels",
+   "sha256": "541b49b4c7190d872c6979c77a313d845e23a9d5649d4d9e902c4604665a280c",
+   "used_for": "boxes/<stem>.txt (박성문이 만든 YOLO txt 를 그대로 복사)"
+  },
+  "psm:apple_check:confirmed_errors.csv": {
+   "exists": true,
+   "fingerprint": "content",
+   "kind": "file",
+   "mtime": "2026-09-17 13:55:53",
+   "n_rows": 38,
+   "owner": "psm0717",
+   "path": "/data/project/2026summer/platform/work/park_seongmoon/apple_check/confirmed_errors.csv",
+   "sha256": "c424d094a0640cc3051798a7a40542c1b0be2147a839d553e23b98a55f325362",
+   "size": 5721,
+   "used_for": "apple_check_verdict 의 «확정오류 N»"
+  },
+  "psm:apple_check:duplicates_folds.csv": {
+   "exists": true,
+   "fingerprint": "content",
+   "kind": "file",
+   "mtime": "2026-09-17 13:01:46",
+   "n_rows": 131,
+   "owner": "psm0717",
+   "path": "/data/project/2026summer/platform/work/park_seongmoon/apple_check/duplicates_folds.csv",
+   "sha256": "ed5ba51991907d5d1eb770daa1ee193debcbd3b8d97cccd6911d964cc2f51bdc",
+   "size": 5488,
+   "used_for": "참고(반영 안 함)"
+  },
+  "psm:apple_check:duplicates_keep_list.csv": {
+   "exists": true,
+   "fingerprint": "content",
+   "kind": "file",
+   "mtime": "2026-09-17 13:01:46",
+   "n_rows": 47,
+   "owner": "psm0717",
+   "path": "/data/project/2026summer/platform/work/park_seongmoon/apple_check/duplicates_keep_list.csv",
+   "sha256": "0cc9a61f6d31fd5ce219de4710d405faf70a6b9d55f2ec95e66a5680754842d1",
+   "size": 3520,
+   "used_for": "참고(반영 안 함)"
+  },
+  "psm:apple_check:per_image.csv": {
+   "exists": true,
+   "fingerprint": "content",
+   "kind": "file",
+   "mtime": "2026-09-17 13:01:27",
+   "n_rows": 1001,
+   "owner": "psm0717",
+   "path": "/data/project/2026summer/platform/work/park_seongmoon/apple_check/per_image.csv",
+   "sha256": "dccc7ed8caf50bd98dcbe92d941e4ab323fd977f0dd9792a304955daf1972d21",
+   "size": 67376,
+   "used_for": "참고(반영 안 함)"
+  },
+  "psm:apple_check:review_list.csv": {
+   "exists": true,
+   "fingerprint": "content",
+   "kind": "file",
+   "mtime": "2026-09-17 13:23:12",
+   "n_rows": 465,
+   "owner": "psm0717",
+   "path": "/data/project/2026summer/platform/work/park_seongmoon/apple_check/review_list.csv",
+   "sha256": "3787d0f713b480c4e07a62fafb0f079e47fac38c5f47fed7fb7c7d52689c0bb4",
+   "size": 67818,
+   "used_for": "apple_check_verdict · verdict_source"
+  },
+  "psm:apple_check:summary.json": {
+   "exists": true,
+   "fingerprint": "content",
+   "kind": "file",
+   "mtime": "2026-09-17 13:55:53",
+   "owner": "psm0717",
+   "path": "/data/project/2026summer/platform/work/park_seongmoon/apple_check/summary.json",
+   "sha256": "0f11029be0b18e80392d81ef240ec4b34e25ea9f5e0a51a9b8cc85af806e0b90",
+   "size": 2287,
+   "used_for": "참고(반영 안 함)"
+  },
+  "psm:blueberry:all.instance_maps": {
+   "exists": true,
+   "fingerprint": "names+size+mtime",
+   "kind": "dir",
+   "latest_mtime": "2026-09-07 17:26:41",
+   "n_files": 1195,
+   "owner": "psm0717",
+   "path": "/data/project/2026summer/platform/work/park_seongmoon/bbox_outputs/blueberry/all/instance_maps",
+   "sha256": "09f24b0e0245700bbde84db7027065bf7e9319ac97c81de8e19e7bd054b4d63a",
+   "used_for": "블루베리만 사용(instances_source=detect_seed) · 나머지 과일은 쓰지 않음"
+  },
+  "psm:blueberry:all.json": {
+   "exists": true,
+   "fingerprint": "names+size+mtime",
+   "kind": "dir",
+   "latest_mtime": "2026-09-07 17:26:41",
+   "n_files": 1195,
+   "owner": "psm0717",
+   "path": "/data/project/2026summer/platform/work/park_seongmoon/bbox_outputs/blueberry/all/json",
+   "sha256": "8a893f6da60503c0a8698a7551db2200460c98034a310c059c82f1c07235f7ef",
+   "used_for": "참고 — 임성후 판과 바이트 동일(watershed 추정, 미검증)"
+  },
+  "psm:blueberry:gt_boxes.json": {
+   "exists": false,
+   "path": "/data/project/2026summer/platform/work/park_seongmoon/bbox_outputs/blueberry/gt_boxes/json",
+   "used_for": "boxes_source=psm_gt (정답 마스크에서 뽑은 상자)"
+  },
+  "psm:blueberry:gt_boxes.summary": {
+   "exists": false,
+   "path": "/data/project/2026summer/platform/work/park_seongmoon/bbox_outputs/blueberry/gt_boxes/summary.md",
+   "used_for": "참고(설명)"
+  },
+  "psm:blueberry:gt_boxes.yolo": {
+   "exists": false,
+   "path": "/data/project/2026summer/platform/work/park_seongmoon/bbox_outputs/blueberry/gt_boxes/yolo_labels",
+   "used_for": "boxes/<stem>.txt (박성문이 만든 YOLO txt 를 그대로 복사)"
+  },
+  "psm:grape:all.instance_maps": {
+   "exists": true,
+   "fingerprint": "names+size+mtime",
+   "kind": "dir",
+   "latest_mtime": "2026-09-07 17:31:11",
+   "n_files": 2502,
+   "owner": "psm0717",
+   "path": "/data/project/2026summer/platform/work/park_seongmoon/bbox_outputs/grape/all/instance_maps",
+   "sha256": "40341524d6aa170de645b44a07637df2f49b933a79981bb26b9669e15b49dabe",
+   "used_for": "블루베리만 사용(instances_source=detect_seed) · 나머지 과일은 쓰지 않음"
+  },
+  "psm:grape:all.json": {
+   "exists": true,
+   "fingerprint": "names+size+mtime",
+   "kind": "dir",
+   "latest_mtime": "2026-09-07 17:31:11",
+   "n_files": 2502,
+   "owner": "psm0717",
+   "path": "/data/project/2026summer/platform/work/park_seongmoon/bbox_outputs/grape/all/json",
+   "sha256": "e2e195ad3f6cde84f852deea7712580fd5c4e5899b5f21f4ee4673d62de0cb4c",
+   "used_for": "참고 — 임성후 판과 바이트 동일(watershed 추정, 미검증)"
+  },
+  "psm:grape:gt_boxes.json": {
+   "exists": true,
+   "fingerprint": "names+size+mtime",
+   "kind": "dir",
+   "latest_mtime": "2026-09-12 23:47:41",
+   "n_files": 2502,
+   "owner": "psm0717",
+   "path": "/data/project/2026summer/platform/work/park_seongmoon/bbox_outputs/grape/gt_boxes/json",
+   "sha256": "d72ad57aa91d172d2cec4e6c90c360f106b64a226a1e2794e7c31e856d5c4781",
+   "used_for": "boxes_source=psm_gt (정답 마스크에서 뽑은 상자)"
+  },
+  "psm:grape:gt_boxes.summary": {
+   "exists": true,
+   "fingerprint": "content",
+   "kind": "file",
+   "mtime": "2026-09-12 23:47:41",
+   "owner": "psm0717",
+   "path": "/data/project/2026summer/platform/work/park_seongmoon/bbox_outputs/grape/gt_boxes/summary.md",
+   "sha256": "bc1274a03887c78af612f53c42d15cebdd47ad9fe7938c1895c9cc515c2ffb66",
+   "size": 286,
+   "used_for": "참고(설명)"
+  },
+  "psm:grape:gt_boxes.yolo": {
+   "exists": true,
+   "fingerprint": "names+size+mtime",
+   "kind": "dir",
+   "latest_mtime": "2026-09-12 23:47:41",
+   "n_files": 2502,
+   "owner": "psm0717",
+   "path": "/data/project/2026summer/platform/work/park_seongmoon/bbox_outputs/grape/gt_boxes/yolo_labels",
+   "sha256": "3abcaa86b4f103ea5e96efb1810413318d7ec12e67b8b774f6675863fd7acebb",
+   "used_for": "boxes/<stem>.txt (박성문이 만든 YOLO txt 를 그대로 복사)"
+  },
+  "psm:peach:all.instance_maps": {
+   "exists": true,
+   "fingerprint": "names+size+mtime",
+   "kind": "dir",
+   "latest_mtime": "2026-09-07 17:22:53",
+   "n_files": 125,
+   "owner": "psm0717",
+   "path": "/data/project/2026summer/platform/work/park_seongmoon/bbox_outputs/peach/all/instance_maps",
+   "sha256": "d76185be951eeb1be2927783698cad493f5073f43167843a8fdd6ccffcb7ae8f",
+   "used_for": "블루베리만 사용(instances_source=detect_seed) · 나머지 과일은 쓰지 않음"
+  },
+  "psm:peach:all.json": {
+   "exists": true,
+   "fingerprint": "names+size+mtime",
+   "kind": "dir",
+   "latest_mtime": "2026-09-07 17:22:53",
+   "n_files": 125,
+   "owner": "psm0717",
+   "path": "/data/project/2026summer/platform/work/park_seongmoon/bbox_outputs/peach/all/json",
+   "sha256": "051ff831d4f77c5d5bed973ffaaa69e4408fdc6b0397bc15457b167489d6eb1a",
+   "used_for": "참고 — 임성후 판과 바이트 동일(watershed 추정, 미검증)"
+  },
+  "psm:peach:gt_boxes.json": {
+   "exists": true,
+   "fingerprint": "names+size+mtime",
+   "kind": "dir",
+   "latest_mtime": "2026-09-12 23:53:38",
+   "n_files": 125,
+   "owner": "psm0717",
+   "path": "/data/project/2026summer/platform/work/park_seongmoon/bbox_outputs/peach/gt_boxes/json",
+   "sha256": "3be828d8b93fd2bdb5f0fdb98ceb208362189b5e5a879c266352507ee49fe85f",
+   "used_for": "boxes_source=psm_gt (정답 마스크에서 뽑은 상자)"
+  },
+  "psm:peach:gt_boxes.summary": {
+   "exists": true,
+   "fingerprint": "content",
+   "kind": "file",
+   "mtime": "2026-09-12 23:53:39",
+   "owner": "psm0717",
+   "path": "/data/project/2026summer/platform/work/park_seongmoon/bbox_outputs/peach/gt_boxes/summary.md",
+   "sha256": "9ad9cd46a2a26d28bf3997bc526fc3148c562d1316dea724f0062c4184a22e19",
+   "size": 273,
+   "used_for": "참고(설명)"
+  },
+  "psm:peach:gt_boxes.yolo": {
+   "exists": true,
+   "fingerprint": "names+size+mtime",
+   "kind": "dir",
+   "latest_mtime": "2026-09-12 23:53:38",
+   "n_files": 125,
+   "owner": "psm0717",
+   "path": "/data/project/2026summer/platform/work/park_seongmoon/bbox_outputs/peach/gt_boxes/yolo_labels",
+   "sha256": "4c952711a76970e48e213034cc49cd8565863aa86902ce0e4b47fd339d6c7ab0",
+   "used_for": "boxes/<stem>.txt (박성문이 만든 YOLO txt 를 그대로 복사)"
+  },
+  "reviewed:apple:images": {
+   "exists": true,
+   "fingerprint": "names+size+mtime",
+   "kind": "dir",
+   "latest_mtime": "2026-08-06 21:24:48",
+   "n_files": 429,
+   "owner": "kds0206",
+   "path": "/data/project/2026summer/kds0206/datasets_reviewed_260917/apple/images",
+   "sha256": "da823b48c24d513dee39b446246eff1c07641372c04fb621cfe1ce2af01b13ee",
+   "used_for": "사진·마스크 원본(복사 대상)"
+  },
+  "reviewed:apple:manifest": {
+   "exists": true,
+   "fingerprint": "content",
+   "kind": "file",
+   "mtime": "2026-09-18 04:12:36",
+   "n_rows": 1001,
+   "owner": "kds0206",
+   "path": "/data/project/2026summer/kds0206/datasets_reviewed_260917/apple/manifest.csv",
+   "sha256": "79c409132e96c20ef361bcf282ae985bd21db0f4e51eb5895f5eaaf7be3ae38f",
+   "size": 130782,
+   "used_for": "바탕 판정(action·note·session·split_group)"
+  },
+  "reviewed:apple:masks": {
+   "exists": true,
+   "fingerprint": "names+size+mtime",
+   "kind": "dir",
+   "latest_mtime": "2026-08-06 21:24:48",
+   "n_files": 429,
+   "owner": "kds0206",
+   "path": "/data/project/2026summer/kds0206/datasets_reviewed_260917/apple/masks",
+   "sha256": "0993d76ed4ca6442d36f822fd2fb7289fbcc57a13d185eaa615fc225cf8918fa",
+   "used_for": "사진·마스크 원본(복사 대상)"
+  },
+  "reviewed:blueberry:images": {
+   "exists": true,
+   "fingerprint": "names+size+mtime",
+   "kind": "dir",
+   "latest_mtime": "2026-08-08 12:54:06",
+   "n_files": 1114,
+   "owner": "kds0206",
+   "path": "/data/project/2026summer/kds0206/datasets_reviewed_260917/blueberry/images",
+   "sha256": "4d2b8f6259a6379afc1446bfa2bc429348c88b1093f83107b59c13a2f128cfaa",
+   "used_for": "사진·마스크 원본(복사 대상)"
+  },
+  "reviewed:blueberry:manifest": {
+   "exists": true,
+   "fingerprint": "content",
+   "kind": "file",
+   "mtime": "2026-09-18 04:12:36",
+   "n_rows": 1195,
+   "owner": "kds0206",
+   "path": "/data/project/2026summer/kds0206/datasets_reviewed_260917/blueberry/manifest.csv",
+   "sha256": "6688aaa97184d028915845d93088c8c4138fbecc673bb09021c96c64d3586832",
+   "size": 131140,
+   "used_for": "바탕 판정(action·note·session·split_group)"
+  },
+  "reviewed:blueberry:masks": {
+   "exists": true,
+   "fingerprint": "names+size+mtime",
+   "kind": "dir",
+   "latest_mtime": "2026-08-08 12:54:07",
+   "n_files": 1114,
+   "owner": "kds0206",
+   "path": "/data/project/2026summer/kds0206/datasets_reviewed_260917/blueberry/masks",
+   "sha256": "af6f7d3e9f487692150f11ca9d104763e78b3291202f4b8591add4cb65bfa185",
+   "used_for": "사진·마스크 원본(복사 대상)"
+  },
+  "reviewed:grape:images": {
+   "exists": true,
+   "fingerprint": "names+size+mtime",
+   "kind": "dir",
+   "latest_mtime": "2026-09-16 10:53:53",
+   "n_files": 2406,
+   "owner": "kds0206",
+   "path": "/data/project/2026summer/kds0206/datasets_reviewed_260916/grape/images",
+   "sha256": "6a0fba4f54146e694b0757812bbe6d93a61a54fc1e4a41c2ff4ee1dae2ad1469",
+   "used_for": "사진·마스크 원본(복사 대상)"
+  },
+  "reviewed:grape:manifest": {
+   "exists": true,
+   "fingerprint": "content",
+   "kind": "file",
+   "mtime": "2026-09-17 00:55:26",
+   "n_rows": 2502,
+   "owner": "kds0206",
+   "path": "/data/project/2026summer/kds0206/datasets_reviewed_260916/grape/manifest.csv",
+   "sha256": "cff8fd83998cc101ea22b8cf344d1776a7e853a3abf228f0fae92ea2b32f6a7e",
+   "size": 107350,
+   "used_for": "바탕 판정(action·note·session·split_group)"
+  },
+  "reviewed:grape:masks": {
+   "exists": true,
+   "fingerprint": "names+size+mtime",
+   "kind": "dir",
+   "latest_mtime": "2026-08-07 20:19:40",
+   "n_files": 2406,
+   "owner": "kds0206",
+   "path": "/data/project/2026summer/kds0206/datasets_reviewed_260916/grape/masks",
+   "sha256": "9e5c9c37b14a99afba4668243bd90fd119b3bab5d82a78581274cff2c072d9c0",
+   "used_for": "사진·마스크 원본(복사 대상)"
+  },
+  "reviewed:peach:images": {
+   "exists": true,
+   "fingerprint": "names+size+mtime",
+   "kind": "dir",
+   "latest_mtime": "2026-08-06 21:25:04",
+   "n_files": 125,
+   "owner": "kds0206",
+   "path": "/data/project/2026summer/kds0206/datasets_reviewed_260916/peach/images",
+   "sha256": "37c6ddfe8b1a949e988d88c41463e8ccad8da8a3837282d6d2a47852749e5f93",
+   "used_for": "사진·마스크 원본(복사 대상)"
+  },
+  "reviewed:peach:manifest": {
+   "exists": true,
+   "fingerprint": "content",
+   "kind": "file",
+   "mtime": "2026-09-17 00:55:26",
+   "n_rows": 125,
+   "owner": "kds0206",
+   "path": "/data/project/2026summer/kds0206/datasets_reviewed_260916/peach/manifest.csv",
+   "sha256": "f2ba8bb9b7913d38724ced832b6d0eb16628e6f1548d5b7000b2eda2d66f3cb4",
+   "size": 12149,
+   "used_for": "바탕 판정(action·note·session·split_group)"
+  },
+  "reviewed:peach:masks": {
+   "exists": true,
+   "fingerprint": "names+size+mtime",
+   "kind": "dir",
+   "latest_mtime": "2026-09-16 11:22:32",
+   "n_files": 125,
+   "owner": "kds0206",
+   "path": "/data/project/2026summer/kds0206/datasets_reviewed_260916/peach/masks",
+   "sha256": "d4d3e2e95c98c0050593cd2fa8996da3bded2be9d0a6343c4e3a2b372faade63",
+   "used_for": "사진·마스크 원본(복사 대상)"
+  },
+  "tool:apple:boxes": {
+   "exists": false,
+   "path": "/data/project/2026summer/platform/work/kwak_dongsin/260916_라벨링툴/data/apple/boxes",
+   "used_for": "boxes_source=tool"
+  },
+  "tool:apple:duplicates.json": {
+   "exists": true,
+   "fingerprint": "content",
+   "kind": "file",
+   "mtime": "2026-09-18 03:07:53",
+   "owner": "kds0206",
+   "path": "/data/project/2026summer/platform/work/kwak_dongsin/260916_라벨링툴/data/apple/duplicates.json",
+   "sha256": "4cf06cf04b29d1aa1649e92a0cdd934053cef088709a4e707bf8f1b7d1ee8223",
+   "size": 29370,
+   "used_for": "복숭아·포도 split_group 의 근접 중복 묶음"
+  },
+  "tool:apple:instances_fixed": {
+   "exists": true,
+   "fingerprint": "names+size+mtime",
+   "kind": "dir",
+   "latest_mtime": "2026-09-17 18:49:01",
+   "n_files": 0,
+   "owner": "kds0206",
+   "path": "/data/project/2026summer/platform/work/kwak_dongsin/260916_라벨링툴/data/apple/instances_fixed",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "used_for": "instances_source=instances_fixed"
+  },
+  "tool:apple:masks_fixed": {
+   "exists": true,
+   "fingerprint": "names+size+mtime",
+   "kind": "dir",
+   "latest_mtime": "2026-09-17 18:49:01",
+   "n_files": 0,
+   "owner": "kds0206",
+   "path": "/data/project/2026summer/platform/work/kwak_dongsin/260916_라벨링툴/data/apple/masks_fixed",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "used_for": "mask_source=masks_fixed"
+  },
+  "tool:apple:status.json": {
+   "exists": true,
+   "fingerprint": "content",
+   "kind": "file",
+   "mtime": "2026-09-18 03:07:53",
+   "owner": "kds0206",
+   "path": "/data/project/2026summer/platform/work/kwak_dongsin/260916_라벨링툴/data/apple/status.json",
+   "sha256": "b2b1997f970d82022fd3da0c6ae526269b56452dc5a30e159c2c5023a48b52f1",
+   "size": 119991,
+   "used_for": "사람 판정(source·confirmed_by·confirmed_at·action)"
+  },
+  "tool:blueberry:boxes": {
+   "exists": false,
+   "path": "/data/project/2026summer/platform/work/kwak_dongsin/260916_라벨링툴/data/blueberry/boxes",
+   "used_for": "boxes_source=tool"
+  },
+  "tool:blueberry:duplicates.json": {
+   "exists": true,
+   "fingerprint": "content",
+   "kind": "file",
+   "mtime": "2026-09-18 03:07:53",
+   "owner": "kds0206",
+   "path": "/data/project/2026summer/platform/work/kwak_dongsin/260916_라벨링툴/data/blueberry/duplicates.json",
+   "sha256": "7e44e41ffdf620851761fa3de8e4f45c5cd91b4bce3e1b59f728e3743785c288",
+   "size": 4360,
+   "used_for": "복숭아·포도 split_group 의 근접 중복 묶음"
+  },
+  "tool:blueberry:instances_fixed": {
+   "exists": true,
+   "fingerprint": "names+size+mtime",
+   "kind": "dir",
+   "latest_mtime": "2026-09-17 18:49:04",
+   "n_files": 0,
+   "owner": "kds0206",
+   "path": "/data/project/2026summer/platform/work/kwak_dongsin/260916_라벨링툴/data/blueberry/instances_fixed",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "used_for": "instances_source=instances_fixed"
+  },
+  "tool:blueberry:masks_fixed": {
+   "exists": true,
+   "fingerprint": "names+size+mtime",
+   "kind": "dir",
+   "latest_mtime": "2026-09-17 18:49:04",
+   "n_files": 0,
+   "owner": "kds0206",
+   "path": "/data/project/2026summer/platform/work/kwak_dongsin/260916_라벨링툴/data/blueberry/masks_fixed",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "used_for": "mask_source=masks_fixed"
+  },
+  "tool:blueberry:status.json": {
+   "exists": true,
+   "fingerprint": "content",
+   "kind": "file",
+   "mtime": "2026-09-18 09:07:56",
+   "owner": "kds0206",
+   "path": "/data/project/2026summer/platform/work/kwak_dongsin/260916_라벨링툴/data/blueberry/status.json",
+   "sha256": "be0c23d60609e43c9b26164eb713e7536da5d0d037bce6b49deb5ed2c10e58ad",
+   "size": 15765,
+   "used_for": "사람 판정(source·confirmed_by·confirmed_at·action)"
+  },
+  "tool:grape:boxes": {
+   "exists": true,
+   "fingerprint": "names+size+mtime",
+   "kind": "dir",
+   "latest_mtime": "2026-09-17 14:04:33",
+   "n_files": 1,
+   "owner": "kds0206",
+   "path": "/data/project/2026summer/platform/work/kwak_dongsin/260916_라벨링툴/data/grape/boxes",
+   "sha256": "634efcdf44e2bb78015307eb9eaad88cb0a20723fdfd307476cced78b8f1e6ec",
+   "used_for": "boxes_source=tool"
+  },
+  "tool:grape:duplicates.json": {
+   "exists": true,
+   "fingerprint": "content",
+   "kind": "file",
+   "mtime": "2026-09-17 00:55:26",
+   "owner": "kds0206",
+   "path": "/data/project/2026summer/platform/work/kwak_dongsin/260916_라벨링툴/data/grape/duplicates.json",
+   "sha256": "e72af225a5c98dfca5707a17ecd9fbff926c3124656d06f2522bb24924294059",
+   "size": 9264,
+   "used_for": "복숭아·포도 split_group 의 근접 중복 묶음"
+  },
+  "tool:grape:instances_fixed": {
+   "exists": false,
+   "path": "/data/project/2026summer/platform/work/kwak_dongsin/260916_라벨링툴/data/grape/instances_fixed",
+   "used_for": "instances_source=instances_fixed"
+  },
+  "tool:grape:masks_fixed": {
+   "exists": true,
+   "fingerprint": "names+size+mtime",
+   "kind": "dir",
+   "latest_mtime": "2026-09-16 23:58:49",
+   "n_files": 0,
+   "owner": "kds0206",
+   "path": "/data/project/2026summer/platform/work/kwak_dongsin/260916_라벨링툴/data/grape/masks_fixed",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "used_for": "mask_source=masks_fixed"
+  },
+  "tool:grape:status.json": {
+   "exists": true,
+   "fingerprint": "content",
+   "kind": "file",
+   "mtime": "2026-09-17 00:55:26",
+   "owner": "kds0206",
+   "path": "/data/project/2026summer/platform/work/kwak_dongsin/260916_라벨링툴/data/grape/status.json",
+   "sha256": "6b97f4b8a6df42d86d5ca4afbcf1c3b6804704555608c7b4e3e642668954cacd",
+   "size": 32118,
+   "used_for": "사람 판정(source·confirmed_by·confirmed_at·action)"
+  },
+  "tool:peach:boxes": {
+   "exists": true,
+   "fingerprint": "names+size+mtime",
+   "kind": "dir",
+   "latest_mtime": "2026-09-17 15:00:19",
+   "n_files": 1,
+   "owner": "kds0206",
+   "path": "/data/project/2026summer/platform/work/kwak_dongsin/260916_라벨링툴/data/peach/boxes",
+   "sha256": "378a6020f9a4816bde70c70b0ef1a2d0a151171dd74e9c021034ee2baa94e48d",
+   "used_for": "boxes_source=tool"
+  },
+  "tool:peach:duplicates.json": {
+   "exists": true,
+   "fingerprint": "content",
+   "kind": "file",
+   "mtime": "2026-09-16 10:18:19",
+   "owner": "kds0206",
+   "path": "/data/project/2026summer/platform/work/kwak_dongsin/260916_라벨링툴/data/peach/duplicates.json",
+   "sha256": "d2d581f7a78c96e023b14cf2706546d06296236208b2d8f0e2d99ddb188f0e17",
+   "size": 2985,
+   "used_for": "복숭아·포도 split_group 의 근접 중복 묶음"
+  },
+  "tool:peach:instances_fixed": {
+   "exists": false,
+   "path": "/data/project/2026summer/platform/work/kwak_dongsin/260916_라벨링툴/data/peach/instances_fixed",
+   "used_for": "instances_source=instances_fixed"
+  },
+  "tool:peach:masks_fixed": {
+   "exists": true,
+   "fingerprint": "names+size+mtime",
+   "kind": "dir",
+   "latest_mtime": "2026-09-16 11:22:32",
+   "n_files": 39,
+   "owner": "kds0206",
+   "path": "/data/project/2026summer/platform/work/kwak_dongsin/260916_라벨링툴/data/peach/masks_fixed",
+   "sha256": "78fb564f1e96b8b7cd3b9515aad89ec7fec5f4ad5a3a29bb1e1d6e636f24d8a0",
+   "used_for": "mask_source=masks_fixed"
+  },
+  "tool:peach:status.json": {
+   "exists": true,
+   "fingerprint": "content",
+   "kind": "file",
+   "mtime": "2026-09-17 14:59:05",
+   "owner": "kds0206",
+   "path": "/data/project/2026summer/platform/work/kwak_dongsin/260916_라벨링툴/data/peach/status.json",
+   "sha256": "237a20f29753de580b6172ee1b8fd665f0c8d2cd095bd54bb88eb8871afb8032",
+   "size": 26428,
+   "used_for": "사람 판정(source·confirmed_by·confirmed_at·action)"
+  }
+ },
+ "inputs": {
+  "apple": {
+   "box_stat": {
+    "lsh": 1001,
+    "overlap_psm_lsh": 1001,
+    "psm_gt": 1001,
+    "tool": 0,
+    "tool_empty_skipped": 0
+   },
+   "duplicate_groups": 336,
+   "reviewed_dir": "/data/project/2026summer/kds0206/datasets_reviewed_260917/apple",
+   "reviewed_manifest_sha256": "79c409132e96c20ef361bcf282ae985bd21db0f4e51eb5895f5eaaf7be3ae38f",
+   "reviewed_mtime": "2026-09-17 22:22:02",
+   "status_json": "/data/project/2026summer/platform/work/kwak_dongsin/260916_라벨링툴/data/apple/status.json",
+   "status_json_mtime": "2026-09-18 03:07:53",
+   "status_json_sha256": "b2b1997f970d82022fd3da0c6ae526269b56452dc5a30e159c2c5023a48b52f1"
+  },
+  "blueberry": {
+   "box_stat": {
+    "lsh": 1195,
+    "overlap_psm_lsh": 0,
+    "psm_gt": 0,
+    "tool": 0,
+    "tool_empty_skipped": 0
+   },
+   "duplicate_groups": 42,
+   "reviewed_dir": "/data/project/2026summer/kds0206/datasets_reviewed_260917/blueberry",
+   "reviewed_manifest_sha256": "6688aaa97184d028915845d93088c8c4138fbecc673bb09021c96c64d3586832",
+   "reviewed_mtime": "2026-09-17 22:22:08",
+   "status_json": "/data/project/2026summer/platform/work/kwak_dongsin/260916_라벨링툴/data/blueberry/status.json",
+   "status_json_mtime": "2026-09-18 09:07:56",
+   "status_json_sha256": "be0c23d60609e43c9b26164eb713e7536da5d0d037bce6b49deb5ed2c10e58ad"
+  },
+  "grape": {
+   "box_stat": {
+    "lsh": 2502,
+    "overlap_psm_lsh": 2502,
+    "psm_gt": 2502,
+    "tool": 0,
+    "tool_empty_skipped": 1
+   },
+   "duplicate_groups": 94,
+   "reviewed_dir": "/data/project/2026summer/kds0206/datasets_reviewed_260916/grape",
+   "reviewed_manifest_sha256": "cff8fd83998cc101ea22b8cf344d1776a7e853a3abf228f0fae92ea2b32f6a7e",
+   "reviewed_mtime": "2026-09-16 23:18:02",
+   "status_json": "/data/project/2026summer/platform/work/kwak_dongsin/260916_라벨링툴/data/grape/status.json",
+   "status_json_mtime": "2026-09-17 00:55:26",
+   "status_json_sha256": "6b97f4b8a6df42d86d5ca4afbcf1c3b6804704555608c7b4e3e642668954cacd"
+  },
+  "peach": {
+   "box_stat": {
+    "lsh": 125,
+    "overlap_psm_lsh": 125,
+    "psm_gt": 125,
+    "tool": 0,
+    "tool_empty_skipped": 1
+   },
+   "duplicate_groups": 0,
+   "reviewed_dir": "/data/project/2026summer/kds0206/datasets_reviewed_260916/peach",
+   "reviewed_manifest_sha256": "f2ba8bb9b7913d38724ced832b6d0eb16628e6f1548d5b7000b2eda2d66f3cb4",
+   "reviewed_mtime": "2026-09-17 00:21:14",
+   "status_json": "/data/project/2026summer/platform/work/kwak_dongsin/260916_라벨링툴/data/peach/status.json",
+   "status_json_mtime": "2026-09-17 14:59:05",
+   "status_json_sha256": "237a20f29753de580b6172ee1b8fd665f0c8d2cd095bd54bb88eb8871afb8032"
+  }
+ },
+ "missing_inputs": [
+  "psm:blueberry:gt_boxes.json",
+  "psm:blueberry:gt_boxes.summary",
+  "psm:blueberry:gt_boxes.yolo",
+  "tool:apple:boxes",
+  "tool:blueberry:boxes",
+  "tool:grape:instances_fixed",
+  "tool:peach:instances_fixed"
+ ],
+ "n_problems": 0,
+ "out_dir": "/data/project/2026summer/kds0206/datasets_merged_260918_v3",
+ "peach_dup_stat": {
+  "exists": true,
+  "n_burst": 45,
+  "n_pair_groups": 4,
+  "n_pairs_cross_session_skipped": 1,
+  "n_pairs_used": 20
+ },
+ "prev_note": "",
+ "prev_summary": "/data/project/2026summer/kds0206/datasets_merged_260918_v2/build_summary.json",
+ "problems": [],
+ "script": "/data/project/2026summer/kds0206/semantic-segmentation/tools/build_merged_dataset.py",
+ "script_sha256": "a01de4b800f1e5c43408abdcfd0d5e9870b8c3019580753360789c7e16dee5b5",
+ "vanished_inputs": [],
+ "verify_failed": []
+}

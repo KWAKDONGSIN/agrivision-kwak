@@ -1,0 +1,22 @@
+깃헙 공개 준비 2번(라이선스, 가중치 링크) 정리했습니다.
+
+정리 문서: platform/_inbox/260830_라이선스정리.md
+반영 브랜치: platform/03_code/semantic-segmentation 의 kwak/license-0830 (main에는 아직 안 합침)
+
+확인한 것
+1. 바탕 코드 sithu31296은 MIT라 원 저작권 고지만 남기면 됩니다. LICENSE에 그대로 두고 우리 수정분도 MIT로 적었습니다.
+2. 백본 가중치 중 ResNet-50, ConvNeXt-T, Swin-T, PVTv2-B2, UniFormer-S는 Apache나 MIT라 제약 없습니다.
+3. MiT-B2와 MambaVision-T는 NVIDIA 라이선스라 연구, 평가 목적으로만 쓸 수 있습니다. 원문 3.3조에 그렇게 적혀 있습니다. 교수님 결정대로 상업화 안 하면 문제 없습니다.
+4. 파이썬 패키지 22개는 전부 허용형이라 문제 없습니다.
+5. git에 올라간 가중치 파일은 0개입니다. weights 3.3GB, output 199MB는 전부 gitignore로 막혀 있습니다.
+6. Swin-T, PVTv2-B2 서버 파일은 공식 배포 파일과 sha256이 완전히 같았습니다. ResNet-50도 timm 공식본입니다.
+7. ConvNeXt-T 파일은 대조해 보니 ImageNet-1k본이 아니라 22k 사전학습 후 1k 파인튜닝본(timm convnext_tiny.fb_in22k_ft_in1k)이었습니다. 다른 백본은 전부 1k라 이건 교수님 판단이 필요합니다. 1k본으로 바꿔 돌릴지, 논문에 22k라고 적을지.
+
+새로 만든 파일 (브랜치 안)
+LICENSE 머리글, NOTICE.md, WEIGHTS.md, licenses 폴더, gitignore에 *.pth 등 7줄
+
+문제 하나
+CCASeg 헤더 원저자 레포(catchyoo/CCASeg)에 LICENSE 파일이 없습니다. 저자에게 이슈로 물어볼 예정이고, 답 없으면 그 파일만 공개에서 뺍니다.
+
+부탁
+LICENSE에 적은 연구실 영문 표기와 저자 순서는 논문 main.tex 것을 그대로 썼습니다. 다르게 할 거면 알려주세요.

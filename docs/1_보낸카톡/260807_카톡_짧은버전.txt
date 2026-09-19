@@ -1,0 +1,29 @@
+데이터셋 화소 통일 끝났습니다 🙌
+비율은 그대로 두고 총 화소만 1440x1440(=2,073,600)에 맞췄습니다.
+
+📁 공통 경로
+/data/project/2026summer/kds0206/datasets_resized_2mp/splits/
+
+폴드 수랑 경로입니다 👇
+
+🫐 블루베리 — 6폴드 (1,067장)
+.../splits/blueberry/cv1 ~ cv6
+
+🍎 사과 — 5폴드 (1,001장)
+.../splits/apple/cv1 ~ cv5
+
+🍑 복숭아 — 5폴드 (125장)
+.../splits/peach/cv1 ~ cv5
+
+🍇 포도 — 5폴드 (2,502장)
+.../splits/grape/cv1 ~ cv5
+
+yaml에서 DATASET.ROOT 한 줄만 바꾸시면 됩니다.
+예) ROOT: /data/project/2026summer/kds0206/datasets_resized_2mp/splits/apple/cv1
+
+⚠️ 3가지만 참고해주세요
+① 4과일 비교는 cv1~cv5로 맞춰주세요. 블루베리 cv6은 예전 실험 때문에 남긴 거라 비교표엔 빼주세요.
+② 폴더에 single / official도 보이는데 그건 각 데이터셋 원래 분할이라 참고용입니다.
+③ 복사하실 땐 cp -rL 로 -L 붙여주세요. (안이 바로가기라서요)
+
+자세한 건 폴더 안 README.md에 있습니다!

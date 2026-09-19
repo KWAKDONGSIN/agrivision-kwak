@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1240" height="980" viewBox="0 0 1240 980" font-family="Noto Sans CJK KR, Noto Sans KR, Noto Serif CJK SC, Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="13">
+  <defs>
+    <marker id="a" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#333"/></marker>
+    <style>
+      .box{fill:#f7f9fc;stroke:#2b4c7e;stroke-width:1.6;rx:8}
+      .pilot{fill:#fff4e5;stroke:#b26a00}
+      .main{fill:#e8f5e9;stroke:#2e7d32}
+      .out{fill:#ede7f6;stroke:#5e35b1}
+      .t{fill:#111}
+      .h{font-weight:700;font-size:15px}
+      .s{font-size:11.5px;fill:#444}
+      .ar{stroke:#333;stroke-width:1.6;fill:none;marker-end:url(#a)}
+      .lab{font-size:12px;fill:#333}
+    </style>
+  </defs>
+  <text x="590" y="34" text-anchor="middle" class="h" font-size="20">실험 설계 순서도 — 파일럿 → 선별 → 본실험 (2026-09-08, 교수님 프로토콜 결정 12·15·24·25·26·27)</text>
+
+  <!-- grid -->
+  <rect x="390" y="60" width="400" height="58" class="box"/>
+  <text x="590" y="84" text-anchor="middle" class="h">144조합 = 헤더 12종 × 백본 12종</text>
+  <text x="590" y="104" text-anchor="middle" class="s">후보 선정에 성능은 쓰지 않음 (결정 9) · 144/144 스모크 PASS (2026-09-08)</text>
+
+  <!-- split -->
+  <rect x="330" y="150" width="520" height="70" class="box"/>
+  <text x="590" y="174" text-anchor="middle" class="h">데이터 4종을 두 덩이로 나눔 (결정 12, seed 3407)</text>
+  <text x="590" y="194" text-anchor="middle" class="s">파일럿 20% (본실험에서 완전 분리, 3-fold) ｜ 본실험 80% = M1 · M2 · M3 · M4 · M5</text>
+  <text x="590" y="211" text-anchor="middle" class="s">블루베리 1,195 = 239 + 956 · 사과 1,001 · 복숭아 125 · 포도 2,502</text>
+  <path d="M590,118 L590,150" class="ar"/>
+
+  <!-- left column: pilot -->
+  <rect x="60" y="270" width="480" height="96" class="box pilot"/>
+  <text x="300" y="294" text-anchor="middle" class="h">C1 검증 보정 — 48런 (결정 26·27) · 2026-09-08 09:46 완주 48/48</text>
+  <text x="300" y="314" text-anchor="middle" class="s">대표 2×2 {BackboneUNet, VWFormer} × {ResNet-50, MiT-B2}</text>
+  <text x="300" y="331" text-anchor="middle" class="s">× 4데이터셋 × 파일럿 3-fold · 300 epoch 완주 · 매 epoch 512 center-crop 검증</text>
+  <text x="300" y="349" text-anchor="middle" class="s">→ 조기종료 규칙만 정함 (standard 80/40 vs fast 40/10). 성적은 후보 선정에 안 씀</text>
+  <path d="M470,220 L300,270" class="ar"/>
+
+  <rect x="60" y="410" width="480" height="96" class="box pilot"/>
+  <text x="300" y="434" text-anchor="middle" class="h">P 파일럿 선별 — 1,728런</text>
+  <text x="300" y="454" text-anchor="middle" class="s">144조합 × 4데이터셋 × 파일럿 3-fold</text>
+  <text x="300" y="471" text-anchor="middle" class="s">점수 = 데이터셋별 3-fold 평균 → 4데이터셋 동일가중 image-macro Dice (결정 16)</text>
+  <text x="300" y="489" text-anchor="middle" class="s">효율(속도·메모리)은 점수에 넣지 않음 (결정 20)</text>
+  <path d="M300,366 L300,410" class="ar"/>
+  <text x="310" y="392" class="lab">멈춤 규칙 동결</text>
+
+  <rect x="60" y="550" width="480" height="96" class="box pilot"/>
+  <text x="300" y="574" text-anchor="middle" class="h">후보 C 선정 (결정 15) — 파일럿 끝나면 잠금</text>
+  <text x="300" y="594" text-anchor="middle" class="s">A = 헤더마다 1등 백본 (12개) ｜ B = 백본마다 1등 헤더 (12개)</text>
+  <text x="300" y="611" text-anchor="middle" class="s">C = A ∪ B → 12 ≤ |C| ≤ 23 · 헤더·백본 전부 최소 한 번씩 포함</text>
+  <text x="300" y="629" text-anchor="middle" class="s">동점은 candidate ID 사전순 · 이후 결과로 C를 바꾸지 않음</text>
+  <path d="M300,506 L300,550" class="ar"/>
+
+  <!-- right column: main -->
+  <rect x="640" y="410" width="480" height="96" class="box main"/>
+  <text x="880" y="434" text-anchor="middle" class="h">M1 전체 grid 본실험 — 576런 (결정 25)</text>
+  <text x="880" y="454" text-anchor="middle" class="s">144조합 전부 × 4데이터셋 · 학습 M2∪M3∪M4∪M5 → 시험 M1 (공통 holdout)</text>
+  <text x="880" y="471" text-anchor="middle" class="s">모든 조합이 같은 시험지 → 144개의 공정한 한 판 순위</text>
+  <text x="880" y="489" text-anchor="middle" class="s">M1 결과로 C 변경 금지</text>
+  <path d="M710,220 L880,410" class="ar"/>
+
+  <rect x="640" y="550" width="480" height="96" class="box main"/>
+  <text x="880" y="574" text-anchor="middle" class="h">M2~M5 확증 — 192~368런 (16 × |C|)</text>
+  <text x="880" y="594" text-anchor="middle" class="s">C에 든 조합만 나머지 4개 fold 추가 → C는 5-fold OOF 완성</text>
+  <text x="880" y="611" text-anchor="middle" class="s">"144조합 전체에 5-fold" 라고 쓰지 않음</text>
+  <text x="880" y="629" text-anchor="middle" class="s">복숭아 저표본: 가중치 불변 + Kendall τ 보고 (결정 19)</text>
+  <path d="M540,598 L640,598" class="ar"/>
+  <text x="560" y="590" class="lab">C 전달</text>
+
+  <!-- winners -->
+  <rect x="640" y="690" width="230" height="64" class="box out"/>
+  <text x="755" y="714" text-anchor="middle" class="h">Full-grid winner</text>
+  <text x="755" y="734" text-anchor="middle" class="s">144조합 공통 M1 1위</text>
+  <rect x="890" y="690" width="230" height="64" class="box out"/>
+  <text x="1005" y="714" text-anchor="middle" class="h">Cross-validated winner</text>
+  <text x="1005" y="734" text-anchor="middle" class="s">C의 5-fold OOF 1위 = 실무 최종 권장</text>
+  <path d="M800,506 L800,540 L620,540 L620,660 L755,660 L755,690" class="ar"/>
+  <path d="M1005,646 L1005,690" class="ar"/>
+
+  <!-- report -->
+  <rect x="330" y="800" width="790" height="96" class="box out"/>
+  <text x="725" y="824" text-anchor="middle" class="h">보고</text>
+  <text x="725" y="844" text-anchor="middle" class="s">추천 조합 · 백본 주효과 · 디코더 주효과 · 상호작용 · 데이터 조건(작다·많다·겹친다)별 선택 원칙</text>
+  <text x="725" y="861" text-anchor="middle" class="s">통계 = paired 비교 + 다중비교 보정 (주) · Friedman (보조, 블록 4) · 효율은 보고만</text>
+  <text x="725" y="879" text-anchor="middle" class="s">두 승자가 다르면 분할 의존성·pilot→main 순위 변화·데이터셋 이질성·interaction 을 보고</text>
+  <path d="M755,754 L755,800" class="ar"/>
+  <path d="M1005,754 L1005,780 L900,780 L900,800" class="ar"/>
+
+  <!-- totals -->
+  <rect x="60" y="690" width="480" height="64" class="box"/>
+  <text x="300" y="714" text-anchor="middle" class="h">런 수 합계</text>
+  <text x="300" y="734" text-anchor="middle" class="s">1,728 + 576 + 192~368 = 2,496~2,672런 · C1 48 포함 2,544~2,720 · C0 6런 별도</text>
+
+  <text x="60" y="950" class="s">색: 주황 = 파일럿 20% 안에서만 · 초록 = 본실험 80% · 보라 = 결과. 출처: platform/planning/안내.md, 260905_00_프로토콜_관리원칙.md</text>
+</svg>

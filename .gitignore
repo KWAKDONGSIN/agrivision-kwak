@@ -1,0 +1,23 @@
+# Private/generated inputs and results
+**/__pycache__/
+*.pyc
+.env
+*.env
+**/data/
+**/exports/
+**/images/
+**/masks/
+**/instances/
+**/boxes/
+**/_sandbox/
+**/sandbox/
+**/_out/
+**/_archive/
+**/_backup_*
+**/logs/
+**/cache/
+*.pth
+*.pt
+*.ckpt
+*.zip
+agrivision_deploy*

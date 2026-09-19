@@ -1,0 +1,66 @@
+{
+ "body": {
+  "ai_boxes_status": "saved",
+  "ai_status": "unreviewed",
+  "at": "⟨지움⟩",
+  "by": "AI 사이클3 1차 왕복시험",
+  "confirmed": {
+   "at": "⟨지움⟩",
+   "by": "기준선",
+   "note": "",
+   "status": "ok"
+  },
+  "confirmed_boxes": {
+   "at": "⟨지움⟩",
+   "by": "기준선",
+   "note": "",
+   "status": "fixed"
+  },
+  "confirmed_instances": null,
+  "counts": {
+   "boxes": 2,
+   "conflict": false,
+   "human": 2,
+   "instances": null,
+   "seed_source": "gt_numbers",
+   "source": "boxes",
+   "team_im": 93,
+   "team_park": 93
+  },
+  "dup_group": null,
+  "dup_member_confirmed": [],
+  "dup_member_status": [],
+  "dup_members": [],
+  "dup_rep": null,
+  "fruit": "apple",
+  "has_fixed": false,
+  "has_gt": true,
+  "has_proposal": true,
+  "height": 1920,
+  "inspection": {
+   "fg_frac": 0.0465099,
+   "hole_frac": 0.000902087,
+   "largest_comp_frac": 0.0725506,
+   "n_components": 70,
+   "suspect": true,
+   "suspect_flags": "merged_blob",
+   "tiny_comp_count": 0
+  },
+  "n_boxes": 2,
+  "n_inst": null,
+  "note": "번호 편집 되돌림",
+  "scores": {
+   "added_frac": 0.001493,
+   "dice_vs_gt": 0.560743,
+   "fg_gt_frac": 0.04651,
+   "fg_pred_frac": 0.020195,
+   "missed_frac": 0.027808,
+   "run_name": "apple_backbone_unet_mit_b2_p0_t1v2"
+  },
+  "src": "ai",
+  "status": "unreviewed",
+  "stem": "20150919_174151_image1",
+  "width": 1080
+ },
+ "http": 200
+}

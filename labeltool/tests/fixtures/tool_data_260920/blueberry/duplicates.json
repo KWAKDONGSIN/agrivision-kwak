@@ -1,0 +1,217 @@
+{
+ "fruit": "blueberry",
+ "n_images": 1195,
+ "method": "사람 눈 판정(시트) — 후보는 dHash·프레임 인접·AKAZE 겹침으로 뽑음",
+ "groups": [
+  [
+   "Camera 3 Video (101)_61",
+   "Camera 3 Video (101)_121"
+  ],
+  [
+   "Camera 3 Video (102)_661",
+   "Camera 3 Video (102)_721"
+  ],
+  [
+   "Camera 3 Video (14)_1",
+   "Camera 3 Video (14)_61"
+  ],
+  [
+   "Camera 3 Video (16)_1",
+   "Camera 3 Video (16)_61"
+  ],
+  [
+   "Camera 3 Video (17)_121",
+   "Camera 3 Video (17)_241"
+  ],
+  [
+   "Camera 3 Video (21)_361",
+   "Camera 3 Video (21)_421"
+  ],
+  [
+   "Camera 3 Video (22)_1",
+   "Camera 3 Video (22)_61"
+  ],
+  [
+   "Camera 3 Video (28)_1",
+   "Camera 3 Video (28)_61",
+   "Camera 3 Video (28)_121"
+  ],
+  [
+   "Camera 3 Video (76)_61",
+   "Camera 3 Video (76)_121"
+  ],
+  [
+   "Camera 4 Video (10)_1",
+   "Camera 4 Video (10)_61",
+   "Camera 4 Video (10)_121"
+  ],
+  [
+   "Camera 4 Video (11)_1",
+   "Camera 4 Video (11)_61",
+   "Camera 4 Video (11)_121"
+  ],
+  [
+   "Camera 4 Video (12)_1",
+   "Camera 4 Video (12)_61",
+   "Camera 4 Video (12)_121",
+   "Camera 4 Video (12)_181",
+   "Camera 4 Video (12)_241",
+   "Camera 4 Video (12)_301",
+   "Camera 4 Video (12)_361",
+   "Camera 4 Video (12)_421"
+  ],
+  [
+   "Camera 4 Video (13)_1",
+   "Camera 4 Video (13)_61",
+   "Camera 4 Video (13)_121"
+  ],
+  [
+   "Camera 4 Video (132)_1",
+   "Camera 4 Video (132)_61"
+  ],
+  [
+   "Camera 4 Video (14)_1",
+   "Camera 4 Video (14)_61"
+  ],
+  [
+   "Camera 4 Video (141)_1",
+   "Camera 4 Video (141)_61"
+  ],
+  [
+   "Camera 4 Video (146)_61",
+   "Camera 4 Video (146)_121"
+  ],
+  [
+   "Camera 4 Video (15)_1",
+   "Camera 4 Video (15)_61",
+   "Camera 4 Video (15)_121",
+   "Camera 4 Video (15)_181",
+   "Camera 4 Video (15)_241",
+   "Camera 4 Video (15)_301"
+  ],
+  [
+   "Camera 4 Video (16)_1",
+   "Camera 4 Video (16)_61",
+   "Camera 4 Video (16)_181"
+  ],
+  [
+   "Camera 4 Video (161)_1",
+   "Camera 4 Video (161)_61",
+   "Camera 4 Video (161)_121"
+  ],
+  [
+   "Camera 4 Video (162)_1",
+   "Camera 4 Video (162)_61",
+   "Camera 4 Video (162)_121"
+  ],
+  [
+   "Camera 4 Video (17)_1",
+   "Camera 4 Video (17)_61",
+   "Camera 4 Video (17)_121",
+   "Camera 4 Video (17)_181"
+  ],
+  [
+   "Camera 4 Video (20)_61",
+   "Camera 4 Video (20)_121"
+  ],
+  [
+   "Camera 4 Video (27)_1",
+   "Camera 4 Video (27)_61",
+   "Camera 4 Video (27)_121",
+   "Camera 4 Video (27)_181",
+   "Camera 4 Video (27)_241",
+   "Camera 4 Video (27)_301"
+  ],
+  [
+   "Camera 4 Video (28)_1",
+   "Camera 4 Video (28)_61",
+   "Camera 4 Video (28)_121",
+   "Camera 4 Video (28)_181"
+  ],
+  [
+   "Camera 4 Video (29)_1",
+   "Camera 4 Video (29)_61"
+  ],
+  [
+   "Camera 4 Video (3)_361",
+   "Camera 4 Video (3)_481"
+  ],
+  [
+   "Camera 4 Video (30)_1",
+   "Camera 4 Video (30)_121",
+   "Camera 4 Video (30)_181",
+   "Camera 4 Video (30)_241"
+  ],
+  [
+   "Camera 4 Video (31)_1",
+   "Camera 4 Video (31)_61"
+  ],
+  [
+   "Camera 4 Video (32)_1",
+   "Camera 4 Video (32)_61",
+   "Camera 4 Video (32)_121",
+   "Camera 4 Video (32)_181",
+   "Camera 4 Video (32)_241"
+  ],
+  [
+   "Camera 4 Video (36)_61",
+   "Camera 4 Video (36)_181"
+  ],
+  [
+   "Camera 4 Video (37)_1",
+   "Camera 4 Video (37)_61"
+  ],
+  [
+   "Camera 4 Video (38)_61",
+   "Camera 4 Video (38)_241"
+  ],
+  [
+   "Camera 4 Video (40)_1",
+   "Camera 4 Video (40)_121",
+   "Camera 4 Video (40)_241"
+  ],
+  [
+   "Camera 4 Video (47)_1",
+   "Camera 4 Video (47)_61"
+  ],
+  [
+   "Camera 4 Video (5)_1",
+   "Camera 4 Video (5)_61",
+   "Camera 4 Video (5)_121",
+   "Camera 4 Video (5)_181"
+  ],
+  [
+   "Camera 4 Video (55)_61",
+   "Camera 4 Video (55)_121",
+   "Camera 4 Video (55)_181"
+  ],
+  [
+   "Camera 4 Video (6)_1",
+   "Camera 4 Video (6)_61"
+  ],
+  [
+   "Camera 4 Video (7)_1",
+   "Camera 4 Video (7)_61",
+   "Camera 4 Video (7)_121",
+   "Camera 4 Video (7)_181"
+  ],
+  [
+   "Camera 4 Video (8)_1",
+   "Camera 4 Video (8)_61",
+   "Camera 4 Video (8)_121",
+   "Camera 4 Video (8)_181",
+   "Camera 4 Video (8)_241"
+  ],
+  [
+   "Camera 4 Video (9)_1",
+   "Camera 4 Video (9)_61"
+  ],
+  [
+   "Camera 4 Video (97)_1",
+   "Camera 4 Video (97)_61"
+  ]
+ ],
+ "n_groups": 42,
+ "n_images_in_groups": 123,
+ "note": "2026-09-18 v2: 눈으로 확인한 «거의 같은 사진» 관계만. 각 그룹 첫 장 = 대표(남긴 사진). 1차 자동판 = duplicates_round1.json, 근거 = inspect/260917_apple_blueberry/round3_final/v2/"
+}

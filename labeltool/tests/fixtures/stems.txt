@@ -1,0 +1,14 @@
+# 기준선 고정 표본 — 과일마다 이름 오름차순 첫 3장. 작성: 2026-09-19
+# 한 줄에 «과일<탭>사진이름». 이 파일을 바꾸면 기준선을 다시 떠야 한다.
+peach	210629-t1-01
+peach	210629-t1-02
+peach	210629-t1-03
+grape	0
+grape	1
+grape	10
+apple	20150919_174151_image1
+apple	20150919_174151_image101
+apple	20150919_174151_image106
+blueberry	Camera 1 Video (1)_1
+blueberry	Camera 1 Video (10)_61
+blueberry	Camera 1 Video (100)_1

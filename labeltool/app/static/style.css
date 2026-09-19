@@ -1,0 +1,360 @@
+/* 과일 마스크 검수·수정 툴 — 작성: 2026-09-16
+   최종 수정: 2026-09-18 «그림판» 재배치 — 상단 한 줄 · 왼쪽 도구 상자 · 가운데 사진(최대) ·
+   오른쪽 접힌 패널 · 하단 한 줄(상태 + 판정 5칸). 요소 id 는 하나도 바뀌지 않았다.
+   색 규칙: 바탕 밝은 회색 · 단추 흰색 · 눌린 도구 파란 테두리(눌린 그림자) ·
+   판정 5칸만 색(초록·파랑·진회색·주황·빨강). */
+
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  margin: 0; font-family: "Malgun Gothic", "Noto Sans KR", system-ui, sans-serif;
+  font-size: 14px; color: #1b1f24; background: #eef1f5;
+  display: flex; flex-direction: column; overflow: hidden;
+}
+button { font-family: inherit; font-size: 13px; cursor: pointer;
+  border: 1px solid #b9c2cc; background: #fff; border-radius: 6px; padding: 5px 10px; }
+button:hover { background: #f2f7fc; border-color: #7fa8d8; }
+button:disabled { opacity: .4; cursor: default; }
+button:disabled:hover { background: #fff; border-color: #b9c2cc; }
+select, input { font-family: inherit; font-size: 13px; padding: 4px 6px;
+  border: 1px solid #b9c2cc; border-radius: 6px; background: #fff; }
+.muted { color: #6b7681; }
+.small { font-size: 12px; }
+.spacer { flex: 1; }
+.hidden { display: none !important; }
+/* 화면에는 글자로 내지 않고 풍선말의 원천으로만 쓰는 칸(#tasknote) */
+.hidden-note { display: none !important; }
+/* 위 ②③ 단추와 같은 스위치인 체크박스 — 요소는 DOM 에 남기고 화면에서만 감춘다 */
+.dupsw { display: none !important; }
+
+/* ═══════════════════ 상단 바 (한 줄, 40px) ═══════════════════ */
+#topbar { display: flex; align-items: center; gap: 7px; padding: 0 10px; height: 40px;
+  background: #22303f; color: #fff; flex: 0 0 auto; overflow: hidden; }
+#topbar .brand { font-size: 17px; cursor: default; }
+#topbar select { height: 27px; padding: 2px 4px; }
+#topbar nav { display: flex; gap: 3px; }
+#topbar button.tab { background: transparent; color: #cfd8e3; border-color: #46596e;
+  padding: 3px 9px; font-size: 12.5px; }
+#topbar button.tab.on { background: #fff; color: #22303f; font-weight: 700; border-color: #fff; }
+#navphoto { display: flex; align-items: center; gap: 5px; min-width: 0; }
+#navphoto::before { content: ""; border-left: 1px solid #46596e; align-self: stretch; margin: 6px 4px 6px 0; }
+#topbar .stemname { font-weight: 700; font-size: 13px; white-space: nowrap;
+  overflow: hidden; text-overflow: ellipsis; max-width: 260px; }
+#topbar #prev, #topbar #next { background: transparent; color: #cfd8e3; border-color: #46596e;
+  padding: 2px 8px; font-size: 13px; }
+#topbar #prev:hover, #topbar #next:hover { background: #3a4a5c; color: #fff; }
+.who { font-size: 12px; color: #cfd8e3; white-space: nowrap; }
+.who input { height: 25px; }
+#saveflash { font-size: 12.5px; font-weight: 700; color: #7ee2a8; max-width: 300px;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+#topbar .topbtn { background: transparent; color: #ffd400; border-color: #6b5a1e; font-weight: 700;
+  width: 27px; padding: 2px 0; text-align: center; }
+#topbar .topbtn:hover { background: #3a4a5c; }
+#topbar .toplink { color: #ffd400; font-weight: 700; text-decoration: none; font-size: 12.5px; white-space: nowrap; }
+
+.view { flex: 1 1 auto; min-height: 0; display: flex; flex-direction: column; }
+
+/* ═══════════════════ 목록 화면 ═══════════════════ */
+.bar { display: flex; align-items: center; gap: 6px; flex-wrap: wrap;
+  padding: 6px 12px; background: #fff; border-bottom: 1px solid #dde3ea; flex: 0 0 auto; }
+.vsep { border-left: 1px solid #dde3ea; align-self: stretch; margin: 0 3px; }
+.chk { display: inline-flex; align-items: center; gap: 3px; font-size: 12px; color: #4b555f; }
+.qf { background: #eef4fb; border-color: #a9c6e6; font-weight: 700; white-space: nowrap; }
+.qf.on { background: #2f6fe0; color: #fff; border-color: #2f6fe0; }
+.fqwrap { display: inline-flex; align-items: center; gap: 5px; flex-wrap: wrap; }
+.qf.fq { background: #fff3f3; border-color: #e6bcbc; font-weight: 400; }
+.qf.fq.on { background: #b4463f; color: #fff; border-color: #b4463f; }
+
+/* grid-auto-rows: max-content — 이것이 없으면 카드 줄이 남은 높이에 맞춰 눌려서
+   («flex 아이템 + auto 행» 조합) 카드가 38px 로 찌그러지고 파일 이름·딱지가 안 보였다. */
+.grid { flex: 1 1 auto; overflow: auto; padding: 10px 12px;
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px;
+  align-content: start; grid-auto-rows: max-content; }
+.card { background: #fff; border: 2px solid #dde3ea; border-radius: 8px; overflow: hidden; cursor: pointer; }
+.card:hover { border-color: #3a7bd5; }
+.card img { width: 100%; height: 108px; object-fit: cover; display: block; background: #e9edf1; }
+.card .cap { padding: 4px 6px; font-size: 11px; line-height: 1.35; word-break: break-all; }
+.card .tags { display: flex; gap: 3px; flex-wrap: wrap; margin-top: 2px; }
+.tag { font-size: 10px; padding: 0 5px; border-radius: 4px; background: #eef1f4; color: #425060; }
+.tag.dup { background: #ffe9b8; }
+.tag.sus { background: #ffd9d9; }
+.tag.dice { background: #e2e9f5; }
+.tag.insterr { background: #ffd0d0; color: #8c2b2b; font-weight: 700; }
+.tag.st { font-weight: 700; }
+.tag.st.ok { background: #d8f0de; color: #226b33; }
+.tag.st.fixed { background: #d7e8fb; color: #1d4c80; }
+.tag.st.flag { background: #fbe4c4; color: #8a5714; }
+.tag.st.exclude { background: #f5d3d3; color: #8c2b2b; }
+.tag.ninst { background: #ede4fb; color: #4a2b80; font-weight: 700; }
+.card.s-ok { border-color: #63bd79; }
+.card.s-fixed { border-color: #4a90e2; }
+.card.s-flag { border-color: #e8a33d; }
+.card.s-exclude { border-color: #cf6b6b; opacity: .55; }
+
+/* 하단 진행률 한 줄 */
+.pager { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; padding: 5px 12px;
+  background: #fff; border-top: 1px solid #dde3ea; flex: 0 0 auto; }
+.pager button { padding: 3px 10px; }
+.counts { display: flex; gap: 5px; flex-wrap: wrap; align-items: center; }
+.pill { padding: 2px 9px; border-radius: 999px; font-size: 11.5px; border: 1px solid #d5dbe2; background: #fff; }
+.pill.unreviewed { background: #eef1f4; }
+.pill.ok { background: #dff3e2; border-color: #9fd6ab; }
+.pill.fixed { background: #dbeafd; border-color: #9dc5f0; }
+.pill.flag { background: #fde9c9; border-color: #efc27c; }
+.pill.exclude { background: #f3d7d7; border-color: #dfa5a5; }
+.prog { display: flex; align-items: center; gap: 6px; font-size: 11.5px; color: #4b555f; }
+.barbg { background: #eef1f4; border-radius: 4px; height: 10px; width: 150px;
+  display: inline-block; overflow: hidden; }
+.barfill { background: #4a90e2; height: 100%; display: block; }
+
+/* ═══════════════════ 편집 화면 — 세 칸 + 하단 한 줄 ═══════════════════ */
+.editwrap { flex: 1 1 auto; min-height: 0; display: flex; }
+
+/* ── 왼쪽 도구 상자 ── */
+/* 0918 사이클2 **2차 검수** F6: 도구 이름을 11 → 13px 로 키우고 «테두리 빼기» 처럼 긴 이름이
+   들어오면서, 두 칸짜리 타일 격자(1fr 1fr 는 min-content 아래로 못 줄어든다)가 도구칸 밖으로
+   11~33px 삐져나가 **오른쪽 칸 이름이 잘려** 보였다(«테두리 빼기» → «테두리», «자동지움» → «자동지…»).
+   실측 s7_clip: 창 네 벌 전부에서 잘림 — 전 0곳 → 후 12곳. 칸을 124/116 → 150px 로 넓힌다.
+   (사진은 세로로 맞춰 그리므로 캔버스 비율 81~88% 는 그대로다 — s6_layout 으로 다시 쟀다.) */
+#toolrail { flex: 0 0 164px; min-width: 164px; background: #e4e9ef; border-right: 1px solid #ccd4dd;
+  padding: 6px; display: flex; flex-direction: column; gap: 6px; overflow-y: auto; }
+#toolrail .tools { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; }
+#taskbar { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; }
+.railgrp { display: flex; flex-direction: column; gap: 5px;
+  border-top: 1px solid #b7c1cc; padding-top: 6px; }
+
+/* 56px 급 큰 아이콘 타일 — «아이콘 + 한 단어» */
+#toolrail button { display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 1px; height: 54px; padding: 2px; font-size: 13px; line-height: 1.15; position: relative;   /* 0918 사이클2: 도구 라벨 11 → 13px */
+  border: 2px solid #c3cbd4; background: #fff; color: #3a4552; border-radius: 7px; }
+#toolrail button .ti { font-size: 19px; line-height: 1; }
+#toolrail button .tw { white-space: nowrap; }
+#toolrail button .tk { position: absolute; right: 3px; top: 2px; font-size: 11px; color: #93a0ad;   /* 0918 사이클2: 글쇠 힌트 9 → 11px */
+  font-family: Consolas, monospace; }
+#toolrail button:hover { background: #f2f7fc; border-color: #7fa8d8; }
+/* 눌린 도구 — 그림판처럼 «눌려 들어간» 모양 + 파란 테두리 */
+#toolrail button.on { background: #dceafa; border-color: #2f6fe0; color: #16334f; font-weight: 700;
+  box-shadow: inset 0 2px 4px rgba(24, 62, 110, .22); }
+#toolrail button.on .tk { color: #4f7aa8; }
+#toolrail button:disabled { background: #eceff3; color: #9aa4ae; border-color: #d3d9e0; }
+/* 작업(모드) 칸은 조금 낮게 — 도구와 구별되게 */
+#taskbar button.task { height: 46px; }
+#taskbar button.task.on { background: #22303f; border-color: #22303f; color: #fff; }
+#taskbar button.task.on .ti, #taskbar button.task.on .tk { color: #ffd400; }
+/* «보기 전환» 3단 스위치 — 도구 타일보다 낮은 가로 줄 세 개(그림판의 «보기» 처럼) */
+#viewsw { display: flex; flex-direction: column; gap: 3px; }
+#toolrail #viewsw button { flex-direction: row; justify-content: flex-start; height: 25px;
+  gap: 5px; padding: 0 6px; font-size: 13px; border-width: 1px; }   /* 0918 사이클2: 보기 전환 11 → 13px */
+#toolrail #viewsw button .ti { font-size: 13px; }
+#toolrail #viewsw button.on { box-shadow: inset 0 1px 3px rgba(24, 62, 110, .25); }
+#toolrail #viewsw button .tk { top: 5px; }
+
+#toolrail .railsel { width: 100%; font-size: 11.5px; padding: 3px 4px; }
+#toolrail .railrange { display: flex; align-items: center; gap: 4px; font-size: 11px; color: #4b555f; }
+#toolrail .railrange input[type=range] { flex: 1 1 0; min-width: 0; }
+/* 도구 상자 안의 «지금 몇 개» 같은 한 줄. 길어지면 두 줄까지만 보이고 전문은 풍선말로
+   (js/view.js 의 tick 이 title 에 통째로 넣는다 — 0920 구조3 전 ui.js) — 그림판의 도구 상자에 문단이 있으면 안 된다. */
+#toolrail .railinfo { font-size: 11px; line-height: 1.35; word-break: break-all;
+  max-height: 30px; overflow: hidden; }
+/* 0918 2차 검수: 「휠 확대 · 0 맞춤」 이 회색 바탕(#e4e9ef) 위 #6b7681 로 대비 3.79:1 이라
+   WCAG AA(4.5:1) 에 못 미쳤다 → 글자색만 진하게(측정 5.9:1). 글자 크기는 그대로 둔다. */
+#toolrail .railhint { font-size: 10.5px; margin-top: auto; text-align: center; cursor: default;
+  color: #4b555f; }
+/* 번호 편집 모드에서 잠긴 도구 */
+.tool.locked, .btool.locked { opacity: .4; }
+
+/* ── 가운데 — 사진 ── */
+#maincol { flex: 1 1 auto; min-width: 0; min-height: 0; display: flex; flex-direction: column; }
+#canvaswrap { flex: 1 1 auto; position: relative; background: #2b3138; min-width: 0; min-height: 0; }
+#cv { display: block; width: 100%; height: 100%; cursor: crosshair; touch-action: none; }
+#loading { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+  color: #fff; background: rgba(0,0,0,.45); font-size: 16px; }
+#hud { position: absolute; left: 8px; bottom: 8px; color: #dfe6ee; background: rgba(0,0,0,.45);
+  padding: 3px 8px; border-radius: 6px; font-size: 12px; pointer-events: none; }
+/* 지금 ②상자·③번호 작업 중이라는 표시(붓질이 왜 안 되는지). 글자만 얹는다 — 조작을 막지 않는다. */
+#taskbadge { position: absolute; left: 8px; top: 8px; max-width: calc(100% - 130px);
+  padding: 4px 9px; border-radius: 7px; background: rgba(34,48,63,.85); color: #ffd400;
+  font-size: 12px; font-weight: 700; pointer-events: none; }
+/* 레이어 칩 = 색 범례. 오른쪽 패널을 접어 두어도 여기서 네 겹을 껐다 켤 수 있다.
+   왼쪽 위(예전 자리)를 비워 두는 것이 중요하다 — 거기서 붓질을 시작하는 사람이 많다. */
+#legend { position: absolute; right: 8px; top: 8px; display: flex; gap: 4px;
+  max-width: calc(100% - 16px); pointer-events: none; }
+#legend span.i { display: inline-flex; align-items: center; gap: 3px; white-space: nowrap;
+  padding: 3px 7px; border-radius: 6px; background: rgba(34,48,63,.80); color: #eef2f7;
+  font-size: 13px; pointer-events: auto; cursor: pointer; border: 1px solid transparent; }   /* 0918 사이클2: 레이어 칩 11.5 → 13px */
+#legend span.i:hover { border-color: #ffd400; }
+#legend span.i i { width: 10px; height: 10px; border-radius: 3px; display: inline-block; border: 1px solid #0006; }
+#legend span.i.off { opacity: .5; text-decoration: line-through; }
+
+/* ── 하단 한 줄: 상태 한 문장 + 판정 5칸 + 메모 ── */
+#verdictbar { flex: 0 0 auto; display: flex; flex-direction: column; gap: 4px;
+  padding: 5px 8px; background: #fff; border-top: 1px solid #ccd4dd; }
+.todo { height: 23px; line-height: 23px; font-size: 15px;    /* 0918 사이클2: 13 → 15px */ padding: 0 3px; border-radius: 4px;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: #4a4327; background: #fffbe6; }
+.todo.go { background: #eaf3ff; color: #1f3d63; }
+.todo.warn { background: #fdecea; color: #7a2e22; }
+.todo.done { background: #eaf7ee; color: #23532f; }
+.todo b { font-weight: 700; }
+.todo .k { display: inline-block; min-width: 16px; text-align: center; padding: 0 5px;
+  border: 1px solid #b3b3b3; border-radius: 4px; background: #fff;
+  font-family: Consolas, monospace; font-size: 11.5px; }
+.todo .todobtn { display: inline; width: auto; margin: 0 0 0 4px; padding: 0 7px; font-size: 12px;
+  font-weight: 700; line-height: 1.3; vertical-align: baseline; cursor: pointer;
+  border: 1px solid currentColor; border-radius: 5px; background: #fff; color: inherit; }
+.todo .todobtn:hover { background: #fff3cd; }
+.todo .dim { color: #7b8792; }
+
+/* 0919 «개수 세기» — 상태 한 문장(줄면 «…») + 개수 칸(늘 보인다). 글자 11자 안쪽으로 짧게 */
+#todorow { display: flex; align-items: stretch; gap: 6px; min-width: 0; }
+#todorow #todo { flex: 1 1 auto; min-width: 0; }
+.cnts { flex: 0 0 auto; height: 23px; line-height: 23px; padding: 0 7px; border-radius: 4px;
+  background: #eef1f4; color: #41566b; font-size: 13px; white-space: nowrap;
+  font-variant-numeric: tabular-nums; cursor: default; }
+.cnts.hum { background: #d8f3e1; color: #1d6b3c; }          /* 사람이 확정한 개수가 있다 */
+.cnts.ne { background: #fff1d6; color: #7a5200; font-weight: 700; }  /* 상자 ≠ 번호 */
+
+#vbrow { display: flex; align-items: stretch; gap: 6px; }
+#taskbtns { display: contents; }
+#vbrow button.big, #vbrow #taskbtns button.big {
+  flex: 1 1 0; min-width: 74px; max-width: 168px; margin: 0; padding: 6px 4px;
+  min-height: 40px; font-size: 14px; font-weight: 700; border-radius: 7px;
+  display: flex; align-items: center; justify-content: center; gap: 5px; }
+#vbrow .vk { font-family: Consolas, monospace; font-size: 11px; font-weight: 400; opacity: .72;
+  border: 1px solid currentColor; border-radius: 4px; padding: 0 4px; }
+#vbrow #note { flex: 1 1 110px; min-width: 70px; max-width: 320px; }
+/* 판정 5칸만 색으로 구분한다 */
+button.ok { background: #d8f2df; border-color: #63bd79; color: #14532a; }
+button.ai { background: #d9e9fd; border-color: #4a90e2; color: #10345e; }
+button.save { background: #22303f; color: #fff; border-color: #22303f; }
+button.save:hover { background: #33475d; border-color: #33475d; color: #fff; }
+button.flag { background: #fde5c2; border-color: #e8a33d; color: #6b420a; }
+button.exc { background: #f7d6d6; border-color: #cf6b6b; color: #7d1f1f; }
+button.big { text-align: center; }
+
+/* ── 오른쪽 패널 — 기본 접힘 ── */
+#side { flex: 0 0 240px; display: flex; background: #fff; border-left: 1px solid #ccd4dd; min-height: 0; }
+#side.fold { flex: 0 0 30px; }
+#sidetgl { flex: 0 0 22px; width: 22px; margin: 4px 0 4px 4px; padding: 0; height: 46px;
+  align-self: flex-start; font-size: 12px; }
+#sidebody { flex: 1 1 auto; min-width: 0; overflow-y: auto; padding: 6px 8px 8px 4px; }
+#side.fold #sidebody { display: none; }
+.sbox { border: 1px solid #e3e8ee; border-radius: 8px; padding: 5px 8px; margin-bottom: 7px; }
+.sbox > summary { cursor: pointer; font-weight: 700; font-size: 13px; list-style: revert; }
+.sbox > b { display: block; margin: 5px 0 4px; }
+.stemname { word-break: break-all; }
+.lay { display: flex; align-items: center; gap: 5px; margin: 3px 0; flex-wrap: wrap; font-size: 12.5px; }
+.lay > input[type=checkbox], .lay > .sw { flex: 0 0 auto; }
+.sw { width: 13px; height: 13px; border-radius: 3px; display: inline-block; border: 1px solid #99a; }
+.sw.red { background: #e8443a; } .sw.blue { background: #2f7de1; }
+.sw.green { background: #2fb562; }
+.sw.diff { background: linear-gradient(90deg,#ffd400 50%,#ff35d0 50%); }
+.sw.inst { background: linear-gradient(90deg,#e8443a 25%,#4ad16b 25% 50%,#3d8bff 50% 75%,#f2c11a 75%); }
+.sw.num { background: conic-gradient(#e8443a,#f2c11a,#4ad16b,#3d8bff,#c46bff,#e8443a); }
+.rowlab { display: block; margin-top: 5px; font-size: 12px; }
+.rowlab input[type=range] { width: 96px; vertical-align: middle; }
+.tools { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 5px; }
+#sidebody button.big { display: block; width: 100%; margin: 4px 0 0; padding: 7px;
+  font-size: 12.5px; font-weight: 700; }
+.small-btn { width: 100%; font-size: 12px; margin-top: 4px; }
+#meta { line-height: 1.5; word-break: break-all; }
+/* 묶음 구성원 파일 이름 줄은 길면 세 줄까지만 — 전문은 풍선말(js/view.js 의 tick 이 넣는다 — 0920 구조3 전 ui.js) */
+#dupinfo { max-height: 48px; overflow: hidden; line-height: 1.4; word-break: break-all; }
+#numinfo { line-height: 1.45; }
+.numerr { margin-top: 5px; }
+.numerr .er { border-top: 1px dashed #d5b3b3; padding: 4px 0; font-size: 12px; line-height: 1.45; }
+.numerr .er b { color: #b03a3a; }
+.numerr .er .ids { font-weight: 700; }
+.numlock { background: #f7f2ff; }
+
+/* 거의 같은 사진 묶음 — 구성원 썸네일 줄(줄 안에서만 굴러간다) */
+.dupstrip { display: flex; flex-wrap: wrap; gap: 4px; margin: 4px 0 6px;
+  max-height: 120px; overflow-y: auto; }
+.dupstrip .dupt { display: block; width: 58px; cursor: pointer; text-decoration: none;
+  border: 2px solid #dde3ea; border-radius: 6px; overflow: hidden; background: #fff; }
+.dupstrip .dupt:hover { border-color: #3a7bd5; }
+.dupstrip .dupt.me { border-color: #22303f; }
+.dupstrip .dupt.gone { opacity: .5; }
+.dupstrip .dupt img { width: 100%; height: 42px; object-fit: cover; display: block; background: #e9edf1; }
+.dupstrip .dupt .dc { display: block; font-size: 10px; line-height: 1.3; padding: 1px 3px;
+  color: #425060; text-align: center; word-break: keep-all; }
+#dupbox { border: 1px solid #e8dfae; background: #fffdf2; border-radius: 7px; padding: 5px 7px; margin: 5px 0; }
+#dupbox.hi { outline: 3px solid #f0a800; outline-offset: -1px; background: #fff6d8; }
+#dupmsg { margin-top: 4px; }
+
+/* ═══════════════════ 대시보드 ═══════════════════ */
+#dash { padding: 14px; overflow: auto; }
+table.d { border-collapse: collapse; background: #fff; margin-bottom: 18px; }
+table.d th, table.d td { border: 1px solid #dde3ea; padding: 5px 12px; text-align: right; }
+table.d th { background: #eef2f6; }
+table.d td.l, table.d th.l { text-align: left; }
+
+/* ═══════════════════ 첫 방문 안내 창 ═══════════════════ */
+#tour { position: fixed; inset: 0; background: rgba(16,22,30,.55); z-index: 50;
+  display: flex; align-items: center; justify-content: center; padding: 16px; }
+#tour.hidden { display: none !important; }
+.tourcard { background: #fff; border-radius: 12px; width: 560px; max-width: 100%;
+  max-height: 88vh; overflow: auto; box-shadow: 0 18px 50px rgba(0,0,0,.35); }
+.tourhd { display: flex; align-items: center; gap: 8px; padding: 12px 16px; background: #22303f; color: #fff; }
+.tourhd b { font-size: 16px; }
+.tourhd button { background: transparent; border-color: #55687d; color: #cfd8e3; }
+.tourbody { padding: 14px 18px; font-size: 14px; line-height: 1.7; }
+.tourbody ul { margin: 6px 0; padding-left: 20px; }
+.tourbody .sw { vertical-align: -2px; margin-right: 3px; }
+.tourbody .key { display: inline-block; min-width: 20px; text-align: center; padding: 0 6px;
+  border: 1px solid #aeb8c3; border-bottom-width: 2px; border-radius: 5px; background: #f7f9fb;
+  font-family: Consolas, monospace; font-size: 12.5px; }
+.tourft { display: flex; align-items: center; gap: 8px; padding: 10px 16px;
+  border-top: 1px solid #e3e8ee; flex-wrap: wrap; }
+.tourft button.save { background: #22303f; color: #fff; border-color: #22303f; }
+
+/* ═══════════════════ 좁은 창(1100~1280) — 그래도 한 겹을 지킨다 ═══════════════════ */
+@media (max-width: 1360px) {
+  #topbar { gap: 5px; padding: 0 8px; }
+  #topbar .stemname { max-width: 180px; }
+  #toolrail { flex-basis: 164px; min-width: 164px; }   /* 0918 사이클2 2차: 116 → 164 (F6) */
+  #toolrail button { height: 50px; font-size: 13px; }          /* 0918 사이클2: 좁은 창에서도 13px (사이클1 3차 ②-1) */
+  #toolrail button .ti { font-size: 17px; }
+  #taskbar button.task { height: 43px; }
+  #vbrow button.big, #vbrow #taskbtns button.big { font-size: 13px; min-width: 66px; padding: 6px 2px; }
+  #vbrow .vk { font-size: 10px; padding: 0 3px; }
+  #side { flex-basis: 224px; }
+}
+@media (max-width: 1180px) {
+  #topbar .stemname { max-width: 130px; }
+  #topbar .who { font-size: 11px; }
+  #verdictbar { gap: 3px; padding: 4px 6px; }
+  #vbrow { gap: 4px; }
+  #vbrow button.big, #vbrow #taskbtns button.big { font-size: 12.5px; min-width: 60px; }
+  #vbrow #note { flex-basis: 84px; min-width: 60px; }
+  .todo { font-size: 15px; }                                   /* 0918 사이클2: 좁은 창에서도 15px */
+}
+
+/* ══════ 사람 확정(confirmed) — 0918 사이클2 ══════
+   카드 딱지와 진행률 알약. 색은 «확정 = 초록(끝난 것) · 미확정 = 회색(아직)» 한 쌍뿐이다. */
+.tag.conf   { background: #d8f3e1; color: #1d6b3c; font-weight: 700; }
+.tag.unconf { background: #eef1f4; color: #7b8794; }
+.pill.conf  { background: #d8f3e1; color: #1d6b3c; border-color: #9fd9b4; font-weight: 700; }
+/* ══════ «데이터 정리» 탭 — 0918 사이클3 ══════ */
+#view-exp { padding: 12px 16px; overflow: auto; }
+.expwrap .exprow { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 9px; }
+.expwrap .chk { font-size: 13px; }
+.expwrap .chk.off { opacity: .5; }
+#exp-count { color: #6b7681; }
+#exp-msg { color: #a8460f; }
+#exp-out { background: #eef7ff; border: 1px solid #b8d8f5; border-radius: 6px;
+  padding: 9px 11px; margin: 4px 0 14px; line-height: 1.7; }
+#exp-out code { background: #fff; border: 1px solid #cfdceb; border-radius: 4px;
+  padding: 1px 5px; user-select: all; }
+#expguard { margin: 16px; padding: 12px 14px; background: #fff6e0;
+  border: 1px solid #e8c880; border-radius: 6px; color: #6b4b00; }
+/* 하단 상태 줄의 «확정 여부» 딱지 — 급한 경고가 머리말을 차지해도 이것은 늘 보인다(0918 사이클2) */
+.todo .cf { font-size: 12.5px; padding: 0 5px; border-radius: 4px; background: #eef1f4; color: #5a6672; }
+.todo .cf.on { background: #d8f3e1; color: #1d6b3c; font-weight: 700; }
+/* 0919 «상자 툴을 따로» — /box 로 열면 body.boxonly: 마스크·번호 작업 단추와 마스크 도구를 숨기고
+   상자 작업만 남긴다(js/main.js 맨 아래 — 0920 구조3 전 ui.js). 데이터·저장은 / 와 같다. */
+body.boxonly #taskbar { grid-template-columns: 1fr; }
+body.boxonly #taskbar button.task[data-task="mask"],
+body.boxonly #taskbar button.task[data-task="num"],
+body.boxonly #toolbox, body.boxonly #numpanel, body.boxonly #link-box { display: none !important; }
+body.boxonly #link-full { display: inline !important; }
+body.boxonly #taskbadge { display: none !important; }   /* «붓질은 마스크로» 안내는 여기서는 뜻이 없다 */

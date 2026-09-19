@@ -1,0 +1,52 @@
+{
+ "body": {
+  "caps": {
+   "confirmed_counts": {
+    "exclude": 0,
+    "fixed": 0,
+    "flag": 0,
+    "ok": 1,
+    "unreviewed": 2
+   },
+   "confirmed_counts_boxes": {
+    "exclude": 0,
+    "fixed": 3,
+    "flag": 0,
+    "ok": 0,
+    "unreviewed": 0
+   },
+   "confirmed_counts_instances": {
+    "exclude": 0,
+    "fixed": 0,
+    "flag": 0,
+    "ok": 1,
+    "unreviewed": 2
+   },
+   "has_instances": true,
+   "has_mask": true,
+   "n_box_images": 3,
+   "n_confirmed": 1,
+   "n_confirmed_boxes": 3,
+   "n_confirmed_boxes_out": 3,
+   "n_confirmed_instances": 1,
+   "n_confirmed_instances_out": 1,
+   "n_confirmed_out": 1,
+   "n_images": 3
+  },
+  "confirmed_only": false,
+  "dry_run": true,
+  "fruit": "blueberry",
+  "n_dropped": 0,
+  "n_dropped_dup": 0,
+  "n_dropped_status": 0,
+  "n_fixed": 0,
+  "n_instances": 0,
+  "n_objects": 0,
+  "n_orig": 3,
+  "n_out": 3,
+  "n_total": 3,
+  "ok": true,
+  "out": "⟨지움⟩"
+ },
+ "http": 200
+}

@@ -1,0 +1,23 @@
+{
+ "body": {
+  "at": null,
+  "boxes": [],
+  "by": null,
+  "classes": [
+   "fruit",
+   "bunch",
+   "other"
+  ],
+  "fruit": "blueberry",
+  "height": 1080,
+  "ok": true,
+  "saved": false,
+  "stem": "Camera 1 Video (1)_1",
+  "team": {
+   "박성문": 55,
+   "임성후": 55
+  },
+  "width": 1920
+ },
+ "http": 200
+}

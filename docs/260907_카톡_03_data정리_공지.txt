@@ -1,0 +1,13 @@
+작성: 2026-09-07
+
+03_data 정리했어요.
+지금은 팀표준_4과일_2MP 하나만 남겼고 안에 사과, 복숭아, 포도, 블루베리 cv1~cv5까지만 있어요.
+나머지(6fold, 타일링, CERTH, cv6 등)는 제 폴더 _archive_03_data_260907로 옮겼고 지운 건 없어요.
+
+경로
+/data/project/2026summer/platform/03_data/팀표준_4과일_2MP/
+사진: 과일이름/images, 마스크: 과일이름/masks (전부 png)
+폴드: splits/과일이름/cv1~cv5
+
+교수님 새 분할 csv는 여기예요.
+/data/project/2026summer/platform/work/ahn_hongryul/pilot/protocol_splits/v2_seed3407/

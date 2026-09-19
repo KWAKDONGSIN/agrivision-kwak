@@ -1,0 +1,128 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1240" height="1120" viewBox="0 0 1240 1120" font-family="Noto Sans CJK KR, Noto Sans KR, Noto Serif CJK SC, Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="13">
+  <rect x="0" y="0" width="1240" height="1120" fill="#ffffff"/>
+  <defs>
+    <marker id="a" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#333"/></marker>
+    <style>
+      .box{fill:#f7f9fc;stroke:#2b4c7e;stroke-width:1.6;rx:8}
+      .pilot{fill:#fff4e5;stroke:#b26a00}
+      .done{fill:#eeeeee;stroke:#777}
+      .run{fill:#fff9c4;stroke:#f9a825;stroke-width:2.4}
+      .main{fill:#e8f5e9;stroke:#2e7d32}
+      .out{fill:#ede7f6;stroke:#5e35b1}
+      .t{fill:#111}
+      .h{font-weight:700;font-size:15px}
+      .s{font-size:11.5px;fill:#444}
+      .ar{stroke:#333;stroke-width:1.6;fill:none;marker-end:url(#a)}
+      .lab{font-size:12px;fill:#333}
+      .zone{fill:none;stroke-dasharray:6 4;stroke-width:1.2}
+    </style>
+  </defs>
+  <text x="620" y="32" text-anchor="middle" class="h" font-size="20" fill="#111">실험 설계 순서도 2판 — 파일럿 → 선별 → 본실험 (2026-09-12, 교수님 프로토콜 결정 12·15·24~31)</text>
+  <text x="620" y="52" text-anchor="middle" class="s">2026-09-11 변경 반영: 파일럿 4분할(결정 29) · 파일럿0 64런 800 epoch(결정 30) · 구간별 체크포인트 v2 재실행(결정 31, 09-13) · P 2,304런</text>
+
+  <!-- grid -->
+  <rect x="420" y="70" width="400" height="58" class="box"/>
+  <text x="620" y="94" text-anchor="middle" class="h">144조합 = 헤더 12종 × 백본 12종</text>
+  <text x="620" y="114" text-anchor="middle" class="s">후보 선정에 성능은 쓰지 않음 (결정 9) · 2026-09-08 동결 · 스모크 144/144 PASS</text>
+
+  <!-- split -->
+  <rect x="300" y="160" width="640" height="88" class="box"/>
+  <text x="620" y="184" text-anchor="middle" class="h">데이터 4종을 한 번만 나눔 (결정 12, seed 3407)</text>
+  <text x="620" y="204" text-anchor="middle" class="s">파일럿 20% (본실험에 재사용 금지) ｜ 본실험 80% = M1 · M2 · M3 · M4 · M5</text>
+  <text x="620" y="221" text-anchor="middle" class="s">파일럿 안은 4분할: 회전마다 학습 2 · 검증 1 · 시험 1 → 데이터셋당 4회전 (결정 29, 2026-09-11)</text>
+  <text x="620" y="238" text-anchor="middle" class="s">블루베리 1,195 = 239 + 956 · 사과 1,001 = 200 + 801 · 복숭아 125 = 25 + 100 · 포도 2,502 = 500 + 2,002</text>
+  <path d="M620,128 L620,160" class="ar"/>
+
+  <!-- pilot zone -->
+  <rect x="40" y="280" width="600" height="520" class="zone" stroke="#b26a00"/>
+  <text x="56" y="300" class="lab" fill="#b26a00" font-weight="700">파일럿 20% 안에서만 (탐색적)</text>
+  <!-- main zone -->
+  <rect x="680" y="280" width="520" height="520" class="zone" stroke="#2e7d32"/>
+  <text x="696" y="300" class="lab" fill="#2e7d32" font-weight="700">본실험 80% (확증적) — C 동결 후에만 시작</text>
+
+  <!-- C1 -->
+  <rect x="60" y="316" width="270" height="96" class="box done"/>
+  <text x="195" y="338" text-anchor="middle" class="h">C1 — 48런 완료 (이력)</text>
+  <text x="195" y="357" text-anchor="middle" class="s">대표 2×2 {BackboneUNet, VWFormer}</text>
+  <text x="195" y="373" text-anchor="middle" class="s">× {ResNet-50, MiT-B2} × 4데이터셋 × 옛 3-fold</text>
+  <text x="195" y="389" text-anchor="middle" class="s">300 epoch 완주 · fast vs standard 조기종료 비교</text>
+  <text x="195" y="404" text-anchor="middle" class="s">fast regret 중앙 0.0085 · 최악 0.604(복숭아)</text>
+  <path d="M480,248 L195,316" class="ar"/>
+
+  <!-- pilot0 -->
+  <rect x="350" y="316" width="270" height="96" class="box run"/>
+  <text x="485" y="338" text-anchor="middle" class="h">파일럿0 — 64런 ▶ v2 재실행 중</text>
+  <text x="485" y="357" text-anchor="middle" class="s">같은 대표 2×2 × 4데이터셋 × 4회전 (결정 30)</text>
+  <text x="485" y="373" text-anchor="middle" class="s">800 epoch 완주 · 구간별(100~800) 최고 검증 체크포인트 저장 (결정 31)</text>
+  <text x="485" y="389" text-anchor="middle" class="s">시험 점수로는 아무것도 고르지 않음</text>
+  <text x="485" y="404" text-anchor="middle" class="s">09-13 00:11 재시작 · 09-13 12시 8/64 · 완주 예상 09-14 오후 1~4시</text>
+  <path d="M560,248 L485,316" class="ar"/>
+
+  <!-- V freeze -->
+  <rect x="150" y="450" width="380" height="50" class="box pilot"/>
+  <text x="340" y="471" text-anchor="middle" class="h">validation process 동결</text>
+  <text x="340" y="489" text-anchor="middle" class="s">조기종료 규칙 · 체크포인트 규칙 확정. 이후 P·본실험에서 바꾸지 않음</text>
+  <path d="M195,412 L300,450" class="ar"/>
+  <path d="M485,412 L380,450" class="ar"/>
+
+  <!-- P -->
+  <rect x="60" y="540" width="560" height="110" class="box pilot"/>
+  <text x="340" y="562" text-anchor="middle" class="h">P 파일럿 선별 — 2,304런</text>
+  <text x="340" y="582" text-anchor="middle" class="s">144조합 × 4데이터셋 × 4회전</text>
+  <text x="340" y="599" text-anchor="middle" class="s">회전마다 검증 fold 로 체크포인트 선택 → 시험 fold 의 image-macro Dice</text>
+  <text x="340" y="616" text-anchor="middle" class="s">점수 = 데이터셋별 4회전 평균 → 4데이터셋 동일가중 (결정 16). 효율은 점수에 안 넣음 (결정 20)</text>
+  <text x="340" y="633" text-anchor="middle" class="s">복숭아 순위 vs 나머지 3개 Kendall τ 보고 (결정 19)</text>
+  <path d="M340,500 L340,540" class="ar"/>
+
+  <!-- A∪B -->
+  <rect x="60" y="690" width="560" height="90" class="box pilot"/>
+  <text x="340" y="712" text-anchor="middle" class="h">A ∪ B → C 동결 (결정 15)</text>
+  <text x="340" y="732" text-anchor="middle" class="s">A = 헤더별 1등 백본 12개 · B = 백본별 1등 헤더 12개</text>
+  <text x="340" y="749" text-anchor="middle" class="s">C = A ∪ B, 12 ≤ |C| ≤ 23 · 동점은 ID 사전순</text>
+  <text x="340" y="766" text-anchor="middle" class="s">헤더 12·백본 12 가 전부 최소 한 번 들어감. 파일럿 끝나면 잠금</text>
+  <path d="M340,650 L340,690" class="ar"/>
+
+  <!-- M1 -->
+  <rect x="700" y="420" width="230" height="150" class="box main"/>
+  <text x="815" y="442" text-anchor="middle" class="h">M1 본실험 — 576런</text>
+  <text x="815" y="462" text-anchor="middle" class="s">144조합 전부</text>
+  <text x="815" y="479" text-anchor="middle" class="s">학습 M2∪M3∪M4∪M5 → 시험 M1</text>
+  <text x="815" y="496" text-anchor="middle" class="s">모든 조합이 같은 시험지</text>
+  <text x="815" y="513" text-anchor="middle" class="s">주효과 · 상호작용 · 데이터셋별 순위</text>
+  <text x="815" y="530" text-anchor="middle" class="s">M1 결과로 C 를 바꾸지 않음 (결정 25)</text>
+  <path d="M620,720 L648,720 L648,495 L700,495" class="ar"/>
+
+  <!-- M2-5 -->
+  <rect x="950" y="420" width="230" height="150" class="box main"/>
+  <text x="1065" y="442" text-anchor="middle" class="h">M2~M5 확증 — 192~368런</text>
+  <text x="1065" y="462" text-anchor="middle" class="s">C(12~23개)만</text>
+  <text x="1065" y="479" text-anchor="middle" class="s">나머지 4-fold 를 test 로 추가</text>
+  <text x="1065" y="496" text-anchor="middle" class="s">→ C 는 5-fold OOF 완성</text>
+  <text x="1065" y="513" text-anchor="middle" class="s">16 × |C| 런</text>
+  <text x="1065" y="530" text-anchor="middle" class="s">C 동결 후에만 시작</text>
+  <path d="M620,750 L664,750 L664,400 L1065,400 L1065,420" class="ar"/>
+  <text x="864" y="394" text-anchor="middle" class="lab">C 만</text>
+
+  <!-- winners -->
+  <rect x="700" y="660" width="230" height="60" class="box out"/>
+  <text x="815" y="682" text-anchor="middle" class="h">Full-grid winner</text>
+  <text x="815" y="702" text-anchor="middle" class="s">144조합 공통 M1 1위</text>
+  <rect x="950" y="660" width="230" height="60" class="box out"/>
+  <text x="1065" y="682" text-anchor="middle" class="h">Cross-validated winner</text>
+  <text x="1065" y="702" text-anchor="middle" class="s">C 의 5-fold OOF 1위 = 실무 최종 권장</text>
+  <path d="M815,570 L815,660" class="ar"/>
+  <path d="M1065,570 L1065,660" class="ar"/>
+
+  <!-- report -->
+  <rect x="300" y="920" width="640" height="110" class="box out"/>
+  <text x="620" y="942" text-anchor="middle" class="h">보고</text>
+  <text x="620" y="962" text-anchor="middle" class="s">test = 전체 영상 슬라이딩 윈도우 512 / stride 384 / threshold 0.5 · image-macro Dice 주 지표</text>
+  <text x="620" y="979" text-anchor="middle" class="s">백본·디코더 주효과 · 상호작용 · 데이터 조건별 선택 원칙</text>
+  <text x="620" y="996" text-anchor="middle" class="s">통계 = paired 비교 + 다중비교 보정 (Friedman 보조, 블록 = 데이터셋 4)</text>
+  <text x="620" y="1013" text-anchor="middle" class="s">효율(파라미터·FLOPs·VRAM·속도)은 보고만, 선정에 안 씀</text>
+  <path d="M815,720 L700,920" class="ar"/>
+  <path d="M1065,720 L840,920" class="ar"/>
+
+  <text x="620" y="1075" text-anchor="middle" class="s">런 수: 2,304 + 576 + 192~368 = 3,072~3,248 (C1 48 · 파일럿0 64 포함 3,184~3,360). C0 옛 6런은 별도.</text>
+  <text x="620" y="1095" text-anchor="middle" class="s">회색 = 완료(이력) · 노랑 테두리 = 실행 중 · 주황 = 파일럿 · 초록 = 본실험 · 보라 = 산출</text>
+</svg>

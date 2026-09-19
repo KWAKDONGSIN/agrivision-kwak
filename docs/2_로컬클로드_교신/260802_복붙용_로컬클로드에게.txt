@@ -1,0 +1,242 @@
+작성: 2026-08-02
+
+──────────────────────────────────────────────────────────────
+아래 줄부터 끝까지 전부 복사해서 로컬 클로드에 붙여넣으세요.
+(첨부할 것: 포도 단독 논문 폴더 + 260802_포도54조합_원시결과.zip)
+──────────────────────────────────────────────────────────────
+
+
+너는 지금부터 내 논문 원고 main.tex 를 고치는 일을 한다.
+
+[상황]
+- 이 논문은 포도(CERTH) 단독 벤치마크 논문이다. 제목 KDS_grape_only_260731.
+- 코덱스 리뷰에서 "원고가 계획(will)과 실행(past)을 섞어 쓰고 있고, 숫자 몇 개가
+  실제 실험과 안 맞는다"는 지적을 받았다.
+- 서버(학습을 돌린 컴퓨터)에서 로그·config·CSV를 전부 다시 확인해서 아래 사실을 확정했다.
+- 너는 서버에 접속할 수 없다. 아래 [확정된 사실]에 없는 숫자는 절대 새로 만들지 마라.
+  모르면 \todo{} 로 남겨라. 추측한 숫자를 본문에 쓰면 논문이 죽는다.
+
+[제일 중요한 규칙]
+1. 숫자를 창작하지 마라. 아래 표에 있는 값만 써라.
+2. 첨부한 260802_포도54조합_원시결과.zip 안에 실제 실험 결과 원본이 다 있다.
+   숫자를 확인하고 싶으면 그 CSV를 읽어라.
+3. 고칠 때마다 "무엇을 왜 고쳤는지" 한 줄씩 기록해서 마지막에 목록으로 보고해라.
+4. 파일을 새로 만들지 말고 main.tex 를 직접 고쳐라.
+
+
+═══════════════════════════════════════════
+[확정된 사실] — 서버 로그·config 실측 (2026-08-02 확인)
+═══════════════════════════════════════════
+
+■ 실제로 돌린 실험은 두 개뿐이다
+  (A) 파일럿: 2조합×2백본 = 4조합
+  (B) 본 실험: 헤더 9 × 백본 6 = 54조합
+  둘 다 같은 데이터 = CERTH 포도 100장, 단일 분할 1개(cv1), 70/10/20(train70/val10/test20)
+
+■ 조합 수: 54 이다. 63 이 아니다.
+  이유 = MambaVision-T 가 V100 GPU에서 실행 불가(커널이 Ampere 이상 요구).
+  따라서 백본은 7종이 아니라 6종 = ResNet-50, ConvNeXt-T, Swin-T, MiT-B2,
+  PVTv2-B2, UniFormer-S. 헤더는 9종 그대로.
+
+■ 분할 반복은 5회가 아니라 1회다. (5폴드를 만들어 두긴 했지만 cv1만 학습했다)
+
+■ Friedman 블록은 "4데이터셋 × 5반복 = 20블록"이 아니다. 실제로 쓴 것은:
+  - 헤더 주효과: 블록 = 백본6 × test사진20 = 120블록, 비교대상 k=9
+  - 백본 주효과: 블록 = 헤더9 × test사진20 = 180블록, 비교대상 k=6
+  - 54조합 동시검정: 블록 = 사진20, k=54  (CD=20.0 이라 무의미. 참고용)
+
+■ 통계의 한계 (반드시 원고에 적을 것)
+  같은 test 20장이 모든 블록에서 반복 사용됐다. 즉 관측치가 서로 독립이 아니다.
+  Friedman은 블록 독립을 가정하므로 이 분석은 exploratory(탐색적)다.
+  이미지 단위 중복을 보정한 분석은 하지 않았다.
+  p=2.6e-88 같은 극단값은 이 중복 때문에 과대평가된 것일 수 있다.
+
+■ 하이퍼파라미터 — 아래는 전부 "실제로 쓴 값"이다 (Executed)
+  ImageNet-1K 사전학습 / crop 512x512 / AdamW / LR 1e-4 / weight decay 0.01 /
+  batch 2 x accumulation 4 (유효 8) / 200 epoch, early stopping 끔 /
+  poly decay power 0.9 + linear warm-up / BCE+Dice 가중치 1:1 /
+  체크포인트 = validation loss 최저 / validation 매 epoch /
+  FP32 (AMP 끔) / threshold 0.5 고정 /
+  Tesla V100-SXM2 32GB / CUDA 12.8 / Python 3.11.15 / PyTorch 2.9.1
+
+■ 하드웨어 서술 주의: "V100 x 8" 이라고 쓰면 안 된다.
+  한 학습은 항상 GPU 1장을 쓴다. 파일럿은 1장(2번), 54조합은 6장(2~7번)에
+  조합을 나눠 배치했을 뿐이다.
+
+■ 백본 파라미터 실측치 (백만, M) — 표 2를 이걸로 바꿔라
+    ResNet-50    23.51
+    ConvNeXt-T   27.82
+    Swin-T       27.52
+    MiT-B2       24.20
+    PVTv2-B2     24.85
+    UniFormer-S  21.03
+    MambaVision-T  측정 안 함 (실행 불가)
+  초록의 "21.6~31.6M"은 백본이 아니라 총 파라미터(백본+헤드) 범위다. 이 구분을 본문에 적어라.
+
+■ 효율 측정 조건 (초록의 FLOPs 20.5~47.1G, latency 9.8~29.0ms)
+  입력 512x512 / 배치 1 / FP32 / 워밍업 10회 / 반복 50회 / 중앙값 (p95도 별도 보유) /
+  Tesla V100 32GB / model.eval() + no_grad + cuda.synchronize
+  → 이 조건을 본문이나 표 각주에 반드시 명시해라.
+
+■ centre crop 44% 근거
+  512 x 512 = 262,144 화소
+  576 x 1024 = 589,824 화소
+  262,144 / 589,824 = 0.4444 → 44.4%
+  ★ 중요: 이 중앙 크롭은 test 채점에만 쓴 게 아니다. validation 에도 똑같이 적용됐다.
+    즉 val loss도 중앙 44%만 보고 계산됐고, 체크포인트 선택도 그 값으로 했다.
+    원고는 지금 test 전용인 것처럼 읽히므로 고쳐라.
+
+■ 0.853 과 0.859 의 관계 (제일 중요)
+  같은 조합(U-Net + ConvNeXt-T), 같은 config, 같은 시드(3407), 같은 데이터,
+  같은 체크포인트 규칙, 같은 test 20장(파일 이름·순서까지 동일)이다.
+  다른 것은 "실행 시점" 하나뿐이다. 코드도 그 사이에 안 바뀌었다.
+  값이 다른 이유 = 학습이 재현되지 않기 때문. cuDNN 설정이
+  benchmark=True / deterministic=False 라서 GPU 커널 선택이 실행마다 달라진다.
+  실제 증거: best epoch 112(파일럿) vs 154(그리드), val_loss 0.303535 vs 0.302440.
+  → 즉 서로 다른 에폭의 다른 가중치를 채점한 것이다.
+  ★ 이걸 "시드 반복 실험"이라고 쓰면 안 된다. 반복이 아니라 그냥 독립적인 두 번의 학습이다.
+
+■ 블루베리 비교 — 지금 원고의 핵심 주장인데, 근거가 약하다
+  블루베리 실험은 나(곽동신)가 같은 서버·같은 코드로 2026-07-20~07-22에 돌린 것이지만,
+  인용할 논문도 없고 git 커밋도 없다(내부 문서와 CSV만 있음).
+  게다가 조건이 아래처럼 다르다:
+     헤더 목록이 다름 — 겹치는 건 UPerNet, CCASeg 딱 2개뿐.
+       블루베리 헤더 = bisenetv2 / ccaseg / lightham / mask2former / oneformer / upernet
+       포도 헤더 = FCN / U-Net / FPN / PSPNet / DeepLabv3+ / UPerNet / All-MLP / FaPN / CCASeg
+     지표가 다름 — 블루베리는 validation fg_IoU, 포도는 test fg_IoU
+     분할이 다름 — 블루베리 GroupKFold 6폴드, 포도 단일분할 1회
+     크롭 비율이 다름 — 블루베리 512²/(1920x1080)=12.6%, 포도 44.4%
+  또 "블루베리 헤더 폭 0.008"은 강한 헤더 4종만 비교한 폭이고,
+  "포도 헤더 폭 0.0793"에는 꼴찌 FCN(0.7685)이 들어 있다.
+  FCN을 빼면 포도 헤더 폭은 0.0434, 겹치는 두 헤더만 보면 0.0319로 줄어든다.
+  ★ 따라서 "작물 때문에 순서가 뒤집혔다"고 단정하면 안 된다. 가설로 낮춰라.
+
+
+═══════════════════════════════════════════
+[할 일] — 아래 12개를 순서대로 고쳐라
+═══════════════════════════════════════════
+
+(1) 계획(will)과 실행(past)을 분리하라
+    Materials and methods 절이 지금 미래시제("will be measured", "will use")로
+    가득한데, 실제로는 이미 다 실행했다.
+    → 실제로 실행한 것은 과거시제로 바꾸고, 아직 안 한 것만 미래시제로 남겨라.
+    → 아직 안 한 것 = 전체 2,502장 학습 / 5분할 반복 / MambaVision /
+       sliding-window 평가. 이건 미래시제로 남기고 \todo 유지.
+
+(2) 조합 수 63 → 54 로 전부 고쳐라
+    다음 문장들에 63이 남아 있다. 찾아서 고쳐라:
+      "the 63 head--backbone combinations are treated as the compared methods"
+      "Because 63 simultaneous comparisons can make the post-hoc test conservative"
+      "where testing 63"
+      "combinations per dataset rather than 63"
+
+(3) 백본 수 7 → 6 으로 고쳐라
+    "Six of the seven backbones in Table~\ref{tab:backbones}"
+    "inference settings for all seven backbones and nine heads"
+    → 표 2에서 MambaVision-T 행은 지우거나, 남기되 "not evaluated (hardware)"로 표시.
+
+(4) Friedman 블록 서술을 실제대로 고쳐라
+    지금 문장: "A block is defined as one dataset--split repetition, resulting in
+                $4\times5=20$ blocks, and the 63 head--backbone combinations..."
+    → 실제: 헤더 주효과는 백본6 x 사진20 = 120블록(k=9),
+            백본 주효과는 헤더9 x 사진20 = 180블록(k=6),
+            54조합 동시검정은 사진20 블록(k=54)이며 CD=20.0으로 무의미.
+    → 그리고 "같은 test 20장이 반복 사용돼 블록이 독립이 아니다"를 명시하고
+       이 분석 전체를 exploratory 로 표기하라.
+
+(5) DB-1 문장을 삭제하라
+    "The present study uses the manually annotated DB-1 subset in the primary
+     supervised benchmark so that label-quality regimes are not mixed."
+    → 이 문장은 블루베리(AgriVision) 데이터 얘기라 포도 단독 논문에 잘못 들어왔다.
+       문장 하나만 지우고 앞뒤를 자연스럽게 이어라.
+
+(6) 표 2(tab:backbones)를 실측치로 바꿔라
+    - 열 이름 "Approx. params" → "Backbone params (measured)"
+    - 값을 위 [확정된 사실]의 실측 6줄로 교체
+    - 캡션에서 "Planning parameter counts will be replaced by measurements" 삭제하고
+      "Parameter counts are measured from the implemented feature extractors." 로
+    - 본문에 "표 2는 백본만의 파라미터이고, 초록의 21.6~31.6M은 백본+헤드 총계"라고 한 줄 추가
+
+(7) 표 3(tab:hyperparameters) 헤더를 "Executed setting"으로 바꿔라
+    단, 아래 3줄은 계획값이므로 실제값으로 고쳐라:
+      "Repeated splits: Five group-disjoint 70/10/20 repetitions"
+         → "Single 70/10/20 split (one repetition)" 로 고치고, 5분할은 미래 계획으로 별도 서술
+      "Hardware: NVIDIA Tesla V100-SXM2 32 GB x 8"
+         → "NVIDIA Tesla V100-SXM2 32 GB (one GPU per run)"
+      "Prediction threshold: 0.5, or validation-only fixed threshold"
+         → "0.5 (fixed)"
+
+(8) 0.853 / 0.859 에 각주를 달아라
+    파일럿 표(tab:pilot)의 0.853과 54조합 표(tab:grid)의 0.859는 같은 조합이다.
+    → 표 아래 또는 본문에 이렇게 적어라(영어로 다듬어서):
+      "The same combination appears as 0.853 in Table (pilot) and 0.859 in Table (grid).
+       These are two independent training runs of an identical configuration, seed, data
+       split and checkpoint rule; the difference arises because cuDNN autotuning is enabled
+       and deterministic kernels are not, so runs are not bit-reproducible. The selected
+       checkpoints were epoch 112 and epoch 154 respectively. They are not seed repetitions."
+
+(9) centre crop 44% 서술을 고쳐라
+    지금은 test 평가에만 적용된 것처럼 읽힌다.
+    → "the same centre crop was applied to the validation split, so the model-selection
+       criterion (validation loss) was also computed on 44% of each image" 를 추가.
+    → 계산 근거 (512x512 / 576x1024 = 44.4%)도 한 번 명시.
+
+(10) 블루베리 주장을 가설로 낮춰라
+     지금 강하게 단정하는 곳이 최소 4군데다:
+       초록 Conclusion: "which reverses the ordering the same protocol produces on
+                         blueberry imagery"
+       Results 부근:    "observed internally on the blueberry dataset, where the backbone
+                         spread was several times the head spread"
+       Discussion:      "The reversal against blueberry deserves emphasis. Under the same
+                         protocol and code base, the blueberry data produce the opposite ordering"
+       Conclusion 절:   "Because the same protocol yields the opposite component ordering
+                         on blueberry imagery"
+     → 전부 "가설/예비 관찰"로 낮추고, 아래 취지의 단서를 반드시 붙여라:
+       "Under the same code base, an internal blueberry benchmark showed the opposite
+        ordering. That comparison is not like-for-like: the head sets overlap in only two
+        of nine heads, the blueberry scores are validation rather than test, the splits
+        differ (six group-disjoint folds vs one), and the centre crop covers 12.6% of a
+        blueberry image against 44.4% here. The apparent reversal is therefore a hypothesis
+        to be tested under matched conditions, not a finding."
+     → "Under the same protocol" 이라는 표현은 사실이 아니므로 지워라.
+       (코드베이스는 같지만 프로토콜은 다르다)
+
+(11) 통계 전체를 exploratory 로 표기하라
+     Results/Discussion에서 통계를 언급하는 곳마다 "exploratory" 를 붙이고,
+     Limitations 에 "repeated measurements on the same 20 test images were not accounted
+     for; p-values are therefore optimistic" 를 넣어라.
+
+(12) 마지막으로 전체 검증
+     - "will" 로 시작하는 문장이 남아 있는데 실제로는 이미 한 것이 없는지 훑어라
+     - 63 / seven backbones / 4x5=20 / DB-1 이 하나도 안 남았는지 grep 해라
+     - \ref 가 깨진 곳이 없는지, 그림 파일이 다 있는지 확인해라
+     - \todo{} 가 몇 개 남았는지 세서 보고해라
+
+
+═══════════════════════════════════════════
+[마지막에 해야 할 것 — Overleaf 컴파일]
+═══════════════════════════════════════════
+
+서버에는 LaTeX 컴파일러가 없어서 아직 PDF 검증을 못 했다. 네가 해라.
+
+1. Overleaf 에 올려서 컴파일하고, 에러가 나면 고쳐라.
+   (sn-jnl.cls 템플릿이 프로젝트에 있어야 한다)
+2. 컴파일 결과에서 확인할 것:
+   - 빈 액자(Replace with the generated figure)가 하나도 없는지
+   - 표가 페이지 밖으로 삐져나가지 않는지 (특히 표 6, 9열짜리 54조합 표)
+   - Undefined reference / Citation undefined 경고가 없는지
+   - 총 몇 쪽인지
+3. 다 끝나면 아래를 나에게 보고해라:
+   - 고친 항목 12개 각각의 처리 결과 (완료 / 부분 / 못함 + 이유)
+   - 남은 \todo 목록
+   - 컴파일 로그의 경고 목록
+   - 최종 PDF 쪽수
+
+
+═══════════════════════════════════════════
+[네가 절대 하면 안 되는 것]
+═══════════════════════════════════════════
+- 위 [확정된 사실]에 없는 숫자를 지어내기
+- 실험 결과 표(tab:pilot, tab:grid)의 IoU 값을 바꾸기 — 그건 실측값이라 정확하다
+- "블루베리에서 뒤집혔다"를 단정문으로 남겨두기
+- 내가 안 한 실험(전체 2,502장, 5분할)을 한 것처럼 쓰기

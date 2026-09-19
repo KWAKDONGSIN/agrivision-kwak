@@ -1,0 +1,83 @@
+농업 컴퓨터비전 논문 근거를 교차 확인해 줘. 웹 브라우저로 실제 논문 원문을 열어서 확인해 줘.
+
+[배경]
+나는 과수(블루베리·사과·복숭아·포도) 이진 semantic segmentation 벤치마크 논문을 쓰고 있다.
+데이터셋의 특성을 보여주려고 "사진 한 장에 열매가 몇 개 있는가"를 전수 계산했다.
+라벨이 0/255 이진 마스크뿐이라 object detection 모델을 새로 학습시키지 않고,
+마스크에 distance transform + watershed 를 적용해 붙어 있는 열매를 한 알씩 분리해서 셌다.
+사과는 마스크 픽셀값이 인스턴스 ID라 정답을 알 수 있어서 정확도를 실측했다:
+  정답 장당 40.4개 / watershed 40.7개(+0.7%, 장별 상대오차 중앙값 3.8%, 95.5%가 ±20% 이내)
+  / connected components 33.1개(-18.2%)
+팀에서 "detection 논문들이 실제로 이 방법을 쓰는지 확인해 달라, 우리가 이렇게 진행한 증거가 필요하다"
+고 요청했다.
+
+[이미 확인된 것 — 다시 찾지 말고, 검증만 해 줘]
+서버 쪽에서 웹검색 + 원문 PDF 직접 확인(pdftotext)까지 끝낸 것이 3편이다.
+
+1) Bargoti & Underwood, "Image Segmentation for Fruit Detection and Yield Estimation in
+   Apple Orchards", Journal of Field Robotics 2017, arXiv:1610.08120
+   - 확인된 인용문 (초록): "The pixel-wise fruit segmentation output is processed using the
+     Watershed Segmentation (WS) and Circular Hough Transform (CHT) algorithms to detect and
+     count individual fruits."
+   - 확인된 인용문 (초록): "The WS algorithm produced the best apple detection and counting
+     results, with a detection F1-score of 0.858."
+   - 확인된 인용문 (본문): "The WS algorithm is used for separating connected objects in an image
+     where each object is characterised by a local maximum and a contour leading to its boundary.
+     For a segmented fruit image, this contour is evaluated by computing distances of individual
+     fruit pixels to the nearest background pixel, resulting in a local maximum that is typically
+     situated around the centre of each fruit."
+   - 확인된 인용문 (본문): "fruits are often clustered together and appear occluded in the image
+     data due to other fruits and foliage. A suitable fruit detection algorithm needs to be able to
+     separate individual fruits in clusters and also connect disjoint regions of the same fruit,
+     formed due to occlusions."
+
+2) Zabawa et al., "Counting of Grapevine Berries in Images via Semantic Segmentation using
+   Convolutional Neural Networks", arXiv:2004.14010 (2020)
+   - 확인된 인용문 (초록): "Our framework uses a convolutional neural network to detect single
+     berries in images by performing a semantic segmentation. Each berry is then counted with a
+     connected component algorithm."
+   - 확인된 인용문 (서론): "We define three classes, 'berry', 'edge' and 'background' so that every
+     single berry is separated from neighbouring berries by an edge and can therefore be identified
+     as a single instance. There is no need to explicitly perform an instance segmentation."
+   - 보고된 정확도: VSP 94.0% / SMPH 85.6%
+
+3) Häni, Roy, Isler, "MinneApple: A Benchmark Dataset for Apple Detection and Segmentation",
+   IEEE RA-L 2020, arXiv:1909.06441
+   - 1000장에 41,000+ 인스턴스, polygonal mask, "patch-based counting of clustered fruits" 제공
+   - 4쪽 본문에 장당 인스턴스 수 비교: MinneApple 41.2 / COCO 7.7 / ImageNet·PASCAL VOC 3 미만
+   - 4쪽: 나무에 달린 과실만 라벨, 땅에 떨어진 것과 뒤쪽 나무는 라벨 안 함
+
+[서버 쪽에서 못 한 것 — 여기가 네 일이다]
+- Zabawa 의 정식 게재지 미확정 (arXiv 번호만 확실함)
+- Bargoti 의 JFR 권·호·페이지 미확인
+- Frontiers 리뷰(Maheswari et al. 2021)에 Bargoti 워터셰드 문장이 있다고 검색 요약에 나왔으나
+  원문에서 찾지 못함 → 확인되기 전엔 인용 금지
+- Objects365 의 "boxes per image 9.04 vs COCO 7.34" 는 검색 요약 기준, 원문 미확인
+- 워터셰드의 한계를 지적한 논문은 아직 못 찾음
+
+[너에게 부탁하는 일 — 이 5가지]
+A. 위 3편의 서지정보를 확정해 줘. 특히
+   - Zabawa et al. 의 정식 게재지·권·호·연도 (ISPRS Journal 로 추정되는데 확인 필요)
+   - Bargoti & Underwood 의 Journal of Field Robotics 권·호·페이지
+   - 위에 적은 인용문들이 원문에 실제로 그대로 있는지 (한 글자라도 다르면 정확한 원문으로 고쳐 줘)
+
+B. 같은 방법(=세그멘테이션 마스크에 distance transform / watershed / connected components 를
+   적용해 개체를 분리하고 개수를 세는 방법)을 쓴 농업 분야 논문을 3편 이상 더 찾아 줘.
+   가급적 2020년 이후 것. 각각에 대해:
+   작물 / 어떤 마스크에서 시작했는지 / 분리 알고리즘 / 정확도를 어떻게 검증했는지 / 인용 가능한 한 문장.
+
+C. 반대 근거도 찾아 줘. watershed 후처리의 한계를 지적한 논문(과분할 over-segmentation,
+   미분할 under-segmentation, 심한 가림에서의 실패). 우리는 블루베리에 정답 라벨이 없어
+   오차를 못 쟀기 때문에, 한계를 먼저 밝혀 두는 편이 방어에 유리하다.
+
+D. 데이터셋 논문이 "장당 객체 수" 통계로 자기 존재 이유를 방어하는 사례를 2편 이상.
+   (예: Objects365, COCO 원논문, LVIS, PhenoBench 등)
+
+E. 마지막에 BibTeX 를 만들어 줘. 확인된 것만. 추측으로 채우지 말고, 모르는 필드는 비워 둬.
+
+[지켜 줘]
+- 검색 결과 요약만 보고 인용문을 쓰지 마. 반드시 논문 원문(PDF나 HTML)을 열어서 확인해.
+- 원문을 못 열었으면 "미확인"이라고 명시해. 있는 것처럼 쓰지 마.
+- 존재하지 않는 논문·DOI·페이지 번호를 만들어내지 마. 이게 제일 중요하다.
+- 결과는 마크다운 파일 하나로 정리해 줘. 파일명은 260812_근거조사_로컬확인분.md
+- 각 항목마다 [원문확인] 또는 [미확인] 표시를 붙여 줘.

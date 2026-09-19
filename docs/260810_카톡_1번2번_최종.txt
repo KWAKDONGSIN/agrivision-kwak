@@ -1,0 +1,40 @@
+작성: 2026-08-10
+용도: 0810 역할분담 1·2번 결과 — 카카오톡 복붙용 (정답 어노테이션 반영 최종본)
+바뀐 점: 260810_카톡_역할분담_개체분리.txt 를 대체합니다.
+        복숭아·포도를 정답 어노테이션으로 다시 세어 숫자가 또 바뀌었습니다.
+색칠 전수본: datasets_overlay_2mp/ (4,823장, 1.7GB)
+첨부: reports/figures/fig_samples_annotated_4fruits.png (그림 2)
+      reports/figures/fig_objects_per_image_4fruits.png (그림 3)
+      reports/figures/fig_instance_split_check.png (부록, 필요할 때만)
+────────────────────────────────────────────────────────
+
+1번 2번 결과 올립니다.
+
+그림 2
+/data/project/2026summer/kds0206/semantic-segmentation/reports/figures/fig_samples_annotated_4fruits.png
+논문 fig.2 형식입니다. 라벨 색칠한 사진에 512 크롭 선 그렸고 과일당 3장씩입니다.
+
+그림 3
+/data/project/2026summer/kds0206/semantic-segmentation/reports/figures/fig_objects_per_image_4fruits.png
+장당 개체 수 분포하고 다른 데이터셋이랑 비교한 겁니다.
+
+개수는 인스턴스 라벨로 셌습니다.
+사과는 마스크 픽셀값이 열매 번호이고
+복숭아는 peach-data COCO json, 포도는 CERTH 인스턴스 마스크를 썼습니다.
+
+리사이즈본 4823장 전수입니다.
+사과 1001장 40464개, 복숭아 125장 977개, 포도 2502장 9832송이,
+블루베리 1195장 44064개입니다.
+
+포도는 Table 1의 9832 bunches와 정확히 같습니다.
+전에 15102로 나왔던 건 잎이나 가지에 가려 한 송이가 조각난 걸 따로 센 거였습니다.
+
+복숭아는 배포 json이 977개인데 Table 1에는 1077로 적혀 있습니다.
+train 805 val 88 test 84 해서 977입니다. 어느 쪽이 맞는지 확인이 필요합니다.
+
+블루베리는 정답 라벨이 없어서 알고리즘으로 셌고 44064개입니다.
+Table 1은 51145인데 원본에 폴리곤이나 json이 남아 있지 않아 오차를 못 쟀습니다.
+
+4823장 전부에 개체를 색칠한 사본도 만들어 뒀습니다.
+/data/project/2026summer/kds0206/datasets_overlay_2mp
+색이 다르면 다른 개체입니다. 1.7GB이고 원본은 안 건드렸습니다.

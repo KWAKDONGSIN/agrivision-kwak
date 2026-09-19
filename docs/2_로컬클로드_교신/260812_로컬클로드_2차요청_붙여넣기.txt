@@ -1,0 +1,38 @@
+논문 원문 확인 3건만 부탁한다. 브라우저로 실제 페이지를 열어서 확인해 줘.
+지난번(1차) 조사는 잘 됐다. 서버에서 DOI 8건을 Crossref로 재조회했더니 전부 일치했고,
+새로 준 인용문 3개도 서버가 보관한 PDF에서 글자 그대로 확인됐다. 이번엔 남은 것만 하면 된다.
+
+[1] Kornilov & Safonov 2018, "An Overview of Watershed Algorithm Implementations in Open
+    Source Libraries", Journal of Imaging 4(10):123, DOI 10.3390/jimaging4100123
+    - 서버에서 MDPI 페이지를 열려고 했으나 403으로 막혔다. 네 크롬으로 열어 줘.
+    - 확인할 것: "2.3 Oversegmentation Problem" 이라는 절이 실제로 있는지, 그리고
+      "When applied to real images, the watershed transformation causes oversegmentation."
+      이 문장이 원문에 그대로 있는지.
+    - 그 절에서 marker-controlled watershed 를 해법으로 제시하는 문장도 한 줄 그대로 뽑아 줘.
+      (우리가 marker-controlled 를 쓴 근거로 인용할 것이다)
+
+[2] 아래 4편의 인용문이 arXiv판이 아니라 "학술지 최종판"에도 그대로 있는지 확인해 줘.
+    최종판이 유료라 못 보면 "확인 불가"라고 적어 줘. 억지로 추측하지 마.
+    - Bargoti & Underwood 2017, J. Field Robotics 34(6):1039-1060, DOI 10.1002/rob.21699
+      확인할 문장: "The pixel-wise fruit segmentation output is processed using the Watershed
+      Segmentation (WS) and Circular Hough Transform (CHT) algorithms to detect and count
+      individual fruits." / "However, the algorithm cannot merge fragments of a single fruit
+      that become separated due to foreground occlusion or misclassification."
+    - Zabawa et al. 2020, ISPRS J. 164:73-83, DOI 10.1016/j.isprsjprs.2020.04.002
+      확인할 문장: "Each berry is then counted with a connected component algorithm." /
+      "To avoid a computationally intensive instance segmentation..."
+    - Häni et al. 2020, IEEE RA-L 5(2):852-858, DOI 10.1109/LRA.2020.2965061
+      확인할 문장: "MinneApple contains 1.5 categories and 41.2 instances on average per image."
+    - Lin et al. 2014, Microsoft COCO, ECCV 2014
+      확인할 문장: "MS COCO contains considerably more object instances per image (7.7) as
+      compared to ImageNet (3.0) and PASCAL (2.3)."
+
+[3] Ruan et al. 2024, LettuceNet, Agriculture 14(8):1412, DOI 10.3390/agriculture14081412
+    - 본문 표에서 계수 정확도 수치(MAE, RMSE, R² 등)를 정확히 뽑아 줘.
+    - 그 수치가 "몇 장을 대상으로" 잰 것인지도 같이.
+
+[지켜 줘]
+- 검색 요약이 아니라 원문 페이지를 열어서 확인해. 못 열었으면 "확인 불가"라고 써.
+- 없는 문장을 있는 것처럼 쓰지 마. 페이지 번호를 지어내지 마.
+- 결과는 짧은 마크다운 하나로. 파일명 260812_근거조사_로컬확인분_2차.md
+- 항목마다 [원문확인] / [확인 불가] 를 붙여 줘.

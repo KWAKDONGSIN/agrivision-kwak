@@ -1,0 +1,524 @@
+{
+ "Camera 1 Video (1)_1": {
+  "at": "2026-09-17 18:49:04",
+  "by": "AI 사이클3 2차 경계시험",
+  "note": "번호 편집 되돌림",
+  "status": "unreviewed"
+ },
+ "Camera 1 Video (97)_61": {
+  "at": "2026-09-18 09:07:56",
+  "by": "익명",
+  "note": "수정본 되돌림",
+  "status": "unreviewed"
+ },
+ "Camera 2 Video (7)_121": {
+  "at": "2026-09-18 03:07",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "사람 확인 필요: [사진 단위] GT 가 잎·줄기 위를 칠함 — 상자 없이 사진 단위 flag, 타당",
+  "status": "flag"
+ },
+ "Camera 2 Video (7)_361": {
+  "at": "2026-09-18 03:07",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "사람 확인 필요: [사진 단위] GT 덩어리가 엉뚱한 곳, 작은 열매 미라벨 — 타당",
+  "status": "flag"
+ },
+ "Camera 2 Video (9)_541": {
+  "at": "2026-09-18 03:07",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "사람 확인 필요: [사진 단위] GT 가 초점 밖 앞잎을 열매로 칠함 — 타당",
+  "status": "flag"
+ },
+ "Camera 3 Video (101)_121": {
+  "at": "2026-09-18 03:07",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: Camera 3 Video (101)_61",
+  "status": "exclude"
+ },
+ "Camera 3 Video (102)_721": {
+  "at": "2026-09-18 03:07",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: Camera 3 Video (102)_661",
+  "status": "exclude"
+ },
+ "Camera 3 Video (14)_61": {
+  "at": "2026-09-18 03:07",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: Camera 3 Video (14)_1",
+  "status": "exclude"
+ },
+ "Camera 3 Video (16)_61": {
+  "at": "2026-09-18 03:07",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: Camera 3 Video (16)_1",
+  "status": "exclude"
+ },
+ "Camera 3 Video (17)_241": {
+  "at": "2026-09-18 03:07",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: Camera 3 Video (17)_121",
+  "status": "exclude"
+ },
+ "Camera 3 Video (21)_421": {
+  "at": "2026-09-18 03:07",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: Camera 3 Video (21)_361",
+  "status": "exclude"
+ },
+ "Camera 3 Video (22)_61": {
+  "at": "2026-09-18 03:07",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: Camera 3 Video (22)_1",
+  "status": "exclude"
+ },
+ "Camera 3 Video (28)_121": {
+  "at": "2026-09-18 03:07",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: Camera 3 Video (28)_1",
+  "status": "exclude"
+ },
+ "Camera 3 Video (28)_61": {
+  "at": "2026-09-18 03:07",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: Camera 3 Video (28)_1",
+  "status": "exclude"
+ },
+ "Camera 3 Video (56)_121": {
+  "at": "2026-09-18 03:07",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "사람 확인 필요: 라벨 안 된 열매 후보 1곳(x1,y1,x2,y2: 919,0,983,63)",
+  "status": "flag"
+ },
+ "Camera 3 Video (76)_121": {
+  "at": "2026-09-18 03:07",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: Camera 3 Video (76)_61",
+  "status": "exclude"
+ },
+ "Camera 4 Video (10)_121": {
+  "at": "2026-09-18 03:07",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: Camera 4 Video (10)_1",
+  "status": "exclude"
+ },
+ "Camera 4 Video (10)_61": {
+  "at": "2026-09-18 03:07",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: Camera 4 Video (10)_1",
+  "status": "exclude"
+ },
+ "Camera 4 Video (11)_121": {
+  "at": "2026-09-18 03:07",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: Camera 4 Video (11)_1",
+  "status": "exclude"
+ },
+ "Camera 4 Video (11)_61": {
+  "at": "2026-09-18 03:07",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: Camera 4 Video (11)_1",
+  "status": "exclude"
+ },
+ "Camera 4 Video (12)_121": {
+  "at": "2026-09-18 03:07",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: Camera 4 Video (12)_1",
+  "status": "exclude"
+ },
+ "Camera 4 Video (12)_181": {
+  "at": "2026-09-18 03:07",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: Camera 4 Video (12)_1",
+  "status": "exclude"
+ },
+ "Camera 4 Video (12)_241": {
+  "at": "2026-09-18 03:07",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: Camera 4 Video (12)_1",
+  "status": "exclude"
+ },
+ "Camera 4 Video (12)_301": {
+  "at": "2026-09-18 03:07",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: Camera 4 Video (12)_1",
+  "status": "exclude"
+ },
+ "Camera 4 Video (12)_361": {
+  "at": "2026-09-18 03:07",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: Camera 4 Video (12)_1",
+  "status": "exclude"
+ },
+ "Camera 4 Video (12)_421": {
+  "at": "2026-09-18 03:07",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: Camera 4 Video (12)_1",
+  "status": "exclude"
+ },
+ "Camera 4 Video (12)_61": {
+  "at": "2026-09-18 03:07",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: Camera 4 Video (12)_1",
+  "status": "exclude"
+ },
+ "Camera 4 Video (13)_121": {
+  "at": "2026-09-18 03:07",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: Camera 4 Video (13)_1",
+  "status": "exclude"
+ },
+ "Camera 4 Video (13)_61": {
+  "at": "2026-09-18 03:07",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: Camera 4 Video (13)_1",
+  "status": "exclude"
+ },
+ "Camera 4 Video (132)_61": {
+  "at": "2026-09-18 03:07",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: Camera 4 Video (132)_1",
+  "status": "exclude"
+ },
+ "Camera 4 Video (14)_61": {
+  "at": "2026-09-18 03:07",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: Camera 4 Video (14)_1",
+  "status": "exclude"
+ },
+ "Camera 4 Video (141)_61": {
+  "at": "2026-09-18 03:07",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: Camera 4 Video (141)_1",
+  "status": "exclude"
+ },
+ "Camera 4 Video (146)_121": {
+  "at": "2026-09-18 03:07",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: Camera 4 Video (146)_61",
+  "status": "exclude"
+ },
+ "Camera 4 Video (15)_121": {
+  "at": "2026-09-18 03:07",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: Camera 4 Video (15)_1",
+  "status": "exclude"
+ },
+ "Camera 4 Video (15)_181": {
+  "at": "2026-09-18 03:07",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: Camera 4 Video (15)_1",
+  "status": "exclude"
+ },
+ "Camera 4 Video (15)_241": {
+  "at": "2026-09-18 03:07",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: Camera 4 Video (15)_1",
+  "status": "exclude"
+ },
+ "Camera 4 Video (15)_301": {
+  "at": "2026-09-18 03:07",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: Camera 4 Video (15)_1",
+  "status": "exclude"
+ },
+ "Camera 4 Video (15)_61": {
+  "at": "2026-09-18 03:07",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: Camera 4 Video (15)_1",
+  "status": "exclude"
+ },
+ "Camera 4 Video (16)_181": {
+  "at": "2026-09-18 03:07",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: Camera 4 Video (16)_1",
+  "status": "exclude"
+ },
+ "Camera 4 Video (16)_61": {
+  "at": "2026-09-18 03:07",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: Camera 4 Video (16)_1",
+  "status": "exclude"
+ },
+ "Camera 4 Video (161)_121": {
+  "at": "2026-09-18 03:07",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: Camera 4 Video (161)_1",
+  "status": "exclude"
+ },
+ "Camera 4 Video (161)_61": {
+  "at": "2026-09-18 03:07",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: Camera 4 Video (161)_1",
+  "status": "exclude"
+ },
+ "Camera 4 Video (162)_121": {
+  "at": "2026-09-18 03:07",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: Camera 4 Video (162)_1",
+  "status": "exclude"
+ },
+ "Camera 4 Video (162)_61": {
+  "at": "2026-09-18 03:07",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: Camera 4 Video (162)_1",
+  "status": "exclude"
+ },
+ "Camera 4 Video (17)_121": {
+  "at": "2026-09-18 03:07",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: Camera 4 Video (17)_1",
+  "status": "exclude"
+ },
+ "Camera 4 Video (17)_181": {
+  "at": "2026-09-18 03:07",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: Camera 4 Video (17)_1",
+  "status": "exclude"
+ },
+ "Camera 4 Video (17)_61": {
+  "at": "2026-09-18 03:07",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: Camera 4 Video (17)_1",
+  "status": "exclude"
+ },
+ "Camera 4 Video (20)_121": {
+  "at": "2026-09-18 03:07",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: Camera 4 Video (20)_61",
+  "status": "exclude"
+ },
+ "Camera 4 Video (27)_121": {
+  "at": "2026-09-18 03:07",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: Camera 4 Video (27)_1",
+  "status": "exclude"
+ },
+ "Camera 4 Video (27)_181": {
+  "at": "2026-09-18 03:07",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: Camera 4 Video (27)_1",
+  "status": "exclude"
+ },
+ "Camera 4 Video (27)_241": {
+  "at": "2026-09-18 03:07",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: Camera 4 Video (27)_1",
+  "status": "exclude"
+ },
+ "Camera 4 Video (27)_301": {
+  "at": "2026-09-18 03:07",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: Camera 4 Video (27)_1",
+  "status": "exclude"
+ },
+ "Camera 4 Video (27)_61": {
+  "at": "2026-09-18 03:07",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: Camera 4 Video (27)_1",
+  "status": "exclude"
+ },
+ "Camera 4 Video (28)_121": {
+  "at": "2026-09-18 03:07",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: Camera 4 Video (28)_1",
+  "status": "exclude"
+ },
+ "Camera 4 Video (28)_181": {
+  "at": "2026-09-18 03:07",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: Camera 4 Video (28)_1",
+  "status": "exclude"
+ },
+ "Camera 4 Video (28)_61": {
+  "at": "2026-09-18 03:07",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: Camera 4 Video (28)_1",
+  "status": "exclude"
+ },
+ "Camera 4 Video (29)_61": {
+  "at": "2026-09-18 03:07",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: Camera 4 Video (29)_1",
+  "status": "exclude"
+ },
+ "Camera 4 Video (3)_481": {
+  "at": "2026-09-18 03:07",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: Camera 4 Video (3)_361",
+  "status": "exclude"
+ },
+ "Camera 4 Video (30)_121": {
+  "at": "2026-09-18 03:07",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: Camera 4 Video (30)_1",
+  "status": "exclude"
+ },
+ "Camera 4 Video (30)_181": {
+  "at": "2026-09-18 03:07",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: Camera 4 Video (30)_1",
+  "status": "exclude"
+ },
+ "Camera 4 Video (30)_241": {
+  "at": "2026-09-18 03:07",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: Camera 4 Video (30)_1",
+  "status": "exclude"
+ },
+ "Camera 4 Video (31)_61": {
+  "at": "2026-09-18 03:07",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: Camera 4 Video (31)_1",
+  "status": "exclude"
+ },
+ "Camera 4 Video (32)_121": {
+  "at": "2026-09-18 03:07",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: Camera 4 Video (32)_1",
+  "status": "exclude"
+ },
+ "Camera 4 Video (32)_181": {
+  "at": "2026-09-18 03:07",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: Camera 4 Video (32)_1",
+  "status": "exclude"
+ },
+ "Camera 4 Video (32)_241": {
+  "at": "2026-09-18 03:07",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: Camera 4 Video (32)_1",
+  "status": "exclude"
+ },
+ "Camera 4 Video (32)_61": {
+  "at": "2026-09-18 03:07",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: Camera 4 Video (32)_1",
+  "status": "exclude"
+ },
+ "Camera 4 Video (36)_181": {
+  "at": "2026-09-18 03:07",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: Camera 4 Video (36)_61",
+  "status": "exclude"
+ },
+ "Camera 4 Video (37)_61": {
+  "at": "2026-09-18 03:07",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: Camera 4 Video (37)_1",
+  "status": "exclude"
+ },
+ "Camera 4 Video (38)_241": {
+  "at": "2026-09-18 03:07",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: Camera 4 Video (38)_61",
+  "status": "exclude"
+ },
+ "Camera 4 Video (40)_121": {
+  "at": "2026-09-18 03:07",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: Camera 4 Video (40)_1",
+  "status": "exclude"
+ },
+ "Camera 4 Video (40)_241": {
+  "at": "2026-09-18 03:07",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: Camera 4 Video (40)_1",
+  "status": "exclude"
+ },
+ "Camera 4 Video (47)_61": {
+  "at": "2026-09-18 03:07",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: Camera 4 Video (47)_1",
+  "status": "exclude"
+ },
+ "Camera 4 Video (5)_121": {
+  "at": "2026-09-18 03:07",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: Camera 4 Video (5)_1",
+  "status": "exclude"
+ },
+ "Camera 4 Video (5)_181": {
+  "at": "2026-09-18 03:07",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: Camera 4 Video (5)_1",
+  "status": "exclude"
+ },
+ "Camera 4 Video (5)_61": {
+  "at": "2026-09-18 03:07",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: Camera 4 Video (5)_1",
+  "status": "exclude"
+ },
+ "Camera 4 Video (55)_121": {
+  "at": "2026-09-18 03:07",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: Camera 4 Video (55)_61",
+  "status": "exclude"
+ },
+ "Camera 4 Video (55)_181": {
+  "at": "2026-09-18 03:07",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: Camera 4 Video (55)_61",
+  "status": "exclude"
+ },
+ "Camera 4 Video (6)_61": {
+  "at": "2026-09-18 03:07",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: Camera 4 Video (6)_1",
+  "status": "exclude"
+ },
+ "Camera 4 Video (7)_121": {
+  "at": "2026-09-18 03:07",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: Camera 4 Video (7)_1",
+  "status": "exclude"
+ },
+ "Camera 4 Video (7)_181": {
+  "at": "2026-09-18 03:07",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: Camera 4 Video (7)_1",
+  "status": "exclude"
+ },
+ "Camera 4 Video (7)_61": {
+  "at": "2026-09-18 03:07",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: Camera 4 Video (7)_1",
+  "status": "exclude"
+ },
+ "Camera 4 Video (8)_121": {
+  "at": "2026-09-18 03:07",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: Camera 4 Video (8)_1",
+  "status": "exclude"
+ },
+ "Camera 4 Video (8)_181": {
+  "at": "2026-09-18 03:07",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: Camera 4 Video (8)_1",
+  "status": "exclude"
+ },
+ "Camera 4 Video (8)_241": {
+  "at": "2026-09-18 03:07",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: Camera 4 Video (8)_1",
+  "status": "exclude"
+ },
+ "Camera 4 Video (8)_61": {
+  "at": "2026-09-18 03:07",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: Camera 4 Video (8)_1",
+  "status": "exclude"
+ },
+ "Camera 4 Video (9)_61": {
+  "at": "2026-09-18 03:07",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: Camera 4 Video (9)_1",
+  "status": "exclude"
+ },
+ "Camera 4 Video (97)_61": {
+  "at": "2026-09-18 03:07",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "note": "중복: Camera 4 Video (97)_1",
+  "status": "exclude"
+ }
+}

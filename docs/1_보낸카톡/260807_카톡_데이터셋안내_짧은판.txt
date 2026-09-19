@@ -1,0 +1,50 @@
+[데이터셋 안내] 4과일 화소 통일본
+
+교수님 지시대로 4개 데이터셋 사진의 가로세로 비율은 그대로 두고,
+총 화소 수만 1440x1440(=2,073,600)에 맞춰 리사이즈했습니다.
+해상도(가로x세로)는 데이터셋마다 다릅니다. 맞춘 건 '화소 수'예요.
+(비율을 억지로 맞추면 사진이 찌그러져서 교수님이 그 방식을 물리셨습니다.
+ 학습 때 어차피 512x512로 크롭하니 해상도가 달라도 됩니다.)
+
+[경로]
+/data/project/2026summer/kds0206/datasets_resized_2mp/
+
+[과일별]
+🫐 블루베리 6폴드 1,195장
+  /data/project/2026summer/kds0206/datasets_resized_2mp/splits/blueberry/cv1   (cv1~cv6)
+🍎 사과 (MinneApple) 5폴드 1,001장
+  /data/project/2026summer/kds0206/datasets_resized_2mp/splits/apple/cv1   (cv1~cv5)
+🍑 복숭아 5폴드 125장
+  /data/project/2026summer/kds0206/datasets_resized_2mp/splits/peach/cv1   (cv1~cv5)
+🍇 포도 (CERTH) 5폴드 2,502장
+  /data/project/2026summer/kds0206/datasets_resized_2mp/splits/grape/cv1   (cv1~cv5)
+합계 4,823장
+
+[쓰는 법] yaml 의 DATASET.ROOT 한 줄만 바꾸면 됩니다.
+DATASET:
+  ROOT: /data/project/2026summer/kds0206/datasets_resized_2mp/splits/apple/cv1
+
+4과일 비교는 cv1~cv5 로 맞추세요.
+블루베리 cv6 은 예전 6-fold 실험용이라 비교표에는 빼주세요.
+
+[복사 안 하셔도 됩니다]
+lab 그룹 전원이 읽을 수 있게 열어놨습니다. 위 경로를 그대로 쓰시면 됩니다.
+꼭 복사하셔야 하면 -a 를 쓰세요. -L 은 절대 쓰지 마세요.
+  (O) cp -a  /data/project/2026summer/kds0206/datasets_resized_2mp 내폴더/     → 약 13GB
+  (X) cp -rL /data/project/2026summer/kds0206/datasets_resized_2mp 내폴더/     → 약 129GB 로 불어납니다
+splits 안이 전부 바로가기라, -L 을 붙이면 같은 사진이 폴드마다 복사됩니다.
+
+[꼭 알아두실 것]
+1) 블루베리는 1,195장 전량 · 7:1:2 로 새로 나눴습니다 (2026-08-08).
+   0806 미팅에서 뺐던 4K 128장을 다시 넣었고, 예전 분할이 7:1:2가 아니라
+   약 67:17:17 이었어서 팀 규칙에 맞춰 다시 떴습니다.
+   폴드 구성이 바뀌어 기존 블루베리 192런과 직접 비교는 안 됩니다. 재학습 필요합니다.
+   ※ 블루베리만 '영상 단위'로 뽑습니다. 파일명이 '영상이름_프레임번호' 라,
+     한 장씩 랜덤으로 뽑으면 같은 영상이 학습과 시험에 같이 들어가 점수가 부풀려집니다.
+2) 사과는 720x1280 을 1080x1920 으로 1.5배 키운 겁니다. 논문 Method 에 적어야 합니다.
+3) 포도는 토이 100장에서 전체 2,502장으로 교체했습니다. 기존 포도 결과와 비교 불가입니다.
+4) 사과 cv1~cv5 는 사진 단위 무작위 분할이라 동영상 앞뒤 프레임이 학습/시험에
+   갈릴 수 있습니다(점수가 실제보다 높게 나올 수 있음).
+   single(2015학습/2016시험) 로도 한 번 돌려보시길 권합니다.
+
+자세한 설명은 /data/project/2026summer/kds0206/datasets_resized_2mp/README.md 에 있습니다.

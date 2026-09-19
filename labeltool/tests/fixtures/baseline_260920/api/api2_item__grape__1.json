@@ -1,0 +1,61 @@
+{
+ "body": {
+  "ai_boxes_status": "saved",
+  "ai_status": "unreviewed",
+  "at": null,
+  "by": null,
+  "confirmed": null,
+  "confirmed_boxes": {
+   "at": "⟨지움⟩",
+   "by": "기준선",
+   "note": "",
+   "status": "fixed"
+  },
+  "confirmed_instances": null,
+  "counts": {
+   "boxes": 2,
+   "conflict": false,
+   "human": 2,
+   "instances": null,
+   "seed_source": "cc4",
+   "source": "boxes",
+   "team_im": 8,
+   "team_park": 8
+  },
+  "dup_group": null,
+  "dup_member_confirmed": [],
+  "dup_member_status": [],
+  "dup_members": [],
+  "dup_rep": null,
+  "fruit": "grape",
+  "has_fixed": false,
+  "has_gt": true,
+  "has_proposal": true,
+  "height": 1920,
+  "inspection": {
+   "fg_frac": 0.176472,
+   "hole_frac": 0.00152214,
+   "largest_comp_frac": 0.485812,
+   "n_components": 8,
+   "suspect": false,
+   "suspect_flags": "",
+   "tiny_comp_count": 1
+  },
+  "n_boxes": 2,
+  "n_inst": null,
+  "note": "",
+  "scores": {
+   "added_frac": 0.009843,
+   "dice_vs_gt": 0.968937,
+   "fg_gt_frac": 0.176472,
+   "fg_pred_frac": 0.184932,
+   "missed_frac": 0.001383,
+   "run_name": "grape_backbone_unet_mit_b2_p0_t2v3"
+  },
+  "src": "human",
+  "status": "unreviewed",
+  "stem": "1",
+  "width": 1080
+ },
+ "http": 200
+}

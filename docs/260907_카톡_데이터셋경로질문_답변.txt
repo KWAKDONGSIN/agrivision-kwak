@@ -1,0 +1,33 @@
+작성: 2026-09-07
+
+사진이랑 마스크는 그 폴더 맞아요.
+/data/project/2026summer/platform/03_data/팀표준_4과일_2MP/
+안에 blueberry/images, blueberry/masks 있고 전부 png예요.
+(실제 위치는 /data/project/2026summer/kds0206/datasets_resized_2mp 인데 링크라 어느 쪽으로 열어도 같아요)
+
+근데 그 밑의 splits/ 폴더는 쓰지 마세요.
+거기 cv1~cv5는 8월 20일 5폴드 분할인데 교수님 9월 5일 프로토콜로 대체됐어요.
+
+새 분할은 여기 csv예요.
+/data/project/2026summer/platform/work/ahn_hongryul/pilot/protocol_splits/v2_seed3407/blueberry.csv
+(사과 apple.csv, 복숭아 peach.csv, 포도 grape.csv 도 같은 폴더)
+
+csv 한 줄에 image_path, mask_path 절대경로가 들어 있어서 그걸 그대로 읽으면 돼요.
+pool 컬럼이 pilot이면 파일럿 20%, main이면 본실험 80%.
+파일럿은 pilot_fold 1~3, 본실험은 main_fold 1~5로 나눠요.
+블루베리 1195장 = 파일럿 239 + 본실험 956, 같은 영상은 같은 폴드라 누수 없어요.
+
+아직 draft라 교수님이 동결하시면 그 버전으로 다시 알려드릴게요.
+
+(추가) 나머지 과일도 전부 같은 폴더 안이에요.
+/data/project/2026summer/platform/03_data/팀표준_4과일_2MP/
+  apple/images, apple/masks : 1001장
+  peach/images, peach/masks : 125장
+  grape/images, grape/masks : 2502장
+  blueberry/images, blueberry/masks : 1195장
+전부 png고 이름이 같은 파일끼리 짝이에요.
+
+분할표는 같은 폴더의 apple.csv, peach.csv, grape.csv, blueberry.csv
+/data/project/2026summer/platform/work/ahn_hongryul/pilot/protocol_splits/v2_seed3407/
+csv 안 경로가 전부 위 팀표준 폴더를 가리켜요.
+파일럿/본실험 = 사과 200/801, 복숭아 25/100, 포도 500/2002, 블루베리 239/956

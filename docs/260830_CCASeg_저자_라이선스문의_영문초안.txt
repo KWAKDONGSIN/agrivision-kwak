@@ -1,0 +1,37 @@
+작성: 2026-08-30
+용도: github.com/catchyoo/CCASeg 에 Issue 로 올리거나, 교신저자 gkim@sogang.ac.kr (김경환 교수, 서강대 전자공학과) 에게 메일.
+     제1저자 Jiwon Yoo = z1u0131@sogang.ac.kr  (WACV 2025 논문 1쪽에서 확인)
+보내는 사람: 곽동신 (GitHub 계정으로 이슈 작성 시 본인 이름·소속만 채우면 됨)
+
+------------------------------ Issue 제목 ------------------------------
+License for the CCASeg code? (request for a LICENSE file)
+
+------------------------------ 본문 ------------------------------
+Hello, and thank you for releasing the official CCASeg implementation.
+
+I am a student at the Department of Data Science, The University of Suwon (Republic of Korea).
+Our lab is preparing an academic benchmark paper on fruit segmentation in orchard images
+(binary semantic segmentation: blueberry, apple, peach, grape), in which we compare several
+decoder heads and backbones under one protocol. CCASeg is one of the decoders we evaluate.
+
+For reproducibility we plan to publish our benchmark code on GitHub under the MIT License.
+Our repository contains a port of `mmseg/models/decode_heads/ccaseg_mit.py` rewritten with
+plain PyTorch (mmcv dependencies removed; the structure and equations are kept identical),
+with a header comment crediting this repository and your WACV 2025 paper.
+
+I noticed that this repository does not currently include a LICENSE file. Could you let us
+know under which license the CCASeg code is released, or add a LICENSE file (e.g. MIT or
+Apache-2.0) to the repository? We would like to make sure we redistribute the ported file
+in a way that respects your terms. If you prefer that the code not be redistributed, we will
+remove the ported file from our public repository and instruct users to obtain it from here.
+
+Of course we cite your paper (Yoo, Ko, Kim, "CCASeg: Decoding Multi-Scale Context with
+Convolutional Cross-Attention for Semantic Segmentation", WACV 2025) in the paper and in
+the code.
+
+Thank you very much for your time.
+
+Best regards,
+Dongsin Kwak
+Department of Data Science, The University of Suwon
+(advisor: Prof. Hongryul Ahn, hrahn@suwon.ac.kr)

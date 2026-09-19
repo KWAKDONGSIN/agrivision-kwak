@@ -1,0 +1,88 @@
+{
+ "body": {
+  "features": {
+   "duplicates": false,
+   "inspection": true,
+   "proposals": true,
+   "scores": true
+  },
+  "flag": "",
+  "flag_counts": {
+   "merged_blob": 3
+  },
+  "fruit": "apple",
+  "items": [
+   {
+    "added_frac": 0.001493,
+    "ai_boxes_status": "saved",
+    "ai_status": "unreviewed",
+    "at": "⟨지움⟩",
+    "by": "AI 사이클3 1차 왕복시험",
+    "confirmed": "ok",
+    "confirmed_boxes": "fixed",
+    "confirmed_by": "기준선",
+    "confirmed_instances": null,
+    "dice": 0.560743,
+    "dup_group": null,
+    "has_fixed": false,
+    "missed_frac": 0.027808,
+    "n_inst": null,
+    "note": "번호 편집 되돌림",
+    "src": "ai",
+    "status": "unreviewed",
+    "stem": "20150919_174151_image1",
+    "suspect": true,
+    "suspect_flags": "merged_blob"
+   },
+   {
+    "added_frac": 0.0033,
+    "ai_boxes_status": "saved",
+    "ai_status": "exclude",
+    "at": "⟨지움⟩",
+    "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+    "confirmed": null,
+    "confirmed_boxes": "fixed",
+    "confirmed_by": null,
+    "confirmed_instances": "ok",
+    "dice": 0.633457,
+    "dup_group": null,
+    "has_fixed": false,
+    "missed_frac": 0.022019,
+    "n_inst": null,
+    "note": "중복: 20150919_174151_image86",
+    "src": "ai",
+    "status": "exclude",
+    "stem": "20150919_174151_image106",
+    "suspect": true,
+    "suspect_flags": "merged_blob"
+   },
+   {
+    "added_frac": 0.00337,
+    "ai_boxes_status": "saved",
+    "ai_status": "exclude",
+    "at": "⟨지움⟩",
+    "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+    "confirmed": null,
+    "confirmed_boxes": "fixed",
+    "confirmed_by": null,
+    "confirmed_instances": null,
+    "dice": 0.662903,
+    "dup_group": null,
+    "has_fixed": false,
+    "missed_frac": 0.021627,
+    "n_inst": null,
+    "note": "중복: 20150919_174151_image96",
+    "src": "ai",
+    "status": "exclude",
+    "stem": "20150919_174151_image101",
+    "suspect": true,
+    "suspect_flags": "merged_blob"
+   }
+  ],
+  "page": 1,
+  "page_size": 120,
+  "pages": 1,
+  "total": 3
+ },
+ "http": 200
+}

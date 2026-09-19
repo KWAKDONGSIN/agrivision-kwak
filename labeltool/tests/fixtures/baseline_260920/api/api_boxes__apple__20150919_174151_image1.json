@@ -1,0 +1,23 @@
+{
+ "body": {
+  "at": null,
+  "boxes": [],
+  "by": null,
+  "classes": [
+   "fruit",
+   "bunch",
+   "other"
+  ],
+  "fruit": "apple",
+  "height": 1920,
+  "ok": true,
+  "saved": false,
+  "stem": "20150919_174151_image1",
+  "team": {
+   "박성문": 93,
+   "임성후": 93
+  },
+  "width": 1080
+ },
+ "http": 200
+}

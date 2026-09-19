@@ -1,0 +1,50 @@
+작성: 2026-09-07
+용도: 성문 님 질문을 GPT·제미나이 등 다른 LLM에 그대로 붙여넣어 교차 확인하기 위한 질문문
+
+──────────── 여기부터 복사 ────────────
+
+semantic segmentation 학습 데이터셋의 파일 형식과 이미지-마스크 짝 찾기에 관한 질문입니다. 아래 상황을 읽고 마지막 질문에 답해 주세요.
+
+[상황]
+1. 원본 데이터셋은 이미지가 bmp, 마스크가 png였습니다. 예: images/1111.bmp 와 masks/1111.png
+2. 4개 과일 데이터셋의 총 화소 수를 맞추려고 리사이즈한 사본을 만들면서 이미지도 png로 저장했습니다. 그래서 사본에서는 images/1111.png 와 masks/1111.png 처럼 이미지와 마스크가 둘 다 png입니다.
+3. 원본 중 리사이즈가 필요 없던 사진은 bmp와 png를 픽셀 단위로 비교했을 때 완전히 동일했습니다.
+4. 폴더 구조는 다음과 같습니다.
+   dataset/train/images/*.png
+   dataset/train/masks/*.png
+   (val, test도 같은 구조)
+5. 학습 코드가 이미지와 마스크 짝을 찾는 부분은 다음과 같습니다 (PyTorch Dataset).
+
+    self.img_dir = self.root / split / "images"
+    self.mask_dir = self.root / split / "masks"
+    allowed = {".png", ".jpg", ".jpeg"}
+    self.files = sorted(
+        path for path in self.img_dir.iterdir()
+        if path.is_file() and path.suffix.lower() in allowed
+    )
+    missing = [
+        path.name for path in self.files
+        if not (self.mask_dir / f"{path.stem}.png").is_file()
+    ]
+    if missing:
+        raise RuntimeError(f"Missing masks; first example: {missing[0]}")
+
+    def __getitem__(self, index):
+        image_path = self.files[index]
+        mask_path = self.mask_dir / f"{image_path.stem}.png"
+        image = Image.open(image_path).convert("RGB")
+        mask = Image.open(mask_path).convert("L")
+        mask = (mask > 0)
+
+[질문]
+팀원이 이렇게 물었습니다.
+"제가 알기로는 이미지 이름이 1111.bmp이고 마스크 이미지가 1111.png 이렇게 이름이 같게 파일 형식만 다르게 해서 같은 이미지 짝을 찾는 거로 알고 있는데, 만약 데이터셋이 섞이게 된다면 같은 png 파일 형식으로 가지고 있어도 문제가 되지 않나요? 파일을 읽을 때 문제가 될 수도 있고요."
+
+다음을 답해 주세요.
+(1) 이미지와 마스크가 둘 다 png여도 짝 찾기나 파일 읽기에 문제가 생길 수 있나요? 생긴다면 정확히 어떤 경우인가요?
+(2) 위 코드 기준으로 "데이터셋이 섞인다"는 상황이 실제로 발생할 수 있나요?
+(3) 이미지를 bmp에서 png로 바꾼 것이 학습 결과에 영향을 줄 수 있나요?
+(4) 공개 segmentation 데이터셋(예: Cityscapes, ADE20K, PASCAL VOC)에서는 이미지와 마스크 형식을 어떻게 두는지, 둘 다 png인 사례가 있는지 알려 주세요.
+근거 없는 추측은 빼고, 확실한 것과 불확실한 것을 구분해서 답해 주세요.
+
+──────────── 여기까지 복사 ────────────

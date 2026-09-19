@@ -1,0 +1,424 @@
+{
+ "aliases": {
+  "boxes": [
+   "INST",
+   "Image",
+   "json",
+   "ndimage",
+   "np",
+   "os",
+   "threading"
+  ],
+  "dupes": [
+   "json",
+   "os"
+  ],
+  "instances": [
+   "DUP",
+   "Image",
+   "base64",
+   "io",
+   "json",
+   "np",
+   "os",
+   "threading",
+   "time"
+  ],
+  "maskio": [
+   "Image",
+   "np",
+   "os",
+   "threading"
+  ]
+ },
+ "modules": {
+  "boxes": [
+   "CLASSES",
+   "MAX_BOXES",
+   "MIN_SIDE",
+   "TEAM_BOX_DIRS",
+   "TEAM_CLS",
+   "boxes_of",
+   "clean",
+   "demo",
+   "export_boxes_to",
+   "human_count",
+   "jsonify",
+   "read_team_boxes",
+   "register",
+   "request",
+   "team_box_path",
+   "team_count"
+  ],
+  "dupes": [
+   "APP_DIR",
+   "DATASET",
+   "DATA_DIR",
+   "DEFAULT_DATASET",
+   "FRUITS",
+   "ROOT",
+   "dataset_for",
+   "duplicate_exclusions",
+   "excluded_stems",
+   "load_duplicate_groups",
+   "pick_representative",
+   "read_status",
+   "representative_map"
+  ],
+  "instances": [
+   "CACHE_DIR",
+   "CC4",
+   "ERROR_CSV",
+   "KIND_SOURCE",
+   "NO_NUM",
+   "PARK",
+   "Response",
+   "SEED_DIRS",
+   "SEED_SOURCE",
+   "cache_file",
+   "cached_counts",
+   "count_fresh",
+   "count_now",
+   "count_one",
+   "has_numbers",
+   "ids_of",
+   "inst_fixed_path",
+   "jsonify",
+   "load_counts",
+   "load_inst",
+   "load_mask_bool",
+   "mask_path_of",
+   "png_u16_bytes",
+   "read_u16",
+   "recount",
+   "register",
+   "request",
+   "save_counts",
+   "seed_source_of",
+   "sig_of",
+   "source_name",
+   "source_of",
+   "stale_stems",
+   "start_count",
+   "summary",
+   "write_u16_atomic"
+  ],
+  "maskio": [
+   "bool_to_png_bytes",
+   "load_mask_bool",
+   "load_mask_raw",
+   "mask_value_report",
+   "raw_to_png_bytes",
+   "save_mask_atomic"
+  ]
+ },
+ "routes": [
+  {
+   "endpoint": "index",
+   "methods": [
+    "GET"
+   ],
+   "rule": "/"
+  },
+  {
+   "endpoint": "api_apply_duplicate_exclusions",
+   "methods": [
+    "POST"
+   ],
+   "rule": "/api/apply_duplicate_exclusions"
+  },
+  {
+   "endpoint": "api_boxes",
+   "methods": [
+    "GET"
+   ],
+   "rule": "/api/boxes"
+  },
+  {
+   "endpoint": "api_boxes_save",
+   "methods": [
+    "POST"
+   ],
+   "rule": "/api/boxes"
+  },
+  {
+   "endpoint": "api_boxes_export",
+   "methods": [
+    "POST"
+   ],
+   "rule": "/api/boxes_export"
+  },
+  {
+   "endpoint": "api_boxes_seed",
+   "methods": [
+    "GET"
+   ],
+   "rule": "/api/boxes_seed"
+  },
+  {
+   "endpoint": "api_boxes_stats",
+   "methods": [
+    "GET"
+   ],
+   "rule": "/api/boxes_stats"
+  },
+  {
+   "endpoint": "api_component",
+   "methods": [
+    "POST"
+   ],
+   "rule": "/api/component"
+  },
+  {
+   "endpoint": "api_duplicate_preview",
+   "methods": [
+    "GET"
+   ],
+   "rule": "/api/duplicate_preview"
+  },
+  {
+   "endpoint": "api_exclude_group",
+   "methods": [
+    "POST"
+   ],
+   "rule": "/api/exclude_group"
+  },
+  {
+   "endpoint": "api_export_excluded",
+   "methods": [
+    "POST"
+   ],
+   "rule": "/api/export_excluded"
+  },
+  {
+   "endpoint": "api_export_list",
+   "methods": [
+    "GET"
+   ],
+   "rule": "/api/export_list"
+  },
+  {
+   "endpoint": "api_export_plan",
+   "methods": [
+    "GET"
+   ],
+   "rule": "/api/export_plan"
+  },
+  {
+   "endpoint": "api_export_start",
+   "methods": [
+    "POST"
+   ],
+   "rule": "/api/export_start"
+  },
+  {
+   "endpoint": "api_export_status",
+   "methods": [
+    "GET"
+   ],
+   "rule": "/api/export_status"
+  },
+  {
+   "endpoint": "api_fruits",
+   "methods": [
+    "GET"
+   ],
+   "rule": "/api/fruits"
+  },
+  {
+   "endpoint": "api_health",
+   "methods": [
+    "GET"
+   ],
+   "rule": "/api/health"
+  },
+  {
+   "endpoint": "api_instance_errors",
+   "methods": [
+    "GET"
+   ],
+   "rule": "/api/instance_errors"
+  },
+  {
+   "endpoint": "api_instance_info",
+   "methods": [
+    "GET"
+   ],
+   "rule": "/api/instance_info"
+  },
+  {
+   "endpoint": "api_instance_stats",
+   "methods": [
+    "GET"
+   ],
+   "rule": "/api/instance_stats"
+  },
+  {
+   "endpoint": "api_item",
+   "methods": [
+    "GET"
+   ],
+   "rule": "/api/item"
+  },
+  {
+   "endpoint": "api_list",
+   "methods": [
+    "GET"
+   ],
+   "rule": "/api/list"
+  },
+  {
+   "endpoint": "api_revert",
+   "methods": [
+    "POST"
+   ],
+   "rule": "/api/revert"
+  },
+  {
+   "endpoint": "api_revert_instances",
+   "methods": [
+    "POST"
+   ],
+   "rule": "/api/revert_instances"
+  },
+  {
+   "endpoint": "api_save",
+   "methods": [
+    "POST"
+   ],
+   "rule": "/api/save"
+  },
+  {
+   "endpoint": "api_save_instances",
+   "methods": [
+    "POST"
+   ],
+   "rule": "/api/save_instances"
+  },
+  {
+   "endpoint": "api_stats",
+   "methods": [
+    "GET"
+   ],
+   "rule": "/api/stats"
+  },
+  {
+   "endpoint": "api_status",
+   "methods": [
+    "POST"
+   ],
+   "rule": "/api/status"
+  },
+  {
+   "endpoint": "api_undo_duplicate_exclusions",
+   "methods": [
+    "POST"
+   ],
+   "rule": "/api/undo_duplicate_exclusions"
+  },
+  {
+   "endpoint": "api_undo_exclude_group",
+   "methods": [
+    "POST"
+   ],
+   "rule": "/api/undo_exclude_group"
+  },
+  {
+   "endpoint": "index_box",
+   "methods": [
+    "GET"
+   ],
+   "rule": "/box"
+  },
+  {
+   "endpoint": "serve_img",
+   "methods": [
+    "GET"
+   ],
+   "rule": "/img"
+  },
+  {
+   "endpoint": "serve_instances",
+   "methods": [
+    "GET"
+   ],
+   "rule": "/instances"
+  },
+  {
+   "endpoint": "login",
+   "methods": [
+    "GET",
+    "POST"
+   ],
+   "rule": "/login"
+  },
+  {
+   "endpoint": "serve_mask",
+   "methods": [
+    "GET"
+   ],
+   "rule": "/mask"
+  },
+  {
+   "endpoint": "static_files",
+   "methods": [
+    "GET"
+   ],
+   "rule": "/static/<path:fn>"
+  },
+  {
+   "endpoint": "serve_thumb",
+   "methods": [
+    "GET"
+   ],
+   "rule": "/thumb"
+  }
+ ],
+ "values": {
+  "boxes.CLASSES": [
+   "fruit",
+   "bunch",
+   "other"
+  ],
+  "boxes.MAX_BOXES": 3000,
+  "boxes.MIN_SIDE": 2,
+  "boxes.TEAM_BOX_DIRS": [
+   [
+    "박성문",
+    "/data/project/2026summer/platform/work/park_seongmoon/bbox_outputs"
+   ],
+   [
+    "임성후",
+    "/data/project/2026summer/platform/work/im_seonghu/bbox_outputs"
+   ]
+  ],
+  "boxes.TEAM_CLS": {
+   "grape": "bunch"
+  },
+  "dupes.DEFAULT_DATASET": "/data/project/2026summer/kds0206/datasets_resized_2mp",
+  "dupes.FRUITS": [
+   "peach",
+   "grape",
+   "apple",
+   "blueberry"
+  ],
+  "instances.CC4": "cc4",
+  "instances.ERROR_CSV_keys": [
+   "apple"
+  ],
+  "instances.KIND_SOURCE": {
+   "fixed": "human_fixed",
+   "gt": "gt_numbers"
+  },
+  "instances.NO_NUM": -1,
+  "instances.SEED_DIRS_keys": [
+   "blueberry",
+   "peach"
+  ],
+  "instances.SEED_SOURCE": {
+   "blueberry": "team:박성문",
+   "grape": "certh_gt",
+   "peach": "team:박성문"
+  }
+ }
+}

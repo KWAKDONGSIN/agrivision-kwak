@@ -1,0 +1,1197 @@
+# 입력 자료 — 교수님(안홍렬) 실험 프로토콜 문서 묶음
+작성: 2026-09-12 · 출처: platform/planning/ (2026-09-11 수정본) · 용도: 외부 AI(GPT·제미나이·클로드)에게 같은 과제를 주기 위한 원문 묶음. 내용은 원문 그대로이며 요약하지 않았다.
+
+
+==================================================================
+## 파일: planning/안내.md
+==================================================================
+
+# planning — 실험 프로토콜
+
+작성: 2026-09-05
+수정: 2026-09-11
+상태: 🟡 **동결 준비.** 12×12 identity·checkpoint·smoke 검증 완료
+
+> 폴더명이 `protocol/` 이 아니라 `planning/` 인 이유: 다른 사람 문서 **46곳**이 `planning/` 경로를
+> 참조하고 있어 이름을 바꾸면 전부 깨집니다. 안쪽 구조는 제안하신 대로입니다.
+
+---
+
+## 문서
+
+| 파일 | 무엇 |
+|---|---|
+| [`260905_00_프로토콜_관리원칙.md`](260905_00_프로토콜_관리원칙.md) | **통제 규칙 + 결정대장.** 파일럿/본실험 구분 · 결정 1~28 이력 · 동결 순서 · 변경관리 · 재실험 트리거 |
+| [`260905_01_데이터_및_분할.md`](260905_01_데이터_및_분할.md) | 데이터셋 4종 · **파일럿의 지위** · 20/80 분할 · 그룹 누출 방지 · test 봉인 |
+| [`260905_02_모델_선정.md`](260905_02_모델_선정.md) | **모델 선정·체크포인트 단일 정본.** eligibility · 144조합 · 최종 checkpoint 12개 · 대안 24개 다운로드/SHA/실측/판정 |
+| [`260905_03_전처리_및_증강.md`](260905_03_전처리_및_증강.md) | 해상도 정책 · 전처리 · 증강 · 누출 방지 |
+| [`260905_04_손실함수_선정.md`](260905_04_손실함수_선정.md) | loss screening 기준 · **BCE+Dice 구현 명세 확정** · 구현 검증 항목 |
+| [`260905_05_학습_및_검증.md`](260905_05_학습_및_검증.md) | 학습 설정 · **update 기반 예산** · 매 epoch center-crop validation · 3종 checkpoint · 예비실험 |
+| [`260905_06_시험_평가_및_보고.md`](260905_06_시험_평가_및_보고.md) | 슬라이딩 추론 · 지표와 예외 규칙 · **통계** · 효율 3층 · 산출물 |
+| [`260906_파일럿_단계_및_결정규칙.md`](260906_파일럿_단계_및_결정규칙.md) | **파일럿 정본.** validation calibration과 후보 screening의 결정 권한·순서 |
+
+### 근거데이터 — `frozen/`
+
+| 파일 | 무엇 |
+|---|---|
+| [`frozen/후보목록.md`](frozen/후보목록.md) | 📄 **후보 65종 목록** — 서지·초록 요약·제외 사유. 헤더 25 · 백본 20 · full-model 범위 밖 5 · 손실 15. **Supplementary selection flow 원본** |
+| [`frozen/후보목록.tsv`](frozen/후보목록.tsv) | 위 문서의 원본 데이터 47열 (동결 전 채울 칸 포함) |
+| [`frozen/실행설정.yaml`](frozen/실행설정.yaml) | 실행 설정 정본. 문서와 실제 실행을 잇는 기계 판독본. 미결은 `null` |
+| [`frozen/260905_프로토콜_동결기록.md`](frozen/260905_프로토콜_동결기록.md) | 동결 상태·해시·체크리스트·amendment 대장 |
+| [`results/selected_checkpoint_inventory.csv`](results/selected_checkpoint_inventory.csv) | 최종 12개 checkpoint의 기계 판독 inventory |
+| [`results/selected_checkpoint_manifest.tsv`](results/selected_checkpoint_manifest.tsv) | 최종 12개 checkpoint의 공식 URL·release·SHA·사전학습·로드키·판정 요약 |
+| [`results/alternative_checkpoint_validation.csv`](results/alternative_checkpoint_validation.csv) | 대안 24개의 41-column 다운로드·무결성·실측·판정 원자료 |
+
+과거 자료는 전부 [`_legacy/`](_legacy/) 에 있습니다. 지운 것은 없습니다. `_legacy/`의 문서는 결정 경위를 확인하는 용도이며, 현재 실행 값의 근거로 사용하지 않습니다.
+
+### 정본 판정 규칙
+
+1. 실험 계획은 이 문서와 `260905_00`~`06`, `260906_파일럿_단계_및_결정규칙.md`만 현행으로 본다.
+2. 값이 충돌하면 `260905_00_프로토콜_관리원칙.md`의 결정대장을 우선한다.
+3. `frozen/`은 현재는 **draft 동결 준비 영역**이다. `실행설정.yaml` 상단이 `status: frozen`이 되기 전에는 확정 실행설정으로 간주하지 않는다.
+4. `_legacy/`(그 안의 `모델선정/` 포함), `_inbox/`, `work/`의 문서는 근거·작업 기록이지 현행 프로토콜이 아니다.
+
+---
+
+## 지금 확정된 설계
+
+```
+144조합 = 헤더 12종 × 백본 12종
+      ↓
+C1       대표 2×2(4 pair) × 4데이터셋 × pilot 3fold(v2), 300 epoch   48 런 ✅ 완료(이력)
+파일럿0  대표 2×2(4 pair) × 4데이터셋 × 4회전(v3), 800 epoch      64 런 ▶ 실행 중
+      ↓  매 epoch center-crop 궤적으로 validation·조기종료 규칙 동결
+파일럿  전체의 20%, 그 안에서 4분할(학습2/검증1/시험1 회전), 4개 데이터셋   2,304 런
+      ↓  Dice 하나로만 점수 (데이터셋 4개 동일가중)
+A = 헤더별 top-1 백본 (12)  ∪  B = 백본별 top-1 헤더 (12)
+      ↓  C = 12~23개. 파일럿 종료 시 동결
+본실험  144조합 공통 M1 holdout                                  576 런
+      ↓  M1 결과로 C 변경 금지
+          C만 M2~M5 추가                                192~368 런
+벤치마크 합계 3,072~3,248 런; C1·파일럿0 포함 신규 전체 3,184~3,360 런
+```
+
+- **A∪B면 헤더·백본 12종이 전부 최소 한 번씩 들어갑니다.** 전체 최고 조합은 A∩B에 속해 최대 23개입니다.
+- Full-grid winner(공통 M1 1위)와 Cross-validated winner(C의 5-fold 1위)를 구분하고, 실무 최종 권장은 후자로 합니다.
+- 통계 주 분석은 **paired 비교 + 다중비교 보정**. Friedman 은 보조이고 **블록 수는 4**입니다.
+- 효율은 **선정에 관여하지 않고 보고만** 합니다.
+
+---
+
+## 🔴 지금 막고 있는 것
+
+### 결정대장 — 21·10·11·22 해소, **13 미결**
+
+| 순 | # | 무엇 | 담당 |
+|---|---|---|---|
+| — | **21** | **해소:** smooth Dice 유지; hard Dice는 양쪽 빈 경우 1, 한쪽만 빈 경우 0 | — |
+| — | **22** | **해소: H002 = `BackboneUNet` (U-Net-style decoder)** | — |
+| — | 10 | **해소: U-MixFormer·VWFormer 모두 편입** | — |
+| — | 11 | **해소: HRNetV2-W32** | — |
+| 1 | 13 | VMamba-T 버전 동결 (config·commit·checkpoint hash) | 팀 |
+
+> ✅ **2026-09-05 실측 정정**: 전체 영상 **4,823장 전량에서 전경 0인 영상은 0장(0.0%)** 입니다.
+> 기존에 인용하던 **8.8% 는 «센터크롭 안에» 과일이 0개인 비율**이라 전체영상 평가에는 해당하지 않습니다.
+> → 전체영상 최종 지표에서는 미결 21이 ranking을 직접 바꾸지 않습니다. C1 center-crop validation에는
+> 빈 전경 crop이 있을 수 있으므로 0/0 규칙을 그대로 기록합니다. **학습 손실**은 더 직접적입니다 —
+> foreground-aware sampling의 배경 우세 crop에서 빈 전경이 생기면 loss 값·gradient가 달라집니다.
+
+21은 파일럿 결과를 보기 전에 확정했습니다. 이후 결과에 따라 이 규칙을 바꾸지 않습니다.
+
+### 코드 12건 — 없는 것
+
+| # | 무엇 | 현재 |
+|---|---|---|
+| O-1 | **슬라이딩 윈도우 추론** (512/384/평균/padding 제외) | 🔴 **0건** |
+| O-2 | center-crop validation 고정 및 manifest | ✅ C1 구현 (`EVAL.CROP=true`) |
+| O-3 | **매 epoch validation**과 standard/fast ES 사후 재생 | ✅ C1 구현 |
+| O-4 | `last_converged`·standard-best·fast-best 3종 checkpoint | ✅ C1 구현·smoke 통과 |
+| O-5 | 후보 규칙: standard min80/patience40, fast min40/patience10, δ=0.0005 | ✅ C1에서 비교 후 동결 |
+| O-6 | foreground-aware sampling 70/30 | 🔴 없음 |
+| O-7 | 효율 측정 통합 스크립트 | ⚠️ `fvcore` 만 있음 |
+| O-8 | Boundary F1 · 객체 수준 지표 | ⚠️ 확인 필요 |
+| O-9 | `get_eval_augmentation(use_crop=…)` — **두 분기 모두 CenterCrop** | 🔴 `augmentations.py:340` |
+| O-10 | 12-head×12-backbone registry·factory 등록과 custom op 확인 | ⚠️ 전체 공식 소스 설치, C1 2×2 factory/smoke 완료; 나머지 adapter 대기 |
+| O-11 | 파일럿 데이터셋별 ranking + Kendall τ 산출 | 🔴 없음 |
+| O-12 | 20/80 + 파일럿 4분할 + 본실험 5fold assignment 생성기 | ✅ v3_seed3407 manifest·SHA-256 생성 (2026-09-11; v2 3fold는 C1 이력) |
+
+헤더 OCRNet·U-MixFormer·VWFormer·HamNet과 백본 HRNet·VMamba·MSCAN·InternImage·TransNeXt·MogaNet·vHeat의 구현·factory·가중치·custom op 상태를 전수 실측해야 합니다. **144조합은 이 검증 전에 실행할 수 없습니다.**
+
+### 자원 — ❌ 추정. 실측으로 교체해야 함
+
+| 단계 | 런 수 | 추정 GPU-h |
+|---|---:|---:|
+| 예비실험 (200ep 완주) | 6 | 약 30 |
+| C1 validation calibration (300ep 완주, 3fold) | 48 | ✅ 완료 — GPU 8장 약 12.6시간 |
+| 파일럿0 (800ep 완주, 4분할) | 64 | 약 262 (❌ C1 실측 기반 추정) |
+| 파일럿 screening | 2,304 | 🔴 재산정 필요 |
+| 본실험 공통 M1 | 576 | 🔴 재산정 필요 |
+| C의 M2~M5 추가 | 192~368 | 🔴 재산정 필요 |
+| **합계** | **완료 C0 6 + 신규 3,184~3,360** | **🔴 calibration 실측으로 GPU-h 재산정 필요** |
+
+저장량은 12×12 확대 후 기존 460 GB 추정을 쓰지 않습니다. C1과 smoke run의 실측 checkpoint 크기로 파일럿·M1·추가 4-fold 보관량을 다시 계산하고, 파일럿 보존 정책을 실행 전 동결합니다.
+
+> 기존 GPU-h 추정은 옛 「런당 약 3시간」 비율을 확대 적용한 값이라 폐기합니다. 완료된 calibration 로그와
+> 파일럿 smoke run 실측으로 파일럿·본실험을 각각 다시 산정합니다.
+
+---
+
+## 🔴 잊으면 안 되는 것
+
+1. **후보 선정에 본실험 성능을 쓰지 않습니다.** (실제로 CCASeg 근거에서 위반이 적발된 적 있음)
+2. **C를 12~23개로 좁힌 이유를 «통계 검출력»이라고 쓰면 안 됩니다.** 계산량·축 대표성·설명 단순성을 위한 선별입니다.
+3. **144조합 M1 순위와 C의 5-fold 순위를 같은 것으로 쓰지 않습니다.** Full-grid winner와 Cross-validated winner를 구분합니다.
+4. **"전체 데이터의 5-fold cross-validation" 이라고 쓰면 안 됩니다.**
+   → *20% exclusive pilot; all 144 configurations on a common independent M1 holdout from the main 80%; pilot-selected C confirmed with five-fold OOF.*
+5. **"전수조사(exhaustive survey)" 라고 쓰지 마세요.** 검색식이 보존되지 않았습니다 →
+   *candidate audit / scoping review*.
+
+---
+
+## 별건 — 원고 쪽
+
+- 🔴 `main.tex:506` 해상도 문구 정정 (2.07 MP = 공통 해상도 ❌ → **최대 픽셀 예산** ⭕)
+- 🔴 "identical 12.6%" 공정성 논거 삭제 — 데이터셋 간 과일 포착률이 22.7~60.7% 로 2.7배 차이
+- ✅ 인훈 4AI 전수조사(`work/choi_inhun/` 7건) 대조 완료 (2026-09-06) → `platform/_inbox/260904_전수조사_인훈님조사_대조.md`.
+  후보목록 B015(mobile)·F005(nnU-Net) 추가. 교수님 미팅 요약 `platform/_inbox/260906_교수님미팅_한장요약.md`
+
+## 규칙
+
+- 계획이 바뀌면 **`260905_00_프로토콜_관리원칙.md` 결정대장에 먼저 적고** 해당 프로토콜 문서를 고칩니다.
+  어긋나면 00 이 맞습니다.
+- 근거는 **✅ 논문 근거(citekey 명시)** 와 **❌ AI·우리 판단** 을 구분합니다 (0820 교수님 지시).
+- ⛔ `03_data/`·`04_experiments/` 는 **링크**입니다. 삭제·이동·개명 금지.
+- ⛔ 삭제는 사람이 합니다. AI 는 지울 목록만 만듭니다.
+
+## 승계된 검토 기록
+
+2026-09-05 검토서의 지적은 현재 00~06 문서와 결정 22~27에 승계되었습니다. 원문은 [`_legacy/260905_계획_검토결과.md`](_legacy/260905_계획_검토결과.md)에 보존합니다.
+
+==================================================================
+## 파일: planning/260905_00_프로토콜_관리원칙.md
+==================================================================
+
+# 00. 프로토콜 관리 원칙
+
+작성: 2026-09-05
+수정: 2026-09-11
+상태: 🟡 draft — 동결 전
+
+개별 설정이 아니라 **전체 실험의 통제 규칙**과 **모든 설계 결정의 단일 출처**입니다.
+다른 프로토콜 문서와 어긋나면 이 문서가 맞습니다.
+
+---
+
+## 1. 탐색적 파일럿과 확증적 본실험의 구분
+
+| | 파일럿 (전체의 20%) | 본실험 (나머지 80%) |
+|---|---|---|
+| 성격 | **탐색적(exploratory)** | **확증적(confirmatory)** |
+| 허용되는 결정 | 사전 등록된 규칙에 따른 **144조합 screening과 후보 C 확정만** | 없음. 동결된 설정과 C를 실행·평가할 뿐 |
+| 쓸 수 있는 성능 | **파일럿 validation 만** | test 는 평가에만. 어떤 결정에도 쓰지 않음 |
+| 재사용 | 본실험 학습·시험에 **절대 재사용 안 함** | — |
+
+### 🔴 절대 규칙
+
+> **후보 선정에 본실험 성능을 쓰지 않는다.** 과거 234개 결과도, smoke test 정확도도 쓰지 않는다.
+
+Smoke test 는 오직 이것만 판정합니다 — forward/backward 가 도는가 / pretrained weight 가 로드되는가 /
+모든 백본 feature level 과 연결되는가 / 512 입력에서 OOM 이 없는가 / loss 가 NaN 이 아닌가 / 출력 크기가 맞는가.
+
+> ⚠️ **이 규칙 위반이 실제로 적발된 적이 있습니다.** 2026-09-05 4차 외부검증에서 CCASeg 선정 근거였던
+> *"이진 과제 적용이 실측 검증된 유일 후보(기존 192런)"* 가 결과 의존적 선택으로 판명돼 제거됐습니다.
+
+**이 규칙은 설정에도 적용됩니다.** scale을 포함한 loss·증강·학습·검증·평가 설정은 파일럿 성능으로
+고르지 않고, screening 전에 전부 확정합니다. 파일럿이 성능으로 고를 수 있는 것은 후보 `C` 하나입니다.
+
+### ⚠️ 남아 있는 설계 쟁점 — 파일럿이 «조합» 을 골라도 되는가
+
+우리 확정안(결정 14~16, 25)은 **파일럿 validation Dice 로 144조합에서 C(12~23조합)를 선정**합니다.
+반면 더 엄격한 입장은 *"모델 선정은 문헌·구조적 대표성·재현성으로만 하고, 파일럿은 실행 가능성만 확인한다"* 입니다.
+
+**우리는 전자를 택했습니다.** 이유:
+
+- 절대 규칙이 금지하는 것은 **본실험(test) 성능** 사용입니다. 파일럿은 본실험과 표본이 완전히 분리돼 있어
+  (20/80, 재사용 없음) 정보 누출이 없습니다.
+- 후보군 **도출**(144조합)은 문헌·구조적 대표성·재현성으로 합니다. 파일럿 점수는 추가 4-fold 확인 대상 C를 좁히는 데만 씁니다.
+- 본실험에서는 144조합 모두를 공통 `M1` holdout에서 평가하고, C만 나머지 4-fold를 추가합니다. `M1` 결과로 C를 바꾸지 않습니다.
+
+**단, 논문에는 이 단계를 숨기지 않고 명시합니다** — *"pilot-based candidate narrowing on a
+disjoint 20% split, frozen before any main-split evaluation."* 이것을 「모델 선정은 성능과 무관했다」로
+서술하면 안 됩니다.
+
+---
+
+## 2. 결정 상태 표기
+
+| 상태 | 의미 |
+|---|---|
+| **Fixed a priori** | 문헌·연구 목적·공정성에 따라 사전 고정 |
+| **Pilot-selected** | 사전에 정한 규칙에 따라 파일럿 결과로 결정 |
+| **Derived** | 학습 데이터 특성으로 자동 계산. 튜닝하지 않음 |
+| **Model-native** | 공통 factorial 범위 밖 구성의 고유 설정. 본 실험에서는 사용하지 않음 |
+| **Report-only** | 통제하지 않고 측정·보고만 함 |
+| **Pending** | 아직 안 정함. 동결 전까지 반드시 해소 |
+
+---
+
+## 3. 결정대장 — 기존 결정과 2026-09-07·09-11 변경
+
+### 데이터와 분할
+
+| # | 무엇 | 결정 | 상태 | 왜 |
+|---|---|---|---|---|
+| 1 | 분할 방식 | 5폴드 × 7:1:2 | ⚠️ **12번으로 대체** | 0820 교수님. 이력으로만 남김 |
+| **12** | 파일럿 도입과 분할 | **파일럿 20% 완전 제외**<br>main 80%를 `M1`–`M5`로 분할 | Fixed a priori | 파일럿 재사용 편향 제거. C는 5-fold OOF, C 외 조합은 공통 M1 holdout만 평가(결정 25) |
+
+> 5-fold OOF와 mean±SD는 C에만 해당합니다. 144조합 전체에 5-fold를 했다고 쓰지 않습니다.
+> 논문에는 *"All 144 configurations were compared on a common independent holdout from the main 80% pool, followed by five-fold confirmation of a pilot-selected subset."*로 구분해 적습니다.
+
+### 평가
+
+| # | 무엇 | 결정 | 상태 | 왜 |
+|---|---|---|---|---|
+| 2 | test 평가 방식 | 전체영상 슬라이딩 윈도우 | Fixed a priori | 센터크롭은 과일 포착률이 22.7~60.7% 로 편향(실측) |
+| 3 | 주 지표 | image-macro Dice | Fixed a priori | 영상별 Dice 의 평균. IoU 는 보조 |
+| 4 | checkpoint 기준 | 전체영상 macro Dice 최대 | Fixed a priori | 평가 지표와 checkpoint 기준을 정렬 |
+
+### 모델
+
+| # | 무엇 | 결정 | 상태 | 왜 |
+|---|---|---|---|---|
+| 5 | 헤더 축에 OCRNet 추가 | 9종 → 10종 | Fixed a priori | object-context 계열 대표가 비어 있었음 |
+| 6 | PVTv2-B2 → HRNet | HRNet; 변형은 **11에서 W32로 해소** | Fixed a priori | MiT-B2 와 동계열 중복. 고해상도 병렬 CNN 계열이 비어 있었음 |
+| 7 | MambaVision-T → VMamba-T | VMamba-T | Fixed a priori | ADE20K 46.0 < 47.9. MambaVision 은 NC 라이선스 |
+| 8 | Mask2Former·BiRefNet | 공통 grid 밖 후보로 분리 | ⚠️ **23으로 대체** | set-prediction loss / 이진 고해상도 특화라 공통 factorial 불가 |
+| **9** | **후보 선정에 본실험 성능** | **금지** | Fixed a priori | 결과 의존적 선택 비판 차단 |
+
+### 조합 선별 (2026-09-05) — 🔒 **잠금. 새 선별 규칙을 더 만들지 않습니다**
+
+| # | 무엇 | 결정 | 상태 | 왜 |
+|---|---|---|---|---|
+| **14** | 파일럿의 역할 | pilot 20% 내부 **4분할 회전(학습 2 / 검증 1 / 시험 1, 결정 29)**에서 **validation process 확정(C1·파일럿0) → process 동결 → 144조합 screening** | Fixed a priori (2026-09-11 결정 29로 3-fold→4분할) | C1(v2 3-fold, 2026-09-07 완료)은 이력으로 보존. C1·파일럿0은 validation process만 결정. 대표 pair는 screening에서 새 seed로 재학습하고 C1 점수를 재사용하지 않음. 상세는 `260906_파일럿_단계_및_결정규칙.md` |
+| **15** | 선별 규칙 | **A(헤더별 top-1 백본 12) ∪ B(백본별 top-1 헤더 12)**, `12 ≤ |C| ≤ 23` | Pilot-selected | A·B가 각 축의 12종을 전부 담고, 전체 최고 조합은 A∩B에 속하므로 합집합은 최대 23. 근거는 계산량·축 대표성·설명 단순함 |
+| **16** | 선별 점수 | **Dice 단일.** 데이터셋별 4회전의 **시험 fold** Dice 평균 → 4데이터셋 동일가중. checkpoint는 각 회전의 검증 fold로 고름. 동점은 ID 사전순 | Fixed a priori | 다축 점수화는 selection protocol 자체가 하이퍼파라미터가 됨 |
+| **17** | 옛 §J 3단계 선별 | **폐기.** C1 validation calibration 후 pilot screening으로 대체 | Fixed a priori | 현재 실험량은 결정 25·26에서 재정의 |
+| **18** | 통계 주분석·블록 수 | **paired 비교 + 다중비교 보정이 주 분석.** Friedman 은 보조. **블록 $N$ = 4** | Fixed a priori | 같은 dataset의 fold는 독립 블록이 아님. C 축소를 통계 검출력 개선으로 설명하지 않음 |
+| **19** | 복숭아 저표본 | **가중치 불변** + 데이터셋별 ranking 보존 + **Kendall τ** 보고 | Report-only | 가중치를 손대면 그게 새 설계 파라미터가 됨 |
+| **20** | 효율 지표 | 선정에서 **완전 제외** | Report-only | 선정 기준을 Dice 하나로 유지 |
+
+### 2026-09-07 계획 변경 — 결정 22~27
+
+| # | 무엇 | 결정 | 상태 | 왜 |
+|---|---|---|---|---|
+| **22** | U-Net 헤더 구현 | **`BackboneUNet`**. 논문 표기는 *U-Net-style decoder* | Fixed a priori | 12개 공통 백본과 교차하려면 독립 전체망 `UNet`이 아니라 4-stage feature를 받는 decoder component여야 함 |
+| **23** | 실험 모집단과 외부 baseline | **교환 가능한 backbone×decoder로 사전 한정. Mask2Former·BiRefNet 등 co-designed full model은 실험에서 제외** | Fixed a priori | 분리 불가 전체망에 native loss 예외를 허용하면 구성요소 효과 해석과 공통 조건이 깨짐. candidate audit에 `exclude_interface` 사유는 보존 |
+| **24** | 최종 factorial grid | **12 heads × 12 backbones = 144조합** | Fixed a priori | 고전 anchor와 최근 mechanism을 공통 조건에서 교차해 백본·디코더 주효과와 상호작용을 분리 |
+| **25** | 본실험 절충 설계 | **144조합 모두 공통 `M1` holdout 평가 + 파일럿에서 고정한 C만 `M2`–`M5` 추가 평가** | Fixed a priori | 전체 grid의 독립 공통분할 순위·상호작용과 유망 조합의 5-fold 안정성을 계산량 제약 안에서 둘 다 확보 |
+| **26** | C1 대표 2×2 | **{BackboneUNet, VWFormer} × {ResNet-50, MiT-B2} = 4 pair** | Fixed a priori | 고전/attention decoder와 CNN/Transformer backbone을 교차해 validation 안정성과 interface 이식성을 함께 검사 |
+| **27** | C1 validation·checkpoint | **512 center crop으로 매 epoch validation. 300 epoch는 실제 중단 없이 완주하고 standard ES(min80/patience40)와 fast ES(min40/patience10)를 사후 재생. `last_converged`·standard-best·fast-best 3개를 보존** | User-directed before C1 | 조밀한 궤적이 있어야 빠른 종료가 놓친 후기 개선과 regret를 같은 학습 궤적에서 비교할 수 있음. 종전 center/full/fast-bank C1 비교를 대체 |
+| **28** | 백본 대표성·파라미터·라이선스 | **21–31M 사전 지정(중심 약 26M, ±5M)의 parameter-count–matched band에서 mechanism-stratified representatives 12종 유지. 라이선스는 기록하되 연구용 eligibility에는 미사용하고 제3자 코드는 재배포하지 않음** | User-directed before pilot | optimal/best available 또는 완전한 capacity control로 과장하지 않고, 파라미터 외 FLOPs·VRAM·latency를 셀별 실측하기 위함 |
+
+### 2026-09-11 계획 변경 — 결정 29~30
+
+| # | 무엇 | 결정 | 상태 | 왜 |
+|---|---|---|---|---|
+| **29** | 파일럿 내부 분할 | **pilot 20%를 4분할. 회전마다 시험 fold t, 검증 fold t+1(순환), 나머지 2 fold로 학습 → 데이터셋당 4회전.** 분할 `v3_seed3407`(20/80 소속·main 5-fold·group은 v2와 동일, pilot fold만 재배정). C1은 v2 3-fold로 완료된 이력으로 보존 | User-directed before pilot (2026-09-11) | 사용자 지시. 파일럿 안에서 checkpoint를 고르는 검증 fold와 성능을 재는 시험 fold를 분리. 회전당 학습 표본은 파일럿의 2/3→2/4로 줄어듦 |
+| **30** | 파일럿0 | **대표 2×2(결정 26) × 4 datasets × 4회전 = 64런. 800 epoch 완주(조기종료 없음), 매 epoch 검증·시험 loss·전경 IoU/Dice·pixel accuracy와 단계별 자원 기록. checkpoint는 검증 전경 IoU 최고(전경 Dice와 순위 동일)와 epoch 800 두 개** | User-directed before pilot (2026-09-11) | 사용자 지시. 긴 학습 예산에서 검증·시험 궤적을 함께 관측. 시험 궤적으로 epoch·설정을 고르지 않음. 이 단계의 결정 권한은 🟡 미정. 실행 `04_experiments/260911_파일럿0/` |
+
+---
+
+## 4. 결정대장 — backbone identity 미결 없음
+
+결정 21·22는 해소되었고, 기존 헤더 슬롯 10(결정 10)은 U-MixFormer와 VWFormer를 둘 다 편입하면서 소멸했습니다. HRNet은 projection 포함 identity로, VMamba-T는 v2 `s1l8` config·checkpoint·backend로 확정했습니다. 결정 28에 따라 vHeat-T도 유지하며 라이선스는 별도 기록합니다.
+
+| 순 | # | 무엇 | 선택지 | 왜 막고 있나 | 담당 |
+|---|---|---|---|---|---|
+| — | **21** | **빈 전경의 Dice 처리** | smooth loss 유지; hard Dice 양쪽 빈 경우 1, 한쪽만 빈 경우 0 | ✅ **해소 (2026-09-06).** 아래 주석 참조 | — |
+| — | **22** | U-Net 구현 | **해소: `BackboneUNet`** | 4-stage 공통 interface용 U-Net-style decoder | — |
+| — | **10** | 최신 attention head | **해소: U-MixFormer·VWFormer 모두 편입** | 12-head grid로 확대 | — |
+| — | **11** | HRNet 변형 | **해소: HRNetV2-W32** | 최종 grid identity 확정 | — |
+| — | **13** | VMamba-T 동결 | **해소: v2 `s1l8`, checkpoint SHA-256 및 `selective_scan_torch` backend 동결** | 2026-09-08 구현·smoke 검증 완료 | — |
+
+결정 10·11·13은 해소됐으며, 현재 backbone candidate identity 미결은 없습니다.
+
+### 미결 21의 범위 정정과 해소 (2026-09-05 실측, 2026-09-06 확정)
+
+> ✅ **전체 영상 4,823장 전량 실측 — 전경 0인 «영상» 은 0장(0.0%)** 입니다.
+> 기존에 근거로 쓰던 **8.8% 는 «센터크롭 안에» 과일이 0개인 비율**이지 영상 단위 비율이 아닙니다.
+> 전체영상 평가로 바꿨으므로 그 숫자를 21 의 근거로 인용하면 안 됩니다.
+
+따라서 21 은 **둘로 나뉘고, 급한 쪽은 지표가 아니라 손실입니다.**
+
+| | 어디서 | 빈 전경이 생기나 | 급한가 |
+|---|---|---|---|
+| **(a) 손실 수준** | 학습, 512 crop | 🔴 **자주** — foreground-aware sampling 이 의도적으로 **30% 를 배경 우세 crop** 으로 뽑음 | 🔴 **파일럿 전 필수** |
+| (b) 지표 수준 | 평가, 전체 영상 | **없음** (실측 0/4,823) | 사전 기록만 |
+| (c) fast validation | 검증, window bank | 선택된 창이 해당 영상의 GT 전경을 하나도 포함하지 않고 예측도 비면 영상 단위 합산 후에도 0/0 가능 | 🔴 bank 생성 전 규칙·포함 보장 필요 |
+
+전체영상 최종 평가는 전경 0 영상이 없어 0/0 규칙이 ranking을 직접 바꾸지 않습니다. 그러나 **fast validation은
+window bank가 전경 창을 포함한다는 보장이 아직 없으므로 예외가 생길 수 있습니다.** bank가 모든 영상에서 GT
+전경을 포함하도록 생성·검증하거나 0/0 규칙을 사전에 고정해야 합니다. 이와 별개로 손실 수준에서는 학습 자체가
+달라지므로 여전히 최우선입니다.
+
+### 21 적용의 절대 조건
+
+> **파일럿 결과를 먼저 보고 유리한 규칙을 고르면 안 됩니다.**
+> 순서는 **빈 전경 처리 규칙 사전 확정 → 144조합 파일럿 실행** 이어야 합니다.
+> 이것은 §1 절대 규칙(결과 의존적 선택 금지)이 프로토콜 «설정» 에도 적용된다는 뜻입니다.
+> 어느 규칙이 파일럿 점수를 높이는지 본 뒤에 고르면, 선별 결과 전체가 방어 불가능해집니다.
+
+이 원칙은 21 뿐 아니라 **04·05·06 의 모든 `Pending` 항목에 동일하게 적용됩니다.**
+
+---
+
+## 5. 동결 순서
+
+앞 단계가 얼기 전에 뒤 단계를 얼리지 않습니다.
+
+```
+⓪ C0 사전 예비검증 → 기존 6런×200 epoch 완료, 잠정 후보 규칙 기록
+① 02 모델 선정·구현 → 12×12 identity(미결 13 포함) 동결, 전 조합 smoke test
+② 01 데이터·분할   → prior-validation group을 pilot에 포함, 20/80·파일럿 4분할(v3) hash 기록
+③ C1 전 공통 설정  → loss·scale·optimizer·LR·update 예산·seed를 하나로 고정
+④ C1 validation calibration → 대표 4 pair×4 datasets×3 folds(v2) = 48 trajectory, 300 epoch 완주 ✅ 2026-09-07 (이력)
+④′ 파일럿0        → 대표 4 pair×4 datasets×4회전(v3) = 64런, 800 epoch 완주, 매 epoch 검증·시험 기록
+⑤ validation process 동결 → 매-epoch center-crop 궤적으로 standard/fast ES·checkpoint 규칙 확정
+⑥ pilot screening  → 동결 설정으로 2,304런(144×4 datasets×4회전), 후보 C 동결
+⑦ frozen/          → 실행설정·코드·가중치·분할 hash 기록, 읽기 전용 보관
+        ↓
+    본실험 시작. 144조합 공통 M1 평가 후, 사전 고정 C만 M2–M5 추가 평가
+```
+
+---
+
+## 6. 변경 관리
+
+### 동결 후 변경 (amendment)
+
+**현재: 없음** (아직 동결 전)
+
+바꿀 때 반드시 적을 것:
+
+- 변경 항목과 이전값 → 새값
+- 발견 시점
+- **본실험 test 결과를 이미 봤는지 (Yes/No)** ← 가장 중요
+- 영향받은 run 목록
+- 재실행 범위
+- 승인자
+
+🔴 **이 기록이 없는 변경이 들어간 결과는 최종 분석에 포함하지 않습니다.**
+
+### 어떤 변경이 전체 재실험을 요구하는가
+
+| 변경 | 재실험 범위 |
+|---|---|
+| 분할(20/80, fold assignment) | **전체 재실험** |
+| loss 정의·계수·reduction | **전체 재실험** |
+| 전처리·normalization·crop 규칙 | **전체 재실험** |
+| optimizer·lr·schedule·batch·update 예산 | **전체 재실험** |
+| 후보 집합 `C` | **본실험 전체 재실행** |
+| checkpoint 선택 기준·조기종료 규칙 | 해당 조합 재학습 |
+| 슬라이딩 stride·겹침 결합·threshold | **재학습 불필요, 추론만 재실행** |
+| 지표 정의·빈 마스크 규칙 | 재학습 불필요, 집계만 재실행 |
+| 통계 검정 방법 | 집계만 재실행 |
+| 효율 측정 | 해당 측정만 재실행 |
+
+### 기록해야 할 식별자
+
+run 하나마다 남깁니다:
+
+```
+protocol_version · protocol_status(draft/frozen)
+code_commit
+data_split_hash
+model_config_hash · pretrained_weight_hash
+preprocessing_hash · loss_hash · training_hash · evaluation_hash
+```
+
+논문 표와 Supplementary 표는 가능하면 `frozen/실행설정.yaml` 에서 자동 생성합니다.
+문서와 실제 실행이 어긋나는 것을 막는 유일한 방법입니다.
+
+---
+
+## 7. cutoff 와 seed
+
+- **문헌 검색 cutoff**: 🟡 미확정. 실제 조사는 **2026-09-05** 까지 수행(WACV 2025 포함).
+  동결 시 이 날짜를 못 박고, 이후 나온 모델은 "cutoff 이후" 로만 언급합니다.
+- **후보 registry 버전**: `frozen/후보목록.tsv` 2026-09-07 (65개 후보 — H025·B016~B020 추가)
+- **seed**: 🟡 미확정. 정할 것 —
+  ① 분할 seed(20/80, fold) ② 학습 seed 개수와 값 ③ window bank 좌표 seed
+  ④ 배정 방식(조합마다 고정 목록에서 순서대로, 모델별로 다르게 뽑지 않음)
+
+---
+
+## 8. 용어 — 쓰지 말 것
+
+| ❌ | ⭕ |
+|---|---|
+| 전수조사 (exhaustive survey) | **candidate audit / scoping review** — 검색식 문자열이 보존되지 않았음 |
+| 직교(orthogonal) taxonomy | multi-axis descriptive taxonomy |
+| 흡수·대체·완전중복 | **family-stratified representative sampling** |
+| "기존안과 독립 조사가 일치했다" 를 신뢰도 근거로 | (독립성을 외부에서 검증할 수 없음) |
+| "전체 데이터의 5-fold cross-validation" | 위 §3 결정 12의 표기 |
+| "모델 수를 줄여 통계 검출력을 높였다" | (사실이 아님 — 결정 18) |
+
+## 9. 근거 표기 (0820 교수님 지시)
+
+- ✅ **논문 근거** — citekey 명시 (예: `demsar2006statistical`)
+- ❌ **AI·우리 판단** — 문헌 근거가 아님을 명시
+
+==================================================================
+## 파일: planning/260905_01_데이터_및_분할.md
+==================================================================
+
+# 01. 데이터 및 분할 프로토콜
+
+작성: 2026-09-05
+수정: 2026-09-07
+상태: 🟡 설계 확정, 실행 전 (분리 미실행)
+
+---
+
+## 1. 데이터셋
+
+### 본실험 4종
+
+| | 이름 | 출처 | 라이선스 | 촬영 단위 | 장수 | 개체 크기 |
+|---|---|---|---|---|---:|---|
+| 블루베리 | 자체 수집 | 연구실 촬영 | 자체 | **카메라 4대** | **1,195** | — |
+| 사과 | MinneApple | 공개 | 공개 | — | **1,001** | 지름 중앙값 **41.8px** (가장 작음) |
+| 복숭아 | 자체/수집 | — | — | — | **125** | — |
+| 포도 | CERTH | 공개 | 공개 | — | **2,502** | 송이 지름 중앙값 **150.1px** |
+
+**포함 기준**: 나무에 달린 과실의 이진 semantic segmentation 이 가능한 픽셀 마스크가 있을 것 ·
+과종이 서로 다를 것(일반화 주장의 근거) · 라이선스가 연구 사용을 허용할 것.
+
+⚠️ 블루베리 원본 **1,195** = 리사이즈 1,067 + 제외 128(Camera4 4K).
+**"1,089장" 이라는 주장은 서버 어디에도 근거가 없습니다.** 논문에 쓰지 마세요.
+
+### 편입 보류 1종
+
+| StrawDI(딸기) | 공개 | 3,100 | 🟡 **미정** |
+
+5폴드 실물이 이미 있습니다 (cv1 = train 2,170 / val 310 / test 620 = 7:1:2).
+**별도 개발용 파일럿 데이터셋으로 쓰는 안(옵션 4)** 이 검토됐으나 채택하지 않았습니다 —
+StrawDI 를 논문 보고 데이터셋으로 쓸 계획이면 파일럿으로 쓸 수 없기 때문입니다.
+
+### 품질검사 — 🟡 대부분 미실행
+
+동결 전에 하고 기록할 것: 중복 이미지 탐지 · 손상 마스크 · 전경 비율 이상치 ·
+이미지-마스크 크기 불일치 · 제외한 이미지와 사유.
+
+> ✅ **전경 0 검사는 완료 (2026-09-05, 4,823장 전량)**
+> 블루베리 1,195 · 사과 1,001 · 복숭아 125 · 포도 2,502 — **전경 0인 영상 0장 (0.0%)**
+> → 전체영상 image-macro Dice 에서 0/0 은 발생하지 않습니다 (미결 21 의 범위 정정, → `00` §4)
+
+### 마스크 인코딩 ✅ 실측
+
+| 과일 | 형식 | 전경 |
+|---|---|---|
+| 블루베리 | RGB PNG | 255 |
+| 복숭아·포도 | L PNG | 255 |
+| 사과 | L PNG | **인스턴스 ID (1~N)** |
+
+전경 판정은 **`mask > 0` 으로 통일**. 사과 인스턴스 ID 는 버리지 말고 **객체 수준 진단에 활용** (→ `06`).
+
+### 경로
+
+- 실물: `/data/project/2026summer/kds0206/` · 입구: `platform/03_data/`
+  ⛔ **링크입니다. 삭제·이동·개명 금지.**
+- 팀 표준: `03_data/팀표준_4과일_2MP/`
+
+---
+
+## 2. 파일럿 데이터셋의 지위 — 가장 중요한 부분
+
+### 채택안: 본실험 4종 안에서 20% 를 떼어낸다 (결정 12)
+
+```
+파일럿 P = 각 데이터셋의 20%   →  동결된 설정으로 144조합 screening (P 안에서 4분할: 회전마다 학습2/검증1/시험1)
+본실험 M = 각 데이터셋의 80%   →  144조합은 공통 M1, C는 M1~M5 평가
+파일럿은 본실험 학습에도 시험에도 절대 다시 쓰지 않는다
+```
+
+### 파일럿에서 해도 되는 것 / 안 되는 것
+
+| 해도 됨 | 안 됨 |
+|---|---|
+| **C1**(v2 3-fold, 완료)·**파일럿0**(4분할, 800 epoch): 2×2 대표 4 pair의 전체 궤적으로 validation·patience process 확정 | C1·파일럿0에서 loss·모델 후보·공통 학습 설정을 고르는 것 |
+| 동일 설정으로 **144조합 → C(12~23조합) screening** (결정 14~15) | scale·loss·LR 등 공통 학습 설정을 파일럿 결과로 고르는 것 |
+| 파일럿 내부 성능·강건성 진단 | 데이터셋마다 다른 설정을 쓰는 것 |
+| — | 본실험 test 를 보거나 파일럿 표본을 본실험에 되쓰는 것 |
+
+파일럿이 성능으로 결정하는 값은 C1·파일럿0의 validation process와 screening의 후보 집합 `C`입니다. 단계별 결정 권한과 순서는
+[`260906_파일럿_단계_및_결정규칙.md`](260906_파일럿_단계_및_결정규칙.md)가 정본입니다.
+
+### 🔴 논문 표기
+
+> *Twenty percent was reserved exclusively for protocol development and screening. All 144 configurations were compared on a common independent holdout from the remaining 80%, followed by five-fold confirmation of the pilot-selected subset C.*
+>
+> **"전체 데이터의 5-fold cross-validation" 이라고 쓰면 안 됩니다.**
+
+파일럿을 떼는 순간 전체 기준 5-fold는 성립하지 않습니다. main 80% 안에서도 모든 표본이 학습 4회·시험 1회 사용되는 것은 **C의 5-fold OOF**입니다. C 외 조합은 공통 M1 한 분할만 평가합니다.
+
+---
+
+## 3. 분할
+
+### 규모
+
+| 데이터셋 | 전체 | 파일럿 20% | 파일럿 회전당 학습 / 검증 / 시험 | 본실험 80% | 반복당 학습 64% | 반복당 시험 16% |
+|---|---:|---:|---:|---:|---:|---:|
+| 블루베리 | 1,195 | 239 | 119~120 / 59~60 / 59~60 | 956 | 765 | 191 |
+| 사과 | 1,001 | 200 | 82~118 / 41~66 / 41~66 | 801 | 641 | 160 |
+| **복숭아** | **125** | **25** | **12~13 / 6~7 / 6~7** | **100** | **80** | **20** |
+| 포도 | 2,502 | 500 | 250 / 125 / 125 | 2,002 | 1,602 | 400 |
+
+파일럿 회전 수치는 `v3_seed3407` 실측입니다. 사과는 capture-sequence 그룹을 fold 사이에 나누지 않아 fold 크기가 41~66장으로 고르지 않습니다.
+
+🔴 **복숭아 파일럿 학습분이 회전당 12~13장, 검증·시험 fold가 6~7장**이고, 그 순위가 1/4 가중으로 후보 확정에 들어갑니다.
+가중치는 바꾸지 않고 **Kendall τ 진단으로 보고**합니다 (결정 19, → `06`).
+
+### 분할 단위 — 검증 가능한 그룹 우선
+
+**같은 나무·같은 촬영 장면·인접 frame 은 같은 쪽에 있어야 합니다.**
+
+- 블루베리: 파일명의 `Camera N Video (M)` 단위.
+- 사과: 파일명의 `_image번호` 앞 capture-sequence 단위.
+- 포도·복숭아: 원자료에 검증 가능한 장면/나무 group metadata가 없어 sample 단위 fallback. 이 한계를
+  assignment의 `group_source` 열에 명시했습니다.
+
+### 자르는 순서
+
+1. `group_id` 를 만든다 (같은 나무·장면·연속 frame).
+2. group 과 층화변수를 지키며 전체를 **파일럿 20% / 본실험 80% 로 한 번만** 나눈다.
+   기존 validation calibration에서 성능을 본 복숭아 23장·포도 250장이 속한 **group 전체**를 파일럿에
+   강제 배정하고 `prior_validation_exposure=true`로 기록한다. 이 group 수가 목표 20%를 넘으면 누출 방지를
+   우선하고 실제 pilot 비율과 편차를 동결 기록에 남긴다.
+3. 파일럿 안에서 4분할을 만든다. 회전마다 시험 fold t, 검증 fold t+1(순환), 나머지 2 fold로 학습한다 (결정 29).
+4. 본실험 80% 안에서 5-fold test 를 만든다.
+5. 모든 144조합을 같은 `Train=M2∪M3∪M4∪M5`, `Test=M1`에서 먼저 평가한다.
+6. 파일럿에서 이미 동결한 C만 `M2`–`M5`를 test fold로 하는 나머지 4회를 추가한다. `M1` 결과로 C를 바꾸지 않는다.
+7. 파일럿 데이터는 **어떤 본실험 학습·시험에도 쓰지 않는다.**
+
+Validation 은 각 반복의 학습 데이터 안에서 사전에 정한 방식으로 분리합니다.
+`Test_k` 는 조기종료·threshold 선택·실패 진단·재설계에 **쓰지 않습니다.**
+
+### 🔴 test set 봉인
+
+본실험 test는 **모든 프로토콜과 C가 동결된 뒤에만** 엽니다.
+동결 시점에 **본실험 결과 디렉터리가 비어 있음을 확인**하고 기록합니다.
+
+---
+
+## 4. 분할 산출물 — 2026-09-07 생성, 2026-09-11 파일럿 4분할 갱신
+
+- 20/80 분리 seed **3407**, group-preserving seeded subset assignment
+- group leakage 검사 결과: 검증 가능한 apple/blueberry group 교차 **0건**
+- 층화 변수
+- 파일럿 4분할 assignment **hash** (v3)
+- 본실험 5fold assignment **hash**
+- 각 반복의 학습/검증/시험 장수와 **전경 비율**
+- 제외 이미지와 사유
+
+현행 산출 위치: `04_experiments/260908_파일럿/protocol_splits/v3_seed3407/` (2026-09-11). v2에서 파일럿 fold만
+4분할로 다시 배정했고, 20/80 소속·본실험 5-fold·group은 v2와 같음을 행 단위로 검증했습니다. `manifest.json`에
+데이터셋별 장수·4/5-fold 장수·회전 규칙·fold 방식(사과·블루베리 GroupKFold, 포도·복숭아 seed KFold)·원본과 새 CSV
+SHA-256을 기록했습니다. 검증 가능한 그룹이 fold 사이에 나뉜 경우는 0건입니다.
+
+이전 산출 `protocol_splits/v2_seed3407/`(파일럿 3-fold)은 C1 실행 이력으로 보존합니다. 복숭아 과거 노출 23장과
+포도 250장은 두 판 모두 pilot에 들어갔고 main에는 없습니다.
+
+---
+
+## 5. 데이터셋 규모 차이를 다루는 법
+
+복숭아 125장과 포도 2,502장은 **20배** 차이입니다. 같은 epoch 를 쓰면 실제 update 수가 크게 달라집니다.
+
+**따라서 epoch 가 아니라 optimizer update 수로 예산을 정의합니다.** 구체적 규칙은
+[`260905_05_학습_및_검증.md`](260905_05_학습_및_검증.md) §1 참조.
+
+선별 점수도 같은 이유로 **데이터셋 동일가중**입니다 (결정 16) — 포도가 점수를 지배하지 못하게.
+
+==================================================================
+## 파일: planning/260905_05_학습_및_검증.md
+==================================================================
+
+# 05. 학습 및 검증 프로토콜
+
+작성: 2026-09-05
+수정: 2026-09-07
+상태: 🟡 C0·C1 완료 · 파일럿0(4분할, 800 epoch) 실행 중 · 일부 설정 미정
+
+---
+
+## 1. 공통 학습 설정
+
+| 항목 | 값 | 상태 |
+|---|---|---|
+| 손실 | BCE + Dice 1:1, image-wise, ε=1e-6 (→ [`04`](260905_04_손실함수_선정.md)) | 명세 확정·구현 검증 전 |
+| optimizer | **AdamW** | Fixed a priori |
+| learning rate | **1e-4** | Fixed a priori |
+| weight decay | | 🟡 Pending |
+| scheduler | **warmup-poly** | Fixed a priori |
+| warm-up | | 🟡 Pending (update 수로 정의할 것) |
+| batch size / gradient accumulation | **effective batch size 를 전 모델 동일**하게. 메모리 부족 모델만 accumulation | Fixed a priori |
+| AMP | **사용** | Fixed a priori |
+| gradient clipping | | 🟡 Pending |
+| **최대 optimizer update 수** | | 🔴 **Pending — §2 참조** |
+| pretrained layer vs 새 head 의 lr multiplier | | 🟡 Pending |
+| batch normalization 처리 (freeze / sync BN) | | 🟡 Pending |
+| seed 개수와 값 | | 🟡 Pending |
+| deterministic 설정 | | 🟡 Pending |
+| auxiliary output | **grid 는 전부 off 로 통일** | Fixed a priori |
+
+⚠️ `num_workers` 는 `min(8, cpu_count())` 로 제한 — 4명이 CPU/RAM 을 공유합니다.
+⚠️ rasterized mask 는 미리 저장합니다.
+
+---
+
+## 2. 🔴 데이터셋 규모 차이 — update 예산 동결 전
+
+복숭아 125장과 포도 2,502장은 **20배** 차이입니다. 같은 epoch 를 쓰면 실제 update 수가 크게 달라집니다.
+
+C0에서 epoch 기반 조기종료 후보를 1차 검증했습니다. 최종 규칙은 §5의 C1 300-epoch calibration으로
+확정합니다. 공통 학습 예산을 epoch로 둘지 update로 환산할지도 C1 전에 정해야 합니다.
+
+1. **effective batch size 통일**
+2. **최대 optimizer update 수 통일**
+3. 데이터셋별 실제 optimizer update 수와 학습시간 기록
+4. 파일럿 전에 최대 update 정책을 정하고 전 조합에 동일하게 적용
+
+> C0의 잠정값은 **10 epoch / 4회(40 epoch)**입니다. C1 결과를 보기 전에 후보와 판정 규칙을 동결하고,
+> C1 후 선택값을 바꾸지 않습니다.
+
+어느 쪽이든 학습시간과 함께 **실제 optimizer update 수를 반드시 기록**합니다.
+
+---
+
+## 3. 종료 조건 후보 — 매 epoch validation, C1 후 동결
+
+| 규칙 | 최소 epoch | patience | min delta | validation 주기 |
+|---|---:|---:|---:|---:|
+| standard ES | 80 | 40 epoch | 0.0005 | **매 epoch** |
+| fast ES | 40 | 10 epoch | 0.0005 | **매 epoch** |
+
+C1에서는 둘 다 실제 종료시키지 않고 최대 300 epoch까지 완주합니다. 각 epoch의 center-crop foreground IoU에
+두 규칙을 사후 적용해 stop epoch, best epoch, regret와 절약 시간을 계산합니다. 파일럿 screening과 본실험도
+validation 자체는 매 epoch 수행합니다.
+
+---
+
+## 4. 검증 — 고정 center crop
+
+| 항목 | 값 |
+|---|---|
+| 입력 | 각 validation 영상의 결정론적 512×512 center crop |
+| 512 미만 영상 | 0 padding 후 center crop; mask padding은 ignore label |
+| augmentation | 없음 |
+| threshold | 0.5 고정 |
+| 주기 | **매 epoch** |
+| 기록 | loss, foreground IoU/Dice/P/R, pixel accuracy, CPU/RAM/GPU/time telemetry |
+
+센터크롭은 validation/조기종료를 위한 저비용 proxy입니다. 논문의 최종 test 정확도는 여전히 전체영상
+sliding(512/384/25%)으로 계산하며 두 값을 섞어 보고하지 않습니다.
+
+### 4-5. Checkpoint 선택
+
+- **C1 학습은 두 stop 신호와 무관하게 300 epoch 완주**합니다.
+- **학습 중**: 매 epoch center-crop foreground IoU로 standard ES와 fast ES의 best state를 각각 갱신합니다.
+- **학습 종료 시**: `checkpoint_last_converged.pth`,
+  `checkpoint_best_standard_early_stopping.pth`, `checkpoint_best_fast_early_stopping.pth` 세 개를 보존합니다.
+- 세 파일에는 epoch·metric·selection rule·전체 config를 state dict와 함께 넣습니다.
+
+**근거**: 같은 조밀한 궤적에서 fast 종료가 이후 개선을 놓쳤는지 직접 대조할 수 있습니다. 최종 test의
+primary endpoint는 여전히 전체영상 sliding image-macro Dice이며 center-crop validation과 구분합니다.
+
+✅ C1 전용 학습기에 위 3종 저장과 매-epoch telemetry가 구현되어 smoke test를 통과했습니다.
+
+### 4-6. 🔴 threshold 이중 적응 방지
+
+validation 마다 threshold 를 재최적화하면 **이중 적응**이 생깁니다. 둘 중 하나를 미리 고정합니다:
+
+| 안 | 내용 |
+|---|---|
+| **A (채택)** | **threshold 0.5 고정.** 학습·검증·시험 전부 동일 |
+| B | validation 에서 **한 번만** 선택한 threshold 를 test 에 적용 |
+
+**A 를 씁니다.** B 가 필요해지면 **선정 시점과 grid 를 명시**해야 합니다.
+
+---
+
+## 5. validation calibration — C0·C1 완료, 파일럿0 실행 중
+
+이 단계는 조합 screening이 아닙니다. 매 epoch center-crop validation 궤적으로 일반 조기종료와 fast
+조기종료의 선택 epoch·후회값을 비교하고 종료 규칙을 고정합니다(결정 27).
+
+### C0: 기존 6런 × 200 epoch
+
+복숭아 cv1·cv2의 DeepLabV3+×ResNet-50 및 UPerNet×Swin-T 4런과, 포도 cv1의 같은 두 pair를
+완주했습니다. 624개 규칙의 사후 시뮬레이션에서 `fgbal` 512 window, 10 epoch 간격, min80,
+patience40, δ=0.0005, top3-gap10이 seed 42·43·44에서 통과했습니다. 이는 C1 후보를 좁히는 **잠정
+근거**입니다.
+
+기존 validation으로 본 복숭아 23장·포도 250장이 속한 group 전체를 pilot에 격리하고
+`prior_validation_exposure=true`로 기록합니다.
+
+### C1: 48 trajectory × 300 epoch — v2 3-fold, 2026-09-07 완료 (이력)
+
+| 항목 | 값 |
+|---|---|
+| 대표 2×2 | {BackboneUNet, VWFormer} × {ResNet-50, MiT-B2} |
+| 범위 | 4 datasets × pilot 3 folds × 4 pairs = **48 trajectories** |
+| 학습 | early stopping 없이 **300 epoch 완주** |
+| validation | **매 epoch**, 512×512 center crop, augmentation 없음, threshold 0.5 |
+| 비교 | standard ES(min80/patience40) vs fast ES(min40/patience10), 공통 δ=0.0005 |
+| 실제 종료 | 없음. 300 epoch 완주 후 두 규칙을 같은 궤적에서 사후 비교 |
+| checkpoint | 마지막 수렴, standard ES best, fast ES best의 **정확히 3종** |
+
+판정은 standard 대비 fast의 median/worst regret, premature stop, 선택 epoch 차이와 절약 시간을 함께 사용합니다.
+세부 hard criteria와 동점 규칙은
+[`260906_파일럿_단계_및_결정규칙.md`](260906_파일럿_단계_및_결정규칙.md) §3이 정본입니다. C1·파일럿0 대표
+pair는 validation process 동결 후 screening seed로 다시 학습하며, C1·파일럿0 점수를 2,304런 후보 점수에 재사용하지
+않습니다.
+
+### 파일럿0: 64런 × 800 epoch — 파일럿 4분할(결정 29·30), 2026-09-11 시작
+
+| 항목 | 값 |
+|---|---|
+| 대표 2×2 | C1과 동일 |
+| 분할 | `v3_seed3407` 파일럿 4분할. 회전마다 시험 fold t, 검증 fold t+1(순환), 나머지 2 fold 학습 |
+| 범위 | 4 datasets × 4 회전 × 4 pairs = **64런** |
+| 학습 | early stopping 없이 **800 epoch 완주**. 손실·optimizer·scheduler·증강·AMP·seed는 C1과 동일 |
+| 매 epoch | 검증·시험 각각 loss, pixel accuracy, 전경 IoU·Dice·Precision·Recall, mIoU (512×512 center crop, threshold 0.5) + 학습·검증·시험 후 자원 |
+| checkpoint | 검증 전경 IoU 최고 epoch(전경 Dice와 순위 동일) 1개 + epoch 800 1개 |
+| 시험 궤적 | 기록만 한다. 시험 점수로 epoch·규칙·설정을 고르지 않는다 |
+
+실행 기록은 `04_experiments/260911_파일럿0/README.md`에 있습니다.
+
+C0 원자료와 자동 보고서는 `04_experiments/260908_파일럿/reports/pilot_report.md`에 보존합니다.
+
+---
+
+## 6. 공정성 예외
+
+- factorial grid 의 auxiliary loss 는 **전부 off 또는 동일 규칙으로 통일**합니다.
+- 분리 불가능한 full model은 실험 범위 밖이며, 144조합에 native loss·scheduler 예외을 두지 않습니다.
+- OOM 으로 batch size 가 달라지면 gradient accumulation 으로 effective batch 를 맞춥니다.
+
+## 7. 실패 판정 — 🟡 Pending
+
+NaN · 발산 · OOM · weight 로딩 실패 · 인터페이스 불일치의 **정의와 허용 재시작 횟수**를
+본실험 전에 정합니다.
+
+==================================================================
+## 파일: planning/260905_06_시험_평가_및_보고.md
+==================================================================
+
+# 06. 시험·평가·보고 프로토콜
+
+작성: 2026-09-05
+수정: 2026-09-07
+상태: 🟡 추론 설정·빈 마스크 지표 규칙 확정, 나머지 평가 명세 동결 전
+
+---
+
+## 1. 전체 영상 추론 — 최종 checkpoint 를 고른 뒤 딱 1회
+
+| 항목 | 값 | 상태 |
+|---|---|---|
+| 대상 | test **전체 영상** | Fixed a priori |
+| 방식 | **sliding window** | Fixed a priori |
+| window 크기 | **512 × 512** | Fixed a priori |
+| stride / overlap | **384 / 25%** | Fixed a priori |
+| 끝 처리 | 모든 픽셀이 최소 한 번 포함되도록 마지막 window 위치 조정 | Fixed a priori |
+| padding | 512 미만 영상은 오른쪽·아래만. **padding 영역 평가 제외** | Fixed a priori |
+| 중첩 결합 | **probability(sigmoid) 또는 logit 평균** — 단순평균으로 시작 | 🟡 둘 중 하나로 확정 필요 |
+| threshold | **전 모델 공통 0.5** | Fixed a priori |
+| TTA | **안 씀** | Fixed a priori |
+| test-time resizing | **안 함** — 원본 해상도에서 슬라이딩 | Fixed a priori |
+| 후처리 | **안 함** | Fixed a priori |
+| connected-component 제거 | **안 함** | Fixed a priori |
+| inference batch size | | 🟡 Pending |
+
+- 25% 겹침은 계산량을 크게 늘리지 않으면서 window 경계 오류를 줄입니다.
+  **겹침 없는 stride 512 는 권장하지 않습니다** — 작은 과실의 경계가 핵심입니다.
+- 경계 오류가 실제로 확인되면 Hann/Gaussian 가중 평균을 쓸 수 있습니다. **단 전 모델에 동일 적용.**
+- 🔴 **threshold 를 test 데이터로 조정하지 않습니다.**
+
+> 🔴 **지표는 전체 영상 확률맵을 복원한 뒤 «영상 단위» 로 계산합니다.**
+> window 별 지표를 평균하면 경계에 걸친 과실 하나가 여러 객체로 중복 계산됩니다.
+
+### 🔴 왜 센터크롭을 주 평가로 쓰면 안 되는가 — 실측
+
+cv1 test 963장 전량 (`05_ai_dialogues/근거문서/260827_센터크롭_객체포함_통계_실측.md`):
+
+| 과일 | 면적 커버리지 | **과일 포착률** | 중앙에 과일 0개 |
+|---|---|---|---|
+| 블루베리 | 12.6% | **24.4%** | 28장 (11.8%) |
+| 사과 | 12.6% | **22.7%** | 17장 (8.5%) |
+| 복숭아 | 12.6% | **60.7%** | 0장 |
+| 포도 | 12.6% | **25.0%** | 40장 (8.0%) |
+
+- 과실의 **75~77% 가 아예 채점되지 않습니다.** ("거의 다 가운데 있다" 는 반증됨)
+- 채점 자체가 불가능한 이미지 **85장(8.8%)** — TP 불가, FP 만 가능.
+- 🔴 데이터셋 간 포착률이 **22.7%~60.7% 로 2.7배 차이** → 원고 §506 의 "identical 12.6%"
+  공정성 논거가 무너집니다. **원고에서 삭제해야 합니다.**
+
+→ **센터크롭은 효율 측정 전용입니다.**
+
+---
+
+## 2. 지표
+
+| 층 | 지표 |
+|---|---|
+| **주 지표 (Primary)** | **image-macro Dice** — 영상별 Dice 를 구한 뒤 평균 |
+| Secondary | **image-macro IoU** |
+| 보조 | micro Dice · precision · recall |
+| 경계 | **Boundary IoU 또는 boundary F-score** — 전체 영상 복원 후 |
+| 객체 수준 | 크기별 성능 · 객체 precision/recall/F1 — 전체 영상 복원 후 (사과 인스턴스 ID 활용) |
+| 효율 | parameters · FLOPs · peak memory · latency · throughput |
+| 안정성 | seed/반복 간 변동 |
+| 데이터셋 통합 | **데이터셋별 결과와 macro-across-datasets 를 분리** 제시 |
+
+주 지표를 image-macro Dice 로 두는 이유: 과실이 많은 몇 장이 전체 결과를 지배하지 않게 합니다.
+
+---
+
+## 3. 예외 규칙
+
+| 경우 | 규칙 | 상태 |
+|---|---|---|
+| **GT 와 prediction 이 «둘 다» 빈 마스크** | Dice=1 | ✅ Fixed a priori. 전체영상에서는 현재 미발생하며 fast validation에 적용 |
+| **GT 만 비어 있을 때** | 공식상 Dice=0 (FP 만 존재) — 별도 규칙 불필요 | ✅ 자연 도출 |
+| **prediction 만 비어 있을 때** | 공식상 Dice=0 (FN 만 존재) — 별도 규칙 불필요 | ✅ 자연 도출 |
+| 매우 작은 객체 | 크기 하한을 둘 것인가 | 🟡 Pending |
+| sliding-window 가장자리 | padding 영역 제외 (위 §1) | ✅ |
+| **통계검정 단위** | **데이터셋 (블록 N=4)** — §4 | ✅ |
+| **다중비교 보정** | 명시 (예: Holm), family 사전 선언 — §4 | ✅ |
+
+> ✅ **2026-09-05 실측 (전체 영상 4,823장 전량)**: 블루베리 1,195 · 사과 1,001 · 복숭아 125 · 포도 2,502
+> **전부 전경이 존재하며, 전경 0인 «영상» 은 0장(0.0%)** 입니다.
+> 기존에 인용하던 **8.8% 는 «센터크롭 안에» 과일이 0개인 비율**이지 영상 단위 비율이 아닙니다.
+> 우리는 전체영상 평가로 바꿨으므로 그 숫자를 미결 21 의 근거로 쓰면 안 됩니다.
+
+**따라서 전체영상 최종 지표에서는 미결 21이 선별 ranking을 직접 바꾸지 않습니다.** 전체영상에는 전경이 있기
+때문입니다. 고정 window bank를 쓰는 fast validation에서는 선택 창에 GT 전경이 없을 수 있으므로 위 규칙을
+적용하고, bank별 GT-empty 영상 수와 비율을 manifest에 기록합니다.
+
+🔴 **정작 중요한 것은 손실 수준입니다** → [`04`](260905_04_손실함수_선정.md) §2.
+학습은 512 crop 이고 foreground-aware sampling 이 **의도적으로 30% 를 배경 우세 crop** 으로 뽑으므로
+빈 전경이 생깁니다. 손실 규칙은 [`04`](260905_04_손실함수_선정.md) §2에서 사전 고정했습니다.
+
+**어느 쪽이든 test 결과를 본 뒤 정의를 바꾸지 않습니다.**
+
+---
+
+## 4. 통계·순위 분석 — 두 결과 층을 구분
+
+### 4-1. 144조합 공통 `M1` holdout
+
+모든 조합이 같은 학습 pool(`M2`–`M5)과 같은 test(`M1`)를 쓰므로 다음을 보고합니다.
+
+1. 144조합 전체 성능 matrix와 **Full-grid winner**
+2. decoder별·backbone별 평균 성능
+3. backbone×decoder interaction과 세대·mechanism 대비
+4. dataset별 순위와 조건부 최상 조합
+5. 같은 M1 영상의 예측을 짝지은 paired 비교
+
+이 층은 **공통 holdout의 전체 순위**이지 144조합 전체의 5-fold 결과가 아닙니다. 주효과·interaction의 추정 모형, 비교 family, 다중비교 보정은 결과를 보기 전에 동결합니다.
+
+### 4-2. 사전 선별 C의 main 5-fold
+
+C에 대해서는 `M1`–`M5` 전체 OOF 예측으로 fold별 mean±SD, 영상 단위 paired 비교, 순위 안정성, **Cross-validated winner**를 보고합니다. 논문의 실무 최종 권장은 이 승자로 합니다.
+
+`M1` 결과를 본 뒤 C를 추가·삭제하지 않습니다. 두 승자가 다르면 분할 의존성, pilot→main 순위 변화, dataset 이질성, interaction, C의 M1 top-1/top-3/top-5 포착률을 보고합니다.
+
+### 4-3. Friedman은 보조·탐색적
+
+Friedman·Nemenyi 요약을 쓸 경우 독립 블록은 dataset 4개이며, 같은 dataset의 fold를 독립 블록 20개로 세지 않습니다(✅ `demsar2006statistical`). 데이터셋이 4개뿐이므로 여기에 주 결론을 걸지 않습니다. C 축소 이유를 “통계 검출력 향상”으로 서술하지 않습니다.
+
+### 복숭아 저표본 진단 (결정 19)
+
+복숭아 파일럿 학습분은 **약 17장**이고 그 순위가 1/4 가중으로 후보 확정에 들어갑니다.
+가중치는 **바꾸지 않고** 다음을 보고합니다:
+
+- 데이터셋별 144조합 ranking **전량 보존**
+- **복숭아 ranking vs 나머지 3개의 Kendall's τ**
+- 위 사실을 **논문 limitation 으로 명시**
+
+---
+
+## 5. 효율 측정 — 정확도와 입력을 분리합니다
+
+| 층 | 무엇을 | 입력 |
+|---|---|---|
+| **정확도** | Dice · IoU · P · R · boundary · object | **전체 영상 슬라이딩** |
+| **하드웨어 효율** | FLOPs · 파라미터 수 · peak GPU memory · latency · throughput | **512×512 센터크롭** |
+| **실제 운용비용** | 영상 1장당 처리시간 · 사용한 window 수 | **전체 영상 슬라이딩** |
+
+> 512 입력 latency = 전 모델 «동일 조건» 비교값 / 전체 영상 시간 = «실제 적용비용»
+> **센터크롭은 여기서만 씁니다.**
+
+**기록할 것**: 측정 hardware(V100-SXM2 32GB) · warm-up 횟수 · latency 반복 횟수 ·
+inference batch size · 측정 시 다른 프로세스 유무.
+🟡 warm-up/반복 횟수는 아직 안 정했습니다.
+
+🔴 **효율은 `Report-only` 입니다** (결정 20). 후보 선정에 일절 관여하지 않습니다.
+
+⚠️ 파라미터 수를 말할 때는 **세는 기준을 먼저 정의**하세요 — ①백본 단독 ②태스크 head 포함 ③seg head 포함.
+HRNet 은 기준에 따라 9.6M / 21.3M / 28.5M / 41.2M 이 다 나옵니다 (→ `02` §6).
+
+---
+
+## 6. 산출물
+
+```
+configs/<데이터>_<head>_<backbone>_bcedice_cv<N>.yaml
+  → tools/train.py                학습 + 매 epoch center-crop val + 3종 checkpoint
+  → tools/select_ckpt             C1에서 동결한 ES 규칙 적용
+  → tools/test.py                 test 전체 슬라이딩 1회
+  → tools/bench.py                512 센터크롭 효율 측정
+  → tools/aggregate_results.py    → output/results_summary.csv
+```
+
+⛔ **`<head>_<backbone>_bcedice_cv<N>` 이름 규칙을 바꾸지 마세요.**
+집계 스크립트가 정규식으로 읽고, **이름이 겹치면 남의 체크포인트를 덮어씁니다.**
+파일럿 런은 본실험과 겹치지 않게 접미(`_pilotf1..3` 등)를 분담표와 함께 정합니다.
+
+**남길 것**: 파일럿 조합별 Dice 원자료 · **데이터셋별 144조합 ranking 전량** · 복숭아 Kendall τ ·
+확정 C · 144조합 M1 예측·순위·interaction matrix · C의 5-fold OOF 예측 · 영상별 지표 · 효율 측정치 · 누락 런과 예외 기록.
+
+논문 표와 Supplementary 표는 가능하면 `frozen/실행설정.yaml` 에서 **자동 생성**합니다.
+
+---
+
+## 7. 🔴 test set 봉인
+
+**모든 프로토콜과 C가 동결된 뒤에만** 엽니다. M1은 전체 144조합에, M2–M5는 사전 고정 C에만 열며, 어떤 main 결과도 설정·C 변경에 사용하지 않습니다.
+동결 시점에 **본실험 결과 디렉터리가 비어 있음을 확인**하고 기록합니다.
+
+==================================================================
+## 파일: planning/260906_파일럿_단계_및_결정규칙.md
+==================================================================
+
+# 파일럿 단계 및 결정 규칙
+
+작성: 2026-09-06
+수정: 2026-09-11
+상태: 파일럿 4분할 분할(v3) 생성 · C1 완료(v2 3-fold, 이력) · 파일럿0 실행 중
+
+20% pilot에서 validation process와 C를 먼저 고정한 뒤, main 80%에서 전체 144조합의 공통 holdout과 C의 추가 4-fold를 평가합니다. 이 문서가 단계별 결정 권한과 순서의 정본입니다.
+
+파일럿 내부는 **4분할**입니다(결정 29). 회전마다 시험 fold `t`, 검증 fold `t+1`(순환), 나머지 2 fold로 학습하므로 데이터셋당 4회전이고, 모든 fold가 시험과 검증에 한 번씩 쓰입니다. 분할은 `04_experiments/260908_파일럿/protocol_splits/v3_seed3407/`이며 20/80 소속과 main 5-fold는 v2와 같습니다.
+
+## 1. 단계별 질문과 결정 권한
+
+| 단계 | 검증하거나 결정하는 것 | 성능으로 선택 가능한 값 | 규모 |
+|---|---|---|---|
+| C0 예비검증 | calibration 코드·후보 규칙 1차 타당성 | 없음 | 기존 6런×200 epoch (완료) |
+| C1 validation calibration | 매 epoch center-crop 궤적에서 fast ES가 후기 개선을 놓치는가 | 조기종료 규칙 | 4 pair×4 dataset×3 fold(v2) = 48 trajectory (2026-09-07 완료, 이력) |
+| 파일럿0 | 4분할 회전의 800 epoch 검증·시험 궤적과 자원 소비 | 🟡 미정 — 이 단계로 무엇을 결정할지 사용자 확정 필요 | **4 pair×4 dataset×4회전 = 64런** |
+| P candidate screening | 고정 process로 144조합에서 C를 고름 | `C=A∪B`만 | **2,304런** |
+| M1 full-grid evaluation | 공통 독립 holdout의 144조합 순위·주효과·상호작용 | 없음 | **576런** |
+| M2–M5 confirmation | 사전 선별 C의 fold 안정성·OOF 성능 | 없음 | `16|C|` = **192~368런** |
+
+loss와 공통 학습 설정은 C1 전에 고정합니다. P에서는 validation process와 공통 설정을 바꾸지 않습니다.
+
+## 2. C0와 prior exposure
+
+기존 복숭아 4런·포도 2런은 200 epoch 궤적에서 624개 규칙을 사후 재생했습니다. 이 결과는 C1 후보 범위를 좁힌 예비 근거일 뿐 최종 규칙이 아닙니다.
+
+기존 validation으로 본 복숭아 23장·포도 250장의 group 전체를 pilot에 배정하고 `prior_validation_exposure=true`로 기록합니다. 해당 group은 main에 들어가지 않습니다.
+
+## 3. C1 — 2×2 validation calibration (v2 3-fold, 2026-09-07 완료)
+
+C1은 결정 29 이전의 v2 파일럿 3-fold로 실행해 48/48을 완주했습니다. 결과는 이력으로 보존하며, 학습 표본 비율(파일럿의 2/3)과 epoch 예산이 다르므로 4분할 수치와 직접 비교하지 않습니다.
+
+- head: **BackboneUNet(H002)**, **VWFormer(H011)**
+- backbone: **ResNet-50(B001)**, **MiT-B2(B006)**
+- 네 pair×4 dataset×pilot 3-fold = **48 trajectory**
+- 각 trajectory를 early stopping 없이 300 epoch 완주하고 **매 epoch center-crop validation·자원 log** 보존
+- C1 pair의 우열은 후보 선정에 사용하지 않고, P에서 새 screening seed로 재학습
+
+같은 매-epoch center-crop 궤적에서 standard ES(min80, patience40, δ=0.0005)와 fast ES(min40,
+patience10, δ=0.0005)를 사후 재생합니다. 실제 학습은 두 규칙이 stop 신호를 내도 300 epoch까지 계속해 후기 개선을
+관측합니다. threshold는 0.5로 고정합니다.
+
+각 런은 `checkpoint_last_converged.pth`, `checkpoint_best_standard_early_stopping.pth`,
+`checkpoint_best_fast_early_stopping.pth` 세 개를 반드시 남깁니다. fast 판정은 standard 대비 선택 epoch 차이,
+center-crop foreground IoU regret, premature stop 여부, 절약 가능한 epoch·시간을 함께 보고합니다. test의 최종 정확도 평가는
+기존대로 전체영상 sliding이며 C1 center crop 점수를 본실험 test 성능으로 쓰지 않습니다.
+
+## 3-1. 파일럿0 — 4분할 800 epoch 전체 궤적 (결정 30, 2026-09-11 시작)
+
+- pair: C1과 같은 2×2
+- 4 pair×4 dataset×4회전 = **64런**
+- early stopping 없이 **800 epoch 완주**. 손실·optimizer·scheduler·증강·AMP·seed는 C1과 동일
+- **매 epoch** 검증 fold와 시험 fold 각각의 loss, pixel accuracy, 전경 IoU·Dice·Precision·Recall, mIoU를 기록 (512×512 center crop, threshold 0.5)
+- 학습 후·검증 후·시험 후·epoch 끝의 CPU·RAM·swap·disk·GPU 사용률·메모리·온도·전력을 기록
+- checkpoint: **best** = 검증 전경 IoU 최고 epoch(같은 혼동행렬에서 전경 Dice와 순위 동일), **final** = epoch 800
+- 시험 궤적은 기록만 합니다. **시험 점수로 epoch·규칙·설정을 고르지 않습니다.**
+- 실행·결과: `04_experiments/260911_파일럿0/`
+
+## 4. P — 144조합 screening
+
+- 144조합×4 dataset×4회전 = **2,304런**
+- 회전마다 checkpoint는 동결된 validation process로 **검증 fold**에서 고르고, 점수는 **시험 fold** image-macro Dice
+- 점수: dataset별 4회전 시험 fold Dice 평균 후 4-dataset 동일가중
+- `A` = head별 top-1 backbone 12개, `B` = backbone별 top-1 head 12개
+- `C=A∪B`, `12≤|C|≤23`; 동점은 candidate ID 사전순
+- 효율 지표는 선별에 사용하지 않음
+- dataset별 144조합 순위와 복숭아 대 나머지 3-dataset Kendall's τ 보존
+
+## 5. Main — 공통 holdout + C의 5-fold 확인
+
+Main pool을 `M1`–`M5`로 나눕니다.
+
+1. 모든 144조합: `Train=M2∪M3∪M4∪M5`, `Test=M1` 공통 평가
+2. 파일럿에서 사전 고정한 C만 `M2`–`M5`를 test로 하는 나머지 4-fold 추가
+3. `M1` 결과를 보고 C를 추가·삭제하는 것은 금지
+
+`Full-grid winner`는 144조합의 공통 M1 holdout 1위입니다. `Cross-validated winner`는 C의 main 5-fold OOF 1위이며 실무 최종 권장은 후자로 합니다. 둘이 다르면 분할 의존성, pilot→main 순위 변화, dataset 이질성, interaction, C의 M1 top-k 포착률을 보고합니다.
+
+## 6. 실행 순서와 실험량
+
+1. 12 heads·12 backbones identity·가중치 동결, 144조합 smoke test
+2. 20/80 group split·pilot 4분할(v3)·main 5-fold hash 기록
+3. loss·증강·optimizer·LR·update 예산·seed 고정
+4. C1 48 trajectory 완주(v2, 완료)와 파일럿0 64런 완주 후 validation process 동결
+5. P 2,304런 실행, C 동결
+6. 실행설정·코드·가중치·분할 hash 최종 동결
+7. M1 576런 실행
+8. C의 M2–M5 `16|C|` 런 실행
+
+벤치마크 학습런은 `2,304 + 576 + 16|C| = 2,880 + 16|C|`, 즉 **3,072~3,248런**입니다. C1 48 trajectory와 파일럿0 64런을 포함한 신규 전체는 **3,184~3,360런**이며 기존 C0 6런은 별도입니다.
+
+==================================================================
+## 파일: 04_experiments/260911_파일럿0/README.md
+==================================================================
+
+# 260911_파일럿0 — 파일럿 4분할(학습 2 / 검증 1 / 시험 1) 전체 궤적 실험
+
+작성: 2026-09-11
+
+## 설계
+
+| 항목 | 값 |
+|---|---|
+| 분할 | `../260908_파일럿/protocol_splits/v3_seed3407/` — 파일럿 20%를 **4분할**. 20/80 소속·본실험 5-fold는 v2와 동일 |
+| 회전 | 시험 fold `t`, 검증 fold `t+1`(순환), 나머지 2개 fold로 학습 → 데이터셋당 4회. 모든 fold가 시험 1번·검증 1번 |
+| 모델 | 대표 2×2 `{BackboneUNet, VWFormer} × {ResNet-50, MiT-B2}` (결정 26) |
+| 데이터셋 | apple · blueberry · grape · peach |
+| 런 수 | 4 pair × 4 데이터셋 × 4 회전 = **64런** |
+| 학습 | **800 epoch 완주**(조기종료 없음). 손실·optimizer·scheduler·증강·AMP·seed 3407은 C1과 동일 |
+| 매 epoch 기록 | 학습 loss · **검증** loss/pixel accuracy/전경 IoU·Dice·Precision·Recall/mIoU · **시험** 같은 항목 · 단계별 시간 · 학습 후/검증 후/시험 후/epoch 끝의 CPU·RAM·swap·disk·GPU 사용률·메모리·온도·전력 |
+| 검증·시험 입력 | 512×512 center crop, 증강 없음 (C1과 동일. 전체영상 슬라이딩 추론은 아직 미구현) |
+| 체크포인트 | **best** = 검증 전경 IoU 최고 epoch(전경 Dice와 순위 동일) → `checkpoint_best_val_fg_dice.pth` + `best_checkpoint.json` · **final** → `checkpoint_final_epoch800.pth` · 요약 `pilot0_summary.json` |
+
+런 이름: `<데이터셋>_<헤드>_<백본>_p0_t<시험fold>v<검증fold>`
+
+### 회전별 표본 수 (학습 / 검증 / 시험)
+
+| 데이터셋 | t1v2 | t2v3 | t3v4 | t4v1 | fold 방식 |
+|---|---|---|---|---|---|
+| apple | 82 / 52 / 66 | 107 / 41 / 52 | 118 / 41 / 41 | 93 / 66 / 41 | GroupKFold (촬영 시퀀스 그룹 보존) |
+| blueberry | 119 / 60 / 60 | 119 / 60 / 60 | 120 / 59 / 60 | 120 / 60 / 59 | GroupKFold (카메라·영상 그룹 보존) |
+| grape | 250 / 125 / 125 | 250 / 125 / 125 | 250 / 125 / 125 | 250 / 125 / 125 | KFold (seed) |
+| peach | 12 / 6 / 7 | 13 / 6 / 6 | 13 / 6 / 6 | 12 / 7 / 6 | KFold (seed) |
+
+## 실행 상태
+
+- 시작: 2026-09-11 17:27, GPU 0~7에 tmux `pilot0_gpu0`~`pilot0_gpu7`, GPU당 1프로세스(동시 최대 8)
+- ❌ 추정: 총 약 262 GPU-시간, 벽시계 약 33~36시간 → **2026-09-13 03:00~05:00쯤 종료**. C1 실측 표본당 시간으로 계산(`launcher/queue_plan.json`). 시작 13분 뒤 실측 epoch 시간은 grape BackboneUNet 34~36초(추정 약 35초), VWFormer 43~45초(추정 약 40초)
+- 서버 부하: 런마다 데이터 로더 worker 8개라 CPU load가 약 77/80까지 오릅니다. 메모리 여유 약 180GB, 스왑 변화·페이지 회수(pgscand) 없음 (2026-09-11 17:39 확인)
+- 가장 긴 런: grape VWFormer MiT-B2 약 9시간 · 가장 짧은 런: peach 약 0.9시간
+
+상태 확인:
+
+```bash
+/home/kds0206/.conda/envs/kwak/bin/python 코드/tools/pilot0_status.py \
+  --config-dir configs --log-dir launcher --brief
+```
+
+## 폴더
+
+```
+260911_파일럿0/
+├── 코드/          260908_파일럿/코드_스냅샷 의 semseg·tools·scripts 복사본 + 아래 변경
+│                  third_party 는 스냅샷으로의 링크(471MB, 복사 안 함)
+├── configs/       64개 설정 (tools/generate_pilot0_configs.py 산출)
+├── runs/<런>/     epoch_telemetry.jsonl · training_history.csv/json · convergence_fixed_axes.png
+│                  checkpoint_best_val_fg_dice.pth · checkpoint_final_epoch800.pth · pilot0_summary.json
+├── launcher/      gpu<N>.queue · gpu<N>.log · queue_plan.json
+└── _smoke/        시작 전 peach 2 epoch × 4모델 점검 결과 (실험 결과 아님, 지워도 됨)
+```
+
+## 스냅샷 대비 코드 변경
+
+| 파일 | 변경 |
+|---|---|
+| `semseg/datasets/protocol_manifest.py` | `?pool=pilot&train=3,4&val=2&test=1` 형식 지원(겹침 검사). 기존 `fold=k` 형식은 그대로 동작 |
+| `tools/train.py` | `PILOT0` 설정 블록: 매 epoch 시험 지표를 이력·telemetry에 기록, 검증/시험 전경 Dice·Precision·Recall·mIoU 추가, 시험 후 자원 스냅샷, best/final 체크포인트 이름·메타데이터, 요약 JSON. `PILOT0` 없으면 기존 동작과 동일 |
+| `tools/generate_pilot4_splits.py` | v2에서 파일럿 fold만 4분할로 재계산(20/80·본실험 fold 불변 검증) |
+| `tools/generate_pilot0_configs.py` | 64개 설정 생성 |
+| `tools/make_pilot0_queues.py` | C1 실측 시간으로 GPU 8개 큐 균형 배정(긴 런 먼저) |
+| `tools/pilot0_status.py` | 진행·완료·실패·남은 시간 요약 |
+| `scripts/launch_pilot0_8gpu.sh`, `scripts/run_pilot0_worker.sh` | GPU가 비어 있을 때만 시작. 한 런이 실패해도 큐의 다음 런 계속 |
+
+## 해석할 때 주의
+
+- C1(3분할, 300 epoch)과 학습 표본 비율(2/3 → 2/4)·epoch 예산이 달라 수치를 직접 비교하지 않습니다. `epoch_seconds`는 시험 평가 시간까지 포함합니다.
+- peach는 검증·시험 fold가 6~7장이라 fold 간 변동이 큽니다. apple은 그룹 보존 때문에 fold 크기가 41~66장으로 고르지 않습니다.
+- 매 epoch 시험 점수를 보고 epoch나 설정을 고르면 시험 fold가 검증으로 바뀝니다. best 체크포인트는 검증 점수로만 고릅니다.
+
+==================================================================
+## 추가 실측 (서버에서 2026-09-12 12시에 읽은 값)
+==================================================================
+- 파일럿0 진행: 64런 중 16런 완료(포도 16런 전부), 남은 약 29 GPU시간. GPU 8장 전부 파일럿0.
+- 포도 16런 best epoch: BackboneUNet×MiT-B2 288/145/331/345 · BackboneUNet×ResNet-50 498/661/574/113 · VWFormer×MiT-B2 151/547/465/224 · VWFormer×ResNet-50 685/412/327/576. best 시점 시험 Dice 0.940~0.956, 800 시점 0.936~0.957.
+- C1(48런, 300 epoch) 실측: fast ES regret 중앙값 0.0085, 평균 0.032, 최악 0.604(복숭아 VWFormer×ResNet-50 fold2: fast 42ep vs standard 175ep). 데이터셋별 중앙값 포도 0.003·사과 0.007·블루베리 0.017·복숭아 0.030. standard 평균 stop 164ep, fast 63ep. 런당 1.72h, 합계 82 GPU-h.
+
+==================================================================
+## 파일: planning/260905_02_모델_선정.md 의 §5 만 발췌 (2026-09-12 추가 — 연구 질문 4개의 원문)
+==================================================================
+
+## 5. 이 12×12를 실험하는 이유
+
+이 연구는 단순히 144개의 순위표만 만드는 것이 아니다. 기존 full architecture 비교에서는 향상이 backbone, decoder, 또는 두 구성요소의 궁합 중 어디서 왔는지 분리하기 어렵습니다. 완전교차 설계는 다음 네 질문을 한 실험 틀에서 다룹니다.
+
+1. **실용 순위:** 통일된 조건에서 144개 modular 조합 중 어떤 조합을 과실 분할의 우선 기본값으로 권고할 수 있는가?
+2. **구성요소 효과:** 좋은 backbone은 decoder가 바뀌어도 좋은가? 좋은 decoder는 backbone이 바뀌어도 좋은가?
+3. **상호작용:** 성능은 각 부품의 독립적 효과로 설명되는가, 아니면 특정 backbone–decoder 조합에 의존하는가?
+4. **세대·데이터 조건:** 최신 메커니즘의 향상이 고전 기준선보다 일관되며, 소형·밀집·가림·저표본 조건에서도 재현되는가?
+
+헤더는 **CNN·pooling 7 + attention 3 + MLP 1 + matrix decomposition 1**을, 백본은 **CNN 6 + Transformer 3 + Hybrid 1 + SSM 1 + PDE/spectral 1**을 담당합니다. 특히 고전 모델은 역사적 예우가 아니라 최신 개량의 실질적 효과를 측정하는 세대 anchor입니다.
+
+| 기준 → 최신 비교 | 검증하는 효과 |
+|---|---|
+| U-Net-style → U-MixFormer | 단계적 복원에 cross-attention을 넣은 효과 |
+| Semantic FPN·UPerNet → VWFormer | 피라미드 융합 대비 varying-window context의 효과 |
+| ResNet-50 → ConvNeXt·MogaNet | 고전 CNN 대비 현대 fixed/gated convolution의 효과 |
+| ConvNeXt·MSCAN → InternImage | 고정 sampling 대비 deformable sampling의 효과 |
+| Swin·MiT → TransNeXt | 최신 aggregated attention의 추가 효과 |
+| Swin·MiT → VMamba·vHeat | attention을 SSM·PDE operator로 대체하는 효과 |
+
+따라서 논문의 중심 기여는 **평가된 144개 조합 안의 최고 성능 조합 식별 + 구성요소 효과 분리 + 상호작용 분석 + 데이터 조건별 선택 지침**입니다. 백본 후보 자체를 optimal/best available로 부르지 않습니다. 효율은 현장 선택을 돕기 위해 보고하지만 파일럿 후보 `C`를 고르는 점수에는 사용하지 않습니다.
+
+
+==================================================================
+## 추가 (2026-09-13): 결정 31 원문 + 파일럿0 README v2 절
+==================================================================
+
+| **31** | 파일럿0 구간별 체크포인트·재실행 | **epoch 100·200·…·800 경계마다 그 구간까지의 최대 검증 모델을 `checkpoint_best_within_<B>.pth`로 보존(런당 8개) + 최종 800 epoch 체크포인트 유지. 2026-09-13 00:11에 64런 전부 재실행(`runs_v2/`); 이전 판(`runs/`, 32런 완주)은 삭제하지 않고 이력 보존** | User-directed (2026-09-13) | 사용자 지시. 「몇 epoch 예산까지 하면 성능이 유지되는가」를 프로토콜 시험 지표(전체영상 슬라이딩)로 판정하려면 구간별 최대 검증 모델의 «가중치»가 있어야 함. 이전 판은 best·final 2개만 저장해 구간별 시험 평가가 불가능했음 |
+
+| peach | 12 / 6 / 7 | 13 / 6 / 6 | 13 / 6 / 6 | 12 / 7 / 6 | KFold (seed) |
+
+## 실행 상태 (v2 — 2026-09-13 재실행)
+
+- 2026-09-11 17:27 첫 판은 구간별 체크포인트를 남기지 않아 「몇 epoch 예산까지 성능이 유지되는가」를 프로토콜 지표로 판정할 수 없었습니다. 2026-09-13 00:11에 64런 전부 재실행했습니다(결정 31).
+- 첫 판 결과(완주 32런)는 `runs/`에 **지우지 않고** 보존합니다. 정리 후보는 `reports/260913_옛판_정리목록.md`에 적었고 삭제는 사람이 합니다.
+
+- 시작: 2026-09-13 00:11, GPU 0~7에 tmux `pilot0_gpu0`~`pilot0_gpu7`, GPU당 1프로세스(동시 최대 8)
+- ❌ 추정: 총 약 262 GPU-시간, 벽시계 약 34~36시간 → **2026-09-14 10:00~13:00쯤 종료**. 첫 판 실측 epoch 시간(포도 BackboneUNet 34~39초, VWFormer 43~46초)을 반영했습니다
+
+- 안내.md O-1 행(09-13): 슬라이딩 윈도우 추론 ✅ 있음 — 04_experiments/260911_파일럿0/코드/semseg/eval/sliding.py (03_code 에는 미반영)

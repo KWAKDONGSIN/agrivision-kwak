@@ -1,0 +1,14 @@
+{
+ "body": {
+  "cut_px": 0,
+  "editable": true,
+  "has": true,
+  "has_fixed": false,
+  "hole_px": 0,
+  "max_id": 15,
+  "n": 15,
+  "ok": true,
+  "source": "seed"
+ },
+ "http": 200
+}
