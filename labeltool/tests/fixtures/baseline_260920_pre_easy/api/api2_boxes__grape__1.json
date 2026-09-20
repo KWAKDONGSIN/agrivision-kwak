@@ -1,0 +1,46 @@
+{
+ "body": {
+  "at": "⟨지움⟩",
+  "boxes": [
+   {
+    "cls": "fruit",
+    "id": 1,
+    "src": "human",
+    "xyxy": [
+     108,
+     192,
+     540,
+     960
+    ]
+   },
+   {
+    "cls": "bunch",
+    "id": 2,
+    "src": "human",
+    "xyxy": [
+     540,
+     960,
+     972,
+     1728
+    ]
+   }
+  ],
+  "by": "기준선",
+  "classes": [
+   "fruit",
+   "bunch",
+   "other"
+  ],
+  "fruit": "grape",
+  "height": 1920,
+  "ok": true,
+  "saved": true,
+  "stem": "1",
+  "team": {
+   "박성문": 8,
+   "임성후": 8
+  },
+  "width": 1080
+ },
+ "http": 200
+}

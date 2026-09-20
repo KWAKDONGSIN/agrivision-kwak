@@ -1,0 +1,46 @@
+{
+ "body": {
+  "at": "⟨지움⟩",
+  "boxes": [
+   {
+    "cls": "fruit",
+    "id": 1,
+    "src": "human",
+    "xyxy": [
+     108,
+     192,
+     540,
+     960
+    ]
+   },
+   {
+    "cls": "bunch",
+    "id": 2,
+    "src": "human",
+    "xyxy": [
+     540,
+     960,
+     972,
+     1728
+    ]
+   }
+  ],
+  "by": "기준선",
+  "classes": [
+   "fruit",
+   "bunch",
+   "other"
+  ],
+  "fruit": "apple",
+  "height": 1920,
+  "ok": true,
+  "saved": true,
+  "stem": "20150919_174151_image106",
+  "team": {
+   "박성문": 98,
+   "임성후": 98
+  },
+  "width": 1080
+ },
+ "http": 200
+}

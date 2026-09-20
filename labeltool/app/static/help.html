@@ -57,16 +57,9 @@ kbd { display: inline-block; min-width: 24px; text-align: center; padding: 1px 7
 </style>
 </head>
 <body>
-<section class="card" id="erase-quickstart" style="margin:16px auto;padding:16px;max-width:900px">
-<h2>잘못된 마스킹 지우기</h2>
-<p><b>E 지우개</b>로 일부를 지우거나 <b>G 자동지움</b>으로 연결된 덩어리를 지웁니다.</p>
-<p>전체를 비우려면 오른쪽 패널 → 더 보기 → 전부 지우기. 저장 전에는 Ctrl+Z로 되돌릴 수 있습니다.</p>
-<p>열매 번호는 ③ 번호 모드에서 고른 뒤 D로 지웁니다. 원본 사진과 원본 마스크는 바뀌지 않습니다.</p>
-</section>
-
 <header>
   <b>사용법</b>
-  <a href="#confirm">확정이란</a><a href="#quick">1분 요약</a><a href="#where">화면 어디에 뭐가</a><a href="#colors">색 읽기</a><a href="#verdict">판정 5가지</a><a href="#tools">고치는 법</a>
+  <a href="#easy">쉬움 모드</a><a href="#confirm">확정이란</a><a href="#quick">1분 요약</a><a href="#where">화면 어디에 뭐가</a><a href="#colors">색 읽기</a><a href="#verdict">판정 5가지</a><a href="#tools">고치는 법</a>
   <a href="#keys">단축키</a><a href="#box">상자</a><a href="#num">열매 번호</a><a href="#cnt">개수</a><a href="#export">데이터 정리</a><a href="#faq">안 될 때</a>
   <a class="go" href="/">툴로 가기 →</a>
 </header>
@@ -87,6 +80,23 @@ kbd { display: inline-block; min-width: 24px; text-align: center; padding: 1px 7
 (<kbd>Enter</kbd> = 사람 확정 · <kbd>Ctrl</kbd>+<kbd>S</kbd> 는 작업마다 다른 것을 저장 · 화면이 넷 — 아래 «확정» 절과 «데이터 정리» 절). 사진이 차지하는 높이가
 <b>57~77% → 82~88%</b> 로 늘었고, 편집 화면에 보이는 글자는 <b>약 1,030자 → 150~270자</b>가 되었습니다(작업마다 다릅니다 — 2026-09-19 실측:
 마스크 155~162자 · 상자 267자 · 번호 225자).</div>
+
+<div class="tip" id="easy"><b>2026-09-20 — «쉬움 모드» 가 기본이 되었습니다.</b> <span class="new">0920</span><br>
+오른쪽 위의 <b>«🙂 쉬움 모드»</b> 단추가 켜져 있으면 <b>꼭 필요한 단추만</b> 보입니다 — 마스크 도구는
+<b>붓 · 지우개 · 자동채움</b> 세 개, 판정은 <b>원본 OK · 저장 · 문제 · 제외</b> 네 개입니다.
+숨은 것(테두리 채움·빼기, 자동지움, 보기 전환 3칸, AI로 교체, 초벌 출처, 의심 종류별 단추)이 필요하면
+그 단추를 눌러 <b>«🛠 전문가 모드»</b> 로 바꾸면 <b>그대로 다시 나옵니다</b>. 고른 모드는 브라우저가 기억합니다.
+<b>단축키는 두 모드에서 똑같이 듣습니다</b> — 숨긴 도구도 키로는 그대로 쓸 수 있습니다.<br>
+그림판과 같아진 것 둘 — <b>마우스 오른쪽 버튼으로 끌면 지우개</b>입니다(자동채움일 때는 자동지움),
+그리고 사진 <b>오른쪽 아래에 확대 단추 <kbd>＋</kbd> <kbd>－</kbd> <kbd>맞춤</kbd></b> 이 생겼습니다(휠·<kbd>0</kbd> 도 그대로).</div>
+
+<figure><img src="/static/help/ui_easy_260920.png" alt="쉬움 모드의 편집 화면 — 왼쪽 도구는 붓·지우개·자동채움 세 개, 아래 판정은 원본 OK·저장·문제·제외 네 개, 사진 오른쪽 아래에 확대 단추" loading="lazy">
+<figcaption><b>쉬움 모드</b>(포도 <code>1027</code> · 1400×860). 도구는 <b>붓 · 지우개 · 자동채움</b>, 판정은 <b>원본 OK · 저장 · 문제 · 제외</b>.
+사진 오른쪽 아래에 <b><kbd>－</kbd> <kbd>＋</kbd> <kbd>맞춤</kbd></b> 이 있습니다.</figcaption></figure>
+
+<figure><img src="/static/help/ui_expert_260920.png" alt="전문가 모드의 같은 화면 — 보기 전환 3칸, 테두리 채움·빼기, 자동지움, AI로 교체가 다시 보인다" loading="lazy">
+<figcaption><b>전문가 모드</b> — 같은 사진, 같은 자리에 숨어 있던 칸이 <b>그대로 돌아옵니다</b>
+(보기 전환 3칸 · 테두리 채움·빼기 · 자동지움 · AI로 교체). 오른쪽 위 단추 하나로 왔다 갔다 합니다.</figcaption></figure>
 
 <h2 id="confirm">«확정» 이란 — AI 제안 vs 사람 확정 <span class="new">0918 추가</span></h2>
 <div class="card">
@@ -377,23 +387,7 @@ kbd { display: inline-block; min-width: 24px; text-align: center; padding: 1px 7
 끄는 스위치는 두지 않았습니다 — 마음에 안 들면 그냥 다른 도구를 누르면 됩니다.</p>
 
 <h2 id="keys">단축키 한 장</h2>
-<div class="scroll"><table>
-<tr><th>키</th><th>기능</th><th>키</th><th>기능</th></tr>
-<tr><td><kbd>Enter</kbd> <span class="new">0918</span></td><td colspan="3"><b>확정 — 이 툴에서 제일 많이 누르는 키입니다.</b>
-«화면 아래 줄에 적힌 제안이 맞다» 는 뜻이고, <b>지금 고른 작업의 확정</b>이 됩니다(① 마스크 / ② 상자 = 화면의 상자를 저장하고 «원본 OK» 확정 / ③ 번호 = «원본 OK» 확정). 누르면 <b>다음 장</b>이 저절로 뜹니다.</td></tr>
-<tr><td><kbd>,</kbd> / <kbd>.</kbd></td><td>이전 / 다음 사진</td><td><kbd>B</kbd> / <kbd>E</kbd></td><td>브러시 / 지우개</td></tr>
-<tr><td><kbd>1</kbd></td><td>원본 그대로 OK</td><td><kbd>[</kbd> / <kbd>]</kbd></td><td>붓 작게 / 크게</td></tr>
-<tr><td><kbd>2</kbd></td><td>AI 제안으로 교체</td><td><kbd>P</kbd> / <kbd>O</kbd></td><td>다각형 채우기 / 빼기</td></tr>
-<tr><td><kbd>3</kbd></td><td>문제 있음</td><td><kbd>F</kbd> / <kbd>G</kbd></td><td>스마트 채우기 / 삭제</td></tr>
-<tr><td><kbd>4</kbd></td><td>제외</td><td><kbd>D</kbd></td><td>차이 보기 (번호 편집 모드에서는 «지우기»)</td></tr>
-<tr><td><kbd>Ctrl</kbd>+<kbd>S</kbd></td><td><b>지금 하는 일의 저장</b>(뜻이 셋) — ① <b>마스크 수정본 저장</b>(확정은 따로: <kbd>Enter</kbd>나 <kbd>1</kbd>) ·
-② <b>상자 저장 = 그 사진의 상자를 «수정함» 으로 확정</b> · ③ <b>번호 저장 = «수정함» 으로 확정</b></td><td><kbd>I</kbd></td><td>알마다 다른 색 (사과)</td></tr>
-<tr><td><kbd>Ctrl</kbd>+<kbd>Z</kbd> / <kbd>Y</kbd></td><td>되돌리기 / 다시 실행</td><td><kbd>0</kbd> · 휠 · <kbd>Space</kbd>+드래그</td><td>화면 맞춤 · 확대 · 이동</td></tr>
-<tr><td><kbd>X</kbd> / <kbd>V</kbd> / <kbd>Del</kbd></td><td>▭ 상자 켜고 끄기 / 상자 고르기 / 상자 삭제</td><td><kbd>K</kbd> / <kbd>J</kbd></td><td>＃ 열매 번호 켜고 끄기 / 번호 레이어</td></tr>
-<tr><td><kbd>Q</kbd> <span class="new">0918</span></td><td><b>보기 전환</b> — 원본만 → 마스크만 → 겹쳐</td><td><kbd>Esc</kbd></td><td>안내 창 닫기 · 다각형 취소</td></tr>
-<tr><td><kbd>?</kbd></td><td>처음 안내 3장 다시 보기</td><td><kbd>M</kbd> / <kbd>N</kbd></td><td>＃ 번호 합치기 / 새로 붙이기 (고른 뒤에 누릅니다)</td></tr>
-</table></div>
-
+<div data-key-table></div>
 <h2 id="box">상자(네모) 모드 — 검출 팀용</h2>
 <p>사진 위에 <b>투명 필름</b>을 한 겹 덮고 그 위에 네모를 칩니다. 마스크는 하나도 바뀌지 않습니다.
 <b>네 과일(사과·블루베리·복숭아·포도) 모두</b> 됩니다.</p>
@@ -610,5 +604,6 @@ COCO(대표적인 검출 데이터셋) 관례와 같습니다. <b>상자가 규�
 예시 1~5 의 그림은 화면 캡처가 아니라 툴과 같은 색 규칙으로 실제 데이터에서 다시 그린 것입니다.
 더 자세한 설명(내보내기 · 서버 켜기 등 담당자용)은 <code>app/README.md</code> 에 있습니다. · 작성 2026-09-17 · 최종 수정 2026-09-18(사이클 5 총괄 — 문서 정합: 확정 칸 셋 · Enter 확정 · 화면 넷 · 데이터 정리 탭)</p>
 </main>
+<script src="/static/js/keys.js"></script>
 </body>
 </html>

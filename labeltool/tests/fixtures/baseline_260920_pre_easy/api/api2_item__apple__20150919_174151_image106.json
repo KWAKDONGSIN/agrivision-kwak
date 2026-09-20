@@ -1,0 +1,66 @@
+{
+ "body": {
+  "ai_boxes_status": "saved",
+  "ai_status": "exclude",
+  "at": "⟨지움⟩",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "confirmed": null,
+  "confirmed_boxes": {
+   "at": "⟨지움⟩",
+   "by": "기준선",
+   "note": "",
+   "status": "fixed"
+  },
+  "confirmed_instances": {
+   "at": "⟨지움⟩",
+   "by": "기준선",
+   "note": "",
+   "status": "ok"
+  },
+  "counts": {
+   "boxes": 2,
+   "conflict": true,
+   "human": null,
+   "instances": 99,
+   "seed_source": "gt_numbers",
+   "source": "conflict",
+   "team_im": 98,
+   "team_park": 98
+  },
+  "dup_group": null,
+  "dup_member_confirmed": [],
+  "dup_member_status": [],
+  "dup_members": [],
+  "dup_rep": null,
+  "fruit": "apple",
+  "has_fixed": false,
+  "has_gt": true,
+  "has_proposal": true,
+  "height": 1920,
+  "inspection": {
+   "fg_frac": 0.0438971,
+   "hole_frac": 0.000626202,
+   "largest_comp_frac": 0.0739797,
+   "n_components": 79,
+   "suspect": true,
+   "suspect_flags": "merged_blob",
+   "tiny_comp_count": 0
+  },
+  "n_boxes": 2,
+  "n_inst": 99,
+  "note": "중복: 20150919_174151_image86",
+  "scores": {
+   "added_frac": 0.0033,
+   "dice_vs_gt": 0.633457,
+   "fg_gt_frac": 0.043897,
+   "fg_pred_frac": 0.025177,
+   "missed_frac": 0.022019,
+   "run_name": "apple_backbone_unet_mit_b2_p0_t1v2"
+  },
+  "src": "ai",
+  "status": "exclude",
+  "stem": "20150919_174151_image106",
+  "width": 1080
+ },
+ "http": 200
+}

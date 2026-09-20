@@ -26,7 +26,7 @@ cv.addEventListener("contextmenu", (e) => e.preventDefault());
 cv.addEventListener("mousedown", (e) => {
   if (!S.img) return;
   const [x, y] = toImg(e);
-  if (e.button === 1 || S.spaceDown) { S.panning = [e.clientX, e.clientY]; e.preventDefault(); return; }
+  if (e.button === 1 || S.spaceDown || (S.panTool && !S.numMode && !S.boxMode)) { S.panning = [e.clientX, e.clientY]; e.preventDefault(); return; }
   if (S.numMode) { numMouseDown(e, x, y); return; }
   if (S.boxMode) { boxMouseDown(e, x, y); return; }
   if (S.tool === "polyadd" || S.tool === "polysub") {
@@ -43,9 +43,13 @@ cv.addEventListener("mousedown", (e) => {
     clearTimeout(flash._t); flash._t = setTimeout(() => { $("#saveflash").textContent = ""; }, 1000);
     return;
   }
-  if (S.tool === "smartadd") { smart(x, y, 1); return; }
-  if (S.tool === "smartsub") { smart(x, y, 0); return; }
-  if (e.button !== 0) return;
+  // 0920 «그림판처럼»: 오른쪽 버튼은 «반대로». 자동채움에서 오른쪽 = 자동지움,
+  // 붓에서 오른쪽 = 지우개. (그림판의 «오른쪽 버튼은 배경색» 과 같은 버릇 — 쉬움 모드에서
+  // 숨긴 자동지움·지우개를 단추 없이도 쓸 수 있게 한다. 전문가 모드에서도 똑같이 된다.)
+  if (S.tool === "smartadd") { smart(x, y, e.button === 2 ? 0 : 1); return; }
+  if (S.tool === "smartsub") { smart(x, y, e.button === 2 ? 1 : 0); return; }
+  const rightErase = (e.button === 2 && (S.tool === "brush" || S.tool === "erase"));
+  if (e.button !== 0 && !rightErase) return;
   // 0918 2차 검수(새 결함): 세로 사진은 캔버스 가로의 74.6%(1366×768 실측)가 회색 여백이다.
   // 거기서 누르면 한 화소도 안 바뀌는데 pushUndo() 가 S.edDirty 를 켜서, 다음 «원본 OK» 에
   // «저장하지 않은 수정이 있습니다» 확인창이 떴다(고친 것이 하나도 없는데도).
@@ -60,7 +64,8 @@ cv.addEventListener("mousedown", (e) => {
   const wasDirty = S.edDirty;
   pushUndo();
   S.drawing = true; S.lastPt = null;
-  if (!strokeTo(x, y, S.tool === "erase" ? 0 : 1)) S.edDirty = wasDirty;
+  S.rightErase = rightErase;                       // 0920: 오른쪽 버튼으로 시작한 붓질은 지우개
+  if (!strokeTo(x, y, (S.tool === "erase" || rightErase) ? 0 : 1)) S.edDirty = wasDirty;
   flushDirty();
 });
 window.addEventListener("mousemove", (e) => {
@@ -77,10 +82,10 @@ window.addEventListener("mousemove", (e) => {
   if (S.boxMode) { boxMouseMove(x, y); return; }
   // 0918 2차 검수: 여백에서 시작해 사진 안으로 끌고 들어오면 그때 딱지를 켠다
   // (mousedown 에서 켜지 않았으므로 여기서 켜야 «저장 안 한 수정» 을 놓치지 않는다).
-  if (S.drawing) { if (strokeTo(x, y, S.tool === "erase" ? 0 : 1)) S.edDirty = true; flushDirty(); }
+  if (S.drawing) { if (strokeTo(x, y, (S.tool === "erase" || S.rightErase) ? 0 : 1)) S.edDirty = true; flushDirty(); }
   else S.dirty = true;
 });
-window.addEventListener("mouseup", () => { numMouseUp(); boxMouseUp(); S.drawing = false; S.panning = false; S.lastPt = null; flushDirty(); });
+window.addEventListener("mouseup", () => { numMouseUp(); boxMouseUp(); S.drawing = false; S.rightErase = false; S.panning = false; S.lastPt = null; flushDirty(); });
 cv.addEventListener("wheel", (e) => {
   e.preventDefault();
   if (!S.img) return;

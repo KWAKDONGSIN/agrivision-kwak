@@ -1,0 +1,46 @@
+{
+ "body": {
+  "at": "⟨지움⟩",
+  "boxes": [
+   {
+    "cls": "fruit",
+    "id": 1,
+    "src": "human",
+    "xyxy": [
+     144,
+     144,
+     720,
+     720
+    ]
+   },
+   {
+    "cls": "bunch",
+    "id": 2,
+    "src": "human",
+    "xyxy": [
+     720,
+     720,
+     1296,
+     1296
+    ]
+   }
+  ],
+  "by": "기준선",
+  "classes": [
+   "fruit",
+   "bunch",
+   "other"
+  ],
+  "fruit": "blueberry",
+  "height": 1440,
+  "ok": true,
+  "saved": true,
+  "stem": "Camera 1 Video (100)_1",
+  "team": {
+   "박성문": 43,
+   "임성후": 43
+  },
+  "width": 1440
+ },
+ "http": 200
+}

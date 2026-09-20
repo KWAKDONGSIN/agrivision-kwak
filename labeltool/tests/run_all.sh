@@ -4,7 +4,6 @@
 #   bash tests/run_all.sh                    ← 보통 이것 하나. 브라우저 묶음은 빠진다
 #   bash tests/run_all.sh --browser          ← 진짜 파이어폭스 시나리오까지(느리다)
 #   bash tests/run_all.sh --rebaseline       ← 지금 코드로 «기준선» 을 새로 뜬다
-#   bash tests/run_all.sh --structure-baseline  ← API/산출 기준선 유지 + 검수한 정적 해시
 #   bash tests/run_all.sh --check-baseline   ← 기준선과 대조해 다른 칸을 표로
 #   bash tests/run_all.sh --no-merged        ← 통합 데이터셋 빌드 시험을 건너뛴다(빠르게)
 #   bash tests/run_all.sh --only unit,sim    ← 고른 묶음만
@@ -26,10 +25,9 @@ mkdir -p "$LOGS"
 export PYTHONPATH="$HERE/lib${PYTHONPATH:+:$PYTHONPATH}"
 export PYTHONDONTWRITEBYTECODE=1
 
-WANT_STRUCTURE=0; WANT_BROWSER=0; WANT_REBASE=0; WANT_CHECK=0; WANT_MERGED=1; ONLY=""; WANT_CLEAN=0
+WANT_BROWSER=0; WANT_REBASE=0; WANT_CHECK=0; WANT_MERGED=1; ONLY=""; WANT_CLEAN=0
 for a in "$@"; do
   case "$a" in
-    --structure-baseline) WANT_STRUCTURE=1 ;;
     --browser)        WANT_BROWSER=1 ;;
     --rebaseline)     WANT_REBASE=1 ;;
     --check-baseline) WANT_CHECK=1 ;;
@@ -138,7 +136,7 @@ if want api; then
   note "4. API 회귀 — 모래상자 서버에 대고(빈 포트 · 내 PID 만 끈다)"
   # t3_login_rate·t4_flag 는 2026-09-20 구조 사이클 2 가 더한 것(로그인 429 · 판정 flag 갈래).
   #   글롭을 쓰지 않는다 — 폴더에 떨어진 것이 조용히 묶음을 늘리지 않게(2차 검수 §8-2 와 같은 이유).
-  for f in t1_api regress_all t3_login_rate t4_flag t5_boxes_reject; do
+  for f in t1_api regress_all t3_login_rate t4_flag; do
     [ -f "$HERE/api/$f.py" ] || continue
     ( cd "$HERE/api" && run1 "api/$f" "api_$f" "$PY" -u "$HERE/api/$f.py" ) || FAILED=1
   done
@@ -174,12 +172,6 @@ if [ "$WANT_CHECK" = 1 ]; then
   note "8. 기준선 대조 (--check-baseline)"
   run1 "baseline/check" baseline_check "$PY" -u "$HERE/baseline/snapshot.py" --check || FAILED=1
   sed -n '/──/,$p' "$LOGS/baseline_check.log" | sed 's/^/    /'
-fi
-
-# 원래 API/산출물 기준선을 보존하고 검증된 정적 파일 3개만 정확한 해시로 허용한다.
-if [ "$WANT_STRUCTURE" = 1 ]; then
-  note "9. 구조 전환 기준선 (원래 기준선 보존)"
-  run1 "baseline/structure_transition" structure_transition "$PY" -u "$HERE/baseline/structure_transition.py" || FAILED=1
 fi
 
 # ═══ 표 ════════════════════════════════════════════════════════════

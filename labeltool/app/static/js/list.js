@@ -44,7 +44,7 @@ function applyFeatures(f) {
 /* ------------------------------------------------------------ 사진 목록 */
 async function loadList(keepPage) {
   if (!keepPage) S.page = 1;
-  if ($("#f-sort").value === "insterr") { await loadListInstErr(keepPage); return; }
+  if (["insterr", "teamreview"].includes($("#f-sort").value)) { await loadListInstErr(keepPage); return; }
   await ensureErrRows();
   const p = new URLSearchParams({
     fruit: S.fruit, status: $("#f-status").value, sort: $("#f-sort").value,
@@ -67,7 +67,7 @@ async function loadList(keepPage) {
     return;
   }
   applyFeatures(j.features);
-  S.items = j.items; S.pages = j.pages;
+  S.items = j.items; S.pages = j.pages; S.listTotal = j.total;
   S.flagCounts = j.flag_counts || {};        // ui.js 가 «종류별» 단추를 만들 때 쓴다
   $("#listinfo").textContent = `조건에 맞는 사진 ${j.total}장`;
   $("#pageinfo").textContent = `${j.page} / ${j.pages} 쪽 (한 쪽에 ${j.page_size}장)`;
@@ -82,6 +82,8 @@ async function renderCounts() {
   if (!j || !j.fruits) return;                // 로그인이 풀렸으면 /login 으로 넘어가는 중
   const f = j.fruits.find((x) => x.fruit === S.fruit);
   if (!f) return;
+  S.progressFruit = f;
+  if (UI.renderEasyProgress) UI.renderEasyProgress();
   const ko = { unreviewed: "아직 안 봄", ok: "원본 OK", fixed: "수정함", flag: "문제 있음", exclude: "제외" };
   // 0917 UI: 숫자만 보면 «얼마나 남았나» 가 안 와닿아서 막대를 한 줄 붙인다.
   const pct = f.n_images ? (f.reviewed / f.n_images * 100) : 0;
@@ -100,10 +102,10 @@ async function renderCounts() {
     // 0918 사이클4 결정 1: 확정은 작업마다 따로다 — 진행률 줄에 종류별 장수를 나란히 둔다.
     // (서버가 옛 판이면 이 칸이 없으므로 아무것도 덧붙이지 않는다.)
     + (f.n_confirmed_boxes === undefined ? "" :
-        `<span class="pill conf" title="사람이 «상자» 를 확정한 장수입니다(마스크 확정과 따로 셉니다).">`
+        `<span class="pill conf" title="사람이 «상자» 를 확정한 장수입니다(칠한 영역 확정과 따로 셉니다).">`
         + `▭ 상자 ${f.n_confirmed_boxes}</span>`
         + (f.has_instances === false ? "" :
-           `<span class="pill conf" title="사람이 «열매 번호» 를 확정한 장수입니다(마스크 확정과 따로 셉니다).">`
+           `<span class="pill conf" title="사람이 «열매 번호» 를 확정한 장수입니다(칠한 영역 확정과 따로 셉니다).">`
            + `＃ 번호 ${f.n_confirmed_instances}</span>`))
     + `<span class="vsep"></span>`
     + Object.keys(ko).map((k) => `<span class="pill ${k}" title="AI 제안(초벌)입니다 — 사람 확정과 다릅니다">${ko[k]} ${f.counts[k]}</span>`).join("")
@@ -132,9 +134,9 @@ function cardFace(it) {
   // 상태는 테두리 색 + 흐림으로만 보였다(제외 314장이 깔린 지금 «이게 왜 흐리지» 가 먼저 온다).
   // 글자 딱지를 하나 붙인다 — 테두리 색과 같은 색이라 범례를 두 번 만들지 않는다(0917 사이클3 ④).
   // 0918 사이클2: 카드가 «AI 제안» 인지 «사람이 확정» 한 것인지 한눈에 보이게 딱지를 먼저 붙인다
-  const CTKO = { mask: "마스크", box: "상자", num: "번호" };
+  const CTKO = { mask: "칠한 영역", box: "상자", num: "번호" };
   const aiWhy = "AI 제안: " + statusKo(it.status)
-    + (ct !== "mask" && it.confirmed ? " · 마스크 확정: " + statusKo(it.confirmed) : "");
+    + (ct !== "mask" && it.confirmed ? " · 칠한 영역 확정: " + statusKo(it.confirmed) : "");
   tags.push(ck
     ? '<span class="tag conf" title="' + escapeHtml("사람이 " + CTKO[ct] + " 를 확정했습니다: " + statusKo(ck)
         + (ct === "mask" && it.confirmed_by ? " · " + it.confirmed_by : "") + " · " + aiWhy) + '">✔ 확정</span>'
@@ -214,7 +216,7 @@ function lazyImages(root) {
   root.querySelectorAll("img[data-src]").forEach((im) => io.observe(im));
 }
 
-$("#fruit").onchange = () => { S.fruit = $("#fruit").value; localStorage.setItem("fruit", S.fruit); loadBrush(); loadList(); };
+$("#fruit").onchange = () => { if (!confirmLeave()) { $("#fruit").value = S.fruit; return; } showView("list"); S.stem = null; S.item = null; S.img = null; S.ed = null; S.inst = null; S.boxes = []; S.edDirty = false; S.bDirty = false; S.numDirty = false; S.fruit = $("#fruit").value; localStorage.setItem("fruit", S.fruit); loadBrush(); loadList(); };
 ["#f-status", "#f-sort", "#f-dup", "#f-suspect", "#f-prop"].forEach((s) => $(s).onchange = () => loadList());
 $("#f-q").onkeydown = (e) => { if (e.key === "Enter") loadList(); };
 $("#prevpage").onclick = () => { if (S.page > 1) { S.page--; loadList(true); } };
@@ -233,7 +235,7 @@ async function openItem(i, force) {
   try {
     const meta = await api(`/api/item?fruit=${encodeURIComponent(S.fruit)}&stem=${encodeURIComponent(it.stem)}`);
     if (!meta || !meta.stem) { flash(errMsg(meta, "사진 정보를 불러오지 못했습니다"), true); return; }
-    S.item = meta; S.stem = meta.stem; S.W = meta.width; S.H = meta.height;
+    S.savedAt = 0; S.item = meta; S.stem = meta.stem; S.W = meta.width; S.H = meta.height;
     $("#stemname").textContent = meta.stem;
     const bits = [];
     bits.push(`${meta.width}×${meta.height}`);
@@ -295,7 +297,7 @@ async function openItem(i, force) {
     $("#l-diff").disabled = !S.ai;
     if (!S.ai) $("#l-diff").checked = false;
     if (S.gtIsInstance) {
-      S.metaBits.push(`원본 라벨 = 인스턴스 ${S.gtNLabels}개(알마다 번호)`);
+      S.metaBits.push(`원본 라벨 = 열매 번호 ${S.gtNLabels}개(알마다 번호)`);
       $("#meta").innerHTML = S.metaBits.map(escapeHtml).join(" · ");
     }
     fitView();
@@ -311,6 +313,8 @@ async function openItem(i, force) {
     loadBoxes();
     loadInstances();
     renderErrRows();
+    if (UI.loadTeamSuspects) UI.loadTeamSuspects();
+    if (UI.renderEasyProgress) UI.renderEasyProgress();
   } catch (e) {
     flash("불러오기 실패: " + e, true);
   } finally {
@@ -421,6 +425,8 @@ async function loadDash() {
     return;
   }
   $("#dashtime").textContent = j.generated;
+  S.progressFruit = f;
+  if (UI.renderEasyProgress) UI.renderEasyProgress();
   const ko = { unreviewed: "아직 안 봄", ok: "원본 OK", fixed: "수정함", flag: "문제 있음", exclude: "제외" };
   let h = "<h3>과일별 진행</h3><table class='d'><tr><th class='l'>과일</th><th>전체</th>"
     + Object.values(ko).map((k) => `<th>${k}</th>`).join("") + "<th>수정본 파일</th><th class='l'>진행률</th></tr>";
@@ -555,8 +561,8 @@ async function loadInstStats() {
         : s.stale ? `<button class='istrun' data-f='${f}'>아직 안 센 ${s.stale}장 세기</button>`
           : "<span class='muted'>다 셌습니다</span>") + "</td></tr>";
   });
-  h += "</table><p class='muted small'>«이진 마스크가 배경인 자리의 번호는 빼고» 센 숫자입니다(편집 화면의 «번호 N개» 와 같은 규칙). "
-    + "번호 파일이나 마스크를 고치면 그 사진만 다시 셉니다."
+  h += "</table><p class='muted small'>«이진 칠한 영역가 배경인 자리의 번호는 빼고» 센 숫자입니다(편집 화면의 «번호 N개» 와 같은 규칙). "
+    + "번호 파일이나 칠한 영역를 고치면 그 사진만 다시 셉니다."
     // 0919 사이클4 M1: 복숭아에 번호본이 생겼다 — «복숭아·포도는 0» 은 이제 거짓이다.
     // 0919 사이클4 2차: 포도는 다시 껐다(교수님 확인 8번 대기) — 포도만 여전히 0 이다.
     + " 포도는 아직 번호본을 켜지 않았습니다(교수님 확인 대기) — 켜면 알이 아니라 <b>송이</b> 수입니다.</p>";
@@ -600,14 +606,20 @@ async function loadListInstErr(keepPage) {
   } while (page <= pages && page <= 30);
   applyFeatures(feat || {});
   const nerr = (s) => (S.errBy[s] || []).length;
-  all.sort((a, b) => (nerr(b.stem) - nerr(a.stem)) || (a.stem < b.stem ? -1 : a.stem > b.stem ? 1 : 0));
+  const team = $("#f-sort").value === "teamreview" && S.fruit === "apple";
+  const review = team ? await api("/api/team_review?fruit=apple") : null;
+  const queue = review && review.ok ? review.queue : [];
+  if (team && !review?.ok) flash("사과 우선 검수 자료를 읽지 못했습니다", true);
+  const rank = (stem) => queue.includes(stem) ? queue.indexOf(stem) : queue.length;
+  all.sort((a, b) => (team ? rank(a.stem) - rank(b.stem) : 0) || (nerr(b.stem) - nerr(a.stem)) || (a.stem < b.stem ? -1 : a.stem > b.stem ? 1 : 0));
   const ps = 120;
   S.pages = Math.max(1, Math.ceil(all.length / ps));
   if (!keepPage) S.page = 1;
   if (S.page > S.pages) S.page = S.pages;
+  S.listTotal = all.length;
   S.items = all.slice((S.page - 1) * ps, S.page * ps);
   const nStems = all.filter((it) => nerr(it.stem)).length;
-  $("#listinfo").textContent = `조건에 맞는 사진 ${all.length}장 · 번호오류 ${nStems}장을 앞에 둠`;
+  $("#listinfo").textContent = team ? `박성문 review_list.csv 순서 · ${queue.length}장 우선 · 전체 ${all.length}장` : `조건에 맞는 사진 ${all.length}장 · 번호오류 ${nStems}장을 앞에 둠`;
   $("#pageinfo").textContent = `${S.page} / ${S.pages} 쪽 (한 쪽에 ${ps}장)`;
   $("#prevpage").disabled = S.page <= 1;
   $("#nextpage").disabled = S.page >= S.pages;

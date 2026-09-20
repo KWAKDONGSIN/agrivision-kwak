@@ -17,6 +17,8 @@
 쪼개기 전(js/ 폴더가 없을 때)에는 **건너뛴다**(그때는 표가 없는 것이 정상이다).
 """
 import io
+import subprocess
+import json
 import os
 import re
 import sys
@@ -69,7 +71,12 @@ def main():
     L.chk("표에 같은 키가 두 번 나오지 않는다", not dup, dup)
 
     hp = os.path.join(STATIC, "help.html")
-    hk = help_keys(io.open(hp, encoding="utf-8").read()) if os.path.exists(hp) else None
+    html = io.open(hp, encoding="utf-8").read() if os.path.exists(hp) else ""
+    if 'data-key-table' in html and '/static/js/keys.js' in html:
+        rendered = subprocess.check_output([L.NODE, "-e", "const el={}; global.document={querySelectorAll:()=>[el]}; require(process.argv[1]); console.log(el.innerHTML)", kp], text=True)
+        hk = re.findall(r"<kbd>(.*?)</kbd>", rendered)
+    else:
+        hk = help_keys(html)
     L.chk("help.html 에 «단축키 한 장» 절이 있다", hk is not None, hp)
     if hk is not None:
         hset = set(hk)

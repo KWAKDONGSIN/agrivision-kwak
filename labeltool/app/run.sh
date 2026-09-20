@@ -32,6 +32,9 @@ PIDF="$HERE/logs/server.pid"
 mkdir -p "$HERE/logs"
 
 stop_server() {
+  # 0920: 감시자(scripts/watchdog.sh)가 «사람이 일부러 껐다» 를 알아보는 표시.
+  # restart 는 곧바로 다시 켜므로 아래 start 자리에서 지운다.
+  touch "$HERE/logs/stop.flag" 2>/dev/null || true
   if [ -f "$PIDF" ] && kill -0 "$(cat "$PIDF")" 2>/dev/null; then
     P=$(cat "$PIDF")
     kill "$P" && echo "서버를 껐습니다 (PID $P)"
@@ -57,6 +60,7 @@ if [ -f "$PIDF" ] && kill -0 "$(cat "$PIDF")" 2>/dev/null; then
 fi
 
 cd "$HERE"
+rm -f "$HERE/logs/stop.flag"                     # 0920: 켰으니 «일부러 꺼 둠» 표시를 지운다
 printf '%s' "$LABELTOOL_DATA_ROOT" > "$LASTFILE"
 PORT="$PORT" LABELTOOL_DATA_ROOT="$LABELTOOL_DATA_ROOT" LABELTOOL_PASSWORD="$LABELTOOL_PASSWORD" \
   nohup "$PY" -u server.py >> "$LOG" 2>&1 &

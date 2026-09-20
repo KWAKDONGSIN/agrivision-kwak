@@ -56,7 +56,7 @@ function statusKo(s) {
   return { unreviewed: "아직 안 봄", ok: "원본 그대로 OK", fixed: "수정함", flag: "문제 있음", exclude: "제외" }[s] || s;
 }
 
-const TASKWORD = { mask: "마스크", box: "상자", num: "번호" };
+const TASKWORD = { mask: "칠한 영역", box: "상자", num: "번호" };
 const TASKKIND = { mask: "mask", box: "boxes", num: "instances" };
 const TASKFIELD = { box: "confirmed_boxes", num: "confirmed_instances" };
 

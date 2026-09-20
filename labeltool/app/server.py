@@ -32,6 +32,7 @@ from api import export as api_export
 from api import instances as api_instances
 from api import masks as api_masks
 from api import photos as api_photos
+from api import team_review as api_team_review
 from core import auth, paths, status_store, util
 from core.auth import LABELTOOL_PASSWORD
 from core.paths import (CACHE_DIR, DATASET, DATA_DIR, FRUITS, MAX_UPLOAD_BYTES, check,
@@ -69,7 +70,7 @@ CTX = {
 auth.register(app, CTX)
 util.register_errors(app)
 for _mod in (api_photos, api_masks, api_boxes, api_instances, api_counts,
-             api_dupes, api_export, api_dashboard):
+             api_dupes, api_export, api_dashboard, api_team_review):
     _mod.register(app, CTX)
 
 

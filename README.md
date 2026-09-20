@@ -20,3 +20,7 @@
 전체 회귀는 기존 서버의 통합 스크립트·팀 자료·아카이브도 참조하므로 이 공개 저장소만으로 재현되지 않습니다.
 `tests/run_all.sh --browser --check-baseline`은 승인된 새 기준선으로 통과했습니다. 원래 기준선은 tests/fixtures/baseline_260920_pre_split에 보존했고 BASELINE_CHANGELOG.md에6칸의 이전/새 지문을 기록했습니다.
 서버 주소와 비밀값을 가린 공개 사본입니다. 설정값은 자신의 환경으로 정하세요. 데이터 사진이 포함된 도움말 그림은 공개에서 제외돼 일부 예시 이미지가 없습니다.
+
+## 2026-09-20 EASY 갱신
+
+최신 구현·검증은 labeltool/reviews/easy_260921/stage3_final.md와 app/static/how_to.html에 있다. 이번 배포 상태는 그 보고서를 우선한다. 이전 전환 보류 기록은 당시 이력으로 보존한다.

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>0920 정리 — 카톡 답 · 작업 상태</title>
+<style>
+  :root{ --bg:#ffffff; --fg:#1a1a1a; --mut:#5c6370; --line:#e3e6ea;
+         --card:#f6f8fa; --accent:#1f6feb; --warn:#b34700; --ok:#1a7f37; }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){ --bg:#15181d; --fg:#e6e9ee; --mut:#9aa4b2; --line:#2b313a;
+      --card:#1c2029; --accent:#6aa8ff; --warn:#ff9e5e; --ok:#5fd07f; }
+  }
+  :root[data-theme="dark"]{ --bg:#15181d; --fg:#e6e9ee; --mut:#9aa4b2; --line:#2b313a;
+      --card:#1c2029; --accent:#6aa8ff; --warn:#ff9e5e; --ok:#5fd07f; }
+  *{ box-sizing:border-box; }
+  body{ margin:0; background:var(--bg); color:var(--fg);
+        font:17px/1.65 -apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR",sans-serif;
+        padding:16px; overflow-x:hidden; word-break:keep-all; }
+  .wrap{ max-width:720px; margin:0 auto; }
+  h1{ font-size:22px; margin:4px 0 2px; line-height:1.35; }
+  h2{ font-size:19px; margin:28px 0 8px; padding-top:14px; border-top:2px solid var(--line); }
+  h3{ font-size:17px; margin:18px 0 6px; }
+  .sub{ color:var(--mut); font-size:15px; margin-bottom:8px; }
+  .card{ background:var(--card); border:1px solid var(--line); border-radius:10px;
+         padding:12px 14px; margin:12px 0; }
+  .big{ font-size:20px; font-weight:700; }
+  table{ width:100%; border-collapse:collapse; margin:10px 0; font-size:15px; }
+  th,td{ border:1px solid var(--line); padding:7px 8px; text-align:left; vertical-align:top; }
+  th{ background:var(--card); font-weight:600; }
+  code{ background:var(--card); border:1px solid var(--line); border-radius:5px;
+        padding:1px 5px; font-size:14px; word-break:break-all; }
+  pre{ background:var(--card); border:1px solid var(--line); border-radius:8px;
+       padding:10px; overflow-x:auto; font-size:13px; line-height:1.5; }
+  ul,ol{ padding-left:22px; margin:8px 0; }
+  li{ margin:5px 0; }
+  .warn{ color:var(--warn); font-weight:600; }
+  .ok{ color:var(--ok); font-weight:600; }
+  .quote{ border-left:3px solid var(--accent); padding:4px 0 4px 12px; margin:10px 0;
+          color:var(--mut); font-size:15px; }
+  .foot{ color:var(--mut); font-size:14px; margin-top:32px;
+         border-top:1px solid var(--line); padding-top:12px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<h1>0920 정리</h1>
+<div class="sub">카톡 답 · 작업 상태 · 클로드 한도 — 2026-09-20 12:18 작성</div>
+
+<h2>1. 임성후 님 질문 답 — “같은 사진의 기준”</h2>
+
+<div class="quote">
+[임성후 00:04] 같은 사진의 기준이 뭔지 알 수 있을까요 / 몇 픽셀이 차이가 난다던가
+</div>
+
+<p><b>픽셀 차이가 아니라 값 두 개입니다.</b> 9월 16일에 4,823장 전수 계산을 이미 끝내 놨습니다.</p>
+
+<table>
+<tr><th>과일</th><th>기준</th><th>걸린 것</th></tr>
+<tr><td><b>포도</b></td><td>해밍거리 <b>≤ 10</b><br>상관계수 <b>≥ 0.9</b></td><td><b>94그룹 192장</b><br>(전체 2,502장 중)</td></tr>
+<tr><td>복숭아</td><td>해밍거리 ≤ 6<br>상관계수 ≥ 0.95</td><td>0그룹</td></tr>
+</table>
+
+<ul>
+<li><b>방법</b>: dHash64(9×8 흑백, 인접 열 비교) 해밍거리 + 32×32 흑백 상관계수</li>
+<li><b>완전히 똑같은 파일은 전 과일 0장</b> — 바이트가 같은 건 없습니다</li>
+<li>목록 파일: <code>data/grape/duplicates.json</code></li>
+<li>예시 그림: <code>inspect/gallery/grape/dup_examples.png</code></li>
+</ul>
+
+<div class="card">
+<span class="warn">⚠️ 포도만 기준이 느슨합니다.</span> 복숭아는 해밍 6 / 상관 0.95인데
+포도는 해밍 10 / 상관 0.9 입니다. 느슨해서 <b>“애매한 것”이 같이 걸려 들어옵니다.</b>
+최인훈 님이 00:29에 말한 <i>“같은 나무 같은데 구도 좀 다른 거”</i> 가 정확히 그 경계입니다.
+<br><br>
+<b>팀이 정할 것은 숫자 두 개뿐입니다</b> — 해밍 몇, 상관 몇. 정하면 목록이 자동으로 다시 나옵니다.
+</div>
+
+<h3>최인훈 님께</h3>
+<ul>
+<li>말씀하신 <b>“99개”가 이 94그룹</b>일 겁니다. <b>눈으로 다시 세지 않으셔도 됩니다.</b></li>
+<li>툴의 <b>「데이터 정리」 탭</b>에서 그룹별로 바로 보실 수 있습니다</li>
+</ul>
+
+<h3>박성문 님 말이 맞습니다</h3>
+<div class="quote">[박성문 00:12] 빼는 게 아니라 수정을 잘해야 하는 거 아냐? 우리가 도구 만든 거로?</div>
+<ul>
+<li><b>줄기가 라벨링된 것 · 포도알 누락</b> → <b>빼지 말고 툴로 고치는 게 맞습니다.</b> 사진이 아까워요</li>
+<li><b>빼는 건 “거의 같은 사진”만</b>. 라벨 오류는 수정 대상입니다</li>
+<li>두 개를 섞으면 나중에 “왜 뺐는지” 설명이 안 됩니다</li>
+</ul>
+
+<h3>임성후 님 말도 맞습니다</h3>
+<div class="quote">[임성후 00:06] 기준이 애매해도 그 기준만 맞춰서 진행하면 큰 문제는 없을듯</div>
+<p>맞습니다. <b>일관성이 정확성보다 중요합니다.</b> 숫자 두 개 정하고 그대로 가면 됩니다.</p>
+
+<h3>기록해 둘 결정</h3>
+<ul>
+<li><b>포도는 “송이” 단위로 센다</b> (00:10 합의) — 스마트팜 용도라 송이가 맞습니다</li>
+<li>원 논문에 중복 언급이 없음 → 논문에 <b>“원본에 근접 중복이 있어 정제했다”</b> 로 쓰면 됩니다.
+디스가 아니라 <b>표준적인 데이터 정제 서술</b>입니다</li>
+</ul>
+
+<h2>2. 작업 상태 — <span class="warn">아직 시작 안 됐습니다</span></h2>
+
+<div class="card">
+<p class="big warn">아직 안 돌고 있습니다.</p>
+<p>제가 Codex를 띄우려 했지만 <b>권한이 막혀 4번 실패</b>했습니다.
+곽동신 님이 명령 한 줄을 붙여넣어야 시작됩니다.</p>
+<p><b>붙여넣은 시각 + 약 1시간</b> 이 끝나는 시각입니다.<br>
+(예: 12시 50분에 붙여넣으면 <b>13시 50분쯤</b>)</p>
+</div>
+
+<p>PC에서 이 한 줄을 붙여넣으세요 (앞의 <code>!</code> 포함):</p>
+<pre>! cd /data/project/2026summer/kds0206 &amp;&amp; tmux new -d -s cf "codex exec --dangerously-bypass-approvals-and-sandbox --skip-git-repo-check -m gpt-6-astra -o logs/handover/cf.md - &lt; 문서/260920_구조정리_마무리_Codex_지시.md &gt; logs/handover/cf.log 2&gt;&amp;1"</pre>
+
+<p>Codex가 끝나면 남기는 것:</p>
+<ul>
+<li>폰용 보고서 → <code>/static/finish_260920.html</code></li>
+<li>전환 방법 → <code>finish_260920/전환하기.md</code></li>
+<li>끝난 표시 → <code>logs/handover/FINISH_DONE</code></li>
+</ul>
+
+<h3>Codex가 할 일 (요약)</h3>
+<ol>
+<li>되돌릴 길 확인 (리허설)</li>
+<li>새 코드 8파일 반영 + <b>상자 지워지는 버그 막기</b></li>
+<li>기준선 정리 (옛것 보존하고 새로)</li>
+<li>전체 시험 + 브라우저 확인</li>
+<li>전환 준비물 만들기 <b>(재시작은 사람이)</b></li>
+<li>검수 → 판정서 → 보고서</li>
+</ol>
+
+<h2>3. 클로드 한도 — <span class="warn">9/23(수) 새벽 4시까지 못 씁니다</span></h2>
+
+<table>
+<tr><th>언제</th><th>무슨 일</th></tr>
+<tr><td>9/20 02:15</td><td>서버 클로드 <b>주간</b> 한도 소진</td></tr>
+<tr><td>9/20 02:24</td><td>Codex가 자동으로 이어받음</td></tr>
+<tr><td>9/20 03:41</td><td>Codex 1차 작업 끝 (깃허브 공개까지)</td></tr>
+<tr><td><b>9/23 04:00</b></td><td><b>다시 쓸 수 있게 됨</b></td></tr>
+</table>
+
+<div class="card">
+<b>낭비였나?</b> — 낭비는 아닙니다. 그 사용량으로 나온 게
+<b>팀원들이 그 시각에 쓰고 있던 바로 그 툴</b>입니다.
+<br><br>
+다만 <b>한도가 공용</b>이라(<code>CLAUDE.md</code> 첫 줄: “4명이 클로드 코드 하나로 같이 쓰는”),
+최인훈 님의 00:05 계획 <i>“클로드한테 시키고 내가 보고”</i> 가 3일 막혔습니다.
+<br><br>
+<span class="ok">✅ 규칙 하나면 해결됩니다</span> — 밤샘 자동 작업 돌릴 때 <b>카톡에 한 줄 먼저</b>,
+무거운 자동 작업은 <b>Codex로</b>.
+</div>
+
+<h2>4. 지금 하실 것 — 순서대로</h2>
+<ol>
+<li><b>카톡에 위 1번 표 올리기</b> (임성후 님 질문 바로 해결)</li>
+<li><b>최인훈 님께</b>: “94그룹 192장 목록 이미 있다, 툴 데이터정리 탭에서 보면 된다”</li>
+<li><b>숫자 두 개 합의</b> — 해밍 몇 / 상관 몇</li>
+<li>PC 가시면 <b>위 한 줄 붙여넣기</b></li>
+<li>끝나면 <code>/static/finish_260920.html</code> 읽고 전환</li>
+</ol>
+<p>1·2·3번은 <b>지금 폰으로 바로</b> 하실 수 있고, 팀이 제일 급한 게 그겁니다.</p>
+
+<div class="foot">
+이 문서는 클로드가 씀 · 2026-09-20 12:18 · 툴 정적 문서로만 추가 (앱 코드·서버 건드리지 않음)
+</div>
+
+</div>
+</body>
+</html>

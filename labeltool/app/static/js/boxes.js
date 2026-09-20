@@ -263,7 +263,7 @@ async function saveBoxes() {
   S.dirty = true;
 }
 // 서버가 정말로 무엇을 보고 상자를 만들었는지(응답 source)를 사람 말로 바꾼다
-const SEEDKO = { "instances:gt": "원본 번호 마스크", "instances:seed": "검출팀 초벌 번호",
+const SEEDKO = { "instances:gt": "원본 번호 칠한 영역", "instances:seed": "검출팀 초벌 번호",
                  "instances:fixed": "사람이 고친 번호", ai: "AI 제안", gt: "원본 GT",
                  "team:박성문": "박성문 상자", "team:임성후": "임성후 상자" };
 /* 0919 «개수 세기» 사이클4 **M1** — 서버 `seed_source` 다섯 낱말을 사람 말로. `SEEDKO` 와 나누어
@@ -274,9 +274,9 @@ const SEEDKO = { "instances:gt": "원본 번호 마스크", "instances:seed": "�
 const SEEDSRCKO = { "team:박성문": "박성문 님 워터셰드 산출물(검출 팀)",
                     "team:임성후": "임성후 님 워터셰드 산출물(검출 팀)",
                     certh_gt: "CERTH 정답 송이 번호본(포도)",
-                    gt_numbers: "원본 마스크의 정답 번호(사과)",
+                    gt_numbers: "원본 칠한 영역의 정답 번호(사과)",
                     human_fixed: "사람이 고쳐 저장한 번호본",
-                    cc4: "이 툴이 이진 마스크를 4-연결로 센 것(폴백)" };
+                    cc4: "이 툴이 이진 칠한 영역를 4-연결로 센 것(폴백)" };
 function seedSrcKo(v) { return SEEDSRCKO[v] || v || ""; }
 /* ⚠ `window` 를 **가드 없이** 만지지 말 것. 회귀 시험 `boxsim.js` 가 이 파일의 «saveBoxes ~
    seedBoxes» 구간을 글자 그대로 떼어 내 **node 에서** 돌린다(브라우저가 없으니 `window` 도 없다).
@@ -295,7 +295,7 @@ async function seedBoxes() {
   // 사람은 원본에 열매가 그려져 있는데도 하나하나 드래그해야 했다 → 0개면 원본 GT 로 한 번 더.
   if (j && j.ok && !j.n && src === "ai") j = await seed("gt");
   if (!j || !j.ok) return flash(errMsg(j, "초벌 상자를 만들지 못했습니다"), true);
-  if (!j.n) return flash("마스크에 덩어리가 없어 상자를 못 만들었습니다", true);
+  if (!j.n) return flash("칠한 영역에 덩어리가 없어 상자를 못 만들었습니다", true);
   bpush();
   const cls = $("#boxcls").value;
   // 팀원 상자는 서버가 과일에 맞는 종류(포도=송이)를 붙여 준다 — 그것을 존중하고, 마스크 계산은 예전대로 고른 종류
@@ -306,7 +306,7 @@ async function seedBoxes() {
   const ss = j.seed_source ? seedSrcKo(j.seed_source) : (SEEDKO[j.source] || j.source);
   const fb = j.fallback_from ? `${SEEDKO[j.fallback_from] || j.fallback_from}가 이 사진에 없어 대신 ` : "";
   boxInfo(`${fb}${ss}에서 ${j.n}개 초벌 — 사람이 고친 뒤 저장`);
-  flash(`초벌 상자 ${j.n}개 (저장 전)` + (j.fallback_from ? " · 팀원 상자가 없어 마스크에서 만들었습니다" : ""));
+  flash(`초벌 상자 ${j.n}개 (저장 전)` + (j.fallback_from ? " · 팀원 상자가 없어 칠한 영역에서 만들었습니다" : ""));
 }
 async function exportBoxes() {
   const j = await post("/api/boxes_export", { fruit: S.fruit });
@@ -331,7 +331,7 @@ $("#box-mode").onchange = () => {
   S.boxMode = $("#box-mode").checked;
   $("#boxpanel").style.display = S.boxMode ? "" : "none";
   if (S.boxMode) setBTool("draw");
-  flash(S.boxMode ? "상자 모드 — 드래그로 네모, V 로 고르기" : "마스크 모드");
+  flash(S.boxMode ? "상자 모드 — 드래그로 네모, V 로 고르기" : "칠한 영역 모드");
   S.dirty = true;
 };
 $("#film").oninput = (e) => { S.film = +e.target.value / 100; $("#filmv").textContent = e.target.value + "%"; S.dirty = true; };
@@ -351,7 +351,7 @@ $("#boxdel").onclick = delSelBox;
 $("#boxundo").onclick = boxUndo;
 $("#boxsave").onclick = saveBoxes;
 $("#boxexport").onclick = exportBoxes;
-$("#boxclear").onclick = () => { if (!S.boxes.length) return; bpush(); S.boxes = []; S.bsel = -1; S.dirty = true; boxInfo(); };
+$("#boxclear").onclick = () => { if (!S.boxes.length || !confirm("상자를 전부 지울까요? Ctrl+Z로 되돌릴 수 있습니다.")) return; bpush(); S.boxes = []; S.bsel = -1; S.dirty = true; boxInfo(); };
 // D4 와 같은 뜻: 고른 상자의 종류가 «정말» 달라질 때만 기록한다(같은 것을 다시 고르면 아무것도 안 함).
 $("#boxcls").onchange = () => {
   const v = $("#boxcls").value;

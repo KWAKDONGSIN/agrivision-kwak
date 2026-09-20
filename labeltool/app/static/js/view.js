@@ -29,6 +29,7 @@ function showView(v) {
   if (v === "edit") { resizeCanvas(); S.dirty = true; }
   if (v === "dash") UI.loadDash();     // ↓ list.js
   if (v === "exp" && window.expOpen) window.expOpen();
+  if (v === "exp" && UI.loadTeamGrape) UI.loadTeamGrape();
 }
 
 /* ------------------------------------------------------------- 화면 그리기 */
@@ -162,7 +163,7 @@ function toImg(ev) {
    **같은 상태를 공유**한다 — 이 단추는 그 둘을 대신 눌러 줄 뿐, 따로 상태를 들고 있지 않다. */
 
 const TASKNOTE = {
-  mask: "① 마스크 검수 — 빨강(원본 라벨)이 열매를 제대로 덮었는지 봅니다. 왼쪽 도구로 고칩니다.",
+  mask: "① 칠한 영역 검수 — 빨강(원본 라벨)이 열매를 제대로 덮었는지 봅니다. 왼쪽 도구로 고칩니다.",
   box:  "② 상자 그리기 — 빈 곳을 드래그하면 네모가 하나 생깁니다. «초벌» 을 먼저 누르면 훨씬 빠릅니다.",
   // 2026-09-17 2차 검수 정정: 네 가지 모두 «마우스로 고른 뒤 키를 눌러야» 고쳐진다(app.js numKey).
   num:  "③ 열매 번호 — 고른 뒤 키를 누릅니다. 알 클릭→D 지우기 · A·B 클릭→M 합치기 · 선 드래그→X 나누기 · 그린 뒤→N 붙이기."
@@ -208,7 +209,7 @@ const TASKBTN = { box: ["#boxsave"], num: ["#numsave"] };
    상자·번호 모드는 사진을 넘겨도 켜진 채로 남는다(의도된 동작). 그 상태에서 붓질을 하면
    아무 말 없이 아무 일도 안 난다. 글자만 얹는다 — pointer-events:none 이라 조작을 막지 않는다. */
 const TASKBADGE = {
-  box: "② 상자 그리기 중 — 붓질은 «🎨 마스크» 로",
+  box: "② 상자 그리기 중 — 붓질은 «🎨 칠한 영역» 로",
   num: "③ 번호 편집 중 — 붓·다각형은 잠겨 있습니다"
 };
 function renderTaskBadge(t) {
@@ -244,12 +245,15 @@ function renderListTask(t) {
   const w = TASKWORD[t] || TASKWORD.mask;
   el.textContent = TASKICON[t] + " " + w;
   el.title = "지금 하는 작업은 «" + w + "» 입니다 — 아래 카드의 «✔ 확정 / 미확정» 과 «☑ 내 큐» 는"
-    + " 이 작업의 확정을 봅니다(마스크·상자·번호는 따로 셉니다)."
+    + " 이 작업의 확정을 봅니다(칠한 영역·상자·번호는 따로 셉니다)."
     + " 바꾸려면 «편집» 화면 왼쪽 맨 위 세 칸에서 고르세요.";
 }
 
 function syncTaskUI() {
   const t = curTask();
+  const pan = document.querySelector('.tool[data-tool="pan"]');
+  if (pan) { pan.disabled = t !== "mask"; pan.title = t === "mask" ? "사진을 끌어서 이동합니다" : "이 작업에서는 Space를 누른 채 사진을 끌어서 이동합니다"; }
+  $("#cv").style.cursor = t === "mask" && S.panTool ? "grab" : t === "mask" && S.tool === "erase" ? "cell" : "crosshair";
   renderListTask(t);                        // 0918 사이클5 ① — 목록 맨 위 낱말
   $$(".task").forEach((b) => {
     const mine = b.dataset.task;
@@ -293,9 +297,9 @@ function syncTaskUI() {
    app.js 에 넣은 것은 딱 두 줄이다: 사진만 어둡게 덮는 `S.dim` 과, «원본만» 에서 필름·상자를
    쉬게 하는 `S.hideBox`. 둘 다 기본값(0/false)에서는 아무 일도 하지 않는다. */
 
-const VWORD = { mask: "마스크만", box: "상자만", num: "번호만" };
+const VWORD = { mask: "칠한 영역만", box: "상자만", num: "번호만" };
 const VTIP = {
-  mask: "마스크만 — 사진을 어둡게 덮고 원본 라벨·AI 제안·내 수정본만 봅니다(라벨 모양 확인용).",
+  mask: "칠한 영역만 — 사진을 어둡게 덮고 원본 라벨·AI 제안·내 수정본만 봅니다(라벨 모양 확인용).",
   box:  "상자만 — 사진을 흰 필름으로 덮고 네모만 봅니다.",
   num:  "번호만 — 사진을 어둡게 덮고 열매 번호 색·숫자만 봅니다."
 };
@@ -512,6 +516,7 @@ function tick() {
   if (s === sig) return;
   sig = s;
   syncTaskUI();
+  if (UI.renderEasyProgress) UI.renderEasyProgress();
   renderLegend();
   UI.renderTodo();                     // ↓ counts.js
   syncInstErrBtn();

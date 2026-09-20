@@ -1,0 +1,5473 @@
+{
+ "after_boxes_all__apple": {
+  "at": "⟨지움⟩",
+  "classes": [
+   "fruit",
+   "bunch",
+   "other"
+  ],
+  "fruit": "apple",
+  "images": [
+   {
+    "at": "⟨지움⟩",
+    "boxes": [
+     {
+      "cls": "fruit",
+      "id": 1,
+      "src": "human",
+      "xyxy": [
+       108,
+       192,
+       540,
+       960
+      ]
+     },
+     {
+      "cls": "bunch",
+      "id": 2,
+      "src": "human",
+      "xyxy": [
+       540,
+       960,
+       972,
+       1728
+      ]
+     }
+    ],
+    "by": "기준선",
+    "fruit": "apple",
+    "height": 1920,
+    "note": "",
+    "stem": "20150919_174151_image1",
+    "width": 1080
+   },
+   {
+    "at": "⟨지움⟩",
+    "boxes": [
+     {
+      "cls": "fruit",
+      "id": 1,
+      "src": "human",
+      "xyxy": [
+       108,
+       192,
+       540,
+       960
+      ]
+     },
+     {
+      "cls": "bunch",
+      "id": 2,
+      "src": "human",
+      "xyxy": [
+       540,
+       960,
+       972,
+       1728
+      ]
+     }
+    ],
+    "by": "기준선",
+    "fruit": "apple",
+    "height": 1920,
+    "note": "",
+    "stem": "20150919_174151_image101",
+    "width": 1080
+   },
+   {
+    "at": "⟨지움⟩",
+    "boxes": [
+     {
+      "cls": "fruit",
+      "id": 1,
+      "src": "human",
+      "xyxy": [
+       108,
+       192,
+       540,
+       960
+      ]
+     },
+     {
+      "cls": "bunch",
+      "id": 2,
+      "src": "human",
+      "xyxy": [
+       540,
+       960,
+       972,
+       1728
+      ]
+     }
+    ],
+    "by": "기준선",
+    "fruit": "apple",
+    "height": 1920,
+    "note": "",
+    "stem": "20150919_174151_image106",
+    "width": 1080
+   }
+  ],
+  "n_boxes": 6,
+  "n_images": 3
+ },
+ "after_boxes_all__blueberry": {
+  "at": "⟨지움⟩",
+  "classes": [
+   "fruit",
+   "bunch",
+   "other"
+  ],
+  "fruit": "blueberry",
+  "images": [
+   {
+    "at": "⟨지움⟩",
+    "boxes": [
+     {
+      "cls": "fruit",
+      "id": 1,
+      "src": "human",
+      "xyxy": [
+       192,
+       108,
+       960,
+       540
+      ]
+     },
+     {
+      "cls": "bunch",
+      "id": 2,
+      "src": "human",
+      "xyxy": [
+       960,
+       540,
+       1728,
+       972
+      ]
+     }
+    ],
+    "by": "기준선",
+    "fruit": "blueberry",
+    "height": 1080,
+    "note": "",
+    "stem": "Camera 1 Video (1)_1",
+    "width": 1920
+   },
+   {
+    "at": "⟨지움⟩",
+    "boxes": [
+     {
+      "cls": "fruit",
+      "id": 1,
+      "src": "human",
+      "xyxy": [
+       144,
+       144,
+       720,
+       720
+      ]
+     },
+     {
+      "cls": "bunch",
+      "id": 2,
+      "src": "human",
+      "xyxy": [
+       720,
+       720,
+       1296,
+       1296
+      ]
+     }
+    ],
+    "by": "기준선",
+    "fruit": "blueberry",
+    "height": 1440,
+    "note": "",
+    "stem": "Camera 1 Video (10)_61",
+    "width": 1440
+   },
+   {
+    "at": "⟨지움⟩",
+    "boxes": [
+     {
+      "cls": "fruit",
+      "id": 1,
+      "src": "human",
+      "xyxy": [
+       144,
+       144,
+       720,
+       720
+      ]
+     },
+     {
+      "cls": "bunch",
+      "id": 2,
+      "src": "human",
+      "xyxy": [
+       720,
+       720,
+       1296,
+       1296
+      ]
+     }
+    ],
+    "by": "기준선",
+    "fruit": "blueberry",
+    "height": 1440,
+    "note": "",
+    "stem": "Camera 1 Video (100)_1",
+    "width": 1440
+   }
+  ],
+  "n_boxes": 6,
+  "n_images": 3
+ },
+ "after_boxes_all__grape": {
+  "at": "⟨지움⟩",
+  "classes": [
+   "fruit",
+   "bunch",
+   "other"
+  ],
+  "fruit": "grape",
+  "images": [
+   {
+    "at": "⟨지움⟩",
+    "boxes": [
+     {
+      "cls": "fruit",
+      "id": 1,
+      "src": "human",
+      "xyxy": [
+       108,
+       192,
+       540,
+       960
+      ]
+     },
+     {
+      "cls": "bunch",
+      "id": 2,
+      "src": "human",
+      "xyxy": [
+       540,
+       960,
+       972,
+       1728
+      ]
+     }
+    ],
+    "by": "기준선",
+    "fruit": "grape",
+    "height": 1920,
+    "note": "",
+    "stem": "0",
+    "width": 1080
+   },
+   {
+    "at": "⟨지움⟩",
+    "boxes": [
+     {
+      "cls": "fruit",
+      "id": 1,
+      "src": "human",
+      "xyxy": [
+       108,
+       192,
+       540,
+       960
+      ]
+     },
+     {
+      "cls": "bunch",
+      "id": 2,
+      "src": "human",
+      "xyxy": [
+       540,
+       960,
+       972,
+       1728
+      ]
+     }
+    ],
+    "by": "기준선",
+    "fruit": "grape",
+    "height": 1920,
+    "note": "",
+    "stem": "1",
+    "width": 1080
+   },
+   {
+    "at": "⟨지움⟩",
+    "boxes": [
+     {
+      "cls": "fruit",
+      "id": 1,
+      "src": "human",
+      "xyxy": [
+       108,
+       192,
+       540,
+       960
+      ]
+     },
+     {
+      "cls": "bunch",
+      "id": 2,
+      "src": "human",
+      "xyxy": [
+       540,
+       960,
+       972,
+       1728
+      ]
+     }
+    ],
+    "by": "기준선",
+    "fruit": "grape",
+    "height": 1920,
+    "note": "",
+    "stem": "10",
+    "width": 1080
+   }
+  ],
+  "n_boxes": 6,
+  "n_images": 3
+ },
+ "after_boxes_all__peach": {
+  "at": "⟨지움⟩",
+  "classes": [
+   "fruit",
+   "bunch",
+   "other"
+  ],
+  "fruit": "peach",
+  "images": [
+   {
+    "at": "⟨지움⟩",
+    "boxes": [
+     {
+      "cls": "fruit",
+      "id": 1,
+      "src": "human",
+      "xyxy": [
+       166,
+       124,
+       832,
+       624
+      ]
+     },
+     {
+      "cls": "bunch",
+      "id": 2,
+      "src": "human",
+      "xyxy": [
+       832,
+       624,
+       1498,
+       1124
+      ]
+     }
+    ],
+    "by": "기준선",
+    "fruit": "peach",
+    "height": 1248,
+    "note": "",
+    "stem": "210629-t1-01",
+    "width": 1664
+   },
+   {
+    "at": "⟨지움⟩",
+    "boxes": [
+     {
+      "cls": "fruit",
+      "id": 1,
+      "src": "human",
+      "xyxy": [
+       166,
+       124,
+       832,
+       624
+      ]
+     },
+     {
+      "cls": "bunch",
+      "id": 2,
+      "src": "human",
+      "xyxy": [
+       832,
+       624,
+       1498,
+       1124
+      ]
+     }
+    ],
+    "by": "기준선",
+    "fruit": "peach",
+    "height": 1248,
+    "note": "",
+    "stem": "210629-t1-02",
+    "width": 1664
+   },
+   {
+    "at": "⟨지움⟩",
+    "boxes": [
+     {
+      "cls": "fruit",
+      "id": 1,
+      "src": "human",
+      "xyxy": [
+       166,
+       124,
+       832,
+       624
+      ]
+     },
+     {
+      "cls": "bunch",
+      "id": 2,
+      "src": "human",
+      "xyxy": [
+       832,
+       624,
+       1498,
+       1124
+      ]
+     }
+    ],
+    "by": "기준선",
+    "fruit": "peach",
+    "height": 1248,
+    "note": "",
+    "stem": "210629-t1-03",
+    "width": 1664
+   }
+  ],
+  "n_boxes": 6,
+  "n_images": 3
+ },
+ "after_boxes_json__apple": {
+  "20150919_174151_image1.json": "356d49e3a3c6765f63b0c0b45de199503adf878a424cd788a2c29d295e25a97a",
+  "20150919_174151_image101.json": "cb53f9fd9ba336de487c0f57c9769f74a018f09bb5f6338b8059cb6b15ebc60b",
+  "20150919_174151_image106.json": "d46371d4b7bb8beb96b606c65dd73505339880071943567387d589c97c0636a4"
+ },
+ "after_boxes_json__blueberry": {
+  "Camera 1 Video (1)_1.json": "aa2c5fb41648d9dee0e6787ac9d33d9bbe1c6d6f2dc2cea42f280bbb49e787e8",
+  "Camera 1 Video (10)_61.json": "51db22d64bc6d4cfde5ce70f2ba06ee6d13986415a3be9fa1eabdfb3b90c569a",
+  "Camera 1 Video (100)_1.json": "422213cca4da381bfaf7b73bba85cfada43b81060b0dabd288faf2df855d0d72"
+ },
+ "after_boxes_json__grape": {
+  "0.json": "0bb6318f38523e5d54189cea698e5a50b83dce9c0f226c42c175dd318cc28e2e",
+  "1.json": "612fafaec3050f0b7668ac55bc7ab3e6bae5f991b502180472cce998561946f1",
+  "10.json": "33cf1956ca333b29889accd1508a3a8d1b7eacb2ee14e0a6f56d30d2056d1d6e",
+  "740.json": "11792547a589b7062238753b68a72285fb9a4316e09acb70ea95bd4e41fbe87e"
+ },
+ "after_boxes_json__peach": {
+  "210629-t1-01.json": "84fbab5a09cee5990e86605b5efb768bc9f1c659c99f36ed1711bf40cf54783d",
+  "210629-t1-02.json": "0742a5133ce1402862b022654aa83293654219282def2ed07c852a682463806c",
+  "210629-t1-03.json": "9069112b575523e2c8991aefa39a1d3c771065b551daa27e5d7b29e9b1b85065",
+  "210629-t4-17.json": "2fc97be91c273078338bfb14135076603fe248acb87edcb5622f3d60a37918e4",
+  "기준선_빈상자.json": "ca8c6e4fa3889eaf9dc7e21a7d210854a9c5274cf25f4ef57f4368394dad679d"
+ },
+ "after_boxes_yolo__apple": {
+  "20150919_174151_image1.txt": "76바이트 6847d4a67fa323b8",
+  "20150919_174151_image101.txt": "76바이트 6847d4a67fa323b8",
+  "20150919_174151_image106.txt": "76바이트 6847d4a67fa323b8"
+ },
+ "after_boxes_yolo__blueberry": {
+  "Camera 1 Video (1)_1.txt": "76바이트 6847d4a67fa323b8",
+  "Camera 1 Video (10)_61.txt": "76바이트 6847d4a67fa323b8",
+  "Camera 1 Video (100)_1.txt": "76바이트 6847d4a67fa323b8"
+ },
+ "after_boxes_yolo__grape": {
+  "0.txt": "76바이트 6847d4a67fa323b8",
+  "1.txt": "76바이트 6847d4a67fa323b8",
+  "10.txt": "76바이트 6847d4a67fa323b8",
+  "740.txt": "0바이트 e3b0c44298fc1c14"
+ },
+ "after_boxes_yolo__peach": {
+  "210629-t1-01.txt": "76바이트 7193ca349e8a3829",
+  "210629-t1-02.txt": "76바이트 7193ca349e8a3829",
+  "210629-t1-03.txt": "76바이트 7193ca349e8a3829",
+  "210629-t4-17.txt": "0바이트 e3b0c44298fc1c14",
+  "기준선_빈상자.txt": "0바이트 e3b0c44298fc1c14"
+ },
+ "after_excluded_list__peach": [
+  "210629-t1-02\tduplicate_of:210629-t1-01"
+ ],
+ "after_instances_fixed__apple": {},
+ "after_instances_fixed__blueberry": {},
+ "after_instances_fixed__grape": "⟨폴더 없음⟩",
+ "after_instances_fixed__peach": {},
+ "after_masks_fixed__apple": {},
+ "after_masks_fixed__blueberry": {},
+ "after_masks_fixed__grape": {},
+ "after_masks_fixed__peach": {
+  "210629-t1-01.png": "48e3da2f6f6c672e472f3adfc09e1d9742cf5df9dcaa79a9dd4d326a5960b625",
+  "210629-t1-04.png": "cdb07c4ff2224459eb0992b7d2a4abb036e29cd8bad4c569e37338147ffcb780",
+  "210629-t1-06.png": "fc5265db875bcffd333d8a70c1f72e8e51d313830700815b0190ac7388e3d945",
+  "210629-t1-08.png": "075fffbb11f3d8750aeffd0b7ca82952af30026d57cb5d845328a64ce73ee150",
+  "210629-t1-20.png": "c4bfb278423e226ba6fabd8527b6197929fa25e06f083e3d6a05614178002c2d",
+  "210629-t2-03.png": "89711ff36ae920774217d98187692bf8471177e926027f7ee1d4349fbe0c3cdf",
+  "210629-t2-09.png": "67b0bcad2b676ec42798d74f3e04ef09355c4d6b677784b5529c2715cd4ce812",
+  "210629-t2-13.png": "47a0b23034cc3cdf69e2bc2719c034706ef407f51a2804c7c65218e28b72ebd6",
+  "210629-t2-16.png": "ffaf5bac27ecad0e4332d767c2822d49cdf8702f5fd47886625ecaa0e666b588",
+  "210629-t2-18.png": "2c9ce7d458156a6040e0ac8b706658ed28ac899d7cd13608905acd5a75cc14b2",
+  "210629-t2-of11-01.png": "c614d7bde29be4c69ea04f8228a6e32e915d8fa03e752c8f1dfd0a1e71dd3f05",
+  "210629-t2-of14-04.png": "d22a27fee553004c34600e81f1fc23b1816a5fdba99d8fbd3a629ec1e33faab2",
+  "210629-t2-of14-05.png": "e53c831c755bb853a38fe0bbf49a0b6c4ffcf7aa569e9c4f9e3c0fb5155dcd3a",
+  "210629-t2-of15-02.png": "7bb51448a6c1d6f07b04cc1fd04f0621d325c37754fa56b1dc8e7ec7d946fcbd",
+  "210629-t2-of16-01.png": "8d6cfb26feccc0e581228527bdf320cee015c29d22d4a94ccd736ffdecf4266b",
+  "210629-t2-of18-03.png": "4b60597fbcc8da0fbdecce77fae77253e082951f66d5fe99e0b37bebe4be9f38",
+  "210629-t2-of18-05.png": "83ca054eab2270dbf881a7753553750bb8da2fd20d21bce2cee11f46b53c2652",
+  "210629-t3-05.png": "39117825d0daa18a2c2d9c30b50c8b1bf792894187f1bb23197e967427203918",
+  "210629-t3-08.png": "bc2f89f33befe4c64b620f8fc02544e2c14730e9b59718d9d6f9b06d6f1c5ce5",
+  "210629-t3-09.png": "b0b002b7f04852e45ac617c4f8c140bcaf2a87b134d50600f4b6e2233b6af583",
+  "210629-t3-10.png": "ecfff6a0285929c9a680c285c35954b2f4019185f18477c8a9f26711bf82e8df",
+  "210629-t3-11.png": "44348893c8af2cf824be9f3443edb91a16d76292dcbbdbd4ff823de8a832ee85",
+  "210629-t3-12.png": "3f12a254e26a035bc90e658f0e14d05e0c8241af1270636571f13541c14dea06",
+  "210629-t3-17.png": "7ee2b66191a9f4b6e055c696d63d58be66d583cbe46c0ee6dd67d1e1aa1c8f0d",
+  "210629-t3-18.png": "2d4662cc29906de122a5fcbf86d6a9b79e1a0565ac7f8a8631ed7530448baa47",
+  "210629-t3-19.png": "36d551efa7f08769233f3c052017f828c3e54487a02cedd307f20380c14d326f",
+  "210629-t4-01.png": "41e17746ec81327f57ea3025ac2689bef271adf499eb6b8cecf5ccac5517317c",
+  "210629-t4-02.png": "3408fecc939b72aae8ed23037e34e78bc3d28a700b481e15c8e706f18b04b07b",
+  "210629-t4-03.png": "a2a9129c7f775ce6a4a2d1eb5c41219ffb0d0973114e871e24fefcb9a0c5c880",
+  "210629-t4-04.png": "6c574a89c68fe7de2613c27e1e4f3240daa866ef607d1a8e8b96bea93fc3d4ba",
+  "210629-t4-05.png": "86a2c9242f257c03b038650db3e60a9fb767cab1d53ecbb7370e106961e5b71a",
+  "210629-t4-08.png": "06201ecd8b6ffc6eceb721db8086ab57df4a7a7b601c80c80b39d8763637a43a",
+  "210629-t4-12.png": "13299d1c010a09cce2dc7b236475e02f459cfb64a6572d6942489aea8f9804f9",
+  "210629-t4-13.png": "497a62ceb7486732b3d8d7247fe3da004c33bc8ebdd825dacff5f8b73b5f5aa8",
+  "210629-t4-16.png": "22764def605d7473eac9fd9f2230e1cb1076bf373ed6fed291d91515ed7ad4ea",
+  "210629-t4-17.png": "64748966ce4063f3d12fd19d60923cfbdde264d1340304dfd263e4b9f331317b",
+  "210629-t4-18.png": "4336ef1ca7cab2e9b404ba4d7cbcc1d3908e3405f80dc7f16bce6f3320a815c0",
+  "210629-t4-19.png": "1289095123340014c098234c21c7e8ba68f3c1218a8551a0417b9a88930f58af",
+  "210629-t4-20.png": "47d952abe154c7b56c60b40a31eba4151f0cb7369c43002ec15ca0810de37163"
+ },
+ "after_status__apple": {
+  "20150919_174151_image1": {
+   "at": "⟨지움⟩",
+   "by": "AI 사이클3 1차 왕복시험",
+   "confirmed": {
+    "at": "⟨지움⟩",
+    "by": "기준선",
+    "note": "",
+    "status": "ok"
+   },
+   "confirmed_boxes": {
+    "at": "⟨지움⟩",
+    "by": "기준선",
+    "note": "",
+    "status": "fixed"
+   },
+   "note": "번호 편집 되돌림",
+   "status": "unreviewed"
+  },
+  "20150919_174151_image101": {
+   "at": "⟨지움⟩",
+   "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+   "confirmed_boxes": {
+    "at": "⟨지움⟩",
+    "by": "기준선",
+    "note": "",
+    "status": "fixed"
+   },
+   "note": "중복: 20150919_174151_image96",
+   "status": "exclude"
+  },
+  "20150919_174151_image106": {
+   "at": "⟨지움⟩",
+   "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+   "confirmed_boxes": {
+    "at": "⟨지움⟩",
+    "by": "기준선",
+    "note": "",
+    "status": "fixed"
+   },
+   "note": "중복: 20150919_174151_image86",
+   "status": "exclude"
+  }
+ },
+ "after_status__blueberry": {
+  "Camera 1 Video (1)_1": {
+   "at": "⟨지움⟩",
+   "by": "AI 사이클3 2차 경계시험",
+   "confirmed": {
+    "at": "⟨지움⟩",
+    "by": "기준선",
+    "note": "",
+    "status": "ok"
+   },
+   "confirmed_boxes": {
+    "at": "⟨지움⟩",
+    "by": "기준선",
+    "note": "",
+    "status": "fixed"
+   },
+   "note": "번호 편집 되돌림",
+   "status": "unreviewed"
+  },
+  "Camera 1 Video (10)_61": {
+   "at": "⟨지움⟩",
+   "by": "기준선",
+   "confirmed_boxes": {
+    "at": "⟨지움⟩",
+    "by": "기준선",
+    "note": "",
+    "status": "fixed"
+   },
+   "note": "기준선 쓰기",
+   "status": "fixed"
+  },
+  "Camera 1 Video (100)_1": {
+   "at": "⟨지움⟩",
+   "by": "기준선",
+   "confirmed_boxes": {
+    "at": "⟨지움⟩",
+    "by": "기준선",
+    "note": "",
+    "status": "fixed"
+   },
+   "note": "번호 편집 되돌림",
+   "status": "unreviewed"
+  }
+ },
+ "after_status__grape": {
+  "0": {
+   "confirmed": {
+    "at": "⟨지움⟩",
+    "by": "기준선",
+    "note": "",
+    "status": "ok"
+   },
+   "confirmed_boxes": {
+    "at": "⟨지움⟩",
+    "by": "기준선",
+    "note": "",
+    "status": "fixed"
+   }
+  },
+  "1": {
+   "at": "⟨지움⟩",
+   "by": "기준선",
+   "confirmed_boxes": {
+    "at": "⟨지움⟩",
+    "by": "기준선",
+    "note": "",
+    "status": "fixed"
+   },
+   "note": "기준선 쓰기",
+   "status": "fixed"
+  },
+  "10": {
+   "confirmed_boxes": {
+    "at": "⟨지움⟩",
+    "by": "기준선",
+    "note": "",
+    "status": "fixed"
+   },
+   "confirmed_instances": {
+    "at": "⟨지움⟩",
+    "by": "기준선",
+    "note": "",
+    "status": "ok"
+   }
+  }
+ },
+ "after_status__peach": {
+  "210629-t1-01": {
+   "at": "⟨지움⟩",
+   "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+   "confirmed": {
+    "at": "⟨지움⟩",
+    "by": "기준선",
+    "note": "",
+    "status": "ok"
+   },
+   "confirmed_boxes": {
+    "at": "⟨지움⟩",
+    "by": "기준선",
+    "note": "",
+    "status": "fixed"
+   },
+   "note": "누락 복숭아 1개 추가(AI 제안 성분 1)",
+   "status": "fixed"
+  },
+  "210629-t1-02": {
+   "at": "⟨지움⟩",
+   "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+   "confirmed_boxes": {
+    "at": "⟨지움⟩",
+    "by": "기준선",
+    "note": "",
+    "status": "fixed"
+   },
+   "note": "3회 검수 이상 없음",
+   "status": "ok"
+  },
+  "210629-t1-03": {
+   "at": "⟨지움⟩",
+   "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+   "confirmed_boxes": {
+    "at": "⟨지움⟩",
+    "by": "기준선",
+    "note": "",
+    "status": "fixed"
+   },
+   "note": "3회 검수 이상 없음",
+   "status": "ok"
+  }
+ },
+ "r_api_로그인없이": {
+  "bytes": 164,
+  "http": 401
+ },
+ "r_boxes__없는과일": {
+  "body": {
+   "error": "찾는 것이 없습니다. 사진이나 과일 이름이 맞는지 확인해 주세요.",
+   "msg": "찾는 것이 없습니다. 사진이나 과일 이름이 맞는지 확인해 주세요.",
+   "ok": false
+  },
+  "http": 404
+ },
+ "r_boxes_seed__apple": {
+  "body": {
+   "boxes": [
+    {
+     "cls": "fruit",
+     "id": 1,
+     "src": "auto",
+     "xyxy": [
+      205,
+      216,
+      242,
+      255
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 2,
+     "src": "auto",
+     "xyxy": [
+      205,
+      254,
+      242,
+      284
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 3,
+     "src": "auto",
+     "xyxy": [
+      257,
+      258,
+      288,
+      287
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 4,
+     "src": "auto",
+     "xyxy": [
+      275,
+      282,
+      291,
+      300
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 5,
+     "src": "auto",
+     "xyxy": [
+      339,
+      291,
+      378,
+      326
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 6,
+     "src": "auto",
+     "xyxy": [
+      338,
+      263,
+      353,
+      282
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 7,
+     "src": "auto",
+     "xyxy": [
+      28,
+      345,
+      71,
+      398
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 8,
+     "src": "auto",
+     "xyxy": [
+      20,
+      396,
+      52,
+      428
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 9,
+     "src": "auto",
+     "xyxy": [
+      1,
+      386,
+      30,
+      417
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 10,
+     "src": "auto",
+     "xyxy": [
+      172,
+      338,
+      205,
+      371
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 11,
+     "src": "auto",
+     "xyxy": [
+      243,
+      338,
+      266,
+      365
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 12,
+     "src": "auto",
+     "xyxy": [
+      75,
+      463,
+      107,
+      501
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 13,
+     "src": "auto",
+     "xyxy": [
+      96,
+      434,
+      124,
+      456
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 14,
+     "src": "auto",
+     "xyxy": [
+      144,
+      449,
+      189,
+      502
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 15,
+     "src": "auto",
+     "xyxy": [
+      102,
+      466,
+      150,
+      519
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 16,
+     "src": "auto",
+     "xyxy": [
+      144,
+      501,
+      177,
+      541
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 17,
+     "src": "auto",
+     "xyxy": [
+      81,
+      502,
+      121,
+      556
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 18,
+     "src": "auto",
+     "xyxy": [
+      104,
+      559,
+      150,
+      616
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 19,
+     "src": "auto",
+     "xyxy": [
+      55,
+      558,
+      107,
+      603
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 20,
+     "src": "auto",
+     "xyxy": [
+      63,
+      604,
+      110,
+      645
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 21,
+     "src": "auto",
+     "xyxy": [
+      39,
+      633,
+      71,
+      673
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 22,
+     "src": "auto",
+     "xyxy": [
+      13,
+      628,
+      39,
+      663
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 23,
+     "src": "auto",
+     "xyxy": [
+      1,
+      607,
+      36,
+      649
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 24,
+     "src": "auto",
+     "xyxy": [
+      226,
+      472,
+      260,
+      511
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 25,
+     "src": "auto",
+     "xyxy": [
+      302,
+      480,
+      357,
+      538
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 26,
+     "src": "auto",
+     "xyxy": [
+      351,
+      422,
+      386,
+      465
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 27,
+     "src": "auto",
+     "xyxy": [
+      279,
+      350,
+      317,
+      396
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 28,
+     "src": "auto",
+     "xyxy": [
+      363,
+      323,
+      404,
+      354
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 29,
+     "src": "auto",
+     "xyxy": [
+      495,
+      529,
+      534,
+      573
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 30,
+     "src": "auto",
+     "xyxy": [
+      532,
+      520,
+      574,
+      561
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 31,
+     "src": "auto",
+     "xyxy": [
+      12,
+      816,
+      68,
+      861
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 32,
+     "src": "auto",
+     "xyxy": [
+      58,
+      858,
+      121,
+      916
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 33,
+     "src": "auto",
+     "xyxy": [
+      245,
+      873,
+      284,
+      913
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 34,
+     "src": "auto",
+     "xyxy": [
+      217,
+      645,
+      263,
+      685
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 35,
+     "src": "auto",
+     "xyxy": [
+      258,
+      673,
+      308,
+      718
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 36,
+     "src": "auto",
+     "xyxy": [
+      196,
+      577,
+      246,
+      622
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 37,
+     "src": "auto",
+     "xyxy": [
+      159,
+      562,
+      204,
+      607
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 38,
+     "src": "auto",
+     "xyxy": [
+      156,
+      604,
+      189,
+      646
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 39,
+     "src": "auto",
+     "xyxy": [
+      407,
+      661,
+      453,
+      712
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 40,
+     "src": "auto",
+     "xyxy": [
+      422,
+      594,
+      477,
+      645
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 41,
+     "src": "auto",
+     "xyxy": [
+      493,
+      567,
+      541,
+      618
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 42,
+     "src": "auto",
+     "xyxy": [
+      507,
+      697,
+      552,
+      751
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 43,
+     "src": "auto",
+     "xyxy": [
+      426,
+      699,
+      468,
+      738
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 44,
+     "src": "auto",
+     "xyxy": [
+      40,
+      989,
+      92,
+      1031
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 45,
+     "src": "auto",
+     "xyxy": [
+      144,
+      1010,
+      199,
+      1061
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 46,
+     "src": "auto",
+     "xyxy": [
+      240,
+      1002,
+      290,
+      1049
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 47,
+     "src": "auto",
+     "xyxy": [
+      315,
+      983,
+      357,
+      1010
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 48,
+     "src": "auto",
+     "xyxy": [
+      417,
+      907,
+      450,
+      947
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 49,
+     "src": "auto",
+     "xyxy": [
+      405,
+      983,
+      449,
+      1031
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 50,
+     "src": "auto",
+     "xyxy": [
+      374,
+      1032,
+      414,
+      1071
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 51,
+     "src": "auto",
+     "xyxy": [
+      399,
+      1047,
+      446,
+      1095
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 52,
+     "src": "auto",
+     "xyxy": [
+      481,
+      1181,
+      528,
+      1223
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 53,
+     "src": "auto",
+     "xyxy": [
+      344,
+      1109,
+      389,
+      1151
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 54,
+     "src": "auto",
+     "xyxy": [
+      219,
+      1158,
+      257,
+      1197
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 55,
+     "src": "auto",
+     "xyxy": [
+      423,
+      1373,
+      456,
+      1415
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 56,
+     "src": "auto",
+     "xyxy": [
+      612,
+      1259,
+      642,
+      1283
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 57,
+     "src": "auto",
+     "xyxy": [
+      606,
+      1110,
+      642,
+      1143
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 58,
+     "src": "auto",
+     "xyxy": [
+      715,
+      1151,
+      759,
+      1190
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 59,
+     "src": "auto",
+     "xyxy": [
+      642,
+      402,
+      670,
+      446
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 60,
+     "src": "auto",
+     "xyxy": [
+      795,
+      549,
+      835,
+      588
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 61,
+     "src": "auto",
+     "xyxy": [
+      615,
+      724,
+      649,
+      768
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 62,
+     "src": "auto",
+     "xyxy": [
+      904,
+      556,
+      945,
+      592
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 63,
+     "src": "auto",
+     "xyxy": [
+      829,
+      526,
+      877,
+      576
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 64,
+     "src": "auto",
+     "xyxy": [
+      873,
+      495,
+      916,
+      537
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 65,
+     "src": "auto",
+     "xyxy": [
+      1038,
+      341,
+      1077,
+      375
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 66,
+     "src": "auto",
+     "xyxy": [
+      1056,
+      365,
+      1080,
+      392
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 67,
+     "src": "auto",
+     "xyxy": [
+      1047,
+      478,
+      1079,
+      508
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 68,
+     "src": "auto",
+     "xyxy": [
+      1023,
+      458,
+      1062,
+      489
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 69,
+     "src": "auto",
+     "xyxy": [
+      763,
+      938,
+      807,
+      986
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 70,
+     "src": "auto",
+     "xyxy": [
+      771,
+      968,
+      825,
+      1014
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 71,
+     "src": "auto",
+     "xyxy": [
+      858,
+      1031,
+      894,
+      1062
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 72,
+     "src": "auto",
+     "xyxy": [
+      880,
+      1044,
+      922,
+      1071
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 73,
+     "src": "auto",
+     "xyxy": [
+      769,
+      1080,
+      801,
+      1103
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 74,
+     "src": "auto",
+     "xyxy": [
+      805,
+      1061,
+      838,
+      1086
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 75,
+     "src": "auto",
+     "xyxy": [
+      446,
+      1409,
+      480,
+      1434
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 76,
+     "src": "auto",
+     "xyxy": [
+      480,
+      1349,
+      513,
+      1382
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 77,
+     "src": "auto",
+     "xyxy": [
+      510,
+      1364,
+      528,
+      1394
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 78,
+     "src": "auto",
+     "xyxy": [
+      359,
+      1151,
+      383,
+      1188
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 79,
+     "src": "auto",
+     "xyxy": [
+      291,
+      1062,
+      326,
+      1097
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 80,
+     "src": "auto",
+     "xyxy": [
+      730,
+      416,
+      753,
+      440
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 81,
+     "src": "auto",
+     "xyxy": [
+      248,
+      390,
+      266,
+      411
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 82,
+     "src": "auto",
+     "xyxy": [
+      270,
+      1205,
+      285,
+      1236
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 83,
+     "src": "auto",
+     "xyxy": [
+      374,
+      1241,
+      401,
+      1271
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 84,
+     "src": "auto",
+     "xyxy": [
+      118,
+      651,
+      159,
+      691
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 85,
+     "src": "auto",
+     "xyxy": [
+      225,
+      718,
+      263,
+      753
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 86,
+     "src": "auto",
+     "xyxy": [
+      288,
+      730,
+      318,
+      756
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 87,
+     "src": "auto",
+     "xyxy": [
+      1025,
+      855,
+      1052,
+      879
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 88,
+     "src": "auto",
+     "xyxy": [
+      1050,
+      873,
+      1077,
+      894
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 89,
+     "src": "auto",
+     "xyxy": [
+      1032,
+      933,
+      1056,
+      954
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 90,
+     "src": "auto",
+     "xyxy": [
+      1014,
+      1143,
+      1053,
+      1178
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 91,
+     "src": "auto",
+     "xyxy": [
+      667,
+      1151,
+      696,
+      1175
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 92,
+     "src": "auto",
+     "xyxy": [
+      631,
+      1067,
+      675,
+      1088
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 93,
+     "src": "auto",
+     "xyxy": [
+      630,
+      1038,
+      652,
+      1068
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 94,
+     "src": "auto",
+     "xyxy": [
+      682,
+      993,
+      730,
+      1031
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 95,
+     "src": "auto",
+     "xyxy": [
+      974,
+      1251,
+      1011,
+      1286
+     ]
+    }
+   ],
+   "n": 95,
+   "ok": true,
+   "seed_source": "gt_numbers",
+   "source": "instances:gt"
+  },
+  "http": 200
+ },
+ "r_boxes_seed__blueberry": {
+  "body": {
+   "boxes": [
+    {
+     "cls": "fruit",
+     "id": 1,
+     "src": "auto",
+     "xyxy": [
+      181,
+      159,
+      239,
+      211
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 2,
+     "src": "auto",
+     "xyxy": [
+      1682,
+      697,
+      1749,
+      755
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 3,
+     "src": "auto",
+     "xyxy": [
+      743,
+      884,
+      796,
+      935
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 4,
+     "src": "auto",
+     "xyxy": [
+      178,
+      128,
+      231,
+      167
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 5,
+     "src": "auto",
+     "xyxy": [
+      645,
+      746,
+      688,
+      791
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 6,
+     "src": "auto",
+     "xyxy": [
+      1164,
+      924,
+      1206,
+      972
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 7,
+     "src": "auto",
+     "xyxy": [
+      829,
+      869,
+      869,
+      919
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 8,
+     "src": "auto",
+     "xyxy": [
+      160,
+      513,
+      202,
+      557
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 9,
+     "src": "auto",
+     "xyxy": [
+      657,
+      790,
+      706,
+      834
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 10,
+     "src": "auto",
+     "xyxy": [
+      233,
+      128,
+      280,
+      183
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 11,
+     "src": "auto",
+     "xyxy": [
+      1705,
+      928,
+      1746,
+      966
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 12,
+     "src": "auto",
+     "xyxy": [
+      1642,
+      666,
+      1688,
+      727
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 13,
+     "src": "auto",
+     "xyxy": [
+      831,
+      969,
+      869,
+      1031
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 14,
+     "src": "auto",
+     "xyxy": [
+      285,
+      223,
+      341,
+      265
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 15,
+     "src": "auto",
+     "xyxy": [
+      944,
+      970,
+      980,
+      1007
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 16,
+     "src": "auto",
+     "xyxy": [
+      1040,
+      941,
+      1078,
+      983
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 17,
+     "src": "auto",
+     "xyxy": [
+      915,
+      948,
+      965,
+      987
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 18,
+     "src": "auto",
+     "xyxy": [
+      655,
+      715,
+      708,
+      752
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 19,
+     "src": "auto",
+     "xyxy": [
+      244,
+      384,
+      293,
+      434
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 20,
+     "src": "auto",
+     "xyxy": [
+      1013,
+      880,
+      1054,
+      927
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 21,
+     "src": "auto",
+     "xyxy": [
+      201,
+      526,
+      253,
+      567
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 22,
+     "src": "auto",
+     "xyxy": [
+      711,
+      868,
+      757,
+      907
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 23,
+     "src": "auto",
+     "xyxy": [
+      797,
+      879,
+      829,
+      927
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 24,
+     "src": "auto",
+     "xyxy": [
+      1195,
+      902,
+      1236,
+      942
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 25,
+     "src": "auto",
+     "xyxy": [
+      1335,
+      937,
+      1380,
+      1008
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 26,
+     "src": "auto",
+     "xyxy": [
+      556,
+      246,
+      588,
+      284
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 27,
+     "src": "auto",
+     "xyxy": [
+      1305,
+      459,
+      1353,
+      498
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 28,
+     "src": "auto",
+     "xyxy": [
+      1362,
+      870,
+      1386,
+      908
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 29,
+     "src": "auto",
+     "xyxy": [
+      1820,
+      201,
+      1842,
+      236
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 30,
+     "src": "auto",
+     "xyxy": [
+      1298,
+      960,
+      1319,
+      982
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 31,
+     "src": "auto",
+     "xyxy": [
+      263,
+      230,
+      285,
+      253
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 32,
+     "src": "auto",
+     "xyxy": [
+      1840,
+      245,
+      1864,
+      268
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 33,
+     "src": "auto",
+     "xyxy": [
+      1756,
+      752,
+      1795,
+      773
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 34,
+     "src": "auto",
+     "xyxy": [
+      244,
+      285,
+      267,
+      311
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 35,
+     "src": "auto",
+     "xyxy": [
+      416,
+      391,
+      438,
+      411
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 36,
+     "src": "auto",
+     "xyxy": [
+      616,
+      0,
+      640,
+      39
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 37,
+     "src": "auto",
+     "xyxy": [
+      1844,
+      547,
+      1871,
+      576
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 38,
+     "src": "auto",
+     "xyxy": [
+      1765,
+      328,
+      1788,
+      357
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 39,
+     "src": "auto",
+     "xyxy": [
+      1833,
+      511,
+      1853,
+      527
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 40,
+     "src": "auto",
+     "xyxy": [
+      1424,
+      891,
+      1442,
+      924
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 41,
+     "src": "auto",
+     "xyxy": [
+      82,
+      616,
+      97,
+      637
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 42,
+     "src": "auto",
+     "xyxy": [
+      1785,
+      439,
+      1808,
+      466
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 43,
+     "src": "auto",
+     "xyxy": [
+      1096,
+      919,
+      1123,
+      961
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 44,
+     "src": "auto",
+     "xyxy": [
+      1811,
+      184,
+      1834,
+      199
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 45,
+     "src": "auto",
+     "xyxy": [
+      653,
+      287,
+      676,
+      309
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 46,
+     "src": "auto",
+     "xyxy": [
+      1806,
+      535,
+      1840,
+      551
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 47,
+     "src": "auto",
+     "xyxy": [
+      1245,
+      1012,
+      1276,
+      1034
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 48,
+     "src": "auto",
+     "xyxy": [
+      224,
+      921,
+      238,
+      935
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 49,
+     "src": "auto",
+     "xyxy": [
+      1295,
+      436,
+      1311,
+      453
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 50,
+     "src": "auto",
+     "xyxy": [
+      1600,
+      300,
+      1629,
+      321
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 51,
+     "src": "auto",
+     "xyxy": [
+      1211,
+      199,
+      1220,
+      218
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 52,
+     "src": "auto",
+     "xyxy": [
+      1278,
+      454,
+      1299,
+      468
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 53,
+     "src": "auto",
+     "xyxy": [
+      1740,
+      628,
+      1757,
+      637
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 54,
+     "src": "auto",
+     "xyxy": [
+      1758,
+      781,
+      1775,
+      789
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 55,
+     "src": "auto",
+     "xyxy": [
+      1785,
+      776,
+      1795,
+      784
+     ]
+    }
+   ],
+   "n": 55,
+   "ok": true,
+   "seed_source": "team:박성문",
+   "source": "instances:seed"
+  },
+  "http": 200
+ },
+ "r_boxes_seed__grape": {
+  "body": {
+   "boxes": [
+    {
+     "cls": "fruit",
+     "id": 1,
+     "src": "auto",
+     "xyxy": [
+      136,
+      618,
+      294,
+      750
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 2,
+     "src": "auto",
+     "xyxy": [
+      205,
+      738,
+      232,
+      766
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 3,
+     "src": "auto",
+     "xyxy": [
+      60,
+      763,
+      195,
+      913
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 4,
+     "src": "auto",
+     "xyxy": [
+      478,
+      808,
+      762,
+      948
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 5,
+     "src": "auto",
+     "xyxy": [
+      255,
+      814,
+      333,
+      968
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 6,
+     "src": "auto",
+     "xyxy": [
+      738,
+      864,
+      847,
+      1098
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 7,
+     "src": "auto",
+     "xyxy": [
+      179,
+      885,
+      222,
+      933
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 8,
+     "src": "auto",
+     "xyxy": [
+      147,
+      919,
+      173,
+      972
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 9,
+     "src": "auto",
+     "xyxy": [
+      143,
+      923,
+      153,
+      938
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 10,
+     "src": "auto",
+     "xyxy": [
+      177,
+      929,
+      228,
+      968
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 11,
+     "src": "auto",
+     "xyxy": [
+      602,
+      993,
+      665,
+      1079
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 12,
+     "src": "auto",
+     "xyxy": [
+      0,
+      1259,
+      87,
+      1426
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 13,
+     "src": "auto",
+     "xyxy": [
+      252,
+      1301,
+      358,
+      1472
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 14,
+     "src": "auto",
+     "xyxy": [
+      5,
+      1430,
+      17,
+      1432
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 15,
+     "src": "auto",
+     "xyxy": [
+      36,
+      1430,
+      40,
+      1432
+     ]
+    }
+   ],
+   "n": 15,
+   "ok": true,
+   "seed_source": "cc4",
+   "source": "gt"
+  },
+  "http": 200
+ },
+ "r_boxes_seed__peach": {
+  "body": {
+   "boxes": [
+    {
+     "cls": "fruit",
+     "id": 1,
+     "src": "auto",
+     "xyxy": [
+      369,
+      396,
+      443,
+      470
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 2,
+     "src": "auto",
+     "xyxy": [
+      1401,
+      461,
+      1471,
+      537
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 3,
+     "src": "auto",
+     "xyxy": [
+      781,
+      260,
+      855,
+      335
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 4,
+     "src": "auto",
+     "xyxy": [
+      229,
+      607,
+      294,
+      673
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 5,
+     "src": "auto",
+     "xyxy": [
+      1445,
+      540,
+      1509,
+      601
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 6,
+     "src": "auto",
+     "xyxy": [
+      405,
+      644,
+      466,
+      706
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 7,
+     "src": "auto",
+     "xyxy": [
+      1307,
+      646,
+      1366,
+      705
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 8,
+     "src": "auto",
+     "xyxy": [
+      1269,
+      794,
+      1326,
+      850
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 9,
+     "src": "auto",
+     "xyxy": [
+      485,
+      802,
+      543,
+      856
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 10,
+     "src": "auto",
+     "xyxy": [
+      1080,
+      828,
+      1127,
+      876
+     ]
+    },
+    {
+     "cls": "fruit",
+     "id": 11,
+     "src": "auto",
+     "xyxy": [
+      804,
+      752,
+      844,
+      792
+     ]
+    }
+   ],
+   "n": 11,
+   "ok": true,
+   "seed_source": "team:박성문",
+   "source": "instances:seed"
+  },
+  "http": 200
+ },
+ "r_boxes_stats": {
+  "body": {
+   "at": "⟨지움⟩",
+   "ok": true,
+   "stats": {
+    "apple": {
+     "n_boxes": 6,
+     "n_images": 3
+    },
+    "blueberry": {
+     "n_boxes": 6,
+     "n_images": 3
+    },
+    "grape": {
+     "n_boxes": 6,
+     "n_images": 4
+    },
+    "peach": {
+     "n_boxes": 6,
+     "n_images": 4
+    }
+   }
+  },
+  "http": 200
+ },
+ "r_duplicate_preview__apple": {
+  "body": {
+   "already_excluded": 0,
+   "fruit": "apple",
+   "kept_human": 0,
+   "n_groups": 0,
+   "n_other_excludes": 2,
+   "n_to_exclude": 0,
+   "n_to_exclude_all": 0,
+   "n_undoable": 0,
+   "n_will_change": 0,
+   "outside_dataset": 0,
+   "sample": []
+  },
+  "http": 200
+ },
+ "r_duplicate_preview__blueberry": {
+  "body": {
+   "already_excluded": 0,
+   "fruit": "blueberry",
+   "kept_human": 0,
+   "n_groups": 0,
+   "n_other_excludes": 0,
+   "n_to_exclude": 0,
+   "n_to_exclude_all": 0,
+   "n_undoable": 0,
+   "n_will_change": 0,
+   "outside_dataset": 0,
+   "sample": []
+  },
+  "http": 200
+ },
+ "r_duplicate_preview__grape": {
+  "body": {
+   "already_excluded": 0,
+   "fruit": "grape",
+   "kept_human": 0,
+   "n_groups": 0,
+   "n_other_excludes": 0,
+   "n_to_exclude": 0,
+   "n_to_exclude_all": 0,
+   "n_undoable": 0,
+   "n_will_change": 0,
+   "outside_dataset": 0,
+   "sample": []
+  },
+  "http": 200
+ },
+ "r_duplicate_preview__peach": {
+  "body": {
+   "already_excluded": 0,
+   "fruit": "peach",
+   "kept_human": 0,
+   "n_groups": 0,
+   "n_other_excludes": 0,
+   "n_to_exclude": 0,
+   "n_to_exclude_all": 0,
+   "n_undoable": 0,
+   "n_will_change": 0,
+   "outside_dataset": 0,
+   "sample": []
+  },
+  "http": 200
+ },
+ "r_duplicate_preview__묶음있음": {
+  "body": {
+   "already_excluded": 0,
+   "fruit": "peach",
+   "kept_human": 1,
+   "n_groups": 1,
+   "n_other_excludes": 0,
+   "n_to_exclude": 1,
+   "n_to_exclude_all": 1,
+   "n_undoable": 0,
+   "n_will_change": 0,
+   "outside_dataset": 0,
+   "sample": [
+    {
+     "rep": "210629-t1-01",
+     "stem": "210629-t1-02"
+    }
+   ]
+  },
+  "http": 200
+ },
+ "r_export_status__없는job": {
+  "body": {
+   "error": "그런 작업이 없습니다.",
+   "msg": "그런 작업이 없습니다.",
+   "ok": false
+  },
+  "http": 404
+ },
+ "r_health": {
+  "body": {
+   "data_root": "⟨지움⟩",
+   "ok": true,
+   "out_dir": "⟨지움⟩",
+   "pid": "⟨지움⟩",
+   "time": "⟨지움⟩"
+  },
+  "http": 200
+ },
+ "r_img__apple": {
+  "bytes": 3677294,
+  "http": 200,
+  "sha256": "d3744125ab359c4a486c5921df81c776b926717e65d904746c586312d8218992"
+ },
+ "r_img__blueberry": {
+  "bytes": 3340629,
+  "http": 200,
+  "sha256": "49a7e6c5982b0224f06a58629c8799176427a64238f91356d58604f36fcb0466"
+ },
+ "r_img__grape": {
+  "bytes": 3775185,
+  "http": 200,
+  "sha256": "3f33f17691065b4f63e3524f80fc9e0351797cb7530eba104ebe8cf7d2c061e8"
+ },
+ "r_img__peach": {
+  "bytes": 4173792,
+  "http": 200,
+  "sha256": "b356d50aaacc825b4bc1f765912b4f16070ef4cf408632655ed2b6de98df42fc"
+ },
+ "r_instance_errors__apple": {
+  "body": {
+   "by_stem": {
+    "20150919_174151_image211": [
+     {
+      "box": [
+       1001,
+       46,
+       1023,
+       87
+      ],
+      "idx": "x158",
+      "inst_ids": "78",
+      "note": "넓힌 조건(닿음 무관) 재탐색",
+      "stem": "20150919_174151_image211",
+      "verdict": "duplicate_polygon"
+     }
+    ],
+    "20150919_174151_image361": [
+     {
+      "box": [
+       93,
+       564,
+       150,
+       616
+      ],
+      "idx": "390",
+      "inst_ids": "50|49",
+      "note": "붙은 두 번호의 합집합이 둥긂 (한 알을 둘로 나눴는지)",
+      "stem": "20150919_174151_image361",
+      "verdict": "one_apple_two_ids"
+     }
+    ],
+    "20150919_174730_image6": [
+     {
+      "box": [
+       673,
+       769,
+       676,
+       772
+      ],
+      "idx": "x149",
+      "inst_ids": "31",
+      "note": "넓힌 조건(닿음 무관) 재탐색",
+      "stem": "20150919_174730_image6",
+      "verdict": "border_artifact"
+     }
+    ],
+    "20150921_131234_image486": [
+     {
+      "box": [
+       615,
+       441,
+       651,
+       501
+      ],
+      "idx": "398",
+      "inst_ids": "17|16",
+      "note": "붙은 두 번호의 합집합이 둥긂 (한 알을 둘로 나눴는지)",
+      "stem": "20150921_131234_image486",
+      "verdict": "one_apple_two_ids"
+     }
+    ],
+    "20150921_131346_image151": [
+     {
+      "box": [
+       849,
+       435,
+       855,
+       443
+      ],
+      "idx": "420",
+      "inst_ids": "18",
+      "note": "같은 번호 조각이 멀리 떨어짐 (상자가 커짐)",
+      "stem": "20150921_131346_image151",
+      "verdict": "border_artifact"
+     }
+    ],
+    "20150921_131346_image51": [
+     {
+      "box": [
+       1,
+       607,
+       13,
+       613
+      ],
+      "idx": "421",
+      "inst_ids": "17",
+      "note": "같은 번호 조각이 멀리 떨어짐 (상자가 커짐)",
+      "stem": "20150921_131346_image51",
+      "verdict": "border_artifact"
+     }
+    ],
+    "20150921_131346_image56": [
+     {
+      "box": [
+       1,
+       607,
+       13,
+       613
+      ],
+      "idx": "422",
+      "inst_ids": "13",
+      "note": "같은 번호 조각이 멀리 떨어짐 (상자가 커짐)",
+      "stem": "20150921_131346_image56",
+      "verdict": "border_artifact"
+     }
+    ],
+    "20150921_131833_image181": [
+     {
+      "box": [
+       114,
+       1127,
+       120,
+       1131
+      ],
+      "idx": "424",
+      "inst_ids": "36",
+      "note": "같은 번호 조각이 멀리 떨어짐 (상자가 커짐)",
+      "stem": "20150921_131833_image181",
+      "verdict": "border_artifact"
+     }
+    ],
+    "20150921_132038_image146": [
+     {
+      "box": [
+       399,
+       523,
+       456,
+       556
+      ],
+      "idx": "156",
+      "inst_ids": "8",
+      "note": "한 번호에 두 알 의심 (봉우리·길쭉한 껍질)",
+      "stem": "20150921_132038_image146",
+      "verdict": "two_apples_one_id"
+     }
+    ],
+    "20150921_132038_image361": [
+     {
+      "box": [
+       720,
+       523,
+       751,
+       546
+      ],
+      "idx": "425",
+      "inst_ids": "5",
+      "note": "같은 번호 조각이 멀리 떨어짐 (상자가 커짐)",
+      "stem": "20150921_132038_image361",
+      "verdict": "duplicate_polygon"
+     },
+     {
+      "box": [
+       819,
+       957,
+       868,
+       1020
+      ],
+      "idx": "426",
+      "inst_ids": "30",
+      "note": "같은 번호 조각이 멀리 떨어짐 (상자가 커짐)",
+      "stem": "20150921_132038_image361",
+      "verdict": "duplicate_polygon"
+     },
+     {
+      "box": [
+       813,
+       957,
+       868,
+       1020
+      ],
+      "idx": "405",
+      "inst_ids": "60|30",
+      "note": "붙은 두 번호의 합집합이 둥긂 (한 알을 둘로 나눴는지)",
+      "stem": "20150921_132038_image361",
+      "verdict": "one_apple_two_ids"
+     }
+    ],
+    "dataset1_back_1201": [
+     {
+      "box": [
+       0,
+       904,
+       39,
+       950
+      ],
+      "idx": "412",
+      "inst_ids": "35|34",
+      "note": "붙은 두 번호의 합집합이 둥긂 (한 알을 둘로 나눴는지)",
+      "stem": "dataset1_back_1201",
+      "verdict": "one_apple_two_ids"
+     }
+    ],
+    "dataset1_back_481": [
+     {
+      "box": [
+       637,
+       786,
+       669,
+       847
+      ],
+      "idx": "x5",
+      "inst_ids": "15",
+      "note": "넓힌 조건(닿음 무관) 재탐색",
+      "stem": "dataset1_back_481",
+      "verdict": "duplicate_polygon"
+     }
+    ],
+    "dataset1_back_61": [
+     {
+      "box": [
+       275,
+       694,
+       299,
+       721
+      ],
+      "idx": "459",
+      "inst_ids": "31",
+      "note": "얇은 조각 (같은 알에 다각형 두 번 그린 흔적 의심)",
+      "stem": "dataset1_back_61",
+      "verdict": "duplicate_polygon"
+     }
+    ],
+    "dataset2_front_1230": [
+     {
+      "box": [
+       526,
+       1229,
+       558,
+       1259
+      ],
+      "idx": "460",
+      "inst_ids": "17",
+      "note": "얇은 조각 (같은 알에 다각형 두 번 그린 흔적 의심)",
+      "stem": "dataset2_front_1230",
+      "verdict": "duplicate_polygon"
+     }
+    ],
+    "dataset3_back_0": [
+     {
+      "box": [
+       428,
+       877,
+       443,
+       903
+      ],
+      "idx": "x100",
+      "inst_ids": "29",
+      "note": "넓힌 조건(닿음 무관) 재탐색",
+      "stem": "dataset3_back_0",
+      "verdict": "duplicate_polygon"
+     }
+    ],
+    "dataset3_back_1020": [
+     {
+      "box": [
+       314,
+       422,
+       342,
+       486
+      ],
+      "idx": "432",
+      "inst_ids": "50",
+      "note": "같은 번호 조각이 멀리 떨어짐 (상자가 커짐)",
+      "stem": "dataset3_back_1020",
+      "verdict": "duplicate_polygon"
+     }
+    ],
+    "dataset3_back_1050": [
+     {
+      "box": [
+       183,
+       351,
+       240,
+       440
+      ],
+      "idx": "433",
+      "inst_ids": "32",
+      "note": "같은 번호 조각이 멀리 떨어짐 (상자가 커짐)",
+      "stem": "dataset3_back_1050",
+      "verdict": "duplicate_polygon"
+     }
+    ],
+    "dataset3_back_1170": [
+     {
+      "box": [
+       790,
+       673,
+       823,
+       684
+      ],
+      "idx": "x55",
+      "inst_ids": "9",
+      "note": "넓힌 조건(닿음 무관) 재탐색",
+      "stem": "dataset3_back_1170",
+      "verdict": "duplicate_polygon"
+     },
+     {
+      "box": [
+       748,
+       1367,
+       802,
+       1443
+      ],
+      "idx": "299",
+      "inst_ids": "47",
+      "note": "한 번호에 두 알 의심 (봉우리·길쭉한 껍질)",
+      "stem": "dataset3_back_1170",
+      "verdict": "two_apples_one_id"
+     }
+    ],
+    "dataset3_back_120": [
+     {
+      "box": [
+       508,
+       912,
+       537,
+       938
+      ],
+      "idx": "461",
+      "inst_ids": "29",
+      "note": "얇은 조각 (같은 알에 다각형 두 번 그린 흔적 의심)",
+      "stem": "dataset3_back_120",
+      "verdict": "duplicate_polygon"
+     }
+    ],
+    "dataset3_back_1290": [
+     {
+      "box": [
+       540,
+       586,
+       576,
+       609
+      ],
+      "idx": "462",
+      "inst_ids": "10",
+      "note": "얇은 조각 (같은 알에 다각형 두 번 그린 흔적 의심)",
+      "stem": "dataset3_back_1290",
+      "verdict": "duplicate_polygon"
+     }
+    ],
+    "dataset3_back_1320": [
+     {
+      "box": [
+       570,
+       834,
+       597,
+       864
+      ],
+      "idx": "x47",
+      "inst_ids": "20",
+      "note": "넓힌 조건(닿음 무관) 재탐색",
+      "stem": "dataset3_back_1320",
+      "verdict": "duplicate_polygon"
+     }
+    ],
+    "dataset3_back_180": [
+     {
+      "box": [
+       294,
+       538,
+       339,
+       606
+      ],
+      "idx": "440",
+      "inst_ids": "20",
+      "note": "같은 번호 조각이 멀리 떨어짐 (상자가 커짐)",
+      "stem": "dataset3_back_180",
+      "verdict": "duplicate_polygon"
+     }
+    ],
+    "dataset3_back_270": [
+     {
+      "box": [
+       37,
+       1236,
+       69,
+       1254
+      ],
+      "idx": "x88",
+      "inst_ids": "52",
+      "note": "넓힌 조건(닿음 무관) 재탐색",
+      "stem": "dataset3_back_270",
+      "verdict": "duplicate_polygon"
+     }
+    ],
+    "dataset3_back_420": [
+     {
+      "box": [
+       1001,
+       535,
+       1013,
+       558
+      ],
+      "idx": "x145",
+      "inst_ids": "41",
+      "note": "넓힌 조건(닿음 무관) 재탐색",
+      "stem": "dataset3_back_420",
+      "verdict": "duplicate_polygon"
+     }
+    ],
+    "dataset3_back_450": [
+     {
+      "box": [
+       124,
+       935,
+       135,
+       956
+      ],
+      "idx": "x97",
+      "inst_ids": "43",
+      "note": "넓힌 조건(닿음 무관) 재탐색",
+      "stem": "dataset3_back_450",
+      "verdict": "duplicate_polygon"
+     }
+    ],
+    "dataset3_back_720": [
+     {
+      "box": [
+       60,
+       1328,
+       75,
+       1355
+      ],
+      "idx": "x125",
+      "inst_ids": "51",
+      "note": "넓힌 조건(닿음 무관) 재탐색",
+      "stem": "dataset3_back_720",
+      "verdict": "duplicate_polygon"
+     }
+    ],
+    "dataset3_back_750": [
+     {
+      "box": [
+       935,
+       807,
+       966,
+       817
+      ],
+      "idx": "463",
+      "inst_ids": "42",
+      "note": "얇은 조각 (같은 알에 다각형 두 번 그린 흔적 의심)",
+      "stem": "dataset3_back_750",
+      "verdict": "duplicate_polygon"
+     }
+    ],
+    "dataset3_back_780": [
+     {
+      "box": [
+       933,
+       1532,
+       968,
+       1560
+      ],
+      "idx": "450",
+      "inst_ids": "1",
+      "note": "같은 번호 조각이 멀리 떨어짐 (상자가 커짐)",
+      "stem": "dataset3_back_780",
+      "verdict": "duplicate_polygon"
+     },
+     {
+      "box": [
+       798,
+       929,
+       882,
+       993
+      ],
+      "idx": "451",
+      "inst_ids": "16",
+      "note": "같은 번호 조각이 멀리 떨어짐 (상자가 커짐)",
+      "stem": "dataset3_back_780",
+      "verdict": "duplicate_polygon"
+     },
+     {
+      "box": [
+       604,
+       814,
+       627,
+       828
+      ],
+      "idx": "465",
+      "inst_ids": "33",
+      "note": "얇은 조각 (같은 알에 다각형 두 번 그린 흔적 의심)",
+      "stem": "dataset3_back_780",
+      "verdict": "duplicate_polygon"
+     }
+    ],
+    "dataset3_back_840": [
+     {
+      "box": [
+       610,
+       805,
+       684,
+       858
+      ],
+      "idx": "454",
+      "inst_ids": "13",
+      "note": "같은 번호 조각이 멀리 떨어짐 (상자가 커짐)",
+      "stem": "dataset3_back_840",
+      "verdict": "duplicate_polygon"
+     }
+    ],
+    "dataset3_back_990": [
+     {
+      "box": [
+       759,
+       912,
+       775,
+       929
+      ],
+      "idx": "x99",
+      "inst_ids": "32",
+      "note": "넓힌 조건(닿음 무관) 재탐색",
+      "stem": "dataset3_back_990",
+      "verdict": "duplicate_polygon"
+     },
+     {
+      "box": [
+       338,
+       1340,
+       363,
+       1356
+      ],
+      "idx": "x136",
+      "inst_ids": "19",
+      "note": "넓힌 조건(닿음 무관) 재탐색",
+      "stem": "dataset3_back_990",
+      "verdict": "duplicate_polygon"
+     }
+    ],
+    "dataset3_front_1110": [
+     {
+      "box": [
+       111,
+       169,
+       132,
+       229
+      ],
+      "idx": "x116",
+      "inst_ids": "6",
+      "note": "넓힌 조건(닿음 무관) 재탐색",
+      "stem": "dataset3_front_1110",
+      "verdict": "duplicate_polygon"
+     }
+    ],
+    "dataset4_front_300": [
+     {
+      "box": [
+       792,
+       1242,
+       837,
+       1290
+      ],
+      "idx": "417",
+      "inst_ids": "49|48",
+      "note": "붙은 두 번호의 합집합이 둥긂 (한 알을 둘로 나눴는지)",
+      "stem": "dataset4_front_300",
+      "verdict": "one_apple_two_ids"
+     }
+    ]
+   },
+   "n": 38,
+   "n_stems": 32,
+   "ok": true,
+   "rows": [
+    {
+     "box": [
+      673,
+      769,
+      676,
+      772
+     ],
+     "idx": "x149",
+     "inst_ids": "31",
+     "note": "넓힌 조건(닿음 무관) 재탐색",
+     "stem": "20150919_174730_image6",
+     "verdict": "border_artifact"
+    },
+    {
+     "box": [
+      849,
+      435,
+      855,
+      443
+     ],
+     "idx": "420",
+     "inst_ids": "18",
+     "note": "같은 번호 조각이 멀리 떨어짐 (상자가 커짐)",
+     "stem": "20150921_131346_image151",
+     "verdict": "border_artifact"
+    },
+    {
+     "box": [
+      1,
+      607,
+      13,
+      613
+     ],
+     "idx": "421",
+     "inst_ids": "17",
+     "note": "같은 번호 조각이 멀리 떨어짐 (상자가 커짐)",
+     "stem": "20150921_131346_image51",
+     "verdict": "border_artifact"
+    },
+    {
+     "box": [
+      1,
+      607,
+      13,
+      613
+     ],
+     "idx": "422",
+     "inst_ids": "13",
+     "note": "같은 번호 조각이 멀리 떨어짐 (상자가 커짐)",
+     "stem": "20150921_131346_image56",
+     "verdict": "border_artifact"
+    },
+    {
+     "box": [
+      114,
+      1127,
+      120,
+      1131
+     ],
+     "idx": "424",
+     "inst_ids": "36",
+     "note": "같은 번호 조각이 멀리 떨어짐 (상자가 커짐)",
+     "stem": "20150921_131833_image181",
+     "verdict": "border_artifact"
+    },
+    {
+     "box": [
+      1001,
+      46,
+      1023,
+      87
+     ],
+     "idx": "x158",
+     "inst_ids": "78",
+     "note": "넓힌 조건(닿음 무관) 재탐색",
+     "stem": "20150919_174151_image211",
+     "verdict": "duplicate_polygon"
+    },
+    {
+     "box": [
+      720,
+      523,
+      751,
+      546
+     ],
+     "idx": "425",
+     "inst_ids": "5",
+     "note": "같은 번호 조각이 멀리 떨어짐 (상자가 커짐)",
+     "stem": "20150921_132038_image361",
+     "verdict": "duplicate_polygon"
+    },
+    {
+     "box": [
+      819,
+      957,
+      868,
+      1020
+     ],
+     "idx": "426",
+     "inst_ids": "30",
+     "note": "같은 번호 조각이 멀리 떨어짐 (상자가 커짐)",
+     "stem": "20150921_132038_image361",
+     "verdict": "duplicate_polygon"
+    },
+    {
+     "box": [
+      637,
+      786,
+      669,
+      847
+     ],
+     "idx": "x5",
+     "inst_ids": "15",
+     "note": "넓힌 조건(닿음 무관) 재탐색",
+     "stem": "dataset1_back_481",
+     "verdict": "duplicate_polygon"
+    },
+    {
+     "box": [
+      275,
+      694,
+      299,
+      721
+     ],
+     "idx": "459",
+     "inst_ids": "31",
+     "note": "얇은 조각 (같은 알에 다각형 두 번 그린 흔적 의심)",
+     "stem": "dataset1_back_61",
+     "verdict": "duplicate_polygon"
+    },
+    {
+     "box": [
+      526,
+      1229,
+      558,
+      1259
+     ],
+     "idx": "460",
+     "inst_ids": "17",
+     "note": "얇은 조각 (같은 알에 다각형 두 번 그린 흔적 의심)",
+     "stem": "dataset2_front_1230",
+     "verdict": "duplicate_polygon"
+    },
+    {
+     "box": [
+      428,
+      877,
+      443,
+      903
+     ],
+     "idx": "x100",
+     "inst_ids": "29",
+     "note": "넓힌 조건(닿음 무관) 재탐색",
+     "stem": "dataset3_back_0",
+     "verdict": "duplicate_polygon"
+    },
+    {
+     "box": [
+      314,
+      422,
+      342,
+      486
+     ],
+     "idx": "432",
+     "inst_ids": "50",
+     "note": "같은 번호 조각이 멀리 떨어짐 (상자가 커짐)",
+     "stem": "dataset3_back_1020",
+     "verdict": "duplicate_polygon"
+    },
+    {
+     "box": [
+      183,
+      351,
+      240,
+      440
+     ],
+     "idx": "433",
+     "inst_ids": "32",
+     "note": "같은 번호 조각이 멀리 떨어짐 (상자가 커짐)",
+     "stem": "dataset3_back_1050",
+     "verdict": "duplicate_polygon"
+    },
+    {
+     "box": [
+      790,
+      673,
+      823,
+      684
+     ],
+     "idx": "x55",
+     "inst_ids": "9",
+     "note": "넓힌 조건(닿음 무관) 재탐색",
+     "stem": "dataset3_back_1170",
+     "verdict": "duplicate_polygon"
+    },
+    {
+     "box": [
+      508,
+      912,
+      537,
+      938
+     ],
+     "idx": "461",
+     "inst_ids": "29",
+     "note": "얇은 조각 (같은 알에 다각형 두 번 그린 흔적 의심)",
+     "stem": "dataset3_back_120",
+     "verdict": "duplicate_polygon"
+    },
+    {
+     "box": [
+      540,
+      586,
+      576,
+      609
+     ],
+     "idx": "462",
+     "inst_ids": "10",
+     "note": "얇은 조각 (같은 알에 다각형 두 번 그린 흔적 의심)",
+     "stem": "dataset3_back_1290",
+     "verdict": "duplicate_polygon"
+    },
+    {
+     "box": [
+      570,
+      834,
+      597,
+      864
+     ],
+     "idx": "x47",
+     "inst_ids": "20",
+     "note": "넓힌 조건(닿음 무관) 재탐색",
+     "stem": "dataset3_back_1320",
+     "verdict": "duplicate_polygon"
+    },
+    {
+     "box": [
+      294,
+      538,
+      339,
+      606
+     ],
+     "idx": "440",
+     "inst_ids": "20",
+     "note": "같은 번호 조각이 멀리 떨어짐 (상자가 커짐)",
+     "stem": "dataset3_back_180",
+     "verdict": "duplicate_polygon"
+    },
+    {
+     "box": [
+      37,
+      1236,
+      69,
+      1254
+     ],
+     "idx": "x88",
+     "inst_ids": "52",
+     "note": "넓힌 조건(닿음 무관) 재탐색",
+     "stem": "dataset3_back_270",
+     "verdict": "duplicate_polygon"
+    },
+    {
+     "box": [
+      1001,
+      535,
+      1013,
+      558
+     ],
+     "idx": "x145",
+     "inst_ids": "41",
+     "note": "넓힌 조건(닿음 무관) 재탐색",
+     "stem": "dataset3_back_420",
+     "verdict": "duplicate_polygon"
+    },
+    {
+     "box": [
+      124,
+      935,
+      135,
+      956
+     ],
+     "idx": "x97",
+     "inst_ids": "43",
+     "note": "넓힌 조건(닿음 무관) 재탐색",
+     "stem": "dataset3_back_450",
+     "verdict": "duplicate_polygon"
+    },
+    {
+     "box": [
+      60,
+      1328,
+      75,
+      1355
+     ],
+     "idx": "x125",
+     "inst_ids": "51",
+     "note": "넓힌 조건(닿음 무관) 재탐색",
+     "stem": "dataset3_back_720",
+     "verdict": "duplicate_polygon"
+    },
+    {
+     "box": [
+      935,
+      807,
+      966,
+      817
+     ],
+     "idx": "463",
+     "inst_ids": "42",
+     "note": "얇은 조각 (같은 알에 다각형 두 번 그린 흔적 의심)",
+     "stem": "dataset3_back_750",
+     "verdict": "duplicate_polygon"
+    },
+    {
+     "box": [
+      933,
+      1532,
+      968,
+      1560
+     ],
+     "idx": "450",
+     "inst_ids": "1",
+     "note": "같은 번호 조각이 멀리 떨어짐 (상자가 커짐)",
+     "stem": "dataset3_back_780",
+     "verdict": "duplicate_polygon"
+    },
+    {
+     "box": [
+      798,
+      929,
+      882,
+      993
+     ],
+     "idx": "451",
+     "inst_ids": "16",
+     "note": "같은 번호 조각이 멀리 떨어짐 (상자가 커짐)",
+     "stem": "dataset3_back_780",
+     "verdict": "duplicate_polygon"
+    },
+    {
+     "box": [
+      604,
+      814,
+      627,
+      828
+     ],
+     "idx": "465",
+     "inst_ids": "33",
+     "note": "얇은 조각 (같은 알에 다각형 두 번 그린 흔적 의심)",
+     "stem": "dataset3_back_780",
+     "verdict": "duplicate_polygon"
+    },
+    {
+     "box": [
+      610,
+      805,
+      684,
+      858
+     ],
+     "idx": "454",
+     "inst_ids": "13",
+     "note": "같은 번호 조각이 멀리 떨어짐 (상자가 커짐)",
+     "stem": "dataset3_back_840",
+     "verdict": "duplicate_polygon"
+    },
+    {
+     "box": [
+      759,
+      912,
+      775,
+      929
+     ],
+     "idx": "x99",
+     "inst_ids": "32",
+     "note": "넓힌 조건(닿음 무관) 재탐색",
+     "stem": "dataset3_back_990",
+     "verdict": "duplicate_polygon"
+    },
+    {
+     "box": [
+      338,
+      1340,
+      363,
+      1356
+     ],
+     "idx": "x136",
+     "inst_ids": "19",
+     "note": "넓힌 조건(닿음 무관) 재탐색",
+     "stem": "dataset3_back_990",
+     "verdict": "duplicate_polygon"
+    },
+    {
+     "box": [
+      111,
+      169,
+      132,
+      229
+     ],
+     "idx": "x116",
+     "inst_ids": "6",
+     "note": "넓힌 조건(닿음 무관) 재탐색",
+     "stem": "dataset3_front_1110",
+     "verdict": "duplicate_polygon"
+    },
+    {
+     "box": [
+      93,
+      564,
+      150,
+      616
+     ],
+     "idx": "390",
+     "inst_ids": "50|49",
+     "note": "붙은 두 번호의 합집합이 둥긂 (한 알을 둘로 나눴는지)",
+     "stem": "20150919_174151_image361",
+     "verdict": "one_apple_two_ids"
+    },
+    {
+     "box": [
+      615,
+      441,
+      651,
+      501
+     ],
+     "idx": "398",
+     "inst_ids": "17|16",
+     "note": "붙은 두 번호의 합집합이 둥긂 (한 알을 둘로 나눴는지)",
+     "stem": "20150921_131234_image486",
+     "verdict": "one_apple_two_ids"
+    },
+    {
+     "box": [
+      813,
+      957,
+      868,
+      1020
+     ],
+     "idx": "405",
+     "inst_ids": "60|30",
+     "note": "붙은 두 번호의 합집합이 둥긂 (한 알을 둘로 나눴는지)",
+     "stem": "20150921_132038_image361",
+     "verdict": "one_apple_two_ids"
+    },
+    {
+     "box": [
+      0,
+      904,
+      39,
+      950
+     ],
+     "idx": "412",
+     "inst_ids": "35|34",
+     "note": "붙은 두 번호의 합집합이 둥긂 (한 알을 둘로 나눴는지)",
+     "stem": "dataset1_back_1201",
+     "verdict": "one_apple_two_ids"
+    },
+    {
+     "box": [
+      792,
+      1242,
+      837,
+      1290
+     ],
+     "idx": "417",
+     "inst_ids": "49|48",
+     "note": "붙은 두 번호의 합집합이 둥긂 (한 알을 둘로 나눴는지)",
+     "stem": "dataset4_front_300",
+     "verdict": "one_apple_two_ids"
+    },
+    {
+     "box": [
+      399,
+      523,
+      456,
+      556
+     ],
+     "idx": "156",
+     "inst_ids": "8",
+     "note": "한 번호에 두 알 의심 (봉우리·길쭉한 껍질)",
+     "stem": "20150921_132038_image146",
+     "verdict": "two_apples_one_id"
+    },
+    {
+     "box": [
+      748,
+      1367,
+      802,
+      1443
+     ],
+     "idx": "299",
+     "inst_ids": "47",
+     "note": "한 번호에 두 알 의심 (봉우리·길쭉한 껍질)",
+     "stem": "dataset3_back_1170",
+     "verdict": "two_apples_one_id"
+    }
+   ],
+   "source": "⟨지움⟩"
+  },
+  "http": 200
+ },
+ "r_instance_errors__blueberry": {
+  "body": {
+   "by_stem": {},
+   "ok": true,
+   "rows": [],
+   "source": null
+  },
+  "http": 200
+ },
+ "r_instance_errors__grape": {
+  "body": {
+   "by_stem": {},
+   "ok": true,
+   "rows": [],
+   "source": null
+  },
+  "http": 200
+ },
+ "r_instance_errors__peach": {
+  "body": {
+   "by_stem": {},
+   "ok": true,
+   "rows": [],
+   "source": null
+  },
+  "http": 200
+ },
+ "r_instance_stats": {
+  "body": {
+   "at": "⟨지움⟩",
+   "ok": true,
+   "running": {},
+   "started": false,
+   "stats": {
+    "apple": {
+     "avg": 99.0,
+     "has_num": true,
+     "max": 99,
+     "n_cached": 1,
+     "n_counted": 1,
+     "n_images": 3,
+     "n_instances": 99,
+     "stale": 2
+    },
+    "blueberry": {
+     "avg": 43.0,
+     "has_num": true,
+     "max": 43,
+     "n_cached": 1,
+     "n_counted": 1,
+     "n_images": 3,
+     "n_instances": 43,
+     "stale": 2
+    },
+    "grape": {
+     "avg": 0,
+     "has_num": false,
+     "max": 0,
+     "n_cached": 1,
+     "n_counted": 0,
+     "n_images": 3,
+     "n_instances": 0,
+     "stale": 2
+    },
+    "peach": {
+     "avg": 10.0,
+     "has_num": true,
+     "max": 10,
+     "n_cached": 1,
+     "n_counted": 1,
+     "n_images": 3,
+     "n_instances": 10,
+     "stale": 2
+    }
+   }
+  },
+  "http": 200
+ },
+ "r_instances_png__apple": {
+  "bytes": 17994,
+  "http": 200,
+  "sha256": "708816e55e3a81431ad05904f1530e70259985ae695073644b5d65fec5384e10"
+ },
+ "r_instances_png__blueberry": {
+  "bytes": 13475,
+  "http": 200,
+  "sha256": "cf7e07754cb1eec03d4dce5e01540492f1681ddce9f0161a0f1e94e185567022"
+ },
+ "r_instances_png__grape": {
+  "bytes": 249,
+  "http": 404,
+  "sha256": "d03322d940831acbe45378becc89e73cfae6bca7c9e4a2af26db712f1c10fc21"
+ },
+ "r_instances_png__peach": {
+  "bytes": 7737,
+  "http": 200,
+  "sha256": "fe07db3d11f9dd1ff39bdb06beac021354c6ab040e39519f2e2055c0aa010446"
+ },
+ "r_item__없는사진": {
+  "body": {
+   "error": "찾는 것이 없습니다. 사진이나 과일 이름이 맞는지 확인해 주세요.",
+   "msg": "찾는 것이 없습니다. 사진이나 과일 이름이 맞는지 확인해 주세요.",
+   "ok": false
+  },
+  "http": 404
+ },
+ "r_login_GET": {
+  "bytes": 1367,
+  "http": 200
+ },
+ "r_login_POST_틀린비밀번호": {
+  "bytes": 1415,
+  "http": 401
+ },
+ "r_mask__apple": {
+  "bytes": 25408,
+  "http": 200,
+  "sha256": "d0c20ef172b15d8cc1ec1d5e78024f90b59b93ac34d328c00863af8c7d0cf109"
+ },
+ "r_mask__blueberry": {
+  "bytes": 20842,
+  "http": 200,
+  "sha256": "62f48812c935e82348269c0d43000318107addea4abe2a64f9b1ca351303791e"
+ },
+ "r_mask__grape": {
+  "bytes": 19563,
+  "http": 200,
+  "sha256": "a356b2a458b07f19547d79dc06ea0925bb03fef6bb7e1a9a0b5ae670434b98ec"
+ },
+ "r_mask__peach": {
+  "bytes": 15136,
+  "http": 200,
+  "sha256": "f1cc439980dcca70d9168c573e7d063fa1e0ea929b4ad035a1454bcc249d6f99"
+ },
+ "r_page_box": {
+  "bytes": 31724,
+  "http": 200,
+  "sha256": "45a680a8f04ab87f3e29d9912eb96eab6694efddf20c17c92ad89c06a9471eb6"
+ },
+ "r_page_index": {
+  "bytes": 31724,
+  "http": 200,
+  "sha256": "45a680a8f04ab87f3e29d9912eb96eab6694efddf20c17c92ad89c06a9471eb6"
+ },
+ "r_page_로그인없이": {
+  "bytes": 1367,
+  "http": 200
+ },
+ "r_queue__apple__boxes": {
+  "body": {
+   "features": {
+    "duplicates": false,
+    "inspection": true,
+    "proposals": true,
+    "scores": true
+   },
+   "flag": "",
+   "flag_counts": {
+    "merged_blob": 3
+   },
+   "fruit": "apple",
+   "items": [],
+   "page": 1,
+   "page_size": 500,
+   "pages": 1,
+   "total": 0
+  },
+  "http": 200
+ },
+ "r_queue__apple__instances": {
+  "body": {
+   "features": {
+    "duplicates": false,
+    "inspection": true,
+    "proposals": true,
+    "scores": true
+   },
+   "flag": "",
+   "flag_counts": {
+    "merged_blob": 3
+   },
+   "fruit": "apple",
+   "items": [
+    {
+     "added_frac": 0.001493,
+     "ai_boxes_status": "saved",
+     "ai_status": "unreviewed",
+     "at": "⟨지움⟩",
+     "by": "AI 사이클3 1차 왕복시험",
+     "confirmed": "ok",
+     "confirmed_boxes": "fixed",
+     "confirmed_by": "기준선",
+     "confirmed_instances": null,
+     "dice": 0.560743,
+     "dup_group": null,
+     "has_fixed": false,
+     "missed_frac": 0.027808,
+     "n_inst": null,
+     "note": "번호 편집 되돌림",
+     "src": "ai",
+     "status": "unreviewed",
+     "stem": "20150919_174151_image1",
+     "suspect": true,
+     "suspect_flags": "merged_blob"
+    },
+    {
+     "added_frac": 0.00337,
+     "ai_boxes_status": "saved",
+     "ai_status": "exclude",
+     "at": "⟨지움⟩",
+     "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+     "confirmed": null,
+     "confirmed_boxes": "fixed",
+     "confirmed_by": null,
+     "confirmed_instances": null,
+     "dice": 0.662903,
+     "dup_group": null,
+     "has_fixed": false,
+     "missed_frac": 0.021627,
+     "n_inst": null,
+     "note": "중복: 20150919_174151_image96",
+     "src": "ai",
+     "status": "exclude",
+     "stem": "20150919_174151_image101",
+     "suspect": true,
+     "suspect_flags": "merged_blob"
+    }
+   ],
+   "page": 1,
+   "page_size": 500,
+   "pages": 1,
+   "total": 2
+  },
+  "http": 200
+ },
+ "r_queue__apple__mask": {
+  "body": {
+   "features": {
+    "duplicates": false,
+    "inspection": true,
+    "proposals": true,
+    "scores": true
+   },
+   "flag": "",
+   "flag_counts": {
+    "merged_blob": 3
+   },
+   "fruit": "apple",
+   "items": [
+    {
+     "added_frac": 0.00337,
+     "ai_boxes_status": "saved",
+     "ai_status": "exclude",
+     "at": "⟨지움⟩",
+     "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+     "confirmed": null,
+     "confirmed_boxes": "fixed",
+     "confirmed_by": null,
+     "confirmed_instances": null,
+     "dice": 0.662903,
+     "dup_group": null,
+     "has_fixed": false,
+     "missed_frac": 0.021627,
+     "n_inst": null,
+     "note": "중복: 20150919_174151_image96",
+     "src": "ai",
+     "status": "exclude",
+     "stem": "20150919_174151_image101",
+     "suspect": true,
+     "suspect_flags": "merged_blob"
+    },
+    {
+     "added_frac": 0.0033,
+     "ai_boxes_status": "saved",
+     "ai_status": "exclude",
+     "at": "⟨지움⟩",
+     "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+     "confirmed": null,
+     "confirmed_boxes": "fixed",
+     "confirmed_by": null,
+     "confirmed_instances": "ok",
+     "dice": 0.633457,
+     "dup_group": null,
+     "has_fixed": false,
+     "missed_frac": 0.022019,
+     "n_inst": 99,
+     "note": "중복: 20150919_174151_image86",
+     "src": "ai",
+     "status": "exclude",
+     "stem": "20150919_174151_image106",
+     "suspect": true,
+     "suspect_flags": "merged_blob"
+    }
+   ],
+   "page": 1,
+   "page_size": 500,
+   "pages": 1,
+   "total": 2
+  },
+  "http": 200
+ },
+ "r_queue__blueberry__boxes": {
+  "body": {
+   "features": {
+    "duplicates": false,
+    "inspection": true,
+    "proposals": true,
+    "scores": true
+   },
+   "flag": "",
+   "flag_counts": {},
+   "fruit": "blueberry",
+   "items": [],
+   "page": 1,
+   "page_size": 500,
+   "pages": 1,
+   "total": 0
+  },
+  "http": 200
+ },
+ "r_queue__blueberry__instances": {
+  "body": {
+   "features": {
+    "duplicates": false,
+    "inspection": true,
+    "proposals": true,
+    "scores": true
+   },
+   "flag": "",
+   "flag_counts": {},
+   "fruit": "blueberry",
+   "items": [
+    {
+     "added_frac": 0.001404,
+     "ai_boxes_status": "saved",
+     "ai_status": "unreviewed",
+     "at": "⟨지움⟩",
+     "by": "AI 사이클3 2차 경계시험",
+     "confirmed": "ok",
+     "confirmed_boxes": "fixed",
+     "confirmed_by": "기준선",
+     "confirmed_instances": null,
+     "dice": 0.886865,
+     "dup_group": null,
+     "has_fixed": false,
+     "missed_frac": 0.003783,
+     "n_inst": null,
+     "note": "번호 편집 되돌림",
+     "src": "ai",
+     "status": "unreviewed",
+     "stem": "Camera 1 Video (1)_1",
+     "suspect": false,
+     "suspect_flags": ""
+    },
+    {
+     "added_frac": 0.002707,
+     "ai_boxes_status": "saved",
+     "ai_status": "unreviewed",
+     "at": null,
+     "by": null,
+     "confirmed": null,
+     "confirmed_boxes": "fixed",
+     "confirmed_by": null,
+     "confirmed_instances": null,
+     "dice": 0.69244,
+     "dup_group": null,
+     "has_fixed": false,
+     "missed_frac": 0.000988,
+     "n_inst": null,
+     "note": null,
+     "src": "human",
+     "status": "unreviewed",
+     "stem": "Camera 1 Video (10)_61",
+     "suspect": false,
+     "suspect_flags": ""
+    }
+   ],
+   "page": 1,
+   "page_size": 500,
+   "pages": 1,
+   "total": 2
+  },
+  "http": 200
+ },
+ "r_queue__blueberry__mask": {
+  "body": {
+   "features": {
+    "duplicates": false,
+    "inspection": true,
+    "proposals": true,
+    "scores": true
+   },
+   "flag": "",
+   "flag_counts": {},
+   "fruit": "blueberry",
+   "items": [
+    {
+     "added_frac": 0.002707,
+     "ai_boxes_status": "saved",
+     "ai_status": "unreviewed",
+     "at": null,
+     "by": null,
+     "confirmed": null,
+     "confirmed_boxes": "fixed",
+     "confirmed_by": null,
+     "confirmed_instances": null,
+     "dice": 0.69244,
+     "dup_group": null,
+     "has_fixed": false,
+     "missed_frac": 0.000988,
+     "n_inst": null,
+     "note": null,
+     "src": "human",
+     "status": "unreviewed",
+     "stem": "Camera 1 Video (10)_61",
+     "suspect": false,
+     "suspect_flags": ""
+    },
+    {
+     "added_frac": 0.004576,
+     "ai_boxes_status": "saved",
+     "ai_status": "unreviewed",
+     "at": null,
+     "by": null,
+     "confirmed": null,
+     "confirmed_boxes": "fixed",
+     "confirmed_by": null,
+     "confirmed_instances": "ok",
+     "dice": 0.875063,
+     "dup_group": null,
+     "has_fixed": false,
+     "missed_frac": 0.001409,
+     "n_inst": 43,
+     "note": null,
+     "src": "human",
+     "status": "unreviewed",
+     "stem": "Camera 1 Video (100)_1",
+     "suspect": false,
+     "suspect_flags": ""
+    }
+   ],
+   "page": 1,
+   "page_size": 500,
+   "pages": 1,
+   "total": 2
+  },
+  "http": 200
+ },
+ "r_queue__grape__boxes": {
+  "body": {
+   "features": {
+    "duplicates": false,
+    "inspection": true,
+    "proposals": true,
+    "scores": true
+   },
+   "flag": "",
+   "flag_counts": {},
+   "fruit": "grape",
+   "items": [],
+   "page": 1,
+   "page_size": 500,
+   "pages": 1,
+   "total": 0
+  },
+  "http": 200
+ },
+ "r_queue__grape__instances": {
+  "body": {
+   "features": {
+    "duplicates": false,
+    "inspection": true,
+    "proposals": true,
+    "scores": true
+   },
+   "flag": "",
+   "flag_counts": {},
+   "fruit": "grape",
+   "items": [
+    {
+     "added_frac": 0.002298,
+     "ai_boxes_status": "saved",
+     "ai_status": "unreviewed",
+     "at": null,
+     "by": null,
+     "confirmed": "ok",
+     "confirmed_boxes": "fixed",
+     "confirmed_by": "기준선",
+     "confirmed_instances": null,
+     "dice": 0.926307,
+     "dup_group": null,
+     "has_fixed": false,
+     "missed_frac": 0.004156,
+     "n_inst": null,
+     "note": null,
+     "src": "human",
+     "status": "unreviewed",
+     "stem": "0",
+     "suspect": false,
+     "suspect_flags": ""
+    },
+    {
+     "added_frac": 0.009843,
+     "ai_boxes_status": "saved",
+     "ai_status": "unreviewed",
+     "at": null,
+     "by": null,
+     "confirmed": null,
+     "confirmed_boxes": "fixed",
+     "confirmed_by": null,
+     "confirmed_instances": null,
+     "dice": 0.968937,
+     "dup_group": null,
+     "has_fixed": false,
+     "missed_frac": 0.001383,
+     "n_inst": null,
+     "note": null,
+     "src": "human",
+     "status": "unreviewed",
+     "stem": "1",
+     "suspect": false,
+     "suspect_flags": ""
+    }
+   ],
+   "page": 1,
+   "page_size": 500,
+   "pages": 1,
+   "total": 2
+  },
+  "http": 200
+ },
+ "r_queue__grape__mask": {
+  "body": {
+   "features": {
+    "duplicates": false,
+    "inspection": true,
+    "proposals": true,
+    "scores": true
+   },
+   "flag": "",
+   "flag_counts": {},
+   "fruit": "grape",
+   "items": [
+    {
+     "added_frac": 0.009843,
+     "ai_boxes_status": "saved",
+     "ai_status": "unreviewed",
+     "at": null,
+     "by": null,
+     "confirmed": null,
+     "confirmed_boxes": "fixed",
+     "confirmed_by": null,
+     "confirmed_instances": null,
+     "dice": 0.968937,
+     "dup_group": null,
+     "has_fixed": false,
+     "missed_frac": 0.001383,
+     "n_inst": null,
+     "note": null,
+     "src": "human",
+     "status": "unreviewed",
+     "stem": "1",
+     "suspect": false,
+     "suspect_flags": ""
+    },
+    {
+     "added_frac": 0.008022,
+     "ai_boxes_status": "saved",
+     "ai_status": "unreviewed",
+     "at": null,
+     "by": null,
+     "confirmed": null,
+     "confirmed_boxes": "fixed",
+     "confirmed_by": null,
+     "confirmed_instances": "ok",
+     "dice": 0.963741,
+     "dup_group": null,
+     "has_fixed": false,
+     "missed_frac": 0.003012,
+     "n_inst": null,
+     "note": null,
+     "src": "human",
+     "status": "unreviewed",
+     "stem": "10",
+     "suspect": false,
+     "suspect_flags": ""
+    }
+   ],
+   "page": 1,
+   "page_size": 500,
+   "pages": 1,
+   "total": 2
+  },
+  "http": 200
+ },
+ "r_queue__peach__boxes": {
+  "body": {
+   "features": {
+    "duplicates": false,
+    "inspection": true,
+    "proposals": true,
+    "scores": true
+   },
+   "flag": "",
+   "flag_counts": {},
+   "fruit": "peach",
+   "items": [],
+   "page": 1,
+   "page_size": 500,
+   "pages": 1,
+   "total": 0
+  },
+  "http": 200
+ },
+ "r_queue__peach__instances": {
+  "body": {
+   "features": {
+    "duplicates": false,
+    "inspection": true,
+    "proposals": true,
+    "scores": true
+   },
+   "flag": "",
+   "flag_counts": {},
+   "fruit": "peach",
+   "items": [
+    {
+     "added_frac": 0.004541,
+     "ai_boxes_status": "saved",
+     "ai_status": "fixed",
+     "at": "⟨지움⟩",
+     "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+     "confirmed": "ok",
+     "confirmed_boxes": "fixed",
+     "confirmed_by": "기준선",
+     "confirmed_instances": null,
+     "dice": 0.667621,
+     "dup_group": null,
+     "has_fixed": true,
+     "missed_frac": 0.005294,
+     "n_inst": null,
+     "note": "누락 복숭아 1개 추가(AI 제안 성분 1)",
+     "src": "ai",
+     "status": "fixed",
+     "stem": "210629-t1-01",
+     "suspect": false,
+     "suspect_flags": ""
+    },
+    {
+     "added_frac": 0.000568,
+     "ai_boxes_status": "saved",
+     "ai_status": "ok",
+     "at": "⟨지움⟩",
+     "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+     "confirmed": null,
+     "confirmed_boxes": "fixed",
+     "confirmed_by": null,
+     "confirmed_instances": null,
+     "dice": 0.825417,
+     "dup_group": null,
+     "has_fixed": false,
+     "missed_frac": 0.004341,
+     "n_inst": null,
+     "note": "3회 검수 이상 없음",
+     "src": "ai",
+     "status": "ok",
+     "stem": "210629-t1-02",
+     "suspect": false,
+     "suspect_flags": ""
+    }
+   ],
+   "page": 1,
+   "page_size": 500,
+   "pages": 1,
+   "total": 2
+  },
+  "http": 200
+ },
+ "r_queue__peach__mask": {
+  "body": {
+   "features": {
+    "duplicates": false,
+    "inspection": true,
+    "proposals": true,
+    "scores": true
+   },
+   "flag": "",
+   "flag_counts": {},
+   "fruit": "peach",
+   "items": [
+    {
+     "added_frac": 0.000568,
+     "ai_boxes_status": "saved",
+     "ai_status": "ok",
+     "at": "⟨지움⟩",
+     "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+     "confirmed": null,
+     "confirmed_boxes": "fixed",
+     "confirmed_by": null,
+     "confirmed_instances": null,
+     "dice": 0.825417,
+     "dup_group": null,
+     "has_fixed": false,
+     "missed_frac": 0.004341,
+     "n_inst": null,
+     "note": "3회 검수 이상 없음",
+     "src": "ai",
+     "status": "ok",
+     "stem": "210629-t1-02",
+     "suspect": false,
+     "suspect_flags": ""
+    },
+    {
+     "added_frac": 0.00164,
+     "ai_boxes_status": "saved",
+     "ai_status": "ok",
+     "at": "⟨지움⟩",
+     "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+     "confirmed": null,
+     "confirmed_boxes": "fixed",
+     "confirmed_by": null,
+     "confirmed_instances": "ok",
+     "dice": 0.826846,
+     "dup_group": null,
+     "has_fixed": false,
+     "missed_frac": 0.004853,
+     "n_inst": 10,
+     "note": "3회 검수 이상 없음",
+     "src": "ai",
+     "status": "ok",
+     "stem": "210629-t1-03",
+     "suspect": false,
+     "suspect_flags": ""
+    }
+   ],
+   "page": 1,
+   "page_size": 500,
+   "pages": 1,
+   "total": 2
+  },
+  "http": 200
+ },
+ "r_static_app_js": {
+  "bytes": 1578,
+  "http": 200,
+  "sha256": "2674b4bf3cad4fa2c95360abe8ad8d7e45b2a0d8dba6d15368bc0d61dec805c9"
+ },
+ "r_stats": {
+  "body": {
+   "by_person": {
+    "AI 3회 검수(Opus5→Opus5→Fable5.1)": {
+     "exclude": 2,
+     "fixed": 1,
+     "flag": 0,
+     "ok": 2,
+     "unreviewed": 0
+    }
+   },
+   "fruits": [
+    {
+     "counts": {
+      "exclude": 0,
+      "fixed": 1,
+      "flag": 0,
+      "ok": 2,
+      "unreviewed": 0
+     },
+     "fruit": "peach",
+     "n_dup_extra": 0,
+     "n_dup_extra_all": 0,
+     "n_dup_groups": 0,
+     "n_fixed": 39,
+     "n_images": 3,
+     "outside_dataset": 0
+    },
+    {
+     "counts": {
+      "exclude": 0,
+      "fixed": 0,
+      "flag": 0,
+      "ok": 0,
+      "unreviewed": 3
+     },
+     "fruit": "grape",
+     "n_dup_extra": 0,
+     "n_dup_extra_all": 0,
+     "n_dup_groups": 0,
+     "n_fixed": 0,
+     "n_images": 3,
+     "outside_dataset": 0
+    },
+    {
+     "counts": {
+      "exclude": 2,
+      "fixed": 0,
+      "flag": 0,
+      "ok": 0,
+      "unreviewed": 1
+     },
+     "fruit": "apple",
+     "n_dup_extra": 0,
+     "n_dup_extra_all": 0,
+     "n_dup_groups": 0,
+     "n_fixed": 0,
+     "n_images": 3,
+     "outside_dataset": 0
+    },
+    {
+     "counts": {
+      "exclude": 0,
+      "fixed": 0,
+      "flag": 0,
+      "ok": 0,
+      "unreviewed": 3
+     },
+     "fruit": "blueberry",
+     "n_dup_extra": 0,
+     "n_dup_extra_all": 0,
+     "n_dup_groups": 0,
+     "n_fixed": 0,
+     "n_images": 3,
+     "outside_dataset": 0
+    }
+   ],
+   "generated": "⟨지움⟩"
+  },
+  "http": 200
+ },
+ "r_thumb__apple": {
+  "bytes": 7410,
+  "http": 200,
+  "sha256": "1970f4af858da6d059bb8a056c6a2c6f71c7e7b0ea924e6a6b27361f6dd479b5"
+ },
+ "r_thumb__blueberry": {
+  "bytes": 7274,
+  "http": 200,
+  "sha256": "ba5906eac5ea15ff4fc270ebc9f29d45d1e648279b0781e1374077bf4a35835a"
+ },
+ "r_thumb__grape": {
+  "bytes": 6957,
+  "http": 200,
+  "sha256": "64955ae3d88288285fdf589d32b2248f4728ac5d64737870f5465c5432049ddc"
+ },
+ "r_thumb__peach": {
+  "bytes": 9988,
+  "http": 200,
+  "sha256": "6488658b3f05b7582ffe79ec75674e95f02fbda1ca3cb179205d1311b0ccecf9"
+ },
+ "w_apply_duplicate_exclusions": {
+  "body": {
+   "changed": 0,
+   "kept_human": 1,
+   "n_pairs": 1,
+   "ok": true,
+   "skipped": 0
+  },
+  "http": 200
+ },
+ "w_boxes_export__apple": {
+  "body": {
+   "dropped_small": 0,
+   "empty_txt": 0,
+   "empty_txt_names": [],
+   "n_boxes": 6,
+   "n_images": 3,
+   "ok": true,
+   "stale_txt": 0,
+   "stale_txt_names": [],
+   "yolo_dir": "⟨지움⟩"
+  },
+  "http": 200
+ },
+ "w_boxes_export__blueberry": {
+  "body": {
+   "dropped_small": 0,
+   "empty_txt": 0,
+   "empty_txt_names": [],
+   "n_boxes": 6,
+   "n_images": 3,
+   "ok": true,
+   "stale_txt": 0,
+   "stale_txt_names": [],
+   "yolo_dir": "⟨지움⟩"
+  },
+  "http": 200
+ },
+ "w_boxes_export__grape": {
+  "body": {
+   "dropped_small": 0,
+   "empty_txt": 1,
+   "empty_txt_names": [
+    "740"
+   ],
+   "n_boxes": 6,
+   "n_images": 3,
+   "ok": true,
+   "stale_txt": 1,
+   "stale_txt_names": [
+    "740.txt"
+   ],
+   "yolo_dir": "⟨지움⟩"
+  },
+  "http": 200
+ },
+ "w_boxes_export__peach": {
+  "body": {
+   "dropped_small": 0,
+   "empty_txt": 1,
+   "empty_txt_names": [
+    "210629-t4-17"
+   ],
+   "n_boxes": 6,
+   "n_images": 3,
+   "ok": true,
+   "stale_txt": 1,
+   "stale_txt_names": [
+    "210629-t4-17.txt"
+   ],
+   "yolo_dir": "⟨지움⟩"
+  },
+  "http": 200
+ },
+ "w_boxes_export__빈상자갈래": {
+  "body": {
+   "dropped_small": 0,
+   "empty_txt": 2,
+   "empty_txt_names": [
+    "210629-t4-17",
+    "기준선_빈상자"
+   ],
+   "n_boxes": 6,
+   "n_images": 3,
+   "ok": true,
+   "stale_txt": 2,
+   "stale_txt_names": [
+    "210629-t4-17.txt",
+    "기준선_빈상자.txt"
+   ],
+   "yolo_dir": "⟨지움⟩"
+  },
+  "http": 200
+ },
+ "w_component__apple": {
+  "body": {
+   "error": "그 지점은 비어 있습니다(배경). 과일 안쪽을 클릭해 주세요.",
+   "msg": "그 지점은 비어 있습니다(배경). 과일 안쪽을 클릭해 주세요.",
+   "ok": false
+  },
+  "http": 200
+ },
+ "w_component__blueberry": {
+  "body": {
+   "n_pixels": 3366,
+   "ok": true,
+   "png": "⟨png sha256 1af6d041d228cd9c81534ceadca5ab9e⟩"
+  },
+  "http": 200
+ },
+ "w_component__grape": {
+  "body": {
+   "n_pixels": 199046,
+   "ok": true,
+   "png": "⟨png sha256 62953808358086f66af8842e1dd90221⟩"
+  },
+  "http": 200
+ },
+ "w_component__peach": {
+  "body": {
+   "n_pixels": 5373,
+   "ok": true,
+   "png": "⟨png sha256 ff3ce1440a3b98cad06fa64ea5620705⟩"
+  },
+  "http": 200
+ },
+ "w_component__밖__apple": {
+  "body": {
+   "error": "클릭한 곳이 사진 밖입니다.",
+   "msg": "클릭한 곳이 사진 밖입니다.",
+   "ok": false
+  },
+  "http": 400
+ },
+ "w_component__밖__blueberry": {
+  "body": {
+   "error": "클릭한 곳이 사진 밖입니다.",
+   "msg": "클릭한 곳이 사진 밖입니다.",
+   "ok": false
+  },
+  "http": 400
+ },
+ "w_component__밖__grape": {
+  "body": {
+   "error": "클릭한 곳이 사진 밖입니다.",
+   "msg": "클릭한 곳이 사진 밖입니다.",
+   "ok": false
+  },
+  "http": 400
+ },
+ "w_component__밖__peach": {
+  "body": {
+   "error": "클릭한 곳이 사진 밖입니다.",
+   "msg": "클릭한 곳이 사진 밖입니다.",
+   "ok": false
+  },
+  "http": 400
+ },
+ "w_exclude_group": {
+  "body": {
+   "changed": [],
+   "group": 0,
+   "members": [
+    "210629-t1-01",
+    "210629-t1-02"
+   ],
+   "ok": true,
+   "rep": "210629-t1-01",
+   "skipped": [
+    {
+     "stem": "210629-t1-02",
+     "why": "ok"
+    }
+   ]
+  },
+  "http": 200
+ },
+ "w_export_excluded": {
+  "body": {
+   "n": 1,
+   "ok": true,
+   "path": "⟨지움⟩"
+  },
+  "http": 200
+ },
+ "w_revert__apple": {
+  "body": {
+   "confirmed_cleared": null,
+   "ok": true,
+   "removed": true,
+   "restored": true,
+   "status": {
+    "at": "⟨지움⟩",
+    "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+    "confirmed_boxes": {
+     "at": "⟨지움⟩",
+     "by": "기준선",
+     "note": "",
+     "status": "fixed"
+    },
+    "note": "중복: 20150919_174151_image96",
+    "status": "exclude"
+   }
+  },
+  "http": 200
+ },
+ "w_revert__blueberry": {
+  "body": {
+   "confirmed_cleared": null,
+   "ok": true,
+   "removed": true,
+   "restored": true,
+   "status": {
+    "at": "⟨지움⟩",
+    "by": "기준선",
+    "confirmed_boxes": {
+     "at": "⟨지움⟩",
+     "by": "기준선",
+     "note": "",
+     "status": "fixed"
+    },
+    "note": "기준선 쓰기",
+    "status": "fixed"
+   }
+  },
+  "http": 200
+ },
+ "w_revert__grape": {
+  "body": {
+   "confirmed_cleared": null,
+   "ok": true,
+   "removed": true,
+   "restored": true,
+   "status": {
+    "at": "⟨지움⟩",
+    "by": "기준선",
+    "confirmed_boxes": {
+     "at": "⟨지움⟩",
+     "by": "기준선",
+     "note": "",
+     "status": "fixed"
+    },
+    "note": "기준선 쓰기",
+    "status": "fixed"
+   }
+  },
+  "http": 200
+ },
+ "w_revert__peach": {
+  "body": {
+   "confirmed_cleared": null,
+   "ok": true,
+   "removed": true,
+   "restored": true,
+   "status": {
+    "at": "⟨지움⟩",
+    "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+    "confirmed_boxes": {
+     "at": "⟨지움⟩",
+     "by": "기준선",
+     "note": "",
+     "status": "fixed"
+    },
+    "note": "3회 검수 이상 없음",
+    "status": "ok"
+   }
+  },
+  "http": 200
+ },
+ "w_revert_instances__apple": {
+  "body": {
+   "changed": true,
+   "confirmed_cleared": "instances",
+   "ok": true,
+   "removed": [
+    "instances_fixed",
+    "masks_fixed"
+   ],
+   "restored": true,
+   "status": {
+    "at": "⟨지움⟩",
+    "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+    "confirmed_boxes": {
+     "at": "⟨지움⟩",
+     "by": "기준선",
+     "note": "",
+     "status": "fixed"
+    },
+    "note": "중복: 20150919_174151_image86",
+    "status": "exclude"
+   }
+  },
+  "http": 200
+ },
+ "w_revert_instances__blueberry": {
+  "body": {
+   "changed": true,
+   "confirmed_cleared": "instances",
+   "ok": true,
+   "removed": [
+    "instances_fixed",
+    "masks_fixed"
+   ],
+   "restored": false,
+   "status": {
+    "at": "⟨지움⟩",
+    "by": "기준선",
+    "confirmed_boxes": {
+     "at": "⟨지움⟩",
+     "by": "기준선",
+     "note": "",
+     "status": "fixed"
+    },
+    "note": "번호 편집 되돌림",
+    "status": "unreviewed"
+   }
+  },
+  "http": 200
+ },
+ "w_revert_instances__grape": {
+  "body": {
+   "changed": false,
+   "ok": true,
+   "removed": [],
+   "status": {
+    "confirmed_boxes": {
+     "at": "⟨지움⟩",
+     "by": "기준선",
+     "note": "",
+     "status": "fixed"
+    },
+    "confirmed_instances": {
+     "at": "⟨지움⟩",
+     "by": "기준선",
+     "note": "",
+     "status": "ok"
+    }
+   }
+  },
+  "http": 200
+ },
+ "w_revert_instances__peach": {
+  "body": {
+   "changed": true,
+   "confirmed_cleared": "instances",
+   "ok": true,
+   "removed": [
+    "instances_fixed",
+    "masks_fixed"
+   ],
+   "restored": true,
+   "status": {
+    "at": "⟨지움⟩",
+    "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+    "confirmed_boxes": {
+     "at": "⟨지움⟩",
+     "by": "기준선",
+     "note": "",
+     "status": "fixed"
+    },
+    "note": "3회 검수 이상 없음",
+    "status": "ok"
+   }
+  },
+  "http": 200
+ },
+ "w_save_fixed__apple": {
+  "body": {
+   "fg_pixels": 0,
+   "kept_exclude": true,
+   "ok": true,
+   "status": {
+    "at": "⟨지움⟩",
+    "by": "기준선",
+    "confirmed_boxes": {
+     "at": "⟨지움⟩",
+     "by": "기준선",
+     "note": "",
+     "status": "fixed"
+    },
+    "note": "중복: 20150919_174151_image96 · (수정본 저장) 기준선 쓰기",
+    "prev": {
+     "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+     "note": "중복: 20150919_174151_image96",
+     "status": "exclude"
+    },
+    "status": "exclude"
+   },
+   "wrote_mask": true
+  },
+  "http": 200
+ },
+ "w_save_fixed__blueberry": {
+  "body": {
+   "fg_pixels": 0,
+   "kept_exclude": false,
+   "ok": true,
+   "status": {
+    "at": "⟨지움⟩",
+    "by": "기준선",
+    "confirmed_boxes": {
+     "at": "⟨지움⟩",
+     "by": "기준선",
+     "note": "",
+     "status": "fixed"
+    },
+    "note": "기준선 쓰기",
+    "status": "fixed"
+   },
+   "wrote_mask": true
+  },
+  "http": 200
+ },
+ "w_save_fixed__grape": {
+  "body": {
+   "fg_pixels": 0,
+   "kept_exclude": false,
+   "ok": true,
+   "status": {
+    "at": "⟨지움⟩",
+    "by": "기준선",
+    "confirmed_boxes": {
+     "at": "⟨지움⟩",
+     "by": "기준선",
+     "note": "",
+     "status": "fixed"
+    },
+    "note": "기준선 쓰기",
+    "status": "fixed"
+   },
+   "wrote_mask": true
+  },
+  "http": 200
+ },
+ "w_save_fixed__peach": {
+  "body": {
+   "fg_pixels": 0,
+   "kept_exclude": false,
+   "ok": true,
+   "status": {
+    "at": "⟨지움⟩",
+    "by": "기준선",
+    "confirmed_boxes": {
+     "at": "⟨지움⟩",
+     "by": "기준선",
+     "note": "",
+     "status": "fixed"
+    },
+    "note": "기준선 쓰기",
+    "prev": {
+     "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+     "note": "3회 검수 이상 없음",
+     "status": "ok"
+    },
+    "status": "fixed"
+   },
+   "wrote_mask": true
+  },
+  "http": 200
+ },
+ "w_save_instances__apple": {
+  "body": {
+   "fg_pixels": 91025,
+   "hole_px": 0,
+   "max_id": 99,
+   "n_instances": 99,
+   "ok": true,
+   "status": {
+    "at": "⟨지움⟩",
+    "by": "기준선",
+    "confirmed_boxes": {
+     "at": "⟨지움⟩",
+     "by": "기준선",
+     "note": "",
+     "status": "fixed"
+    },
+    "confirmed_instances": {
+     "at": "⟨지움⟩",
+     "by": "기준선",
+     "note": "",
+     "status": "ok"
+    },
+    "instance_counts": {
+     "add": 0,
+     "erase": 0,
+     "merge": 0,
+     "split": 0
+    },
+    "instances_edited": true,
+    "note": "번호 편집 · (이전) 중복: 20150919_174151_image86",
+    "prev": {
+     "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+     "note": "중복: 20150919_174151_image86",
+     "status": "exclude"
+    },
+    "status": "exclude"
+   }
+  },
+  "http": 200
+ },
+ "w_save_instances__blueberry": {
+  "body": {
+   "fg_pixels": 46381,
+   "hole_px": 0,
+   "max_id": 43,
+   "n_instances": 43,
+   "ok": true,
+   "status": {
+    "at": "⟨지움⟩",
+    "by": "기준선",
+    "confirmed_boxes": {
+     "at": "⟨지움⟩",
+     "by": "기준선",
+     "note": "",
+     "status": "fixed"
+    },
+    "confirmed_instances": {
+     "at": "⟨지움⟩",
+     "by": "기준선",
+     "note": "",
+     "status": "ok"
+    },
+    "instance_counts": {
+     "add": 0,
+     "erase": 0,
+     "merge": 0,
+     "split": 0
+    },
+    "instances_edited": true,
+    "note": "번호 편집",
+    "status": "fixed"
+   }
+  },
+  "http": 200
+ },
+ "w_save_instances__grape": {
+  "body": "⟨번호본이 없다⟩",
+  "http": 404
+ },
+ "w_save_instances__peach": {
+  "body": {
+   "fg_pixels": 42270,
+   "hole_px": 0,
+   "max_id": 10,
+   "n_instances": 10,
+   "ok": true,
+   "status": {
+    "at": "⟨지움⟩",
+    "by": "기준선",
+    "confirmed_boxes": {
+     "at": "⟨지움⟩",
+     "by": "기준선",
+     "note": "",
+     "status": "fixed"
+    },
+    "confirmed_instances": {
+     "at": "⟨지움⟩",
+     "by": "기준선",
+     "note": "",
+     "status": "ok"
+    },
+    "instance_counts": {
+     "add": 0,
+     "erase": 0,
+     "merge": 0,
+     "split": 0
+    },
+    "instances_edited": true,
+    "note": "번호 편집 · (이전) 3회 검수 이상 없음",
+    "prev": {
+     "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+     "note": "3회 검수 이상 없음",
+     "status": "ok"
+    },
+    "status": "fixed"
+   }
+  },
+  "http": 200
+ },
+ "w_save_ok__apple": {
+  "body": {
+   "has_fixed": true,
+   "ok": true,
+   "status": {
+    "at": "⟨지움⟩",
+    "by": "기준선",
+    "confirmed_boxes": {
+     "at": "⟨지움⟩",
+     "by": "기준선",
+     "note": "",
+     "status": "fixed"
+    },
+    "note": "기준선 ok",
+    "prev": {
+     "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+     "note": "중복: 20150919_174151_image96",
+     "status": "exclude"
+    },
+    "status": "ok"
+   },
+   "wrote_mask": false
+  },
+  "http": 200
+ },
+ "w_save_ok__blueberry": {
+  "body": {
+   "has_fixed": true,
+   "ok": true,
+   "status": {
+    "at": "⟨지움⟩",
+    "by": "기준선",
+    "confirmed_boxes": {
+     "at": "⟨지움⟩",
+     "by": "기준선",
+     "note": "",
+     "status": "fixed"
+    },
+    "note": "기준선 ok",
+    "prev": {
+     "by": "기준선",
+     "note": "기준선 쓰기",
+     "status": "fixed"
+    },
+    "status": "ok"
+   },
+   "wrote_mask": false
+  },
+  "http": 200
+ },
+ "w_save_ok__grape": {
+  "body": {
+   "has_fixed": true,
+   "ok": true,
+   "status": {
+    "at": "⟨지움⟩",
+    "by": "기준선",
+    "confirmed_boxes": {
+     "at": "⟨지움⟩",
+     "by": "기준선",
+     "note": "",
+     "status": "fixed"
+    },
+    "note": "기준선 ok",
+    "prev": {
+     "by": "기준선",
+     "note": "기준선 쓰기",
+     "status": "fixed"
+    },
+    "status": "ok"
+   },
+   "wrote_mask": false
+  },
+  "http": 200
+ },
+ "w_save_ok__peach": {
+  "body": {
+   "has_fixed": true,
+   "ok": true,
+   "status": {
+    "at": "⟨지움⟩",
+    "by": "기준선",
+    "confirmed_boxes": {
+     "at": "⟨지움⟩",
+     "by": "기준선",
+     "note": "",
+     "status": "fixed"
+    },
+    "note": "기준선 ok",
+    "prev": {
+     "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+     "note": "3회 검수 이상 없음",
+     "status": "ok"
+    },
+    "status": "ok"
+   },
+   "wrote_mask": false
+  },
+  "http": 200
+ },
+ "w_undo_duplicate_exclusions": {
+  "body": {
+   "backup": null,
+   "changed": 0,
+   "kept": 0,
+   "kept_other": 0,
+   "ok": true
+  },
+  "http": 200
+ },
+ "w_undo_exclude_group": {
+  "body": {
+   "changed": [],
+   "kept": [
+    "210629-t1-02"
+   ],
+   "ok": true
+  },
+  "http": 200
+ }
+}

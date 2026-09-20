@@ -1,0 +1,23 @@
+{
+ "body": {
+  "at": null,
+  "boxes": [],
+  "by": null,
+  "classes": [
+   "fruit",
+   "bunch",
+   "other"
+  ],
+  "fruit": "grape",
+  "height": 1920,
+  "ok": true,
+  "saved": false,
+  "stem": "1",
+  "team": {
+   "박성문": 8,
+   "임성후": 8
+  },
+  "width": 1080
+ },
+ "http": 200
+}

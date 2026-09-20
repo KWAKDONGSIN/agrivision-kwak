@@ -19,7 +19,7 @@ const api = API.get, post = API.post;
    ⛔ 규칙 §8-10(만들기/켜기 분리): 정적 파일은 서버 재시작 없이 바로 나가므로 **화면이 서버보다 먼저 온다.**
       서버가 이 기능을 모르면(/api/export_list → 404) 탭 안을 통째로 감추고 안내 한 줄만 보여 준다.
    화면 글자는 최소로 — 이유·설명은 전부 풍선말(title)과 /static/help.html 에 있다. */
-const EXPK = { mask: "세그 마스크", instances: "열매 번호", boxes: "상자 YOLO",
+const EXPK = { mask: "세그 칠한 영역", instances: "열매 번호", boxes: "상자 YOLO",
                counts: "개수(counts.csv)" };      // 0919 «개수 세기» 사이클1 (지시서 §1-3)
 const EXPM = { conf: "사람 확정만", ai: "AI 제안 포함" };
 const EXP = { caps: null, fruit: null, mode: "conf",
@@ -70,7 +70,7 @@ function expDraw() {
   });
 
   /* 그 과일에 그 자료가 없으면 **비활성 + 이유**(풍선말). 없는 것은 체크도 풀어 둔다. */
-  const why = { mask: c.has_mask ? "" : "이 과일은 마스크 폴더가 없습니다",
+  const why = { mask: c.has_mask ? "" : "이 과일은 칠한 영역 폴더가 없습니다",
                 instances: c.has_instances ? "" : "이 과일에는 열매 번호 라벨이 없습니다",
                 boxes: c.n_box_images ? "" : "아직 저장된 상자가 없습니다(② 상자 그리기로 만듭니다)",
                 // 개수 표는 늘 만들 수 있다 — 상자도 번호도 없으면 빈 표가 나오고 그것도 사실이다
@@ -79,7 +79,7 @@ function expDraw() {
     const off = !!why[k];
     if (off) EXP.kinds[k] = false;
     const tip = off ? why[k] : { mask: "열매를 칠한 그림을 0/255 PNG 로 내보냅니다",
-                                 instances: "알마다 번호가 붙은 uint16 PNG 를 내보냅니다(세그 마스크와 함께 나갑니다)",
+                                 instances: "알마다 번호가 붙은 uint16 PNG 를 내보냅니다(세그 칠한 영역와 함께 나갑니다)",
                                  boxes: "네모를 YOLO txt 로 내보냅니다",
                                  counts: "사진마다 «열매가 몇 개인가» 를 counts.csv 한 장으로 내보냅니다"
                                        + " — 상자 수 · 번호 수 · 검출 팀 초벌 수 · 사람 확정 개수"
@@ -156,7 +156,7 @@ async function expPlan() {
      규칙은 그대로 두고 **미리 말해** 준다 — 받은 뒤에 놀라지 않게. «AI 제안 포함» 에서는
      마스크 확정을 보지 않으므로 이 줄을 띄우지 않는다. */
   const cntWarn = (EXP.kinds.counts && EXP.mode === "conf")
-    ? "개수 csv 는 마스크를 확정한 사진만 담깁니다 — 상자만 확정하면 빈 표" : "";
+    ? "개수 csv 는 칠한 영역를 확정한 사진만 담깁니다 — 상자만 확정하면 빈 표" : "";
   $("#exp-count").innerHTML = escapeHtml(expConfText(c2) + " — 0장이면 아무것도 나가지 않습니다. "
     + "AI 제안까지 포함하려면 위에서 고르세요. · " + expOutText(c2))
     + (cntWarn ? "<br>" + escapeHtml(cntWarn) : "");
@@ -203,7 +203,7 @@ async function expGo() {
        채라 여기서 막히고, 안내문은 **방금 누른 Enter 를 또 누르라고** 한다(사이클4 2차가 지적한 그
        자리의 남은 반쪽이다). 규칙은 그대로 두고 **무엇을 빼면 되는지** 한 마디 덧붙인다. */
     const off = [];
-    if (ks.indexOf("mask") >= 0) off.push("«세그 마스크»");
+    if (ks.indexOf("mask") >= 0) off.push("«세그 칠한 영역»");
     if (ks.indexOf("instances") >= 0) off.push("«열매 번호»");
     const alsoBC = ks.indexOf("boxes") >= 0 || ks.indexOf("counts") >= 0;
     $("#exp-msg").textContent = "0장 — 나갈 것이 없습니다. 편집 화면에서 Enter 로 확정하거나 «AI 제안 포함» 을 고르세요."

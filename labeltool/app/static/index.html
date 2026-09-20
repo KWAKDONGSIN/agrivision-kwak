@@ -30,8 +30,9 @@
   <span id="saveflash"></span>
   <label class="who">내 이름 <input id="who" placeholder="예: 곽동신" size="7" title="누가 검수했는지 기록됩니다. 한 번만 적으면 브라우저가 기억합니다."></label>
   <a href="/box" class="toplink" id="link-box" title="상자(바운딩 박스) 전용 화면 — 상자 작업만 보이게 엽니다. 저장 파일은 여기와 같습니다.">▭ 상자 툴</a>
-  <a href="/" class="toplink" id="link-full" title="전체 툴(마스크·상자·번호)로 돌아갑니다" style="display:none">🎨 전체 툴</a>
-  <a href="/static/help.html" target="_blank" rel="noopener" class="toplink" title="사용법 페이지를 새 창에서 엽니다">사용법</a>
+  <a href="/" class="toplink" id="link-full" title="전체 툴(칠한 영역·상자·번호)로 돌아갑니다" style="display:none">🎨 전체 툴</a>
+  <a href="/static/how_to.html" target="_blank" rel="noopener" class="toplink" title="사용법 페이지를 새 창에서 엽니다">사용법</a>
+  <button id="easytgl" class="topbtn easytgl" title="쉬움 모드 — 꼭 필요한 단추만 보여 줍니다. 전문가 모드로 바꾸면 숨겨 둔 도구(테두리 채움·초벌 출처·AI로 교체 …)가 다시 나옵니다. 단축키 없음.">🙂 쉬움 모드</button>
   <button id="btn-tour" class="topbtn" title="처음 온 사람을 위한 안내를 다시 봅니다 (? 키)">?</button>
 </header>
 
@@ -52,27 +53,35 @@
       <option value="added">AI가 더 잡은 순(라벨 누락 후보)</option>
       <option value="status">상태별</option>
       <option value="name">파일 이름순</option>
+      <option value="teamreview">박성문 사과 우선 검수</option>
       <option value="insterr">번호 편집 대상(번호오류 먼저)</option>
     </select>
     <span class="vsep"></span>
     <!-- 「무엇부터 볼까」 빠른 단추 — 위의 정렬/체크박스를 대신 눌러 준다 -->
-    <button class="qf" data-qf="myqueue" title="아직 «확정» 하지 않은 사진만, 급한 순서로 보여 줍니다 — ① AI 가 «문제» 라고 한 것 ② AI 가 제외한 중복 묶음의 대표 ③ 나머지. 한 장씩 보고 맞으면 Enter 를 누르면 됩니다. 지금 고른 작업(① 마스크 · ② 상자 · ③ 번호)의 확정을 기준으로 봅니다.">☑ 내 큐</button>
+    <button class="qf" data-qf="myqueue" title="아직 «확정» 하지 않은 사진만, 급한 순서로 보여 줍니다 — ① AI 가 «문제» 라고 한 것 ② AI 가 제외한 중복 묶음의 대표 ③ 나머지. 한 장씩 보고 맞으면 Enter 를 누르면 됩니다. 지금 고른 작업(① 칠한 영역 · ② 상자 · ③ 번호)의 확정을 기준으로 봅니다.">☑ 내 큐</button>
     <button class="qf" data-qf="unseen" title="아직 아무도 안 본 사진만 보여 줍니다 (상태 = 아직 안 봄)">👁 안 본 것</button>
-    <button class="qf feat-prop" data-qf="missing" title="AI가 원본보다 열매를 많이 찾은 사진 — 원본에 빠진 열매가 있을 가능성이 큽니다">＋ 누락 후보</button>
-    <button class="qf feat-dup" data-qf="dup" title="영상에서 뽑아 거의 똑같은 사진 묶음만 보여 줍니다">⧉ 중복</button>
-    <button class="qf" data-qf="insterr" title="검출 팀이 «번호가 틀렸다» 고 표시한 사진을 앞에 둡니다">＃ 번호 오류</button>
+    <button class="qf feat-prop adv" data-qf="missing" title="AI가 원본보다 열매를 많이 찾은 사진 — 원본에 빠진 열매가 있을 가능성이 큽니다">＋ 누락 후보</button>
+    <button class="qf feat-dup adv" data-qf="dup" title="영상에서 뽑아 거의 똑같은 사진 묶음만 보여 줍니다">⧉ 중복</button>
+    <button class="qf adv" data-qf="insterr" title="검출 팀이 «번호가 틀렸다» 고 표시한 사진을 앞에 둡니다">＃ 번호 오류</button>
     <button class="qf" data-qf="all" title="걸러 놓은 조건을 모두 지우고 전체를 봅니다">✕ 조건 지우기</button>
     <!-- 의심 «종류» 별 단추 — 그 과일에 실제로 있는 종류만 ui.js 가 여기에 만든다(0917 사이클3 ②) -->
-    <span id="flagqf" class="fqwrap"></span>
+    <span id="flagqf" class="fqwrap adv"></span>
     <span class="spacer"></span>
     <input id="f-q" placeholder="파일 이름 검색" size="13" title="파일 이름의 일부를 적으면 그 사진만 보입니다. 치는 대로 걸러집니다(Enter 도 됩니다).">
-    <label class="chk feat-dup" title="영상에서 뽑아 거의 똑같은 사진들만 봅니다"><input type="checkbox" id="f-dup"> 중복</label>
-    <label class="chk feat-insp" title="자동 점검이 «이상하다» 고 표시한 사진만 봅니다"><input type="checkbox" id="f-suspect"> 의심</label>
-    <label class="chk feat-prop" title="AI가 그려 둔 제안이 있는 사진만 봅니다"><input type="checkbox" id="f-prop"> AI</label>
+    <label class="chk feat-dup adv" title="영상에서 뽑아 거의 똑같은 사진들만 봅니다"><input type="checkbox" id="f-dup"> 중복</label>
+    <label class="chk feat-insp adv" title="자동 점검이 «이상하다» 고 표시한 사진만 봅니다"><input type="checkbox" id="f-suspect"> 의심</label>
+    <label class="chk feat-prop adv" title="AI가 그려 둔 제안이 있는 사진만 봅니다"><input type="checkbox" id="f-prop"> AI</label>
     <!-- 카드 테두리 색·딱지의 뜻은 카드에 풍선말로 붙고, 자세한 표는 «사용법» 페이지에 있다
          (전에는 이 자리에 100자짜리 범례 문단이 있었다 — 0918 «그림판» 재배치에서 뺐다). -->
   </div>
 
+  <div id="easyguide" class="easyonly">
+    <b>세 걸음</b>
+    <span>① 위에서 <b>과일</b>을 고릅니다</span>
+    <span>② 사진을 <b>클릭</b>하면 편집 화면이 열립니다</span>
+    <span>③ 고친 뒤 <b>저장 → 다 했어요</b>, 원본이 맞으면 <b>원본 OK</b></span>
+    <span class="g-more">더 자세히는 오른쪽 위 <b>사용법</b> · <b>?</b></span>
+  </div>
   <div id="grid" class="grid"></div>
 
   <div class="pager">
@@ -94,8 +103,8 @@
          그 아래가 그 일에 필요한 도구만. 다른 일의 도구는 통째로 숨는다(ui.js syncTaskUI). -->
     <div id="toolrail">
       <div id="taskbar">
-        <button class="task on" data-task="mask" title="① 마스크 검수 — 열매를 칠한 그림(마스크)이 맞는지 보고 붓으로 고칩니다. 네 과일 모두 됩니다.">
-          <span class="ti">🎨</span><span class="tw">마스크</span><span class="tk">①</span></button>
+        <button class="task on" data-task="mask" title="① 칠한 영역 검수 — 열매를 칠한 그림(칠한 영역)이 맞는지 보고 붓으로 고칩니다. 네 과일 모두 됩니다.">
+          <span class="ti">🎨</span><span class="tw">칠한 영역</span><span class="tk">①</span></button>
         <button class="task" data-task="box" title="② 상자 그리기 — 열매마다 네모(바운딩 박스)를 칩니다. 네 과일 모두 됩니다. 단축키 X">
           <span class="ti">▭</span><span class="tw">상자</span><span class="tk">X</span></button>
         <button class="task" data-task="num" title="③ 열매 번호 — 알마다 붙은 번호를 고칩니다(개수 세기용). 단축키 K">
@@ -106,17 +115,17 @@
 
       <!-- ══ «보기 전환» 3단 스위치 (그림판의 «보기») ══
            레이어 체크박스를 **대신 눌러 줄 뿐**이고, «겹쳐» 로 돌아오면 원래 체크대로 돌아온다.
-           «마스크만» 의 뜻은 작업마다 다르다(ui.js VMODE) — 🎨 마스크 / ▭ 상자만 / ＃ 번호만. -->
-      <div id="viewsw" class="railgrp">
-        <button class="vsw" data-vm="photo" title="원본만 — 사진만 봅니다(마스크·AI·상자·번호를 전부 숨깁니다). Q 로 돌려 가며 봅니다.">
+           «칠한 영역만» 의 뜻은 작업마다 다르다(ui.js VMODE) — 🎨 칠한 영역 / ▭ 상자만 / ＃ 번호만. -->
+      <div id="viewsw" class="railgrp adv">
+        <button class="vsw" data-vm="photo" title="원본만 — 사진만 봅니다(칠한 영역·AI·상자·번호를 전부 숨깁니다). Q 로 돌려 가며 봅니다.">
           <span class="ti">🖼</span><span class="tw">원본만</span></button>
-        <button class="vsw" data-vm="mask" title="마스크만 — 사진을 어둡게 덮고 지금 작업의 그림만 봅니다(라벨 모양 확인용). Q">
-          <span class="ti">🎭</span><span class="tw">마스크만</span></button>
+        <button class="vsw" data-vm="mask" title="칠한 영역만 — 사진을 어둡게 덮고 지금 작업의 그림만 봅니다(라벨 모양 확인용). Q">
+          <span class="ti">🎭</span><span class="tw">칠한 영역만</span></button>
         <button class="vsw on" data-vm="over" title="겹쳐 보기 — 사진 위에 그림을 겹쳐 봅니다(기본). Q">
           <span class="ti">🔀</span><span class="tw">겹쳐</span><span class="tk">Q</span></button>
       </div>
 
-      <!-- ① 마스크 검수의 도구 -->
+      <!-- ① 칠한 영역 검수의 도구 -->
       <div id="toolbox" class="railgrp">
         <div class="tools">
           <button class="tool on" data-tool="brush" title="브러시 — 드래그해서 열매를 칠합니다. 붓 크기는 [ ] 키 (B)">
@@ -124,12 +133,12 @@
           <button class="tool" data-tool="erase" title="지우개 — 드래그해서 잘못 칠한 곳을 지웁니다 (E)">
             <span class="ti">🧽</span><span class="tw">지우개</span><span class="tk">E</span></button>
           <button class="tool" data-tool="polyadd" title="다각형 채우기 — 클릭으로 점을 찍고 Enter. 그 안을 칠합니다. 취소는 Esc (P)">
-            <span class="ti">⬠</span><span class="tw">테두리 채움</span><span class="tk">P</span></button>
-          <button class="tool" data-tool="polysub" title="다각형 빼기 — 클릭으로 점을 찍고 Enter. 그 안을 지웁니다 (O)">
+            <span class="ti">⬠</span><span class="tw">채우기</span><span class="tk">P</span></button>
+          <button class="tool adv" data-tool="polysub" title="다각형 빼기 — 클릭으로 점을 찍고 Enter. 그 안을 지웁니다 (O)">
             <span class="ti">⬡</span><span class="tw">테두리 빼기</span><span class="tk">O</span></button>
           <button class="tool feat-prop" data-tool="smartadd" title="스마트 채우기 — 한 번 누르면 그 자리의 AI 덩어리를 통째로 가져옵니다. 제일 빠릅니다 (F)">
             <span class="ti">✨</span><span class="tw">자동채움</span><span class="tk">F</span></button>
-          <button class="tool feat-prop" data-tool="smartsub" title="스마트 삭제 — 한 번 누르면 그 자리의 덩어리를 통째로 지웁니다 (G)">
+          <button class="tool feat-prop adv" data-tool="smartsub" title="스마트 삭제 — 한 번 누르면 그 자리의 덩어리를 통째로 지웁니다 (G)">
             <span class="ti">💫</span><span class="tw">자동지움</span><span class="tk">G</span></button>
         </div>
         <label class="railrange" title="붓과 지우개의 굵기. [ ] 키로도 바뀝니다.">
@@ -138,7 +147,7 @@
           <button id="undo" class="rbtn" title="한 단계 되돌리기 (Ctrl+Z · 20단계)">
             <span class="ti">↶</span><span class="tw">되돌리기</span></button>
           <button id="redo" class="rbtn" title="되돌린 것을 다시 (Ctrl+Y)">
-            <span class="ti">↷</span><span class="tw">다시</span></button>
+            <span class="ti">↷</span><span class="tw">다시하기</span></button>
         </div>
       </div>
 
@@ -155,19 +164,19 @@
           <option value="bunch">송이 (1)</option>
           <option value="other">기타 (2)</option>
         </select>
-        <!-- 0919 «초벌을 어디서 가져올까» — 팀원(박성문·임성후)이 마스크에서 뽑아 둔 상자 파일이 네 과일 4,823장
+        <!-- 0919 «초벌을 어디서 가져올까» — 팀원(박성문·임성후)이 칠한 영역에서 뽑아 둔 상자 파일이 네 과일 4,823장
              전부에 있다. 사진을 열 때 저장된 상자가 없으면 이 출처의 상자가 자동으로 화면에 깔린다(저장 전). -->
-        <select id="boxseedsrc" class="railsel" title="초벌 출처 — 사진을 열 때, 그리고 ✨ 초벌을 누를 때 어디서 네모를 가져올지.&#10;· 박성문·임성후 = 검출 팀이 마스크에서 워터셰드로 뽑아 둔 상자(4,823장 전부 있음). 기본값이 박성문입니다.&#10;· 마스크 = 이 툴이 지금 번호·마스크에서 계산(사과는 원본 정답 번호, 포도는 CERTH 정답 송이, 그것이 없으면 4-연결 덩어리).&#10;· 고른 파일이 이 사진에 없으면 아래쪽으로 저절로 물러섭니다 — 무엇에서 나왔는지는 아래 회색 줄에 적힙니다.">
+        <select id="boxseedsrc" class="railsel adv" title="초벌 출처 — 사진을 열 때, 그리고 ✨ 초벌을 누를 때 어디서 네모를 가져올지.&#10;· 박성문·임성후 = 검출 팀이 칠한 영역에서 워터셰드로 뽑아 둔 상자(4,823장 전부 있음). 기본값이 박성문입니다.&#10;· 칠한 영역 = 이 툴이 지금 번호·칠한 영역에서 계산(사과는 원본 정답 번호, 포도는 CERTH 정답 송이, 그것이 없으면 4-연결 덩어리).&#10;· 고른 파일이 이 사진에 없으면 아래쪽으로 저절로 물러섭니다 — 무엇에서 나왔는지는 아래 회색 줄에 적힙니다.">
           <option value="team:박성문">초벌: 박성문 상자</option>
           <option value="team:임성후">초벌: 임성후 상자</option>
-          <option value="mask">초벌: 마스크에서 계산</option>
+          <option value="mask">초벌: 칠한 영역에서 계산</option>
         </select>
         <div class="tools">
           <button id="boxseed" class="rbtn" title="초벌 다시 불러오기 — 위에서 고른 출처의 네모를 화면에 깔아 줍니다(지금 화면의 네모는 바뀝니다). 저장은 안 됩니다 — 사람이 고친 뒤 저장하세요.">
             <span class="ti">✨</span><span class="tw">초벌</span></button>
           <button id="boxdel" class="rbtn" title="고른 네모 하나를 지웁니다 (Del)">
             <span class="ti">🗑</span><span class="tw">삭제</span><span class="tk">⌫</span></button>
-          <button id="boxclear" class="rbtn" title="이 사진의 네모를 화면에서 전부 지웁니다(저장 전)">
+          <button id="boxclear" class="rbtn adv" title="이 사진의 네모를 화면에서 전부 지웁니다(저장 전)">
             <span class="ti">🧹</span><span class="tw">전부 지움</span></button>
           <button id="boxundo" class="rbtn" title="상자 작업을 한 단계 되돌립니다 (Ctrl+Z)">
             <span class="ti">↶</span><span class="tw">되돌리기</span></button>
@@ -175,7 +184,7 @@
         <!-- «상자 저장» 은 ui.js 가 아래 판정 줄의 «저장» 자리로 옮긴다(단추 자체를 옮기므로
              id·풍선말·app.js 가 붙인 onclick 이 하나도 안 바뀐다). -->
         <button class="big save" id="boxsave" title="상자 저장 — 이 사진의 네모를 파일로 저장합니다. (Ctrl+S)">상자 저장<span class="vk">^S</span></button>
-        <div id="boxinfo" class="railinfo muted"></div>
+        <details class="rail-details"><summary>작업 정보</summary><div id="boxinfo" class="railinfo muted"></div></details>
       </div>
 
       <!-- ③ 열매 번호의 도구 -->
@@ -193,11 +202,11 @@
           <button class="ntool" data-ntool="add" title="새로 붙이기 — 번호가 없는 열매를 다각형·브러시로 그린 «뒤» N 키를 누르면 새 번호가 붙습니다">
             <span class="ti">➕</span><span class="tw">붙이기</span><span class="tk">N</span></button>
         </div>
-        <select id="numshape" class="railsel" title="새로 붙일 때 다각형으로 그릴지 붓으로 그릴지">
+        <select id="numshape" class="railsel adv" title="새로 붙일 때 다각형으로 그릴지 붓으로 그릴지">
           <option value="poly">다각형으로 붙이기</option>
           <option value="brush">붓으로 붙이기</option>
         </select>
-        <label class="railrange" title="나누는 선을 몇 화소 굵기로 그을지">✂<input type="range" id="numline" min="1" max="3" value="2"><b id="numlinev">2</b></label>
+        <label class="railrange adv" title="나누는 선을 몇 화소 굵기로 그을지">✂<input type="range" id="numline" min="1" max="3" value="2"><b id="numlinev">2</b></label>
         <div class="tools">
           <button id="numundo" class="rbtn" title="번호 고친 것을 한 단계 되돌립니다 (Ctrl+Z · 40단계)">
             <span class="ti">↶</span><span class="tw">되돌리기</span></button>
@@ -206,20 +215,31 @@
         </div>
         <!-- «번호 저장» 도 ui.js 가 판정 줄의 «저장» 자리로 옮긴다. -->
         <button class="big save" id="numsave" title="번호 저장 — 고친 번호를 파일로 저장합니다. (Ctrl+S)">번호 저장<span class="vk">^S</span></button>
-        <div id="numinfo" class="railinfo muted"></div>
-        <div id="numsrc" class="railinfo muted"></div>
+        <details class="rail-details"><summary>작업 정보</summary><div id="numinfo" class="railinfo muted"></div>
+        <div id="numsrc" class="railinfo muted"></div></details>
       </div>
 
-      <div class="railhint muted" title="휠 = 확대·축소 · 스페이스+드래그(또는 가운데 버튼) = 이동 · 0 = 화면에 맞춤">휠 확대 · 0 맞춤</div>
+      <div class="tools"><button class="tool" data-tool="pan" title="사진을 끌어서 이동합니다"><span class="ti">✋</span><span class="tw">이동</span></button></div>
+      <p class="undo-hint">잘못 칠해도 Ctrl+Z 로 되돌아갑니다</p>
+      <div id="railhint" class="railhint muted" title="휠 = 확대·축소 · 스페이스+드래그(또는 가운데 버튼) = 이동 · 0 = 화면에 맞춤">휠 확대 · 0 맞춤</div>
     </div>
 
     <!-- ══════ 가운데 — 사진(최대) + 하단 한 줄 ══════ -->
     <div id="maincol">
+      <div id="edit-guide">① 잘못된 부분을 붓/지우개로 고친 뒤 «저장» → ② 아래 «다 했어요»를 누르세요.</div>
+      <label id="team-suspect-control" hidden><input id="team-suspect" type="checkbox"> 의심 개체 표시 · 박성문 자료(자동 후보와 육안 판정 구분)</label>
+      <div id="edit-progress" aria-live="polite"></div>
       <div id="canvaswrap">
         <canvas id="cv"></canvas>
         <!-- 레이어 칩(= 색 범례). 오른쪽 패널을 접어 두어도 여기서 네 겹을 껐다 켤 수 있다. -->
         <div id="legend"></div>
         <div id="loading" class="hidden">불러오는 중…</div>
+        <!-- 0920 «그림판처럼»: 휠·0 키를 모르는 사람을 위한 확대 단추 3칸(js/easy.js 가 붙인다) -->
+        <div id="zoombar">
+          <button id="zoomout" title="축소 (휠을 내려도 됩니다)">－</button>
+          <button id="zoomin" title="확대 (휠을 올려도 됩니다)">＋ 확대</button>
+          <button id="zoomfit" title="화면에 맞춤 (0 키)">맞춤</button>
+        </div>
         <div id="hud"></div>
       </div>
 
@@ -234,15 +254,16 @@
         <div id="vbrow">
           <button class="big ok" id="btn-ok" title="원본 그대로 OK — 빨강(원본 라벨)이 열매를 잘 덮었을 때. 아무것도 저장하지 않고 다음 사진으로 넘어갑니다. (1)">
             원본 OK<span class="vk">1</span></button>
-          <button class="big ai feat-prop" id="btn-ai" title="AI 제안으로 교체 — AI가 그린 파랑이 원본보다 확실히 나을 때. AI 그림을 수정본으로 저장합니다. (2)">
+          <button class="big ai feat-prop adv" id="btn-ai" title="AI 제안으로 교체 — AI가 그린 파랑이 원본보다 확실히 나을 때. AI 그림을 수정본으로 저장합니다. (2)">
             AI로 교체<span class="vk">2</span></button>
           <button class="big save" id="btn-save" title="수정본 저장 — 붓·다각형으로 고친 하늘색 그림을 파일로 저장합니다. (Ctrl+S)">
             저장<span class="vk">^S</span></button>
           <!-- ②③ 의 «상자 저장»·«번호 저장» 이 위 «저장» 자리에 그대로 들어온다(ui.js 가 단추를
                **옮긴다** — id·풍선말·onclick 이 하나도 안 바뀐다). 그 작업에서는 위 «저장» 이 숨는다:
-               ②③ 에서는 붓질 자체가 막혀 있어 마스크로 저장할 것이 없고, «저장» 이 둘 나란히 있으면
+               ②③ 에서는 붓질 자체가 막혀 있어 칠한 영역로 저장할 것이 없고, «저장» 이 둘 나란히 있으면
                헷갈리기 때문이다(0918 사이클5 2차는 회색으로 두었는데, 그림판식으로는 한 칸이 낫다). -->
           <span id="taskbtns"></span>
+          <button class="big ok" id="btn-confirm" title="아래 상태를 확인 완료로 기록하고 다음 사진으로 갑니다. 저장 안 한 수정이 있으면 먼저 저장하세요.">다 했어요<span class="vk">Enter</span></button>
           <button class="big flag" id="btn-flag" title="문제 있음 — 이상한데 내가 고치기 어려울 때. 나중에 다시 보려고 표시만 해 둡니다. (3)">
             문제<span class="vk">3</span></button>
           <button class="big exc" id="btn-exc" title="제외 — 쓰지 않을 사진(거의 같은 사진·엉뚱한 사진). 파일을 지우지는 않습니다. (4)">
@@ -297,7 +318,7 @@
             <button id="fromai" class="feat-prop" title="내 수정본을 AI 제안 그대로로 바꿉니다">AI 복사</button>
             <button id="clearall" title="내 수정본을 전부 지웁니다(빈 그림)">전부 지우기</button>
           </div>
-          <button id="btn-revert" class="small-btn" title="전에 저장한 마스크 수정본 파일을 지우고 원본 상태로 되돌립니다">수정본 되돌리기</button>
+          <button id="btn-revert" class="small-btn" title="전에 저장한 칠한 영역 수정본 파일을 지우고 원본 상태로 되돌립니다">수정본 되돌리기</button>
           <button id="numrevert" class="small-btn" title="저장했던 번호 수정본 파일을 지우고 처음 상태로">번호 되돌리기</button>
           <button id="boxexport" class="small-btn" title="이 과일의 저장된 네모를 전부 YOLO 형식 txt 로 내보냅니다">상자 YOLO 내보내기</button>
         </details>
@@ -317,6 +338,7 @@
      /static/help.html 로 보낸다. 라디오·체크·표는 ui.js 가 만든다(과일마다 있는 자료가 달라서). -->
 <section id="view-exp" class="view hidden">
   <div id="expguard" class="hidden">서버가 아직 이 기능을 모릅니다 — 관리자가 켜야 합니다</div>
+  <details id="team-grape" class="expwrap"><summary>포도 삭제대상 목록 · 202장 · 최인훈 검수 문서</summary><p>목록을 보기만 합니다. 번호를 누르면 사진이 열립니다. 원본이나 판정을 바꾸지 않습니다.</p><div id="team-grape-list"></div></details>
   <div id="expbody" class="expwrap">
     <div class="exprow" id="exp-fruits"></div>
     <div class="exprow" id="exp-kinds"></div>
@@ -340,7 +362,7 @@
   <div class="tourcard">
     <div class="tourhd"><b id="tour-t"></b><span class="spacer"></span><span id="tour-n" class="muted small"></span>
       <button id="tour-x" title="닫기">✕</button></div>
-    <div id="tour-b" class="tourbody"></div>
+    <div id="tour-b" class="tourbody"></div><details class="shortcut-panel"><summary>⌨ 단축키 한 장</summary><div data-key-table></div></details>
     <div class="tourft">
       <label class="small"><input type="checkbox" id="tour-never" checked title="끄면 다음에 또 보여 줍니다"> 다시 보지 않기</label>
       <span class="spacer"></span>
@@ -360,7 +382,7 @@
 <script src="/static/js/state.js"></script>      <!-- ① 상태 S · 전역 셋 · 공용 낱말표 -->
 <script src="/static/js/api.js"></script>        <!-- ② 서버 부르기 · $ · flash · 내 이름 -->
 <script src="/static/js/view.js"></script>       <!-- ③ 캔버스·확대·화면/작업/보기 전환 -->
-<script src="/static/js/mask.js"></script>       <!-- ④ 마스크 읽기·붓·다각형·되돌리기 -->
+<script src="/static/js/mask.js"></script>       <!-- ④ 칠한 영역 읽기·붓·다각형·되돌리기 -->
 <script src="/static/js/boxes.js"></script>      <!-- ⑤ 상자(바운딩 박스) -->
 <script src="/static/js/instances.js"></script>  <!-- ⑥ 열매 번호 편집 -->
 <script src="/static/js/counts.js"></script>     <!-- ⑦ 사람 확정·판정·하단 한 줄·개수 칸 -->
@@ -369,5 +391,6 @@
 <script src="/static/js/tour.js"></script>       <!-- ⑩ 첫 방문 안내 3장 -->
 <script src="/static/js/keys.js"></script>       <!-- ⑪ 단축키 표 한 장 + 손잡이 등록 -->
 <script src="/static/js/main.js"></script>       <!-- ⑫ 연결과 시작(loadFruits) -->
+<script src="/static/js/easy.js"></script>       <!-- ⑬ 쉬움 모드 스위치 · 확대 단추 -->
 </body>
 </html>

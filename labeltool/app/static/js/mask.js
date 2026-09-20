@@ -141,7 +141,7 @@ function confirmLeave(kind) {
   return confirm("저장하지 않은 수정이 있습니다.\n버리고 넘어갈까요?  (남기려면 «취소» → Ctrl+S 로 저장)");
 }
 window.addEventListener("beforeunload", (e) => {
-  if (!S.edDirty && !S.numDirty) return;
+  if (!S.edDirty && !S.numDirty && !S.bDirty) return;
   e.preventDefault(); e.returnValue = "";
 });
 function applyBits(bits) {
@@ -295,7 +295,8 @@ $$(".tool").forEach((b) => b.onclick = () => setTool(b.dataset.tool));
 function setTool(t) {
   // 번호 편집과 0/255 브러시가 섞이면 저장 규칙이 꼬인다(지시서 §3-1) → 모드가 켜져 있으면 막는다
   if (S.numMode) { flash("번호 편집 모드가 켜져 있어 브러시·다각형이 잠겨 있습니다 (K 로 끄기)", true); return; }
-  S.tool = t; S.poly = [];
+  S.tool = t; S.panTool = t === "pan"; S.poly = [];
+  $("#cv").style.cursor = S.panTool ? "grab" : t === "erase" ? "cell" : "crosshair";
   $$(".tool").forEach((b) => b.classList.toggle("on", b.dataset.tool === t));
   S.dirty = true;
 }
@@ -317,7 +318,7 @@ $("#alpha").oninput = (e) => { S.alpha = +e.target.value / 100; $("#alphav").tex
 $("#l-inst").onchange = () => { paintGtLayer(); S.dirty = true; };
 $("#fromgt").onclick = () => { if (!S.gt) return; pushUndo(); applyBits(S.gt.slice()); flash("원본 GT 를 수정본으로 복사"); };
 $("#fromai").onclick = () => { if (!S.ai) return; pushUndo(); applyBits(S.ai.slice()); flash("AI 제안을 수정본으로 복사"); };
-$("#clearall").onclick = () => { if (!S.ed) return; pushUndo(); applyBits(new Uint8Array(S.W * S.H)); flash("수정본을 전부 지웠습니다"); };
+$("#clearall").onclick = () => { if (!S.ed || !confirm("칠한 영역을 전부 지울까요? Ctrl+Z로 되돌릴 수 있습니다.")) return; pushUndo(); applyBits(new Uint8Array(S.W * S.H)); flash("수정본을 전부 지웠습니다"); };
 
 /* ------------------------------------------------------------- 저장 */
 function edToPngDataUrl() {

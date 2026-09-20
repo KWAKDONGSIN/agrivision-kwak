@@ -10,6 +10,50 @@
 "use strict";
 
 (function () {
+const KEYS = [
+  { key: "Enter", ko: "다 했어요 — 화면 아래 줄에 적힌 제안이 맞다(다음 사진으로)", at: "counts.js",
+    src: 'if (e.key !== "Enter") return;' },
+  { key: ",", ko: "이전 사진", at: "keys.js", src: 'case ",":' },
+  { key: ".", ko: "다음 사진", at: "keys.js", src: 'case ".":' },
+  { key: "1", ko: "원본 그대로 OK", at: "keys.js", src: 'case "1":' },
+  { key: "2", ko: "AI 제안으로 교체", at: "keys.js", src: 'case "2":' },
+  { key: "3", ko: "문제 있음", at: "keys.js", src: 'case "3":' },
+  { key: "4", ko: "제외", at: "keys.js", src: 'case "4":' },
+  { key: "Ctrl+S", ko: "지금 하는 일의 저장(칠한 영역 수정본 · 상자 · 번호)", at: "keys.js",
+    src: 'e.key === "s" || e.key === "S"' },
+  { key: "Ctrl+Z", ko: "되돌리기(칠한 영역 · 상자 · 번호)", at: "keys.js", src: 'e.key === "z" || e.key === "Z"' },
+  { key: "Ctrl+Y", ko: "다시 실행(칠한 영역 · 번호 — 상자에는 없다)", at: "keys.js", src: 'e.key === "y" || e.key === "Y"' },
+  { key: "B", ko: "붓", at: "keys.js", src: 'case "b":' },
+  { key: "E", ko: "지우개", at: "keys.js", src: 'case "e":' },
+  { key: "P", ko: "다각형 채우기", at: "keys.js", src: 'case "p":' },
+  { key: "O", ko: "다각형 빼기", at: "keys.js", src: 'case "o":' },
+  { key: "F", ko: "스마트 채우기", at: "keys.js", src: 'case "f":' },
+  { key: "G", ko: "스마트 삭제", at: "keys.js", src: 'case "g":' },
+  { key: "[", ko: "붓 작게", at: "keys.js", src: 'case "[":' },
+  { key: "]", ko: "붓 크게", at: "keys.js", src: 'case "]":' },
+  { key: "I", ko: "알마다 다른 색(사과)", at: "keys.js", src: 'case "i":' },
+  { key: "D", ko: "차이 보기 (번호 편집 모드에서는 지우기)", at: "keys.js", src: 'case "d":' },
+  { key: "X", ko: "상자 모드 켜고 끄기 (번호 편집 모드에서는 나누기)", at: "keys.js", src: 'case "x":' },
+  { key: "V", ko: "상자 고르기", at: "keys.js", src: 'case "v":' },
+  { key: "Del", ko: "고른 상자 삭제", at: "keys.js", src: 'case "Delete":' },
+  { key: "K", ko: "열매 번호 편집 켜고 끄기", at: "keys.js", src: 'case "k":' },
+  { key: "J", ko: "번호 레이어 켜고 끄기", at: "keys.js", src: 'case "j":' },
+  { key: "0", ko: "화면에 맞춤", at: "keys.js", src: 'case "0":' },
+  { key: "Esc", ko: "다각형 취소 · 안내 창 닫기", at: "keys.js", src: 'case "Escape":' },
+  { key: "Space", ko: "누른 채 드래그 = 화면 이동", at: "keys.js", src: 'e.code === "Space"' },
+  { key: "Q", ko: "보기 전환 — 원본만 → 칠한 영역만 → 겹쳐", at: "view.js", src: 'e.key !== "q" && e.key !== "Q"' },
+  { key: "?", ko: "안내와 단축키 표 보기", at: "tour.js", src: 'e.key === "?"' },
+  { key: "M", ko: "번호 합치기(고른 뒤)", at: "instances.js", src: 'if (k === "m") {' },
+  { key: "N", ko: "번호 새로 붙이기(그린 뒤)", at: "instances.js", src: 'if (k === "n") {' }
+];
+function renderKeyTable(root) {
+  root.innerHTML = '<table><thead><tr><th>키</th><th>하는 일</th></tr></thead><tbody>'
+    + KEYS.map(r => '<tr><td>' + r.key.split('+').map(k => '<kbd>' + k + '</kbd>').join('+')
+      + '</td><td>' + r.ko + '</td></tr>').join('') + '</tbody></table>';
+}
+document.querySelectorAll('[data-key-table]').forEach(renderKeyTable);
+if (typeof UI === "undefined") return; // 사용법에서도 같은 표만 읽는다.
+
 /* ── 먼저 온 파일에서 가져오는 것 (위에서 아래로) ── */
 const $ = UI.$, $$ = UI.$$, flash = UI.flash, ensureWho = UI.ensureWho, onWhoKey = UI.onWhoKey, fitView = UI.fitView, onViewModeKey = UI.onViewModeKey, setTool = UI.setTool, applyPolygon = UI.applyPolygon, paintGtLayer = UI.paintGtLayer, boxUndo = UI.boxUndo, saveBoxes = UI.saveBoxes, delSelBox = UI.delSelBox, setBTool = UI.setBTool, numKey = UI.numKey, numUndo = UI.numUndo, numRedo = UI.numRedo, saveInstances = UI.saveInstances, setNumMode = UI.setNumMode, doAction = UI.doAction, enterConfirm = UI.enterConfirm, onEnterKey = UI.onEnterKey, prevItem = UI.prevItem, nextItem = UI.nextItem, onTourCaptureKey = UI.onTourCaptureKey, onTourKey = UI.onTourKey;
 const api = API.get, post = API.post;
@@ -77,42 +121,7 @@ window.addEventListener("keyup", (e) => { if (e.code === "Space") S.spaceDown = 
        src = 그 파일에 **반드시 있는 글자**(u7 이 이것으로 «표와 코드가 같은가» 를 본다)
    ⚠ 손잡이 자체는 아래 §2 에 쪼개기 **전 글자 그대로** 있다(동작 무변경). 이 표는 «무엇이 있나» 를
      한 장으로 보여 주고, 도움말·코드와 어긋나지 않게 묶어 두는 것이 일이다.                   */
-const KEYS = [
-  { key: "Enter", ko: "확정 — 화면 아래 줄에 적힌 제안이 맞다(다음 사진으로)", at: "counts.js",
-    src: 'if (e.key !== "Enter") return;' },
-  { key: ",", ko: "이전 사진", at: "keys.js", src: 'case ",":' },
-  { key: ".", ko: "다음 사진", at: "keys.js", src: 'case ".":' },
-  { key: "1", ko: "원본 그대로 OK", at: "keys.js", src: 'case "1":' },
-  { key: "2", ko: "AI 제안으로 교체", at: "keys.js", src: 'case "2":' },
-  { key: "3", ko: "문제 있음", at: "keys.js", src: 'case "3":' },
-  { key: "4", ko: "제외", at: "keys.js", src: 'case "4":' },
-  { key: "Ctrl+S", ko: "지금 하는 일의 저장(마스크 수정본 · 상자 · 번호)", at: "keys.js",
-    src: 'e.key === "s" || e.key === "S"' },
-  { key: "Ctrl+Z", ko: "되돌리기(마스크 · 상자 · 번호)", at: "keys.js", src: 'e.key === "z" || e.key === "Z"' },
-  { key: "Ctrl+Y", ko: "다시 실행(마스크 · 번호 — 상자에는 없다)", at: "keys.js", src: 'e.key === "y" || e.key === "Y"' },
-  { key: "B", ko: "브러시", at: "keys.js", src: 'case "b":' },
-  { key: "E", ko: "지우개", at: "keys.js", src: 'case "e":' },
-  { key: "P", ko: "다각형 채우기", at: "keys.js", src: 'case "p":' },
-  { key: "O", ko: "다각형 빼기", at: "keys.js", src: 'case "o":' },
-  { key: "F", ko: "스마트 채우기", at: "keys.js", src: 'case "f":' },
-  { key: "G", ko: "스마트 삭제", at: "keys.js", src: 'case "g":' },
-  { key: "[", ko: "붓 작게", at: "keys.js", src: 'case "[":' },
-  { key: "]", ko: "붓 크게", at: "keys.js", src: 'case "]":' },
-  { key: "I", ko: "알마다 다른 색(사과)", at: "keys.js", src: 'case "i":' },
-  { key: "D", ko: "차이 보기 (번호 편집 모드에서는 지우기)", at: "keys.js", src: 'case "d":' },
-  { key: "X", ko: "상자 모드 켜고 끄기 (번호 편집 모드에서는 나누기)", at: "keys.js", src: 'case "x":' },
-  { key: "V", ko: "상자 고르기", at: "keys.js", src: 'case "v":' },
-  { key: "Del", ko: "고른 상자 삭제", at: "keys.js", src: 'case "Delete":' },
-  { key: "K", ko: "열매 번호 편집 켜고 끄기", at: "keys.js", src: 'case "k":' },
-  { key: "J", ko: "번호 레이어 켜고 끄기", at: "keys.js", src: 'case "j":' },
-  { key: "0", ko: "화면에 맞춤", at: "keys.js", src: 'case "0":' },
-  { key: "Esc", ko: "다각형 취소 · 안내 창 닫기", at: "keys.js", src: 'case "Escape":' },
-  { key: "Space", ko: "누른 채 드래그 = 화면 이동", at: "keys.js", src: 'e.code === "Space"' },
-  { key: "Q", ko: "보기 전환 — 원본만 → 마스크만 → 겹쳐", at: "view.js", src: 'e.key !== "q" && e.key !== "Q"' },
-  { key: "?", ko: "처음 안내 3장 다시 보기", at: "tour.js", src: 'e.key === "?"' },
-  { key: "M", ko: "번호 합치기(고른 뒤)", at: "instances.js", src: 'if (k === "m") {' },
-  { key: "N", ko: "번호 새로 붙이기(그린 뒤)", at: "instances.js", src: 'if (k === "n") {' }
-];
+
 
 /* ══════════════════ §2. 다른 파일에 있는 키 손잡이도 여기서 등록한다 ══════════════════
    쪼개기 전 순서 그대로다(app.js 의 keydown·keyup 이 먼저, 그다음 ui.js 순서: Q → 안내 가로채기

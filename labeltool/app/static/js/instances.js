@@ -308,11 +308,11 @@ async function loadInstances() {
   if (!info.ok || !info.has) { S.dirty = true; return; }   // 번호가 없는 과일 — 화면은 전과 똑같다
   try {
     const r = await fetch("/instances?" + q);
-    if (!r.ok) throw new Error("서버가 번호 마스크를 주지 않았습니다(" + r.status + ")");
+    if (!r.ok) throw new Error("서버가 번호 칠한 영역를 주지 않았습니다(" + r.status + ")");
     const src = r.headers.get("X-Instance-Source") || info.source;
     const dec = await decodeGrayPng(new Uint8Array(await r.arrayBuffer()));
     if (dec.w !== S.W || dec.h !== S.H) {
-      throw new Error(`번호 마스크 크기(${dec.w}×${dec.h})가 사진(${S.W}×${S.H})과 다릅니다`);
+      throw new Error(`번호 칠한 영역 크기(${dec.w}×${dec.h})가 사진(${S.W}×${S.H})과 다릅니다`);
     }
     S.inst = dec.data;
     S.instOrig = dec.data.slice();
@@ -360,7 +360,7 @@ function numInfo(extra) {
     if (srcEl) srcEl.textContent = "";
     return;
   }
-  const srcKo = { fixed: "사람이 고친 번호", seed: "검출팀 초벌(블루베리·복숭아 워터셰드)", gt: "원본 번호 마스크" }[S.instSrc] || S.instSrc || "";
+  const srcKo = { fixed: "사람이 고친 번호", seed: "검출팀 초벌(블루베리·복숭아 워터셰드)", gt: "원본 번호 칠한 영역" }[S.instSrc] || S.instSrc || "";
   if (srcEl) srcEl.textContent = "— " + srcKo;
   const c = S.numCounts;
   const sel = S.numSel.length ? ` · 고른 번호 ${S.numSel.join(" → ")}` : "";
@@ -682,12 +682,14 @@ function drawNumOverlay() {
 
 /* 검출 팀이 확인한 «번호 오류» 상자를 점선으로 (지시서 §3-4) */
 const VERDICT_KO = {
+  ok_one_apple: "한 알 맞음", unclear: "사람 확인 필요",
   duplicate_polygon: "다각형 겹침 띠 → 지우기",
   border_artifact: "가장자리 잡티 → 지우기",
   one_apple_two_ids: "한 알이 두 번호 → 합치기",
   two_apples_one_id: "한 번호에 두 알 → 나누기"
 };
 const VERDICT_SHORT = {
+  ok_one_apple: "한 알 맞음", unclear: "미판정",
   duplicate_polygon: "겹침띠", border_artifact: "잡티",
   one_apple_two_ids: "두번호", two_apples_one_id: "두알"
 };
@@ -705,7 +707,8 @@ function noteBoxes(note) {
 
 function drawErrBoxes() {
   drawNoteBoxes();
-  if (!S.errRows || !S.errRows.length) return;
+  const rows = (S.errRows || []).concat($("#team-suspect")?.checked ? (S.teamSuspects || []) : []);
+  if (!rows.length) return;
   const s = S.view.s;
   const fs = Math.max(8, 12 / s);
   ctx.save();
@@ -714,13 +717,13 @@ function drawErrBoxes() {
   ctx.strokeStyle = "#ff2f2f";
   ctx.font = `bold ${fs}px sans-serif`;
   ctx.textBaseline = "bottom";
-  S.errRows.forEach((r) => {
+  rows.forEach((r) => {
     if (!r.box) return;
     const pad = Math.max(4, 8 / s);
     const x0 = r.box[0] - pad, y0 = r.box[1] - pad;
     const w = (r.box[2] - r.box[0]) + 2 * pad, h = (r.box[3] - r.box[1]) + 2 * pad;
     ctx.strokeRect(x0, y0, w, h);
-    const t = `${VERDICT_SHORT[r.verdict] || r.verdict || ""} #${r.inst_ids || ""}`;
+    const t = `${r.source ? "의심 · " : ""}${VERDICT_SHORT[r.verdict] || r.verdict || ""} #${r.inst_ids || ""}`;
     const tw = ctx.measureText(t).width;
     ctx.setLineDash([]);
     ctx.fillStyle = "rgba(0,0,0,.65)";

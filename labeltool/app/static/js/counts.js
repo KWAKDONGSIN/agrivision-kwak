@@ -203,6 +203,7 @@ $("#btn-flag").onclick = () => doAction("flag");
 $("#btn-exc").onclick = () => doAction("exclude");
 $("#btn-revert").onclick = async () => {
   if (!S.stem) return;
+  if (!confirm("저장한 수정본을 지우고 원본으로 돌아갈까요?")) return;
   const j = await post("/api/revert", { fruit: S.fruit, stem: S.stem, by: who() });
   if (!j || !j.ok) return flash(errMsg(j, "실패"), true);
   flash("수정본을 지우고 원본으로 되돌렸습니다");
@@ -246,7 +247,7 @@ const splitFlags = (s) => String(s || "").replace(/;/g, "|").split("|").map((x) 
 const FLAG_KO = {
   merged_blob:       ["알끼리 붙음", "여러 알이 한 덩어리로 칠해져 있습니다(표시 방식 — 틀린 것이 아닐 수 있습니다)"],
   filled_blob:       ["속이 찬 동그라미", "알 속을 통째로 채운 동그라미로 칠해져 있습니다"],
-  fg_too_low:        ["마스크가 거의 빔", "칠한 넓이가 너무 작습니다 — 라벨이 빠졌을 수 있습니다"],
+  fg_too_low:        ["칠한 영역가 거의 빔", "칠한 넓이가 너무 작습니다 — 라벨이 빠졌을 수 있습니다"],
   fg_too_high:       ["너무 넓게 칠함", "칠한 넓이가 너무 큽니다 — 배경까지 칠했을 수 있습니다"],
   single_convex_blob:["통째로 한 덩어리", "사진 전체가 덩어리 하나로 칠해져 있습니다"],
   many_tiny:         ["자잘한 조각 많음", "아주 작은 조각이 많습니다 — 잡티일 수 있습니다"]
@@ -316,7 +317,7 @@ function taskConfLine(t, m) {
              tip: "이 사진의 " + w + " 는 사람이 확정했습니다: " + statusKo(c.status)
                 + " · " + (c.by || "익명") + " " + (c.at || "")
                 + ". 다시 확정하려면 Enter(맞다), 고쳤으면 저장(Ctrl+S)하면 «수정함» 으로 덮어씁니다."
-                + " 마스크 확정과는 **따로** 셉니다." };
+                + " 칠한 영역 확정과는 **따로** 셉니다." };
   }
   const n = taskCount(t);
   const seed = (t === "box" && m.ai_boxes_status !== "saved");
@@ -327,7 +328,7 @@ function taskConfLine(t, m) {
   if (t === "box" && !n)
     return { cls: "todo go",
              head: w + " 0개 — «초벌» 을 누른 뒤 " + K("Enter"),
-             tip: "이 사진에는 상자가 아직 하나도 없습니다. 왼쪽 «✨ 초벌» 로 마스크에서 네모를"
+             tip: "이 사진에는 상자가 아직 하나도 없습니다. 왼쪽 «✨ 초벌» 로 칠한 영역에서 네모를"
                 + " 자동으로 만들거나(저장 전) 직접 드래그해 그린 뒤 Enter 를 누르면"
                 + " «원본 OK» 로 확정됩니다. 지금 Enter 를 누르면 확정하지 않고 이 안내만 뜹니다." };
   /* 🔴 0919 «개수 세기» **사이클5**(사이클4 2차 §9-3 · 3차 §3): 사과의 ③ 번호는 **AI 가 만든 것이
@@ -342,7 +343,7 @@ function taskConfLine(t, m) {
            head: (gtNum ? "원본 정답 " : "AI 초벌 ") + w + " " + what + " — 맞으면 " + K("Enter"),
            /* 0919 사이클5 **2차**: 풍선말은 `title` 속성이라 마크다운이 그대로 «**» 로 보인다.
               화면 다른 풍선말과 같이 «» 로 감싼다(2자 줄었다 · 뜻은 그대로). */
-           tip: (gtNum ? "이 " + w + " 는 AI 가 만든 것이 아니라 «원본 마스크에 들어 있는 정답"
+           tip: (gtNum ? "이 " + w + " 는 AI 가 만든 것이 아니라 «원본 칠한 영역에 들어 있는 정답"
                        + " 번호»입니다(고칠 일이 거의 없습니다). " : "")
               + "아직 이 사진의 " + w + " 는 «미확정» 입니다. 화면에 있는 "
               + (seed ? "초벌(저장 전)" : "저장된") + " " + w + " 가 맞으면 Enter 를 누르세요"
@@ -378,7 +379,7 @@ function cntTip(c) {
                  + (c.seed_source === "cc4"
                     ? " — 검출 팀 도구(8-연결)와 다를 수 있습니다"
                     : " — 이 사진에 그 파일이 없으면 4-연결 CC 로 물러섭니다")
-               : "※ «✨ 초벌» 이 마스크에서 센 개수는 4-연결 덩어리 기준입니다 —"
+               : "※ «✨ 초벌» 이 칠한 영역에서 센 개수는 4-연결 덩어리 기준입니다 —"
                  + " 검출 팀 도구(8-연결)와 다를 수 있습니다(번호가 있는 사과·블루베리는 번호 수를 씁니다)",
              "번호(열매 번호 라벨): " + n(c.instances) + " — «없음» 은 아직 세지 않았거나 번호본이 없는 사진입니다",
              "검출 팀 초벌 — 박성문 " + n(c.team_park) + " · 임성후 " + n(c.team_im)
@@ -488,7 +489,7 @@ function renderTodo() {
   if (S.noteBoxes && S.noteBoxes.length) full.push("노란 점선 = 라벨 안 된 열매 후보 "
     + S.noteBoxes.length + "곳 — 🔍 로 그 자리를 크게 본 뒤 붓으로 칠하고 N 으로 번호를 붙이세요 (0 = 원래 크기).");
   if (nerr) full.push("검출 팀이 찾은 번호 오류 " + nerr + "개 — «＃ 번호»(K) 에서 고치세요.");
-  if (isDup && iAmRep && tidy) full.push("이 묶음의 대표(남길 장)입니다 — 나머지는 이미 제외됐습니다. 마스크만 보시면 됩니다.");
+  if (isDup && iAmRep && tidy) full.push("이 묶음의 대표(남길 장)입니다 — 나머지는 이미 제외됐습니다. 칠한 영역만 보시면 됩니다.");
   else if (isDup) full.push("거의 같은 사진 묶음 #" + m.dup_group + " (" + dupN + "장)"
     + (done ? "" : " — 대표 한 장만 남기고 나머지는 4 제외. ▸ 로 오른쪽 «이 사진» 칸으로."));
   if (added != null && added > th.added) full.push("AI 가 라벨에 없는 열매를 찾았습니다 (AI추가 "
@@ -528,7 +529,7 @@ function renderTodo() {
     head = "⚠ " + flagKo(real[0]) + (real.length > 1 ? " 외 " + (real.length - 1) + "가지" : "");
   } else if (isDup && iAmRep && tidy) {
     cls = "todo done";
-    head = "✅ 이 묶음의 대표 — 마스크만 보세요";
+    head = "✅ 이 묶음의 대표 — 칠한 영역만 보세요";
   } else {
     head = "빨강이 맞으면 " + K("1") + " · 고쳤으면 " + K("Ctrl") + "+" + K("S");
   }

@@ -358,3 +358,49 @@ body.boxonly #taskbar button.task[data-task="num"],
 body.boxonly #toolbox, body.boxonly #numpanel, body.boxonly #link-box { display: none !important; }
 body.boxonly #link-full { display: inline !important; }
 body.boxonly #taskbadge { display: none !important; }   /* «붓질은 마스크로» 안내는 여기서는 뜻이 없다 */
+
+/* ═══════════════════ 0920 «쉬움 모드» (그림판처럼) ═══════════════════
+   요청: 랩미팅 전 «좀 쉽게»(최인훈) · «봤는데 어려움»(박성문).
+   칸을 지우지 않고 **숨기기만** 한다 — 전문가 모드로 바꾸면 그대로 돌아온다.
+   숨기는 규칙은 이 한 줄뿐이고, 무엇이 `.adv` 인지는 index.html 에 적혀 있다. */
+body.easy .adv { display: none !important; }
+/* 쉬움 모드에서는 남은 단추가 더 커 보이게(그림판의 큼직한 도구) */
+body.easy #toolrail .tool, body.easy #toolrail .rbtn { min-height: 46px; }
+body.easy .qf { font-size: 13px; }
+
+/* 위쪽 한 줄의 «🙂 쉬움 모드 / 🛠 전문가 모드» 스위치 — .topbtn 의 27px 고정폭을 푼다 */
+#topbar .topbtn.easytgl { width: auto; padding: 2px 8px; font-size: 12.5px; white-space: nowrap; }
+
+/* 사진 위 확대 단추 3칸 — 오른쪽 아래(왼쪽 아래는 #hud 가 쓴다) */
+#zoombar { position: absolute; right: 8px; bottom: 8px; display: flex; gap: 4px; }
+#zoombar button { min-width: 34px; height: 30px; padding: 0 6px; font-size: 15px; font-weight: 700;
+  color: #eef2f7; background: rgba(34,48,63,.80); border: 1px solid #56667a; border-radius: 6px; cursor: pointer; }
+#zoombar button:hover { border-color: #ffd400; }
+
+/* 쉬움 모드에서만 보이는 칸(세 걸음 안내) — 전문가 모드에서는 자리도 차지하지 않는다 */
+.easyonly { display: none; }
+body.easy .easyonly { display: flex; }
+#easyguide { align-items: center; gap: 14px; flex-wrap: wrap; padding: 6px 12px;
+  background: #f4f9ff; border-bottom: 1px solid #dde3ea; font-size: 13px; color: #33465c; }
+#easyguide b { color: #1f3d63; }
+#easyguide .g-more { margin-left: auto; color: #6b7785; }
+/* 검색칸이 쉬움 모드에서 가로로 늘어나 보이던 것(숨긴 체크박스 자리) — 폭을 고정한다 */
+body.easy #f-q { flex: 0 0 auto; width: 180px; }
+
+/* 0921 쉬움 보완 — 기존 도구·저장 규칙을 유지한 안내. */
+#toolrail #undo, #toolrail #boxundo, #toolrail #numundo { grid-column:1 / -1; min-height:62px; font-size:16px; background:#fff2cb; border:2px solid #ac7916; }
+#toolrail button.on { background:#1764ad; color:white; }
+#toolrail button.on .tk { color:white; }
+.undo-hint { font-size:13px; line-height:1.4; margin:6px 0; }
+#edit-guide, #edit-progress { padding:5px 10px; background:#f2f7fc; font-size:14px; flex:none; }
+#edit-progress { padding-top:0; color:#35516e; }
+.shortcut-panel { padding:8px 18px; max-height:30vh; overflow:auto; }
+.shortcut-panel table { width:100%; text-align:left; font-size:14px; }
+.shortcut-panel td { padding:3px; }
+
+#team-grape-list button { margin:3px; min-width:48px; min-height:36px; }
+#team-suspect-control { font-size:14px; padding:4px 10px; }
+
+body.easy #hud, body.easy #railhint { display:none; }
+.rail-details { font-size:13px; }
+.rail-details summary { cursor:pointer; padding:5px 0; }
