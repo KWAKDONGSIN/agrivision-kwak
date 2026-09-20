@@ -1,0 +1,56 @@
+{
+ "body": {
+  "ai_boxes_status": "seed",
+  "ai_status": "unreviewed",
+  "at": null,
+  "by": null,
+  "confirmed": null,
+  "confirmed_boxes": null,
+  "confirmed_instances": null,
+  "counts": {
+   "boxes": null,
+   "conflict": false,
+   "human": null,
+   "instances": null,
+   "seed_source": "cc4",
+   "source": "",
+   "team_im": 9,
+   "team_park": 9
+  },
+  "dup_group": null,
+  "dup_member_confirmed": [],
+  "dup_member_status": [],
+  "dup_members": [],
+  "dup_rep": null,
+  "fruit": "grape",
+  "has_fixed": false,
+  "has_gt": true,
+  "has_proposal": true,
+  "height": 1920,
+  "inspection": {
+   "fg_frac": 0.149658,
+   "hole_frac": 0.000154674,
+   "largest_comp_frac": 0.426052,
+   "n_components": 9,
+   "suspect": false,
+   "suspect_flags": "",
+   "tiny_comp_count": 0
+  },
+  "n_boxes": null,
+  "n_inst": null,
+  "note": "",
+  "scores": {
+   "added_frac": 0.008022,
+   "dice_vs_gt": 0.963741,
+   "fg_gt_frac": 0.149658,
+   "fg_pred_frac": 0.154668,
+   "missed_frac": 0.003012,
+   "run_name": "grape_backbone_unet_mit_b2_p0_t2v3"
+  },
+  "src": "human",
+  "status": "unreviewed",
+  "stem": "10",
+  "width": 1080
+ },
+ "http": 200
+}

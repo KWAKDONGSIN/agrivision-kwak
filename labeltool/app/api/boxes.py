@@ -231,7 +231,10 @@ def register(app: Any, ctx: Any) -> None:
         if not isinstance(raw, list):
             return err_json("상자 목록(boxes)이 없습니다. 새로고침한 뒤 다시 저장해 주세요.", 400)
         w, h = size_of(fruit, stem)
-        boxes, dropped, over = clean(raw, w, h)
+        try:
+            boxes, dropped, over = clean(raw, w, h)
+        except ValueError as e:
+            return err_json(str(e), 400)
         rec = {"stem": stem, "fruit": fruit, "width": w, "height": h,
                "by": (d.get("by") or "익명").strip()[:rules.NAME_MAX], "at": now_str(),
                "note": (d.get("note") or "").strip()[:rules.NOTE_MAX], "boxes": boxes}
@@ -308,7 +311,10 @@ def register(app: Any, ctx: Any) -> None:
             w, h = size_of(fruit, stem)
             tb = read_team_boxes(who, fruit, stem, w, h)
             if tb is not None:
-                boxes, _, _ = clean(tb, w, h)
+                try:
+                    boxes, _, _ = clean(tb, w, h)
+                except ValueError as e:
+                    return err_json(str(e), 400)
                 return jsonify({"ok": True, "boxes": boxes, "n": len(boxes), "source": source,
                                 "seed_source": source})
             # 그 사람 파일이 없는 사진 — 마스크·번호 갈래로 내려간다(M1 폴백)

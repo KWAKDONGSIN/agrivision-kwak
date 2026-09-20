@@ -10,6 +10,8 @@
 
 from __future__ import annotations
 from typing import Any
+import math
+
 import numpy as np
 from scipy import ndimage      # boxes_of 가 쓴다(서버가 이미 scipy 를 쓴다)
 
@@ -69,6 +71,8 @@ def clean(raw: Any, w: int, h: int) -> Any:
         except Exception:
             dropped += 1
             continue
+        if not all(math.isfinite(v) for v in (x1, y1, x2, y2)):
+            raise ValueError("상자 좌표에는 유한한 숫자만 사용할 수 있습니다.")
         x1, x2 = sorted((x1, x2))
         y1, y2 = sorted((y1, y2))
         x1 = max(0, min(w - 1, round(x1)));  x2 = max(0, min(w, round(x2)))

@@ -1,0 +1,56 @@
+{
+ "body": {
+  "ai_boxes_status": "seed",
+  "ai_status": "exclude",
+  "at": "⟨지움⟩",
+  "by": "AI 3회 검수(Opus5→Opus5→Fable5.1)",
+  "confirmed": null,
+  "confirmed_boxes": null,
+  "confirmed_instances": null,
+  "counts": {
+   "boxes": null,
+   "conflict": false,
+   "human": null,
+   "instances": null,
+   "seed_source": "gt_numbers",
+   "source": "",
+   "team_im": 100,
+   "team_park": 100
+  },
+  "dup_group": null,
+  "dup_member_confirmed": [],
+  "dup_member_status": [],
+  "dup_members": [],
+  "dup_rep": null,
+  "fruit": "apple",
+  "has_fixed": false,
+  "has_gt": true,
+  "has_proposal": true,
+  "height": 1920,
+  "inspection": {
+   "fg_frac": 0.0462056,
+   "hole_frac": 0.000908028,
+   "largest_comp_frac": 0.059074,
+   "n_components": 81,
+   "suspect": true,
+   "suspect_flags": "merged_blob",
+   "tiny_comp_count": 0
+  },
+  "n_boxes": null,
+  "n_inst": null,
+  "note": "중복: 20150919_174151_image96",
+  "scores": {
+   "added_frac": 0.00337,
+   "dice_vs_gt": 0.662903,
+   "fg_gt_frac": 0.046206,
+   "fg_pred_frac": 0.027948,
+   "missed_frac": 0.021627,
+   "run_name": "apple_backbone_unet_mit_b2_p0_t1v2"
+  },
+  "src": "ai",
+  "status": "exclude",
+  "stem": "20150919_174151_image101",
+  "width": 1080
+ },
+ "http": 200
+}

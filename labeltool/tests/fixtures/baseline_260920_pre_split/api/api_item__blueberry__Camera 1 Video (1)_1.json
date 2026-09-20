@@ -1,0 +1,56 @@
+{
+ "body": {
+  "ai_boxes_status": "seed",
+  "ai_status": "unreviewed",
+  "at": "⟨지움⟩",
+  "by": "AI 사이클3 2차 경계시험",
+  "confirmed": null,
+  "confirmed_boxes": null,
+  "confirmed_instances": null,
+  "counts": {
+   "boxes": null,
+   "conflict": false,
+   "human": null,
+   "instances": null,
+   "seed_source": "team:박성문",
+   "source": "",
+   "team_im": 55,
+   "team_park": 55
+  },
+  "dup_group": null,
+  "dup_member_confirmed": [],
+  "dup_member_status": [],
+  "dup_members": [],
+  "dup_rep": null,
+  "fruit": "blueberry",
+  "has_fixed": false,
+  "has_gt": true,
+  "has_proposal": true,
+  "height": 1080,
+  "inspection": {
+   "fg_frac": 0.024116,
+   "hole_frac": 0.000219969,
+   "largest_comp_frac": 0.0940068,
+   "n_components": 46,
+   "suspect": false,
+   "suspect_flags": "",
+   "tiny_comp_count": 1
+  },
+  "n_boxes": null,
+  "n_inst": null,
+  "note": "번호 편집 되돌림",
+  "scores": {
+   "added_frac": 0.001404,
+   "dice_vs_gt": 0.886865,
+   "fg_gt_frac": 0.024116,
+   "fg_pred_frac": 0.021737,
+   "missed_frac": 0.003783,
+   "run_name": "blueberry_backbone_unet_mit_b2_p0_t3v4"
+  },
+  "src": "ai",
+  "status": "unreviewed",
+  "stem": "Camera 1 Video (1)_1",
+  "width": 1920
+ },
+ "http": 200
+}

@@ -1,0 +1,61 @@
+{
+ "body": {
+  "ai_boxes_status": "saved",
+  "ai_status": "unreviewed",
+  "at": null,
+  "by": null,
+  "confirmed": null,
+  "confirmed_boxes": {
+   "at": "⟨지움⟩",
+   "by": "기준선",
+   "note": "",
+   "status": "fixed"
+  },
+  "confirmed_instances": null,
+  "counts": {
+   "boxes": 2,
+   "conflict": false,
+   "human": 2,
+   "instances": null,
+   "seed_source": "team:박성문",
+   "source": "boxes",
+   "team_im": 15,
+   "team_park": 15
+  },
+  "dup_group": null,
+  "dup_member_confirmed": [],
+  "dup_member_status": [],
+  "dup_members": [],
+  "dup_rep": null,
+  "fruit": "blueberry",
+  "has_fixed": false,
+  "has_gt": true,
+  "has_proposal": true,
+  "height": 1440,
+  "inspection": {
+   "fg_frac": 0.0051466,
+   "hole_frac": 0.00468516,
+   "largest_comp_frac": 0.627061,
+   "n_components": 11,
+   "suspect": false,
+   "suspect_flags": "",
+   "tiny_comp_count": 2
+  },
+  "n_boxes": 2,
+  "n_inst": null,
+  "note": "",
+  "scores": {
+   "added_frac": 0.002707,
+   "dice_vs_gt": 0.69244,
+   "fg_gt_frac": 0.005147,
+   "fg_pred_frac": 0.006866,
+   "missed_frac": 0.000988,
+   "run_name": "blueberry_backbone_unet_mit_b2_p0_t3v4"
+  },
+  "src": "human",
+  "status": "unreviewed",
+  "stem": "Camera 1 Video (10)_61",
+  "width": 1440
+ },
+ "http": 200
+}

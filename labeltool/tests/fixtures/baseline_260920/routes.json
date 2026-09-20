@@ -4058,14 +4058,14 @@
   "sha256": "f1cc439980dcca70d9168c573e7d063fa1e0ea929b4ad035a1454bcc249d6f99"
  },
  "r_page_box": {
-  "bytes": 29900,
+  "bytes": 31724,
   "http": 200,
-  "sha256": "f515913144feb6d53af9b09f2ff6e23c9b7650f81e87a4ea8e5efb198b333ce7"
+  "sha256": "45a680a8f04ab87f3e29d9912eb96eab6694efddf20c17c92ad89c06a9471eb6"
  },
  "r_page_index": {
-  "bytes": 29900,
+  "bytes": 31724,
   "http": 200,
-  "sha256": "f515913144feb6d53af9b09f2ff6e23c9b7650f81e87a4ea8e5efb198b333ce7"
+  "sha256": "45a680a8f04ab87f3e29d9912eb96eab6694efddf20c17c92ad89c06a9471eb6"
  },
  "r_page_로그인없이": {
   "bytes": 1367,
@@ -4666,9 +4666,9 @@
   "http": 200
  },
  "r_static_app_js": {
-  "bytes": 145377,
+  "bytes": 1578,
   "http": 200,
-  "sha256": "0f58ea45601660c9b9f71e7f6d179f3c7cf52be39065578745c1777819523f4f"
+  "sha256": "2674b4bf3cad4fa2c95360abe8ad8d7e45b2a0d8dba6d15368bc0d61dec805c9"
  },
  "r_stats": {
   "body": {
