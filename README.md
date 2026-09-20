@@ -24,3 +24,7 @@
 ## 2026-09-20 EASY 갱신
 
 최신 구현·검증은 labeltool/reviews/easy_260921/stage3_final.md와 app/static/how_to.html에 있다. 이번 배포 상태는 그 보고서를 우선한다. 이전 전환 보류 기록은 당시 이력으로 보존한다.
+
+## 2026-09-20 DEMO 갱신
+
+시연 최종 보고는 labeltool/reviews/easy_260921/demo/DEMO_완료보고.md, 실제31동작 대본은 labeltool/reviews/easy_260921/랩미팅_툴시연_대본.md에 있습니다. 사진과 폰PDF는 인증된 내부 운영 환경에서 제공합니다.
