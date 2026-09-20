@@ -74,6 +74,12 @@ LOGIN_HTML = """<!doctype html>
  button{width:100%;padding:10px;font-size:15px;border:0;border-radius:8px;
         background:#7a2f3a;color:#fff;cursor:pointer}
  .err{color:#8a3030;font-size:13px;margin:0 0 12px}
+@media (max-width:820px) {
+ *{box-sizing:border-box}
+ .box{width:calc(100% - 32px);max-width:360px;padding:24px}
+ body,p,input,button,.err{font-size:16px}
+ input,button{min-height:44px}
+}
 </style></head><body>
 <form class="box" method="post" action="/login">
   <h1>라벨링 툴</h1>

@@ -28,3 +28,7 @@
 ## 2026-09-20 DEMO 갱신
 
 시연 최종 보고는 labeltool/reviews/easy_260921/demo/DEMO_완료보고.md, 실제31동작 대본은 labeltool/reviews/easy_260921/랩미팅_툴시연_대본.md에 있습니다. 사진과 폰PDF는 인증된 내부 운영 환경에서 제공합니다.
+
+## 2026-09-21 MOBILE 갱신
+
+폰 판정·현황·간단 상자/번호 편집을 지원합니다. 정밀 편집은 PC에서 합니다. 최신 검증은 labeltool/reviews/mobile_260921/stage3_final.md, 사용법은 labeltool/app/static/how_to.html입니다. 실기기 검증은 하지 못했습니다.

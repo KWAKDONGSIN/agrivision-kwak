@@ -1,0 +1,57 @@
+# 합성 터치로 실제 입력 손잡이·확정·되돌림을 독립 모래상자에서 검증한다.
+from pathlib import Path
+import sys,json,time,urllib.parse
+C=Path(__file__).resolve().parent;sys.path.insert(0,str(C/'candidate/tests/lib'));import sandbox as L
+sb=str(C/'sandbox_touch');L.sync(sb=sb,src=str(C/'candidate'));port=L.free_port(5821);p=L.start(port=port,sb=sb,data_root=L.DR_DEFAULT)
+b=L.browser(w=900,h=1000,base=f'http://127.0.0.1:{port}');api=L.Api(f'http://127.0.0.1:{port}')
+def click(css):b.js('document.querySelector(arguments[0]).click()',css);time.sleep(.4)
+def touch(name,pts):
+ return b.js("const e=new Event(arguments[0],{bubbles:true,cancelable:true});Object.defineProperty(e,'touches',{value:arguments[1].map((p,i)=>({identifier:i,clientX:p[0],clientY:p[1]}))});document.querySelector('#cv').dispatchEvent(e);return e.defaultPrevented",name,pts)
+def xy(x,y):return L.ev(b,f"(()=>{{const r=UI.cv.getBoundingClientRect();return [r.left+S.view.tx+{x}*S.view.s,r.top+S.view.ty+{y}*S.view.s]}})()")
+def item():return api.get('/api/item?fruit=apple&stem=20150919_174151_image1')
+try:
+ b.js("document.body.innerHTML='<iframe id=phone src=/ style=\"width:390px;height:844px;border:0\"></iframe>'")
+ fid=b.find('#phone');b._s('POST','/frame',{'id':{'element-6066-11e4-a52e-4f735466cecf':fid}})
+ b.wait("return !!document.querySelector('#fruit option')");L.close_tour(b);b.open_photo('apple','20150919_174151_image1')
+ b.js("document.querySelector('#who').value='모바일시험';document.querySelector('#who').dispatchEvent(new Event('change'));window.__posts=[];const old=window.fetch;window.fetch=(u,o)=>{if(o?.method==='POST')window.__posts.push(String(u));return old(u,o)}")
+ L.run(b,'window.__ed=S.ed.slice()');a=xy(100,100);z=xy(200,200)
+ L.chk('touchstart 기본스크롤 차단',touch('touchstart',[a]));touch('touchmove',[z]);touch('touchend',[])
+ b.js("document.querySelector('#cv').dispatchEvent(new MouseEvent('mousedown',{bubbles:true,clientX:100,clientY:100,button:0}))")
+ L.chk('폰 마스크 칠하기 불가·원본 불변',L.ev(b,'S.ed.every((v,i)=>v===window.__ed[i]) && !S.edDirty'))
+ v=L.ev(b,'({...S.view})');touch('touchstart',[[100,450],[200,450]]);touch('touchmove',[[90,470],[240,470]]);touch('touchend',[])
+ n=L.ev(b,'({...S.view})');L.chk('두손가락 1.5배 확대·중심 이동',abs(n['s']/v['s']-1.5)<.001 and n['tx']!=v['tx'] and n['ty']!=v['ty'])
+ click('#zoomfit');click('[data-task=box]');L.run(b,'window.__boxes=JSON.stringify(S.boxes)')
+ a=xy(80,80);z=xy(230,250);n=L.ev(b,'S.boxes.length')
+ touch('touchstart',[a]);touch('touchmove',[z]);touch('touchend',[])
+ L.chk('한손가락 상자 생성',L.ev(b,'S.boxes.length')==n+1)
+ click('#mobile-undo');L.chk('하단 되돌림으로 상자 복구',L.ev(b,'JSON.stringify(S.boxes)===window.__boxes'))
+ touch('touchstart',[a]);touch('touchmove',[z]);touch('touchstart',[z,[z[0]+60,z[1]]]);touch('touchmove',[[z[0]+10,z[1]+10],[z[0]+80,z[1]+10]]);touch('touchend',[z]);touch('touchmove',[a]);touch('touchend',[])
+ L.chk('그리다 두손가락 전환·남은손가락은 상자 미생성',L.ev(b,'JSON.stringify(S.boxes)===window.__boxes && !S.drag'))
+ click('#zoomfit');a=xy(80,80);z=xy(230,250);touch('touchstart',[a]);touch('touchmove',[z]);touch('touchcancel',[])
+ L.chk('상자 터치취소 복구',L.ev(b,'JSON.stringify(S.boxes)===window.__boxes && !S.drag'))
+ touch('touchstart',[a]);touch('touchmove',[z]);touch('touchend',[]);click('#boxdel');click('#mobile-undo')
+ L.chk('상자 삭제·되돌림',L.ev(b,'S.boxes.length')==n+1)
+ click('#boxsave');b.wait("return !window.eval('S.bDirty')");L.chk('상자 저장 성공',item()['counts']['boxes']==n+1, item()['counts'])
+ click('[data-task=num]');b.wait("return !!window.eval('S.inst')")
+ L.run(b,'window.__inst=S.inst.slice()')
+ point=L.ev(b,'(()=>{const i=S.inst.findIndex(v=>v>0);return [i%S.W,Math.floor(i/S.W),S.inst[i]]})()')
+ a=xy(point[0]+.5,point[1]+.5);touch('touchstart',[a]);touch('touchend',[]);L.chk('번호 터치 선택',L.ev(b,'S.numSel.includes('+str(point[2])+')'))
+ click('#mobile-num-delete');L.chk('고른 번호 삭제',L.ev(b,'!S.inst.includes('+str(point[2])+')'));click('#mobile-undo');L.chk('번호 되돌림',L.ev(b,'S.inst.every((v,i)=>v===window.__inst[i])'))
+ click('[data-ntool=add]');a=xy(50,50);z=xy(80,80);touch('touchstart',[a]);touch('touchmove',[z]);touch('touchend',[])
+ L.chk('큰 붓 번호 임시 영역',L.ev(b,'!!UI.hasPendingRegion()'));click('#mobile-undo');L.chk('미완성 번호 되돌림',L.ev(b,'!UI.hasPendingRegion()'));touch('touchstart',[a]);touch('touchmove',[z]);touch('touchend',[])
+ posts=b.js('return window.__posts.length');click('#mobile-confirm');L.chk('미완성 번호 확정 차단',b.js('return window.__posts.length')==posts)
+ click('#mobile-num-add');L.chk('큰 붓 번호 적용',L.ev(b,'S.numDirty && !UI.hasPendingRegion()'));click('#mobile-undo');L.chk('번호 붙이기 되돌림',L.ev(b,'S.inst.every((v,i)=>v===window.__inst[i])'))
+ touch('touchstart',[a]);touch('touchmove',[z]);touch('touchcancel',[]);L.chk('번호 터치취소 미적용',L.ev(b,'!UI.hasPendingRegion() && S.inst.every((v,i)=>v===window.__inst[i])'))
+ # 되돌리기 뒤 원래 상태여도 변경 딱지가 남는 기존 규칙에 따라 저장 후 판정한다.
+ click('#numsave');b.wait("return document.querySelector('#saveflash').textContent.includes('저장 완료')");click('[data-task=mask]')
+ ai=item()['ai_status'];click('#btn-flag');time.sleep(1);L.chk('문제 판정 기록·AI 불변',item()['confirmed']['status']=='flag' and item()['ai_status']==ai)
+ b.open_photo('apple','20150919_174151_image1');click('#btn-ok');time.sleep(1);L.chk('수정본 잔존 안내 보존','수정본' in b.alert_text());b.alert_ok();time.sleep(1);L.chk('좋음 판정 기록·AI 불변',item()['confirmed']['status']=='ok' and item()['ai_status']==ai)
+ b.open_photo('apple','20150919_174151_image1');posts=b.js('return window.__posts.length');click('#mobile-confirm');time.sleep(1)
+ try:
+  prompt=b.alert_text();L.chk('하단 확정 묶음 경고 보존','묶음' in prompt);b.alert_ok();time.sleep(1)
+ except RuntimeError as e:
+  if 'No modal dialog' not in str(e) and 'no such alert' not in str(e).lower():raise
+ L.chk('하단 확정 실제 요청·기록',b.js('return window.__posts.length')>posts and item()['confirmed']['by']=='모바일시험')
+ b.wait("return !window.eval('S.busy') && document.querySelector('#loading').classList.contains('hidden')");click('[data-view=list]');click('[data-qf=all]');b.wait("return document.querySelectorAll('#grid .card').length>2");click('#grid .card');b.wait("return !window.eval('S.busy') && document.querySelector('#loading').classList.contains('hidden')");L.run(b,'S.bDirty=true');click('#mobile-next');L.chk('미저장 다음 이동 경고',bool(b.alert_text()));b.alert_cancel();L.run(b,'S.bDirty=false')
+finally:b.close();L.stop(p)
+(C/'evidence/touch.json').write_text(json.dumps({'passed':L.OK,'failed':L.BAD,'real_device':False},ensure_ascii=False,indent=2));sys.exit(bool(L.summary('mobile-touch')))

@@ -4030,11 +4030,11 @@
   "http": 404
  },
  "r_login_GET": {
-  "bytes": 1555,
+  "bytes": 1367,
   "http": 200
  },
  "r_login_POST_틀린비밀번호": {
-  "bytes": 1603,
+  "bytes": 1415,
   "http": 401
  },
  "r_mask__apple": {
@@ -4058,17 +4058,17 @@
   "sha256": "f1cc439980dcca70d9168c573e7d063fa1e0ea929b4ad035a1454bcc249d6f99"
  },
  "r_page_box": {
-  "bytes": 34699,
+  "bytes": 34604,
   "http": 200,
-  "sha256": "259d0d87509cfda657b69379e5ec08259259d12657acd77a778d2ad76dfa25c5"
+  "sha256": "a76729de0b889ad210b52f986cc793c33d79b5f27cd773e8121fa302b722d91f"
  },
  "r_page_index": {
-  "bytes": 34699,
+  "bytes": 34604,
   "http": 200,
-  "sha256": "259d0d87509cfda657b69379e5ec08259259d12657acd77a778d2ad76dfa25c5"
+  "sha256": "a76729de0b889ad210b52f986cc793c33d79b5f27cd773e8121fa302b722d91f"
  },
  "r_page_로그인없이": {
-  "bytes": 1555,
+  "bytes": 1367,
   "http": 200
  },
  "r_queue__apple__boxes": {
