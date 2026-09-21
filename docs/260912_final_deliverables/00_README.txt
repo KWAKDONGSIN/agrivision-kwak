@@ -12,3 +12,5 @@ external_ai_task/                     외부 AI 동일과제 묶음: 원문(01),
 08_notion_paste_12x12_table.md        12개 표 연도·계열 노션용 (= 260912_노션붙여넣기_12x12표_연도계열.md)
 09_gpt_prompt_flowchart_image.txt     GPT 에 순서도 그림 시키는 프롬프트 (= 260912_GPT프롬프트_순서도그림.txt)
 10_prompts_gemini_flowchart_and_localclaude_wrapup.txt  제미나이 순서도 프롬프트 + 로컬 클로드 총정리 프롬프트 (= 260913_프롬프트_제미나이순서도_로컬클로드총정리.txt)
+
+(2026-09-22) 01_presentation_material_19p.pdf 는 공개 저장소에서 뺐습니다. 원본은 서버 문서/260912_실험설계_이해_발표자료.pdf 에 있습니다.
