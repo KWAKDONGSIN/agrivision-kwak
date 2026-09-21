@@ -22,7 +22,7 @@ const KEYS = [
   { key: "Ctrl+S", ko: "지금 하는 일의 저장(칠한 영역 수정본 · 상자 · 번호)", at: "keys.js",
     src: 'e.key === "s" || e.key === "S"' },
   { key: "Ctrl+Z", ko: "되돌리기(칠한 영역 · 상자 · 번호)", at: "keys.js", src: 'e.key === "z" || e.key === "Z"' },
-  { key: "Ctrl+Y", ko: "다시 실행(칠한 영역 · 번호 — 상자에는 없다)", at: "keys.js", src: 'e.key === "y" || e.key === "Y"' },
+  { key: "Ctrl+Y", ko: "다시 실행(칠한 영역 · 상자 · 번호)", at: "keys.js", src: 'e.key === "y" || e.key === "Y"' },
   { key: "B", ko: "붓", at: "keys.js", src: 'case "b":' },
   { key: "E", ko: "지우개", at: "keys.js", src: 'case "e":' },
   { key: "P", ko: "다각형 채우기", at: "keys.js", src: 'case "p":' },
@@ -42,6 +42,9 @@ const KEYS = [
   { key: "Esc", ko: "다각형 취소 · 안내 창 닫기", at: "keys.js", src: 'case "Escape":' },
   { key: "Space", ko: "누른 채 드래그 = 화면 이동", at: "keys.js", src: 'e.code === "Space"' },
   { key: "Q", ko: "보기 전환 — 원본만 → 칠한 영역만 → 겹쳐", at: "view.js", src: 'e.key !== "q" && e.key !== "Q"' },
+  { key: "~", ko: "누르고 있는 동안만 원본 사진만 보기 (놓으면 보던 대로 돌아옵니다)", at: "view.js",
+    src: 'e.code !== "Backquote"' },
+  { key: "F1", ko: "이 단축키 표 한 장 (다시 누르거나 Esc 로 닫기)", at: "keys.js", src: 'e.key === "F1"' },
   { key: "?", ko: "안내와 단축키 표 보기", at: "tour.js", src: 'e.key === "?"' },
   { key: "M", ko: "번호 합치기(고른 뒤)", at: "instances.js", src: 'if (k === "m") {' },
   { key: "N", ko: "번호 새로 붙이기(그린 뒤)", at: "instances.js", src: 'if (k === "n") {' }
@@ -55,12 +58,15 @@ document.querySelectorAll('[data-key-table]').forEach(renderKeyTable);
 if (typeof UI === "undefined") return; // 사용법에서도 같은 표만 읽는다.
 
 /* ── 먼저 온 파일에서 가져오는 것 (위에서 아래로) ── */
-const $ = UI.$, $$ = UI.$$, flash = UI.flash, ensureWho = UI.ensureWho, onWhoKey = UI.onWhoKey, fitView = UI.fitView, onViewModeKey = UI.onViewModeKey, setTool = UI.setTool, applyPolygon = UI.applyPolygon, paintGtLayer = UI.paintGtLayer, boxUndo = UI.boxUndo, saveBoxes = UI.saveBoxes, delSelBox = UI.delSelBox, setBTool = UI.setBTool, numKey = UI.numKey, numUndo = UI.numUndo, numRedo = UI.numRedo, saveInstances = UI.saveInstances, setNumMode = UI.setNumMode, doAction = UI.doAction, enterConfirm = UI.enterConfirm, onEnterKey = UI.onEnterKey, prevItem = UI.prevItem, nextItem = UI.nextItem, onTourCaptureKey = UI.onTourCaptureKey, onTourKey = UI.onTourKey;
+const $ = UI.$, $$ = UI.$$, flash = UI.flash, ensureWho = UI.ensureWho, onWhoKey = UI.onWhoKey, fitView = UI.fitView, onViewModeKey = UI.onViewModeKey, onPeekKey = UI.onPeekKey, onPeekUp = UI.onPeekUp, setTool = UI.setTool, applyPolygon = UI.applyPolygon, paintGtLayer = UI.paintGtLayer, boxUndo = UI.boxUndo, boxRedo = UI.boxRedo, saveBoxes = UI.saveBoxes, delSelBox = UI.delSelBox, setBTool = UI.setBTool, numKey = UI.numKey, numUndo = UI.numUndo, numRedo = UI.numRedo, saveInstances = UI.saveInstances, setNumMode = UI.setNumMode, doAction = UI.doAction, enterConfirm = UI.enterConfirm, onEnterKey = UI.onEnterKey, prevItem = UI.prevItem, nextItem = UI.nextItem, onTourCaptureKey = UI.onTourCaptureKey, onTourKey = UI.onTourKey;
 const api = API.get, post = API.post;
 
 /* ------------------------------------------------------------- 단축키 */
 window.addEventListener("keydown", (e) => {
-  if (e.code === "Space") { S.spaceDown = true; }
+  // 0921 U5: Space 를 잡으면 커서가 ✋(grab)로 바뀐다 → 그 한 프레임을 청한다.
+  // **값이 바뀔 때만** 청한다 — 누르고 있으면 keydown 이 계속 되풀이되는데 그때마다 켜면
+  // 가만히 있어도 사진을 60번/초 다시 그린다.
+  if (e.code === "Space") { if (!S.spaceDown) S.dirty = true; S.spaceDown = true; }
   const t = e.target.tagName;
   if (t === "INPUT" || t === "SELECT" || t === "TEXTAREA") return;
   // 0918 사이클3 **2차 검수**(화면-7-C): 이 줄이 **Ctrl 갈래 아래**에 있어서, 편집 화면이 아닌
@@ -71,7 +77,7 @@ window.addEventListener("keydown", (e) => {
   if ($("#view-edit").classList.contains("hidden")) return;
   if (e.ctrlKey || e.metaKey) {
     if (e.key === "z" || e.key === "Z") { e.preventDefault(); if (S.numMode) numUndo(); else if (S.boxMode) boxUndo(); else $("#undo").click(); }
-    else if (e.key === "y" || e.key === "Y") { e.preventDefault(); if (S.numMode) numRedo(); else if (S.boxMode) flash("상자에는 다시 실행이 없습니다", true); else $("#redo").click(); }
+    else if (e.key === "y" || e.key === "Y") { e.preventDefault(); if (S.numMode) numRedo(); else if (S.boxMode) boxRedo(); else $("#redo").click(); }   // 0921 U3: 상자도 다시하기가 생겼다
     else if (e.key === "s" || e.key === "S") { e.preventDefault(); if (S.numMode) saveInstances(); else if (S.boxMode) saveBoxes(); else doAction("fixed"); }
     return;
   }
@@ -110,7 +116,7 @@ window.addEventListener("keydown", (e) => {
     case "Escape": S.poly = []; S.dirty = true; break;
   }
 });
-window.addEventListener("keyup", (e) => { if (e.code === "Space") S.spaceDown = false; });
+window.addEventListener("keyup", (e) => { if (e.code === "Space") { if (S.spaceDown) S.dirty = true; S.spaceDown = false; } });   // 0921 U5: 놓으면 도구 커서로 돌아가는 한 프레임
 
 
 /* ══════════════════════════ §1. 단축키 표 — 이 표가 «한 곳» 이다 ══════════════════════════
@@ -123,10 +129,44 @@ window.addEventListener("keyup", (e) => { if (e.code === "Space") S.spaceDown = 
      한 장으로 보여 주고, 도움말·코드와 어긋나지 않게 묶어 두는 것이 일이다.                   */
 
 
+/* ═══════ §1.5 단축키 한 장 겹창 — F1 로 열고 Esc 로 닫는다 (0921 편의 U7 · 윈도우 관습) ═══════
+   표를 여기서 **다시 그리지 않는다.** 겹창 안의 `data-key-table` 칸은 위 54줄이 이미 KEYS 로
+   채워 두었다 — 그리는 곳이 하나라 겹창·안내 창·도움말(help.html)이 어긋날 길이 없다.
+
+   왜 «가로채기(capture)» 단계에서 다른 키를 멈추나 — 2026-09-17 에 안내 창에서 똑같은 버그가
+     있었다: 창이 떠 있어도 뒤의 단축키가 살아 있어, 읽다가 1 을 누르면 진짜 판정이 나갔다.
+   왜 안내 창(tour)보다 **먼저** 등록하나 — 안내 창이 열려 있으면 그쪽이 먼저다. 겹창 두 장을
+     포개지 않으려고, 안내 창이 떠 있는 동안에는 F1 을 그냥 흘려 보낸다.
+   왜 글자 칸(INPUT)에서도 듣나 — F1 은 글자가 아니다. 윈도우에서는 어디서 눌러도 도움말이 뜬다.
+     («?» 는 글자라서 tour.js 가 INPUT 을 걸러 내는데, 그 판단과 다른 것이 맞다.)
+   왜 편집 화면 밖에서도 듣나 — 목록·현황에서도 «무슨 키가 있더라» 는 똑같이 궁금하다.         */
+const keyhelp = $("#keyhelp");
+if (keyhelp) {
+  const keyhelpOpen = () => keyhelp.classList.remove("hidden");
+  const keyhelpClose = () => keyhelp.classList.add("hidden");
+  $("#keyhelp-x").onclick = keyhelpClose;
+  keyhelp.onclick = (e) => { if (e.target === keyhelp) keyhelpClose(); };   // 바깥 어두운 데를 눌러도 닫힌다
+  window.addEventListener("keydown", (e) => {
+    const open = !keyhelp.classList.contains("hidden");
+    if (e.key === "F1") {
+      if (!open && !$("#tour").classList.contains("hidden")) return;        // 안내 창이 먼저다
+      e.preventDefault(); e.stopImmediatePropagation();
+      if (open) keyhelpClose(); else keyhelpOpen();
+      return;
+    }
+    if (!open) return;
+    e.stopImmediatePropagation();                                           // 뒤의 단축키를 멈춘다
+    if (e.key === "Escape") { e.preventDefault(); keyhelpClose(); }
+  }, true);
+}
+
+
 /* ══════════════════ §2. 다른 파일에 있는 키 손잡이도 여기서 등록한다 ══════════════════
    쪼개기 전 순서 그대로다(app.js 의 keydown·keyup 이 먼저, 그다음 ui.js 순서: Q → 안내 가로채기
    → ?·Esc → 이름 묻기 → Enter). 가로채기(capture) 단계가 먼저 도는 것은 브라우저가 정한다. */
 window.addEventListener("keydown", onViewModeKey);              // Q — 보기 전환      (view.js)
+window.addEventListener("keydown", onPeekKey);                  // ~ — 누르는 동안만 «원본만» (view.js · 0921 U9)
+window.addEventListener("keyup", onPeekUp);                     //     놓으면 보던 대로 (view.js)
 window.addEventListener("keydown", onTourCaptureKey, true);     // 안내 창이 열려 있으면 키를 멈춘다 (tour.js)
 window.addEventListener("keydown", onTourKey);                  // ? · Esc            (tour.js)
 window.addEventListener("keydown", onWhoKey, true);             // 첫 판정 때 이름 묻기 (api.js)

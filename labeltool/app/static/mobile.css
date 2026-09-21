@@ -21,8 +21,24 @@
   #who { width:100px; }
   #navphoto { width:100%; }
   #topbar .stemname { max-width:100%; white-space:normal; overflow-wrap:anywhere; }
-  #saveflash { position:fixed; top:8px; left:16px; right:16px; z-index:45; max-width:none; padding:8px; border-radius:6px; background:#22303f; pointer-events:none; white-space:normal; overflow-wrap:anywhere; }
+  /* 2026-09-21 디자인 G6 — 이 파일에 혼자 남아 있던 옛 파랑회색 #22303f 둘을 `--chrome` 으로.
+     ⚠ 토큰은 이 파일이 아니라 `style.css` 의 `:root` 에서 온다. 그러니 **mobile.css 를 부르는
+       문서는 style.css 도 같이 불러야 한다** — 안 그러면 var() 가 비어서 바탕이 통째로
+       사라진다(index.html 이 둘 다 부른다 · `tests/browser/b24_shadow_mobile.py` ② 가 못박는다).
+     왜 고치나 — G2 가 상단 바를 #1c1c1c 로 옮긴 뒤로 **휴대폰에서만** 이 띠와 아래 단추 줄이
+       옛 색이라, 한 화면 안에 검정이 두 가지였다(실측 rgb(28,28,28) ↔ rgb(34,48,63)).
+     ⚠ 실패 띠(.flashbad)의 붉은 바탕 #4a2328 은 **뜻이 묶인 색**이라 여기서 안 덮는다 —
+       아래 `.flashbad` 줄에 background 가 없으므로 style.css 의 그 값이 그대로 이긴다. */
+  #saveflash { position:fixed; top:8px; left:16px; right:16px; z-index:45; max-width:none; padding:8px; border-radius:var(--r-sm); background:var(--chrome); pointer-events:none; white-space:normal; overflow-wrap:anywhere; }
   #saveflash:empty { display:none; }
+  /* 2026-09-21 S2 — 실패 띠는 «확인» 을 눌러야 지워진다. 휴대폰에서는 화면 폭을 다 쓴다.
+     위 줄의 `pointer-events:none` 이 그대로면 그 단추를 누를 수가 없으므로 여기서만 되돌린다. */
+  #saveflash.flashbad { top:8px; left:16px; right:16px; transform:none; max-width:none; pointer-events:auto; }
+  /* 2026-09-21 S3 — 연결 끊김 띠. 휴대폰은 글자가 16px 라 한 줄에 안 들어간다 → 줄바꿈을 허용하고
+     높이를 푼다. 알림 띠(위 두 줄)는 fixed 라 띠가 떠 있는 동안만 그만큼 내려 준다.
+     실제 기기 확인은 사람 몫이다(지금까지 360/390 폭 흉내내기뿐 — plan.md «사람이 꼭 확인할 것»). */
+  #netdown.on { height:auto; white-space:normal; padding:10px 16px; }
+  body.netdown #saveflash, body.netdown #saveflash.flashbad { top:64px; }
   .view { flex:none; min-width:0; }
   .bar, .pager { padding:8px 16px; }
   .bar select, #f-q, body.easy #f-q { width:100%; }
@@ -57,7 +73,7 @@
   #mobile-bar { display:none; }
   body:has(#view-edit:not(.hidden)) #mobile-bar { display:grid; }
   #mobile-bar { position:fixed; bottom:0; left:0; right:0; z-index:40; grid-template-columns:1fr 1.4fr 1fr 1fr;
-    gap:6px; padding:8px 16px calc(8px + env(safe-area-inset-bottom)); background:#22303f; }
+    gap:6px; padding:8px 16px calc(8px + env(safe-area-inset-bottom)); background:var(--chrome); }   /* 0921 G6 — #22303f 에서 */
   #mobile-bar button { min-height:52px; padding:4px; }
   #dash, #view-exp { overflow:visible; padding:12px 16px; overflow-wrap:anywhere; }
   #dash table, #exp-list table { display:block; width:100%; }

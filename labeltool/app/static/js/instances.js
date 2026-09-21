@@ -11,7 +11,7 @@
 
 (function () {
 /* ── 먼저 온 파일에서 가져오는 것 (위에서 아래로) ── */
-const $ = UI.$, $$ = UI.$$, flash = UI.flash, who = UI.who, errMsg = UI.errMsg, escapeHtml = UI.escapeHtml, makeLayer = UI.makeLayer, scratch = UI.scratch, sctx = UI.sctx, cv = UI.cv, ctx = UI.ctx;
+const $ = UI.$, $$ = UI.$$, flash = UI.flash, flashBrief = UI.flashBrief, who = UI.who, errMsg = UI.errMsg, escapeHtml = UI.escapeHtml, makeLayer = UI.makeLayer, scratch = UI.scratch, sctx = UI.sctx, cv = UI.cv, ctx = UI.ctx;
 const api = API.get, post = API.post;
 /* ↓ 아래에 오는 파일(뒤에 실리는 것)을 되돌아 부른다 — 부를 때 찾는다.
    (`typeof cntSet === "function"` 같은 옛 가드가 그대로 살아 있어야 해서 이름을 둔다:
@@ -813,12 +813,10 @@ async function saveInstances() {
     note: $("#note").value                  // 0918 사이클2: 세 저장 중 번호 저장만 메모를 안 보냈다
   });
   if (!j || !j.ok) {
-    flash(errMsg(j, "번호 저장 실패"), true);
     // 0919 사이클5 3차 결정 1: 서버가 «번호 0개 저장» 을 막으면(blocked) 그 문구를 «사진 밖» 힌트와
-    // 같은 **1초짜리 하단 힌트**로 보여 준다(다른 저장 실패는 그대로 3초 — 새 글자 0자).
-    if (j && j.blocked) {
-      clearTimeout(flash._t); flash._t = setTimeout(() => { $("#saveflash").textContent = ""; }, 1000);
-    }
+    // 같은 **1초짜리 하단 힌트**로 보여 준다.
+    // 0921 S2: 다른 저장 실패는 이제 «확인» 을 누를 때까지 남는다(전에는 3초). blocked 만 1초 그대로.
+    (j && j.blocked ? flashBrief : flash)(errMsg(j, "번호 저장 실패"), true);
     return;
   }
   S.numDirty = false;
@@ -858,6 +856,10 @@ function numReload() {
 }
 
 /* ------------------------------------------------------------- UI 연결 */
+/* 🔴 0921 S6 — 번호 저장도 도는 동안 단추를 잠근다. 번호본은 PNG 로 접어 올리는 데 제일 오래
+   걸리는 저장이라(1664×1248 · 실측 1~2초) «안 눌렸나» 하고 한 번 더 누르기 가장 쉽다.
+   `#num-mode` 가 없는 화면(사용법 등)에서도 이름은 있어야 하므로 if 밖에서 만든다. */
+const numSave = UI.lockWhile(["#numsave"], saveInstances);
 if ($("#num-mode")) {
   $("#num-mode").onchange = () => setNumMode($("#num-mode").checked);
   $$(".ntool").forEach((b) => b.onclick = () => setNTool(b.dataset.ntool));
@@ -866,12 +868,13 @@ if ($("#num-mode")) {
   ["#l-num", "#l-numtext"].forEach((s) => $(s).onchange = () => { S.dirty = true; });
   $("#numundo").onclick = numUndo;
   $("#numreload").onclick = numReload;
-  $("#numsave").onclick = saveInstances;
+  $("#numsave").onclick = numSave;
   $("#numrevert").onclick = revertInstances;
   $("#numshape").onchange = () => { clearPending(); };
 }
 
 
 /* ── 이 파일이 내놓는 것 (다음 파일들이 쓴다) ── */
-Object.assign(UI, { loadInstances, setNumMode, setNTool, numKey, numUndo, numRedo, saveInstances, revertInstances, numReload, drawNumOverlay, drawErrBoxes, drawNoteBoxes, noteBoxes, ensureErrRows, renderErrRows, hasPendingRegion, clearPending, numMouseDown, numMouseMove, numMouseUp, instStats, VERDICT_KO });
+/* 0921 S6 — `saveInstances` 는 **감싼 쪽**(numSave)을 같은 이름으로 내놓는다(keys.js 의 Ctrl+S). */
+Object.assign(UI, { loadInstances, setNumMode, setNTool, numKey, numUndo, numRedo, saveInstances: numSave, revertInstances, numReload, repaintNum, drawNumOverlay, drawErrBoxes, drawNoteBoxes, noteBoxes, ensureErrRows, renderErrRows, hasPendingRegion, clearPending, numMouseDown, numMouseMove, numMouseUp, instStats, VERDICT_KO });
 })();

@@ -38,8 +38,10 @@ const COL = { gt: [232, 68, 58], ai: [47, 125, 225], ed: [0, 229, 255],
               add: [255, 212, 0], del: [255, 53, 208] };
 
 Object.assign(S, { boxMode: false, film: 0.25, boxes: [], bsel: -1,
-                   btool: "draw", bundo: [], bDirty: false, drag: null,
+                   btool: "draw", bundo: [], bredo: [], bDirty: false, drag: null,
                    bpick: null });                   // bpick: 마지막으로 고른 자리(겹친 상자 순환용)
+                   // 0921 U3: bredo = 되돌린 상자 모습을 담아 두는 칸(Ctrl+Y). 마스크의 `redo`·번호의
+                   // `numRedoStack` 과 같은 뜻이고, 담는 것은 `bundo` 와 똑같은 «JSON 글자» 다.
 
 Object.assign(S, {
   inst: null, instOrig: null, instSrc: null, instMax: 0, instN: 0,

@@ -17,7 +17,7 @@ const CODE = cut("function bpush()", "function boxInfo(extra)")      // bpush, b
            + cut("const norm = (a, b, c, d)", "function delSelBox()")// 판정·마우스·bcommit·bHandleR
            + cut("async function saveBoxes()", "async function seedBoxes()");
 const make = new Function("S", "HANDLE", "BKO", "flash", "$", "post", "errMsg", "who",
-  CODE + "\nreturn {bpush,boxUndo,boxInfo,hitBox,hitBoxesAt,hitHandle,bHandleR,bcommit,"
+  CODE + "\nreturn {bpush,boxUndo,boxRedo,boxInfo,hitBox,hitBoxesAt,hitHandle,bHandleR,bcommit,"
        + "boxMouseDown,boxMouseMove,boxMouseUp,saveBoxes,PICKTOL};");
 
 function mkEnv(o) {
@@ -26,7 +26,8 @@ function mkEnv(o) {
               view: { s: o.s || 1, tx: 0, ty: 0 },
               boxes: JSON.parse(JSON.stringify(o.boxes || [])),
               bsel: o.bsel === undefined ? -1 : o.bsel, btool: o.btool || "pick",
-              bundo: [], bDirty: false, drag: null, bpick: null, dirty: false };
+              bundo: [], bredo: [], bDirty: false, drag: null, bpick: null, dirty: false };
+                                                            // bredo: 0921 U3 (state.js 와 같은 칸)
   const els = { "#boxinfo": { textContent: "" }, "#boxcls": { value: "fruit" }, "#note": { value: "" } };
   const env = { S: S, flashes: [], posts: [], els: els, resp: null, onPost: null };
   const F = make(S, 7, { fruit: "과실·알", bunch: "송이", other: "기타" },
@@ -267,6 +268,103 @@ if (fs.existsSync(REAL)) {
   ok(JSON.stringify(e.S.boxes) === keep && e.S.bDirty === true,
     "저장이 실패하면 화면을 덮어쓰지 않고 «저장 안 됨» 도 그대로 둔다");
 }
+/* ============ 5. U3 — 상자 «다시하기»(Ctrl+Y) ============
+   2026-09-21 U3 로 새로 생겼다. 마스크·번호에만 있던 다시하기를 상자에도 붙였다.
+   여기서 못박는 것: ① 그리기→Ctrl+Z→Ctrl+Y 가 돌아온다 ② 되돌리기와 다시하기가 서로의
+   **정확한 반대**다(글자까지) ③ 새로 손대면 다시하기 갈래를 버린다 ④ bDirty 를 건드리지 않는다. */
+console.log("\n5. U3 — 상자 다시하기(Ctrl+Y)");
+{ // 체크리스트에 적힌 그 검증: 상자 그리기 → Ctrl+Z → Ctrl+Y
+  const e = mkEnv({ boxes: [], btool: "draw" });
+  drag(e, 100, 100, [[200, 200]]);
+  const made = JSON.stringify(e.S.boxes);
+  ok(e.S.boxes.length === 1 && e.S.bredo.length === 0, "새로 그리면 상자 1개 · 다시하기 0칸");
+  e.F.boxUndo();
+  ok(e.S.boxes.length === 0 && e.S.bundo.length === 0 && e.S.bredo.length === 1,
+    "Ctrl+Z → 상자 0개 · 되돌리기 0칸 · 다시하기 1칸");
+  e.F.boxRedo();
+  ok(JSON.stringify(e.S.boxes) === made && e.S.bundo.length === 1 && e.S.bredo.length === 0,
+    "Ctrl+Y → 그렸던 상자가 «글자까지» 그대로 돌아온다", made);
+}
+{ // 다시할 것이 없을 때
+  const e = mkEnv({ boxes: BIGSMALL, btool: "pick" });
+  const keep = JSON.stringify(e.S.boxes);
+  e.F.boxRedo();
+  const f = e.flashes[e.flashes.length - 1];
+  ok(JSON.stringify(e.S.boxes) === keep && e.S.bundo.length === 0,
+    "다시할 것이 없으면 상자를 건드리지 않는다");
+  ok(f && f.bad === true && /다시 실행할 상자 작업이 없습니다/.test(f.m),
+    "«다시 실행할 상자 작업이 없습니다» 를 경고색으로 알린다", `"${f && f.m}"`);
+  e.F.boxUndo();
+  const g = e.flashes[e.flashes.length - 1];
+  ok(g && g.bad === true && /되돌릴 상자 작업이 없습니다/.test(g.m),
+    "되돌리기 쪽 안내는 예전 글자 그대로다(회귀)", `"${g && g.m}"`);
+}
+{ // 세 단계를 다 되돌렸다가 다 다시 실행하면 글자까지 원래대로
+  const e = mkEnv({ boxes: [], btool: "draw" });
+  const snap = [JSON.stringify(e.S.boxes)];
+  for (const d of [[100, 100, 200, 200], [300, 300, 400, 400], [500, 500, 700, 700]]) {
+    drag(e, d[0], d[1], [[d[2], d[3]]]);
+    snap.push(JSON.stringify(e.S.boxes));
+  }
+  ok(e.S.boxes.length === 3 && e.S.bundo.length === 3, "세 번 그려서 되돌리기 3칸");
+  let good = true;
+  for (let k = 2; k >= 0; k--) { e.F.boxUndo(); if (JSON.stringify(e.S.boxes) !== snap[k]) good = false; }
+  ok(good && e.S.bundo.length === 0 && e.S.bredo.length === 3,
+    "세 번 되돌리면 한 칸씩 정확히 뒤로 간다 · 다시하기 3칸");
+  good = true;
+  for (let k = 1; k <= 3; k++) { e.F.boxRedo(); if (JSON.stringify(e.S.boxes) !== snap[k]) good = false; }
+  ok(good && e.S.bredo.length === 0 && e.S.bundo.length === 3,
+    "세 번 다시 실행하면 한 칸씩 정확히 앞으로 간다 · 마지막이 처음 그린 것과 같다");
+}
+{ // 되돌린 뒤 «새 작업» 을 하면 다시하기 갈래는 버린다 (그림판·포토샵과 같은 규칙)
+  const e = mkEnv({ boxes: [], btool: "draw" });
+  drag(e, 100, 100, [[200, 200]]);
+  e.F.boxUndo();
+  ok(e.S.bredo.length === 1, "되돌려서 다시하기 1칸");
+  drag(e, 600, 600, [[700, 700]]);                            // 다른 것을 새로 그렸다
+  ok(e.S.bredo.length === 0 && e.S.boxes.length === 1 &&
+     JSON.stringify(e.S.boxes[0].xyxy) === JSON.stringify([600, 600, 700, 700]),
+    "새로 그리면(bcommit) 다시하기 갈래를 버린다 — 옛 갈래가 되살아나지 않는다");
+  e.F.boxRedo();
+  ok(e.S.boxes.length === 1, "그 뒤 Ctrl+Y 를 눌러도 아무 일도 없다");
+}
+{ // bpush() 로 남기는 작업(전부 지우기·초벌·백업 되돌리기)도 갈래를 버린다
+  const e = mkEnv({ boxes: BIGSMALL, btool: "pick" });
+  drag(e, 125, 125, [[165, 165]]);
+  e.F.boxUndo();
+  ok(e.S.bredo.length === 1, "옮겼다 되돌려서 다시하기 1칸");
+  e.F.bpush(); e.S.boxes = [];                                 // «전부 지우기» 와 같은 길
+  ok(e.S.bredo.length === 0, "bpush() 를 쓰는 작업도 다시하기 갈래를 버린다");
+}
+{ // 되돌리기·다시하기는 bDirty 를 건드리지 않는다 (U1 의 «*» 가 흔들리지 않게)
+  const e = mkEnv({ boxes: [], btool: "draw" });
+  drag(e, 100, 100, [[200, 200]]);
+  const was = e.S.bDirty;
+  e.F.boxUndo(); const afterUndo = e.S.bDirty;
+  e.F.boxRedo(); const afterRedo = e.S.bDirty;
+  ok(was === true && afterUndo === true && afterRedo === true,
+    "되돌리기·다시하기가 «저장 안 됨» 딱지를 바꾸지 않는다(둘이 서로의 반대)",
+    `${was} → ${afterUndo} → ${afterRedo}`);
+}
+{ // 30칸 상한 — bundo 와 같은 수
+  const e = mkEnv({ boxes: [], btool: "draw" });
+  for (let k = 0; k < 40; k++) drag(e, 10 + k, 10, [[110 + k, 110]]);
+  ok(e.S.bundo.length === 30, "되돌리기는 30칸에서 멈춘다(회귀)", `bundo=${e.S.bundo.length}`);
+  for (let k = 0; k < 40; k++) e.F.boxUndo();
+  ok(e.S.bredo.length === 30, "다시하기도 30칸을 넘지 않는다", `bredo=${e.S.bredo.length}`);
+}
+{ // 저장이 무엇을 버렸을 때(bpush) 다시하기 갈래가 남아 있으면 안 된다
+  const e = mkEnv({ boxes: [{ cls: "fruit", src: "human", xyxy: [100, 100, 300, 300] }], btool: "draw" });
+  drag(e, 500, 500, [[600, 600]]);
+  e.F.boxUndo();
+  ok(e.S.bredo.length === 1, "저장 전 되돌려서 다시하기 1칸");
+  e.resp = { ok: true, n_boxes: 1, dropped: 1, over: 0, at: "x",
+             boxes: [{ id: 1, cls: "fruit", src: "human", xyxy: [100, 100, 300, 300] }] };
+  await e.F.saveBoxes();
+  ok(e.S.bredo.length === 0 && e.S.bundo.length === 1,
+    "저장하면(버린 것이 있어 bpush) 다시하기 갈래를 버린다 — 파일에 없는 상자가 Ctrl+Y 로 되살아나지 않는다");
+}
+
 console.log(`\n합계: ${tests}개 중 ${tests - fails}개 통과, ${fails}개 실패`);
 process.exit(fails ? 1 : 0);
 })().catch((e) => { console.error("시뮬레이션 오류:", e); process.exit(3); });

@@ -4,20 +4,143 @@
    색 규칙: 바탕 밝은 회색 · 단추 흰색 · 눌린 도구 파란 테두리(눌린 그림자) ·
    판정 5칸만 색(초록·파랑·진회색·주황·빨강). */
 
+/* ═══════════════════ 색·치수 토큰 (2026-09-21 디자인 G1) ═══════════════════
+   출처 — supabase 체계. 고른 까닭은 `cycles/260921_편의/design/후보비교.md`,
+   값을 이 툴에 맞춰 정한 표는 `cycles/260921_편의/design_final.md` 에 있다.
+
+   왜 만드나 — 지금 이 파일에는 **서로 다른 색이 133가지**(총 233번) 들어 있다. 파랑회색만
+     #22303f · #46596e · #3a4a5c · #425060 · #33475d · #35516e · #41566b · #55687d · #56667a …
+     처럼 열 가지가 넘어, 어디를 고쳐도 옆 칸과 미묘하게 안 맞는다. 손으로 하나씩 고르다 쌓인
+     것이다. 처방은 **무채색 계단 하나 + 강조색 하나**다.
+
+   이번(G1)에 하는 일은 **선언뿐**이다 — 아직 아무도 `var(--…)` 를 쓰지 않는다. 선언만 있는
+   사용자 정의 속성은 그리기에 닿지 않으므로 화면이 한 화소도 안 바뀌어야 한다
+   (실측으로 못박았다 — 화면 12장 0화소 · `tests/browser/shots12.py`). 실제로 바꿔 끼우는 일은
+   G2(상단바) → G3(도구상자·패널·카드) → G4(단추·입력칸·포커스) 순서로 나눠서 한다.
+   → **G6 까지 왔다**(2026-09-21). 지금 `var(--…)` 를 꺼내 쓰는 곳은 ① 상단 바 한 줄(`#topbar`
+     와 그 안) ② 도구상자·오른쪽 패널·목록 카드의 **바탕과 1px 선** ③ 맨 밑바닥 단추·입력칸의
+     테두리·반지름·hover 와 `:focus-visible` 띠 ④ 겹창·실패 띠의 **그림자**(G6) 와
+     `mobile.css` 의 검정 둘(G6 — 그 파일에는 `:root` 가 없다. 토큰은 여기서 간다).
+     아직 옛 파랑회색인 곳 — 판정 줄 테두리(#verdictbar) · 대시보드 표(table.d) ·
+     안내 창(.tourhd·.tourft) · 단축키 겹창(.keyhelp-body) · 쉬움 모드 안내(#easyguide) ·
+     카드·썸네일의 :hover(#3a7bd5) · 사진 위 확대바(#zoombar).
+     ⚠ 이 여섯은 **아직 아무도 안 맡았다.** 260921 편의 사이클의 체크리스트에서 G6 은
+       «그림자 줄이기 + mobile.css 토큰화» 까지다 — 위 목록은 다음 사이클 몫으로 남겨 둔다
+       (`cycles/260921_편의/context-notes.md` 2026-09-21 G6 항목에 적어 두었다).
+     ⚠ G4 도 **상태 색을 다 접지는 않았다.** 눌린 도구(.on · U6)와 잠긴 도구(#toolrail
+       button:disabled)의 명암은 일부러 그대로 뒀다 — U6 이 화소로 재서 «파여 보이게» 맞춰
+       놓은 것이라 색 계단만 보고 건드리면 그 느낌이 깨진다(b15 가 못박고 있다).
+
+   ⚠ 절대 토큰으로 덮지 않는 색이 있다 — **뜻이 묶인 색**이다.
+     · 레이어 4겹 — 빨강(원본) · 파랑(AI) · 초록(내 수정본) · 노랑·분홍(차이)
+     · 판정 5칸 — 원본 OK(초록) · AI로 교체(파랑) · 저장(진회색) · 문제(주황) · 제외(빨강)
+     · 목록 카드의 상태 딱지·테두리 색
+     예쁘게 맞추지 않는다. 의미가 먼저다.
+   ⚠ `--accent`(에메랄드)를 채움 단추로 쓰지 않는다 — 초록은 이미 «내 수정본» 이다.
+     고른 도구 테두리 · 포커스 테두리 · 진행 표시에만 쓴다. */
+:root {
+  /* 바탕 */
+  --canvas: #ffffff;              /* 카드·패널·단추 바탕 */
+  --canvas-soft: #fafafa;         /* 목록·현황 화면 바탕 (지금 #eef1f5) */
+  --canvas-sunken: #f4f4f4;       /* 사진 주변 빈 공간 */
+
+  /* 상단 한 줄 — 어두운 쪽부터 밝은 쪽으로 **한 계단**이다.
+     #1c1c1c(바) → #202020(가라앉은 칸) → #343434(손이 닿은 칸) → #3d3d3d(1px 선)
+     → #9a9a9a(흐린 글씨) → #ededed(글씨). 값 사이를 눈대중으로 끼워 넣지 말 것 —
+     계단이 흔들리면 파랑회색 열 가지로 돌아간다. */
+  --chrome: #1c1c1c;              /* 상단 바 (지금 #22303f) */
+  --chrome-soft: #202020;         /* 상단바 안의 눌린 칸 */
+  /* ↓ 두 칸은 G2 에서 **더 놓았다**. design_final.md 의 표에는 «바 · 눌린 칸 · 글씨 ·
+     흐린 글씨» 넷뿐이었는데, 실제로 상단 바를 옮겨 보니 그 넷으로는 못 적는 자리가 둘
+     있었다 — ① 단추에 마우스를 올렸을 때(전 #3a4a5c) ② 칸을 두르는 1px 선(전 #46596e).
+     둘 다 «흐린 글씨»(#9a9a9a)로 칠하면 지금보다 훨씬 밝아져 상단 바가 시끄러워진다
+     (실측 — 선 대비 1.86:1 → 6.11:1). 그래서 계단을 늘렸다. 값은 지금 화면의 **눈에
+     보이는 세기**를 맞춘 것이다(선 1.66:1 · hover 1.38:1 ↔ 지금 1.86:1 · 1.48:1). */
+  --chrome-hi: #343434;           /* 상단바에서 손이 닿은 칸(hover) — 0921 G2 */
+  --chrome-line: #3d3d3d;         /* 상단바 안의 1px 선·테두리 — 0921 G2 */
+  --chrome-ink: #ededed;          /* 상단바 글씨 */
+  --chrome-mute: #9a9a9a;         /* 상단바 흐린 글씨·구분선 */
+
+  /* 1px 선 */
+  --hairline: #dfdfdf;            /* 기본 테두리 */
+  --hairline-strong: #c7c7c7;     /* 강조 테두리 */
+  --hairline-cool: #ededed;       /* 아주 옅은 칸 나눔 */
+
+  /* 글씨 */
+  --ink: #171717;                 /* 본문 */
+  --ink-mute: #707070;            /* 보조 설명 */
+  --ink-faint: #b2b2b2;           /* 비활성·자리표시 */
+
+  /* 강조 — 위 ⚠ 를 읽고 쓸 것 */
+  --accent: #3ecf8e;
+  --accent-deep: #24b47e;         /* 눌린 순간 */
+  --accent-wash: rgba(62, 207, 142, .12);
+
+  /* 모서리 — 입력칸 · 단추 · 카드 · 패널 */
+  --r-xs: 4px;
+  --r-sm: 6px;
+  --r-md: 8px;
+  --r-lg: 12px;
+
+  /* 여백 — 8px 기준 */
+  --sp-1: 2px;
+  --sp-2: 4px;
+  --sp-3: 8px;
+  --sp-4: 12px;
+  --sp-5: 16px;
+
+  /* 숫자 칸(좌표·배율·개수·쪽수)용 글꼴. 웹폰트를 받지 않는다(CDN 금지) */
+  --mono: ui-monospace, Menlo, Monaco, Consolas, "DejaVu Sans Mono", monospace;
+
+  /* 그림자 — supabase 원칙은 «깊이는 1px 실선». 카드·패널은 --shadow-1 까지만.
+     0921 G6 에서 **꺼내 썼다.** 밖으로 띄우는 그림자는 이 툴에 둘뿐이었고 둘 다 알파 .35 로
+     짙었다 — 겹창(.tourcard) `0 18px 50px` · 저장 실패 띠(.flashbad) `0 4px 12px`.
+     ⚠ **안쪽**(inset) 그림자는 여기 계단이 아니다. 눌린 도구(U6)의 두 겹은 색이 아니라
+       «파여 보이는 명암» 이라 b15 가 화소로 못박아 두었고, «저장 안 됨»(U1)의
+       `0 0 0 2px #ffd400` 은 그림자가 아니라 **뜻이 묶인 노란 테두리**다. 둘 다 안 건드린다.
+     ⚠ 카드(.card)·패널에는 그림자를 **더하지 않았다.** G6 은 «줄이기» 지 «입히기» 가 아니고,
+       지금 그 칸들은 1px 실선으로 이미 구분된다(그것이 supabase 의 처방이다). */
+  --shadow-1: 0 1px 3px rgba(0, 0, 0, .06);
+  --shadow-3: 0 16px 48px rgba(0, 0, 0, .12);   /* 겹창(단축키 표·안내 창) */
+}
+
 * { box-sizing: border-box; }
 html, body { height: 100%; }
 body {
   margin: 0; font-family: "Malgun Gothic", "Noto Sans KR", system-ui, sans-serif;
-  font-size: 14px; color: #1b1f24; background: #eef1f5;
+  font-size: 14px; color: #1b1f24; background: var(--canvas-soft);
   display: flex; flex-direction: column; overflow: hidden;
 }
+/* 🔴 2026-09-21 디자인 G4 — 단추·입력칸의 «테두리 · 반지름 · 손이 닿은 모양»을 토큰으로 접는다.
+   상단 바(G2)와 도구상자·패널(G3)은 이미 무채색인데 단추만 파랑회색(#b9c2cc)이고, 손이 닿으면
+   파란빛(#f2f7fc 바탕 · #7fa8d8 테두리)으로 변해 «고른 것» 처럼 보였다. 여기서 바꾸는 것은
+   **색과 반지름뿐**이다 — 크기·여백·글자 크기는 한 글자도 안 건드린다(자리가 밀리면 안 된다).
+   hover 는 계단을 **한 칸씩** 내린다 — 바탕 --canvas → --canvas-sunken · 테두리
+   --hairline-strong → --ink-faint. 값은 «지금 보이는 세기»를 맞춰 골랐다(실측 — 전 2.30:1 ·
+   후 1.91:1. --hairline-strong 으로 하면 1.52:1 로 손이 닿은 것이 잘 안 보인다).
+   ⚠ 뜻이 묶인 색은 그대로다 — 판정 5칸(.ok·.ai·.save·.flag·.exc) · 거르개(.qf) · 카드 상태
+     테두리는 제 border-color 를 따로 적어 두었으므로 여기 값이 안 닿는다.
+   ⚠ 눌린 도구(.on · U6)와 잠긴 도구(:disabled)의 **명암**은 안 건드린다 — U6 이 화소로 재서
+     맞춰 둔 «파여 보이는» 느낌이 깨진다(b15 가 그 명암을 못박고 있다). */
 button { font-family: inherit; font-size: 13px; cursor: pointer;
-  border: 1px solid #b9c2cc; background: #fff; border-radius: 6px; padding: 5px 10px; }
-button:hover { background: #f2f7fc; border-color: #7fa8d8; }
+  border: 1px solid var(--hairline-strong); background: var(--canvas); border-radius: var(--r-sm); padding: 5px 10px; }
+button:hover { background: var(--canvas-sunken); border-color: var(--ink-faint); }
 button:disabled { opacity: .4; cursor: default; }
-button:disabled:hover { background: #fff; border-color: #b9c2cc; }
+button:disabled:hover { background: var(--canvas); border-color: var(--hairline-strong); }
+/* 🔴 2026-09-21 디자인 G4 — 키보드로 쓰는 사람에게 «지금 여기» 를 알리는 띠.
+   `:focus` 가 아니라 `:focus-visible` 인 까닭 — 마우스로 누를 때도 뜨면 아무도 안 보게 된다.
+   파이어폭스 기본 띠는 `auto 1px` 라 밝은 바탕에서 거의 안 보인다(실측).
+   색은 --accent 가 아니라 **한 칸 진한 --accent-deep** 이다 — 흰 바탕 위 밝기 차가
+   --accent 는 2.00:1, --accent-deep 은 2.66:1 이었다(검은 상단 바 위에서는 6.41:1).
+   ⚠ 초록이지만 «내 수정본»(레이어)과 헷갈리지 않는다 — 저 초록은 사진 **안**에만 칠해진다.
+   ⚠ `outline` 이라 자리를 한 화소도 안 밀고, `box-shadow` 를 안 써서 눌린 도구의 안쪽
+     그림자(U6)와 «저장 안 됨» 노란 테두리(U1)를 덮지 않는다. */
+:focus-visible { outline: 2px solid var(--accent-deep); outline-offset: 1px; }
+/* 🔴 0921 S6 — 지금 서버에 보내는 중인 단추. 다 보내면 이 딱지는 떨어진다(js/api.js lockWhile).
+   `disabled` 를 안 쓰는 까닭은 그 주석에 있다(다른 규칙이 쓰는 칸을 뺏지 않으려고). */
+button.saving { opacity: .55; cursor: progress; pointer-events: none; }
 select, input { font-family: inherit; font-size: 13px; padding: 4px 6px;
-  border: 1px solid #b9c2cc; border-radius: 6px; background: #fff; }
+  border: 1px solid var(--hairline-strong); border-radius: var(--r-sm); background: var(--canvas); }
 .muted { color: #6b7681; }
 .small { font-size: 12px; }
 .spacer { flex: 1; }
@@ -28,36 +151,86 @@ select, input { font-family: inherit; font-size: 13px; padding: 4px 6px;
 .dupsw { display: none !important; }
 
 /* ═══════════════════ 상단 바 (한 줄, 40px) ═══════════════════ */
+/* 🔴 2026-09-21 디자인 G2 — 이 한 줄에 쓰이던 파랑회색 **넷**
+     (#22303f 바탕 · #cfd8e3 글씨 · #46596e 테두리·구분선 · #3a4a5c hover)
+   을 무채색 `--chrome*` 계단 하나로 접었다. 여기서 바꾸는 것은 **색뿐**이다 —
+   자리·크기·글자 크기·여백은 한 글자도 안 건드린다(화면 12장에서 상단 바 **밖**은 0화소여야
+   한다 · `tests/browser/shots12.py` · `tests/browser/b20_chrome.py`).
+   ⚠ 뜻이 묶인 색은 그대로 둔다 — 노랑 #ffd400(도움말·사용법·«저장 안 됨» 별) ·
+     초록 #7ee2a8(저장됨) · 붉은 실패 띠(.flashbad) · 붉은 연결 끊김 띠(#netdown).
+   ⚠ 흰 입력칸(#fruit · #who)의 테두리 #b9c2cc 는 목록 화면의 거르개와 **같은 규칙**이라
+     여기서 안 건드린다(G4 «단추·입력칸» 몫이다). mobile.css 의 #22303f 둘도 G6 몫이다. */
 #topbar { display: flex; align-items: center; gap: 7px; padding: 0 10px; height: 40px;
-  background: #22303f; color: #fff; flex: 0 0 auto; overflow: hidden; }
+  background: var(--chrome); color: var(--chrome-ink); flex: 0 0 auto; overflow: hidden; }
 #topbar .brand { font-size: 17px; cursor: default; }
 #topbar select { height: 27px; padding: 2px 4px; }
 #topbar nav { display: flex; gap: 3px; }
-#topbar button.tab { background: transparent; color: #cfd8e3; border-color: #46596e;
+#topbar button.tab { background: transparent; color: var(--chrome-mute); border-color: var(--chrome-line);
   padding: 3px 9px; font-size: 12.5px; }
-#topbar button.tab.on { background: #fff; color: #22303f; font-weight: 700; border-color: #fff; }
+#topbar button.tab.on { background: var(--canvas); color: var(--chrome); font-weight: 700; border-color: var(--canvas); }
 #navphoto { display: flex; align-items: center; gap: 5px; min-width: 0; }
-#navphoto::before { content: ""; border-left: 1px solid #46596e; align-self: stretch; margin: 6px 4px 6px 0; }
+#navphoto::before { content: ""; border-left: 1px solid var(--chrome-line); align-self: stretch; margin: 6px 4px 6px 0; }
 #topbar .stemname { font-weight: 700; font-size: 13px; white-space: nowrap;
   overflow: hidden; text-overflow: ellipsis; max-width: 260px; }
-#topbar #prev, #topbar #next { background: transparent; color: #cfd8e3; border-color: #46596e;
+/* 🔴 2026-09-21 편의 U1 — 저장하지 않은 작업이 있을 때만 파일 이름 옆에 서는 «*» (js/dirtymark.js).
+   메모장·포토샵의 관습이다. 깨끗할 때는 `display:none` 이라 자리도 차지하지 않는다.
+   `#stemname` **밖**에 형제로 두는 까닭은 dirtymark.js 주석에 있다(이름이 «…» 로 잘려도 안 잘린다).
+   `*` 글자는 제 칸의 **위쪽**에 그려지는 글자라(다른 글자와 달리 밑줄 근처가 비어 있다) 그냥
+   두면 파일 이름보다 4화소 높이 뜬다 — 각주 표시처럼 보인다. 화면 사진에서 잉크 자리를 실측해
+   (별 y 14~19 · 이름 y 16~25) 크기를 22px 로 키우고 `top:5px` 만큼 내렸다. `position:relative`
+   라서 옆 단추 자리는 한 화소도 안 밀린다. */
+#dirtystar { display: none; position: relative; top: 5px; font-weight: 700; font-size: 22px;
+  line-height: 1; color: #ffd400; cursor: default; }
+#dirtystar.on { display: inline-block; }
+/* ◀ ▶ 는 «흐린 글씨» 가 아니라 **손이 자주 가는 단추**다 → 탭 글씨(--chrome-mute)보다
+   밝은 --chrome-ink 를 준다(실측 대비 6.11:1 → 14.68:1). 자리는 그대로다. */
+#topbar #prev, #topbar #next { background: transparent; color: var(--chrome-ink); border-color: var(--chrome-line);
   padding: 2px 8px; font-size: 13px; }
-#topbar #prev:hover, #topbar #next:hover { background: #3a4a5c; color: #fff; }
-.who { font-size: 12px; color: #cfd8e3; white-space: nowrap; }
+#topbar #prev:hover, #topbar #next:hover { background: var(--chrome-hi); color: var(--chrome-ink); }
+.who { font-size: 12px; color: var(--chrome-mute); white-space: nowrap; }
 .who input { height: 25px; }
 #saveflash { font-size: 12.5px; font-weight: 700; color: #7ee2a8; max-width: 300px;
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+/* 🔴 2026-09-21 편의·안정성 S2 — 실패 알림은 «확인» 을 누를 때까지 남는다(api.js 의 flash).
+   상단 바는 `height:40px · overflow:hidden` 이고 이 칸은 `max-width:300px` 이라, 긴 실패 문장과
+   «확인» 단추가 잘려 나가 누를 수가 없다. 그래서 실패일 때만 상단 바 **아래 띠**로 내려온다.
+   성공 알림(.flashbad 가 없다)은 자리도 모양도 전과 똑같다. */
+#saveflash.flashbad { position: fixed; top: 46px; left: 50%; transform: translateX(-50%);
+  z-index: 55; display: flex; align-items: center; gap: 10px;
+  max-width: min(760px, calc(100vw - 32px));
+  white-space: normal; overflow: visible; text-overflow: clip;
+  padding: 8px 10px; background: #4a2328; border: 1px solid #a45560; border-radius: 6px;
+  box-shadow: var(--shadow-1); }   /* 0921 G6 — 0 4px 12px rgba(0,0,0,.35) 에서. 붉은 바탕은 그대로다 */
+#saveflash.flashbad .flashok { flex: 0 0 auto; background: #fff; color: #1b1f24;
+  border-color: #fff; font-weight: 700; padding: 3px 12px; }
+/* 🔴 2026-09-21 편의·안정성 S3 — 서버에 안 닿을 때 맨 위에 깔리는 붉은 띠(api.js 가 만든다).
+   잘 도는 동안에는 이 요소가 화면에 아예 없다.
+   왜 겹치지 않고 **밀어 내리나** — 겹쳐 띄우면 탭·과일 고르개를 덮어 «연결이 끊겼다» 를
+     알리려다 일을 막는다. `body` 가 세로 flex 라 맨 앞에 끼우면 나머지가 그만큼 내려간다
+     (캔버스는 `#canvaswrap` 의 ResizeObserver 가 알아서 다시 잡는다 — view.js).
+   왜 높이를 32px 로 못박나 — 아래 `.flashbad` 는 `position:fixed` 라 «배너만큼 내려간 자리» 를
+     CSS 로 계산할 수 없다. 높이를 고정해야 46 + 32 = 78px 이라고 적을 수 있다. */
+#netdown { display: none; }
+#netdown.on { display: block; flex: 0 0 auto; height: 32px; line-height: 20px; padding: 6px 12px;
+  background: #b3261e; color: #fff; font-weight: 700; font-size: 13px; text-align: center;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+body.netdown #saveflash.flashbad { top: 78px; }
 #topbar .topbtn { background: transparent; color: #ffd400; border-color: #6b5a1e; font-weight: 700;
   width: 27px; padding: 2px 0; text-align: center; }
-#topbar .topbtn:hover { background: #3a4a5c; }
+#topbar .topbtn:hover { background: var(--chrome-hi); }
 #topbar .toplink { color: #ffd400; font-weight: 700; text-decoration: none; font-size: 12.5px; white-space: nowrap; }
 
 .view { flex: 1 1 auto; min-height: 0; display: flex; flex-direction: column; }
 
 /* ═══════════════════ 목록 화면 ═══════════════════ */
+/* 🔴 2026-09-21 디자인 G3 — 목록 줄·카드·쪽수 줄의 «바탕과 1px 선»만 무채색 토큰으로 접는다.
+   흰 바탕(#fff)은 `--canvas` 와 **같은 값**이라 화면이 안 바뀐다 — 여기서 눈에 보이게 달라지는
+   것은 선 색(#dde3ea → --hairline)과 사진 자리(#e9edf1 → --canvas-sunken)뿐이다.
+   ⚠ 상태 딱지(.tag.*) · 카드 상태 테두리(.card.s-*) · 진행률 알약(.pill.*) 은 **뜻이 묶인 색**이라
+     한 글자도 안 건드린다. 손이 닿은 모양(:hover)도 G4 «단추» 몫이라 그대로 둔다. */
 .bar { display: flex; align-items: center; gap: 6px; flex-wrap: wrap;
-  padding: 6px 12px; background: #fff; border-bottom: 1px solid #dde3ea; flex: 0 0 auto; }
-.vsep { border-left: 1px solid #dde3ea; align-self: stretch; margin: 0 3px; }
+  padding: 6px 12px; background: var(--canvas); border-bottom: 1px solid var(--hairline); flex: 0 0 auto; }
+.vsep { border-left: 1px solid var(--hairline); align-self: stretch; margin: 0 3px; }
 .chk { display: inline-flex; align-items: center; gap: 3px; font-size: 12px; color: #4b555f; }
 .qf { background: #eef4fb; border-color: #a9c6e6; font-weight: 700; white-space: nowrap; }
 .qf.on { background: #2f6fe0; color: #fff; border-color: #2f6fe0; }
@@ -70,9 +243,9 @@ select, input { font-family: inherit; font-size: 13px; padding: 4px 6px;
 .grid { flex: 1 1 auto; overflow: auto; padding: 10px 12px;
   display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px;
   align-content: start; grid-auto-rows: max-content; }
-.card { background: #fff; border: 2px solid #dde3ea; border-radius: 8px; overflow: hidden; cursor: pointer; }
+.card { background: var(--canvas); border: 2px solid var(--hairline); border-radius: 8px; overflow: hidden; cursor: pointer; }
 .card:hover { border-color: #3a7bd5; }
-.card img { width: 100%; height: 108px; object-fit: cover; display: block; background: #e9edf1; }
+.card img { width: 100%; height: 108px; object-fit: cover; display: block; background: var(--canvas-sunken); }
 .card .cap { padding: 4px 6px; font-size: 11px; line-height: 1.35; word-break: break-all; }
 .card .tags { display: flex; gap: 3px; flex-wrap: wrap; margin-top: 2px; }
 .tag { font-size: 10px; padding: 0 5px; border-radius: 4px; background: #eef1f4; color: #425060; }
@@ -93,8 +266,26 @@ select, input { font-family: inherit; font-size: 13px; padding: 4px 6px;
 
 /* 하단 진행률 한 줄 */
 .pager { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; padding: 5px 12px;
-  background: #fff; border-top: 1px solid #dde3ea; flex: 0 0 auto; }
+  background: var(--canvas); border-top: 1px solid var(--hairline); flex: 0 0 auto; }
 .pager button { padding: 3px 10px; }
+/* 🔴 2026-09-21 디자인 G5 — **숫자가 바뀔 때 칸 너비가 흔들리지 않게.**
+   좌표·배율·개수·쪽수 칸은 글자 수가 그때그때 달라진다. «1 / 9 쪽» 이 «10 / 19 쪽» 이 되면
+   그 칸이 넓어지면서 **▶ 단추가 오른쪽으로 달아난다** — 누르려던 단추가 손가락 밑에서 움직인다.
+
+   ⚠ design_final.md 5번은 «`--mono` 와 tabular-nums 를 준다» 였는데, **재 보고 `--mono` 는
+     안 썼다**(G2·G4 와 같은 판단 — 표를 베끼지 않고 지금 화면에서 잰다).
+       · 지금 글꼴은 숫자 폭이 **이미 같다**(«1» 도 «8» 도 7.77px) → tabular-nums 로는 한 화소도
+         안 바뀐다. 흔들림의 원인은 글자 모양이 아니라 **자릿수**다.
+       · `--mono` 를 씌우면 한글 +15% · 숫자 +8.5% 로 오히려 **넓어지고**, 흔들림은 그대로다
+         (#pageinfo 26.67 → 28.87px). 한글이 다른 글꼴로 떨어지는 것도 덤으로 따라온다.
+     그래서 고치는 법은 하나뿐이다 — 가장 긴 글자 몫의 자리를 **미리 잡아 두는 것**(min-width).
+     그래도 tabular-nums 는 준다: 사람 PC 의 진짜 맑은 고딕에서 숫자 폭이 다르면 그때 듣는다.
+
+   자리는 `ch`(그 칸 글꼴의 숫자 한 자 폭)로 잡는다 — 글꼴·글자 크기가 바뀌어도 따라온다.
+   자른다(overflow)가 아니라 **최소**라서, 예상보다 긴 글자가 와도 글자가 안 잘린다.
+   못박은 곳 — `tests/browser/b23_numwidth.py`. */
+#pageinfo { min-width: 21ch; font-variant-numeric: tabular-nums; }   /* 0921 G5 — «10 / 10 쪽 (한 쪽에 120장)» = 20.23ch */
+#listinfo { font-variant-numeric: tabular-nums; }   /* 0921 G5 — 자리는 **일부러 안 잡았다**(가운데 빈칸이 먹어 ◀ 가 안 밀린다) */
 .counts { display: flex; gap: 5px; flex-wrap: wrap; align-items: center; }
 .pill { padding: 2px 9px; border-radius: 999px; font-size: 11.5px; border: 1px solid #d5dbe2; background: #fff; }
 .pill.unreviewed { background: #eef1f4; }
@@ -116,26 +307,46 @@ select, input { font-family: inherit; font-size: 13px; padding: 4px 6px;
    11~33px 삐져나가 **오른쪽 칸 이름이 잘려** 보였다(«테두리 빼기» → «테두리», «자동지움» → «자동지…»).
    실측 s7_clip: 창 네 벌 전부에서 잘림 — 전 0곳 → 후 12곳. 칸을 124/116 → 150px 로 넓힌다.
    (사진은 세로로 맞춰 그리므로 캔버스 비율 81~88% 는 그대로다 — s6_layout 으로 다시 쟀다.) */
-#toolrail { flex: 0 0 164px; min-width: 164px; background: #e4e9ef; border-right: 1px solid #ccd4dd;
+/* 🔴 2026-09-21 디자인 G3 — 도구상자의 «바탕과 1px 선»을 무채색 토큰으로 접는다.
+   전에는 바탕 #e4e9ef · 가장자리 #ccd4dd · 칸 나눔 #b7c1cc · 타일 테두리 #c3cbd4 — «거의 같은데
+   조금씩 다른» 파랑회색 넷이었다. 바탕이 밝아지므로(#e4e9ef → #f4f4f4) 흰 타일이 묻히지 않게
+   타일 테두리만 한 칸 진한 `--hairline-strong` 을 쓴다(흰 바탕 위 세기 1.64 → 1.69 로 전과 같다).
+   ⚠ 손이 닿은 모양(:hover) · 눌린 도구(.on · U6) · 잠긴 도구(:disabled) 는 **안 건드린다** —
+     그건 G4 «단추» 몫이고, 눌림은 U6 이 명암을 실측해 맞춰 놓은 것이다. */
+#toolrail { flex: 0 0 164px; min-width: 164px; background: var(--canvas-sunken); border-right: 1px solid var(--hairline);
   padding: 6px; display: flex; flex-direction: column; gap: 6px; overflow-y: auto; }
 #toolrail .tools { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; }
 #taskbar { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; }
 .railgrp { display: flex; flex-direction: column; gap: 5px;
-  border-top: 1px solid #b7c1cc; padding-top: 6px; }
+  border-top: 1px solid var(--hairline-strong); padding-top: 6px; }
 
 /* 56px 급 큰 아이콘 타일 — «아이콘 + 한 단어» */
 #toolrail button { display: flex; flex-direction: column; align-items: center; justify-content: center;
   gap: 1px; height: 54px; padding: 2px; font-size: 13px; line-height: 1.15; position: relative;   /* 0918 사이클2: 도구 라벨 11 → 13px */
-  border: 2px solid #c3cbd4; background: #fff; color: #3a4552; border-radius: 7px; }
+  border: 2px solid var(--hairline-strong); background: var(--canvas); color: #3a4552; border-radius: var(--r-sm); }   /* 0921 G4: 7 → 6px (단추 반지름 통일) */
 #toolrail button .ti { font-size: 19px; line-height: 1; }
 #toolrail button .tw { white-space: nowrap; }
 #toolrail button .tk { position: absolute; right: 3px; top: 2px; font-size: 11px; color: #93a0ad;   /* 0918 사이클2: 글쇠 힌트 9 → 11px */
   font-family: Consolas, monospace; }
-#toolrail button:hover { background: #f2f7fc; border-color: #7fa8d8; }
+#toolrail button:hover { background: var(--canvas-sunken); border-color: var(--ink-faint); }   /* 0921 G4 */
 /* 눌린 도구 — 그림판처럼 «눌려 들어간» 모양 + 파란 테두리 */
-#toolrail button.on { background: #dceafa; border-color: #2f6fe0; color: #16334f; font-weight: 700;
-  box-shadow: inset 0 2px 4px rgba(24, 62, 110, .22); }
-#toolrail button.on .tk { color: #4f7aa8; }
+/* 🔴 2026-09-21 편의 U6 — 그 «눌림» 을 **눈에 보이게**. 색은 그대로 두고 명암만 고친다.
+   구형 그림판의 눌린 단추는 네 가지가 같이 있어야 눈이 «파였다» 고 읽는다:
+     ① 둘레가 바탕보다 **어둡다**. 지금 테두리(#2f6fe0)는 바탕(#1764ad — 아래 «0921 쉬움 보완»
+        에서 온다)보다 **밝아서** 파인 것이 아니라 빛나 보였다.
+     ② 위 안쪽에 그림자. 빛은 위에서 오므로 파인 칸은 위 안쪽이 그늘진다. rgba(24,62,110,.22)
+        는 그 짙은 바탕 위에서 **보이지 않았다** — 실측 «① 칠한 영역» 칸에서 위 안쪽 (32,51,70)
+        이 가운데 (34,48,63) 보다 오히려 **밝았다**(채널 차 2~7).
+     ③ 아래 안쪽에 아주 옅은 밝은 줄. 파인 자리의 앞턱에 빛이 닿는 자리다.
+     ④ 글자·아이콘이 1화소 내려앉는다. 위 여백을 2→3, 아래를 2→1 로 **맞바꿀 뿐**이라
+        칸 높이도 글자 칸 높이도 한 화소도 안 변한다(box-sizing:border-box · 위아래 합 4 그대로).
+   여기 `background`·`color` 는 아래 «0921 쉬움 보완» 에 덮여 화면에 닿지 않는다(옛 밝은 파랑
+   시절의 자국이다). 내 것이 아니라 그대로 둔다 — 지우면 이 줄의 뜻이 바뀐다. */
+#toolrail button.on { background: #dceafa; border-color: #0d4278; color: #16334f; font-weight: 700;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, .42), inset 0 -1px 0 rgba(255, 255, 255, .20);
+  padding-top: 3px; padding-bottom: 1px; }
+/* 글쇠 힌트는 절대 배치라 여백이 안 밀어 준다 — 얼굴 전체가 같이 내려앉게 1화소만 따로 민다 */
+#toolrail button.on .tk { color: #4f7aa8; margin-top: 1px; }
 #toolrail button:disabled { background: #eceff3; color: #9aa4ae; border-color: #d3d9e0; }
 /* 작업(모드) 칸은 조금 낮게 — 도구와 구별되게 */
 #taskbar button.task { height: 46px; }
@@ -146,7 +357,10 @@ select, input { font-family: inherit; font-size: 13px; padding: 4px 6px;
 #toolrail #viewsw button { flex-direction: row; justify-content: flex-start; height: 25px;
   gap: 5px; padding: 0 6px; font-size: 13px; border-width: 1px; }   /* 0918 사이클2: 보기 전환 11 → 13px */
 #toolrail #viewsw button .ti { font-size: 13px; }
-#toolrail #viewsw button.on { box-shadow: inset 0 1px 3px rgba(24, 62, 110, .25); }
+/* 0921 U6 — 25px 짜리 낮은 줄이라 그림자는 한 겹 얕게. 내려앉는 양은 타일과 똑같이 1화소다
+   (여기 padding 은 `0 6px` 라 위 규칙의 3/1 이 안 닿는다 — 좌우는 그대로 두고 위아래만 민다). */
+#toolrail #viewsw button.on { box-shadow: inset 0 2px 3px rgba(0, 0, 0, .38),
+  inset 0 -1px 0 rgba(255, 255, 255, .18); padding-top: 2px; padding-bottom: 0; }
 #toolrail #viewsw button .tk { top: 5px; }
 
 #toolrail .railsel { width: 100%; font-size: 11.5px; padding: 3px 4px; }
@@ -169,8 +383,13 @@ select, input { font-family: inherit; font-size: 13px; padding: 4px 6px;
 #cv { display: block; width: 100%; height: 100%; cursor: crosshair; touch-action: none; }
 #loading { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
   color: #fff; background: rgba(0,0,0,.45); font-size: 16px; }
+/* 0921 G5 — 마우스를 움직일 때마다 «(9, 8)» ↔ «(1664, 1248)» 로 칸이 늘었다 줄었다 했다.
+   가장 긴 «(1664, 1248)  배율 3000%  붓 200» 이 28.26ch → 29ch 을 잡아 둔다.
+   자리를 잡으면 **글자가 없을 때 빈 칸이 크게 보이므로** :empty 를 같이 둔다(#zoompct 와 같은 처방). */
 #hud { position: absolute; left: 8px; bottom: 8px; color: #dfe6ee; background: rgba(0,0,0,.45);
-  padding: 3px 8px; border-radius: 6px; font-size: 12px; pointer-events: none; }
+  padding: 3px 8px; border-radius: 6px; font-size: 12px; pointer-events: none;
+  min-width: 29ch; font-variant-numeric: tabular-nums; }
+#hud:empty { display: none; }
 /* 지금 ②상자·③번호 작업 중이라는 표시(붓질이 왜 안 되는지). 글자만 얹는다 — 조작을 막지 않는다. */
 #taskbadge { position: absolute; left: 8px; top: 8px; max-width: calc(100% - 130px);
   padding: 4px 9px; border-radius: 7px; background: rgba(34,48,63,.85); color: #ffd400;
@@ -209,7 +428,8 @@ select, input { font-family: inherit; font-size: 13px; padding: 4px 6px;
 #todorow #todo { flex: 1 1 auto; min-width: 0; }
 .cnts { flex: 0 0 auto; height: 23px; line-height: 23px; padding: 0 7px; border-radius: 4px;
   background: #eef1f4; color: #41566b; font-size: 13px; white-space: nowrap;
-  font-variant-numeric: tabular-nums; cursor: default; }
+  font-variant-numeric: tabular-nums; cursor: default;
+  min-width: 15ch; }   /* 0921 G5 — «개수 100·100·99» = 14.77ch. 세 자리까지 자리를 잡아 둔다 */
 .cnts.hum { background: #d8f3e1; color: #1d6b3c; }          /* 사람이 확정한 개수가 있다 */
 .cnts.ne { background: #fff1d6; color: #7a5200; font-weight: 700; }  /* 상자 ≠ 번호 */
 
@@ -217,7 +437,7 @@ select, input { font-family: inherit; font-size: 13px; padding: 4px 6px;
 #taskbtns { display: contents; }
 #vbrow button.big, #vbrow #taskbtns button.big {
   flex: 1 1 0; min-width: 74px; max-width: 168px; margin: 0; padding: 6px 4px;
-  min-height: 40px; font-size: 14px; font-weight: 700; border-radius: 7px;
+  min-height: 40px; font-size: 14px; font-weight: 700; border-radius: var(--r-sm);   /* 0921 G4: 7 → 6px */
   display: flex; align-items: center; justify-content: center; gap: 5px; }
 #vbrow .vk { font-family: Consolas, monospace; font-size: 11px; font-weight: 400; opacity: .72;
   border: 1px solid currentColor; border-radius: 4px; padding: 0 4px; }
@@ -227,18 +447,27 @@ button.ok { background: #d8f2df; border-color: #63bd79; color: #14532a; }
 button.ai { background: #d9e9fd; border-color: #4a90e2; color: #10345e; }
 button.save { background: #22303f; color: #fff; border-color: #22303f; }
 button.save:hover { background: #33475d; border-color: #33475d; color: #fff; }
+/* 🔴 2026-09-21 편의 U1 — 아직 저장 안 한 것이 있는 «저장» 단추(js/dirtymark.js 가 붙인다).
+   배경색을 안 바꾸는 까닭 — 옆의 «문제»(연주황)와 색이 겹쳐 «저장» 이 다른 단추로 보인다.
+   `box-shadow` 라서 칸 크기가 한 화소도 안 변한다(단추 자리가 안 밀린다).
+   노란색은 위 «*» 와 같은 색이다 — 두 표시가 같은 뜻임을 색으로 묶는다. */
+button.save.unsaved { box-shadow: 0 0 0 2px #ffd400; }
 button.flag { background: #fde5c2; border-color: #e8a33d; color: #6b420a; }
 button.exc { background: #f7d6d6; border-color: #cf6b6b; color: #7d1f1f; }
 button.big { text-align: center; }
 
 /* ── 오른쪽 패널 — 기본 접힘 ── */
-#side { flex: 0 0 240px; display: flex; background: #fff; border-left: 1px solid #ccd4dd; min-height: 0; }
+/* 🔴 2026-09-21 디자인 G3 — 오른쪽 패널의 «바탕과 1px 선». 가장자리는 도구상자 가장자리와
+   **같은 `--hairline`** 이다(캔버스를 사이에 두고 마주 보는 두 변이라 한 값이어야 한다).
+   ⚠ 레이어 칩(.sw.*) · 번호 오류(.numerr) · 묶음 안내(#dupbox) · «나»(.dupt.me) 는 뜻이 묶인
+     색이라 안 건드린다. */
+#side { flex: 0 0 240px; display: flex; background: var(--canvas); border-left: 1px solid var(--hairline); min-height: 0; }
 #side.fold { flex: 0 0 30px; }
 #sidetgl { flex: 0 0 22px; width: 22px; margin: 4px 0 4px 4px; padding: 0; height: 46px;
   align-self: flex-start; font-size: 12px; }
 #sidebody { flex: 1 1 auto; min-width: 0; overflow-y: auto; padding: 6px 8px 8px 4px; }
 #side.fold #sidebody { display: none; }
-.sbox { border: 1px solid #e3e8ee; border-radius: 8px; padding: 5px 8px; margin-bottom: 7px; }
+.sbox { border: 1px solid var(--hairline-cool); border-radius: 8px; padding: 5px 8px; margin-bottom: 7px; }
 .sbox > summary { cursor: pointer; font-weight: 700; font-size: 13px; list-style: revert; }
 .sbox > b { display: block; margin: 5px 0 4px; }
 .stemname { word-break: break-all; }
@@ -270,11 +499,11 @@ button.big { text-align: center; }
 .dupstrip { display: flex; flex-wrap: wrap; gap: 4px; margin: 4px 0 6px;
   max-height: 120px; overflow-y: auto; }
 .dupstrip .dupt { display: block; width: 58px; cursor: pointer; text-decoration: none;
-  border: 2px solid #dde3ea; border-radius: 6px; overflow: hidden; background: #fff; }
+  border: 2px solid var(--hairline); border-radius: 6px; overflow: hidden; background: var(--canvas); }
 .dupstrip .dupt:hover { border-color: #3a7bd5; }
 .dupstrip .dupt.me { border-color: #22303f; }
 .dupstrip .dupt.gone { opacity: .5; }
-.dupstrip .dupt img { width: 100%; height: 42px; object-fit: cover; display: block; background: #e9edf1; }
+.dupstrip .dupt img { width: 100%; height: 42px; object-fit: cover; display: block; background: var(--canvas-sunken); }
 .dupstrip .dupt .dc { display: block; font-size: 10px; line-height: 1.3; padding: 1px 3px;
   color: #425060; text-align: center; word-break: keep-all; }
 #dupbox { border: 1px solid #e8dfae; background: #fffdf2; border-radius: 7px; padding: 5px 7px; margin: 5px 0; }
@@ -293,7 +522,7 @@ table.d td.l, table.d th.l { text-align: left; }
   display: flex; align-items: center; justify-content: center; padding: 16px; }
 #tour.hidden { display: none !important; }
 .tourcard { background: #fff; border-radius: 12px; width: 560px; max-width: 100%;
-  max-height: 88vh; overflow: auto; box-shadow: 0 18px 50px rgba(0,0,0,.35); }
+  max-height: 88vh; overflow: auto; box-shadow: var(--shadow-3); }   /* 0921 G6 — 0 18px 50px rgba(0,0,0,.35) 에서 */
 .tourhd { display: flex; align-items: center; gap: 8px; padding: 12px 16px; background: #22303f; color: #fff; }
 .tourhd b { font-size: 16px; }
 .tourhd button { background: transparent; border-color: #55687d; color: #cfd8e3; }
@@ -306,6 +535,23 @@ table.d td.l, table.d th.l { text-align: left; }
 .tourft { display: flex; align-items: center; gap: 8px; padding: 10px 16px;
   border-top: 1px solid #e3e8ee; flex-wrap: wrap; }
 .tourft button.save { background: #22303f; color: #fff; border-color: #22303f; }
+
+/* ═══ 단축키 한 장 겹창 (F1) — 0921 편의 U7 ═══
+   안내 창과 **같은 카드**(.tourcard·.tourhd)를 입는다 → 여기서 새로 정하는 것은 겹치는 바탕과
+   표 모양뿐이다. z-index 도 안내 창과 같은 50 으로 둔다 — 서버가 끊겼을 때의 붉은 띠(#netdown)와
+   저장 실패 띠(.flashbad, z-index 55)는 이 창보다 위에 남아야 한다(그게 더 급한 소식이다). */
+#keyhelp { position: fixed; inset: 0; background: rgba(16,22,30,.55); z-index: 50;
+  display: flex; align-items: center; justify-content: center; padding: 16px; }
+#keyhelp.hidden { display: none !important; }
+#keyhelp .tourhd .small { color: #cfd8e3; }
+.keyhelp-body { padding: 8px 18px 14px; max-height: 72vh; overflow: auto; }
+.keyhelp-body table { width: 100%; text-align: left; font-size: 14px; border-collapse: collapse; }
+.keyhelp-body th { padding: 4px 6px; border-bottom: 1px solid #ccd5df; }
+.keyhelp-body td { padding: 3px 6px; border-bottom: 1px solid #eef1f5; }
+.keyhelp-body td:first-child { width: 96px; white-space: nowrap; }
+.keyhelp-body kbd { display: inline-block; min-width: 20px; text-align: center; padding: 0 6px;
+  border: 1px solid #aeb8c3; border-bottom-width: 2px; border-radius: 5px; background: #f7f9fb;
+  font-family: Consolas, monospace; font-size: 12.5px; }
 
 /* ═══════════════════ 좁은 창(1100~1280) — 그래도 한 겹을 지킨다 ═══════════════════ */
 @media (max-width: 1360px) {
@@ -372,7 +618,19 @@ body.easy .qf { font-size: 13px; }
 #topbar .topbtn.easytgl { width: auto; padding: 2px 8px; font-size: 12.5px; white-space: nowrap; }
 
 /* 사진 위 확대 단추 3칸 — 오른쪽 아래(왼쪽 아래는 #hud 가 쓴다) */
-#zoombar { position: absolute; right: 8px; bottom: 8px; display: flex; gap: 4px; }
+#zoombar { position: absolute; right: 8px; bottom: 8px; display: flex; gap: 4px; align-items: center; }
+/* 0921 U2 — 지금 배율 %. 단추와 같은 옷을 입되 눌리지는 않는다(글자만이다).
+   휴대폰에서는 단추만 44px 로 커진다(mobile.css) — 이 칸은 30px 그대로 가운데에 선다.
+   0921 G5 — 여기 «숫자 폭이 고정이라 9% ↔ 100% 로 바뀌어도 옆 단추가 안 밀린다» 고 적혀
+   있었는데 **까닭이 틀렸다.** 단추가 안 밀리는 것은 확대바가 오른쪽에 붙어 있어서고
+   (#zoombar right:8px), tabular-nums 는 자릿수가 바뀌면 아무것도 못 한다 — 실제로 이 칸은
+   «3%» 38.18px ↔ «3000%» 61.18px 로 23px 이나 흔들려 **바의 왼쪽 끝이 밀렸다**.
+   가장 긴 «3000%» 가 7.98ch → 8.5ch 을 잡아 둔다. */
+#zoombar #zoompct { height: 30px; display: flex; align-items: center; padding: 0 8px;
+  color: #ffffff; background: rgba(34,48,63,.80); border: 1px solid #56667a; border-radius: 6px;
+  font-size: 13px; font-weight: 700; font-variant-numeric: tabular-nums; pointer-events: none;
+  min-width: 8.5ch; }   /* 0921 G5 */
+#zoombar #zoompct:empty { display: none; }   /* 사진을 열기 전에는 자리도 차지하지 않는다 */
 #zoombar button { min-width: 34px; height: 30px; padding: 0 6px; font-size: 15px; font-weight: 700;
   color: #eef2f7; background: rgba(34,48,63,.80); border: 1px solid #56667a; border-radius: 6px; cursor: pointer; }
 #zoombar button:hover { border-color: #ffd400; }

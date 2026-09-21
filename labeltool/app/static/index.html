@@ -142,7 +142,7 @@
           <button class="tool feat-prop adv" data-tool="smartsub" title="스마트 삭제 — 한 번 누르면 그 자리의 덩어리를 통째로 지웁니다 (G)">
             <span class="ti">💫</span><span class="tw">자동지움</span><span class="tk">G</span></button>
         </div>
-        <label class="railrange" title="붓과 지우개의 굵기. [ ] 키로도 바뀝니다.">
+        <label class="railrange" title="붓과 지우개의 굵기 — 도구마다 따로 기억합니다. [ ] 키로도 바뀝니다.">
           <input type="range" id="brush" min="2" max="200" value="30"><b id="brushv">30</b></label>
         <div class="tools">
           <button id="undo" class="rbtn" title="한 단계 되돌리기 (Ctrl+Z · 20단계)">
@@ -237,6 +237,8 @@
         <div id="loading" class="hidden">불러오는 중…</div>
         <!-- 0920 «그림판처럼»: 휠·0 키를 모르는 사람을 위한 확대 단추 3칸(js/easy.js 가 붙인다) -->
         <div id="zoombar">
+          <!-- 0921 U2: 지금 배율 %. #hud 는 쉬움 모드에서 숨고 마우스를 움직여야 갱신되므로 여기에도 둔다(view.js 가 채운다) -->
+          <span id="zoompct" title="지금 보고 있는 배율입니다 (휠 = 확대·축소 · 0 키나 «맞춤» = 화면에 맞춤)"></span>
           <button id="zoomout" title="축소 (휠을 내려도 됩니다)">－</button>
           <button id="zoomin" title="확대 (휠을 올려도 됩니다)">＋ 확대</button>
           <button id="zoomfit" title="화면에 맞춤 (0 키)">맞춤</button>
@@ -374,6 +376,19 @@
   </div>
 </div>
 
+<!-- ────────── 단축키 한 장 (F1 로 열고 Esc 로 닫는다 · 0921 편의 U7) ──────────
+     표 안은 비워 둔다 — `data-key-table` 를 보고 keys.js 가 **KEYS 한 곳**에서 채운다.
+     그래서 이 겹창과 안내 창 아래 «⌨ 단축키 한 장», 도움말(help.html)이 어긋날 길이 없다.
+     안내 창(#tour)과 **같은 카드 옷**(.tourcard·.tourhd)을 입어 새로 만든 모양이 없다. -->
+<div id="keyhelp" class="hidden">
+  <div class="tourcard">
+    <div class="tourhd"><b>⌨ 단축키 한 장</b><span class="spacer"></span>
+      <span class="small">F1 로 열고 Esc 로 닫습니다</span>
+      <button id="keyhelp-x" title="닫기 (Esc)">✕</button></div>
+    <div class="keyhelp-body" data-key-table></div>
+  </div>
+</div>
+
 <!-- 화면(JS) — 2026-09-20 구조 사이클3 «화면 분리». 옛 app.js(2,664줄)·ui.js(1,337줄) 한 덩어리를
      역할별 12파일로 나눴다(동작은 바뀌지 않았다). **순서가 곧 의존 방향**이다: 아래 파일은 위 파일이
      만든 것만 쓴다(전역은 S·API·UI 셋뿐). 되돌아 부르는 자리는 코드에 `UI.이름()` 으로 적혀 있다.
@@ -394,5 +409,7 @@
 <script src="/static/js/main.js"></script>       <!-- ⑫ 연결과 시작(loadFruits) -->
 <script src="/static/js/easy.js"></script>       <!-- ⑬ 쉬움 모드 스위치 · 확대 단추 -->
 <script src="/static/js/mobile.js"></script>
+<script src="/static/js/backup.js"></script>     <!-- ⑭ 저장 전 작업 1분마다 임시 백업 · 다시 열면 복구 (0921 S5) -->
+<script src="/static/js/dirtymark.js"></script>  <!-- ⑮ 저장 안 한 작업을 파일 이름 옆 «*» 로 (0921 U1) -->
 </body>
 </html>

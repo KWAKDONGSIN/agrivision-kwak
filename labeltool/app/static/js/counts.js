@@ -11,7 +11,7 @@
 
 (function () {
 /* ── 먼저 온 파일에서 가져오는 것 (위에서 아래로) ── */
-const $ = UI.$, $$ = UI.$$, flash = UI.flash, who = UI.who, errMsg = UI.errMsg, escapeHtml = UI.escapeHtml, statusKo = UI.statusKo, TASKWORD = UI.TASKWORD, TASKKIND = UI.TASKKIND, TASKFIELD = UI.TASKFIELD, curTask = UI.curTask, setSideFold = UI.setSideFold, NUM_WHY = UI.NUM_WHY, confirmLeave = UI.confirmLeave, edToPngDataUrl = UI.edToPngDataUrl, saveBoxes = UI.saveBoxes, hasPendingRegion = UI.hasPendingRegion;
+const $ = UI.$, $$ = UI.$$, flash = UI.flash, flashBrief = UI.flashBrief, who = UI.who, errMsg = UI.errMsg, escapeHtml = UI.escapeHtml, statusKo = UI.statusKo, TASKWORD = UI.TASKWORD, TASKKIND = UI.TASKKIND, TASKFIELD = UI.TASKFIELD, curTask = UI.curTask, setSideFold = UI.setSideFold, NUM_WHY = UI.NUM_WHY, confirmLeave = UI.confirmLeave, edToPngDataUrl = UI.edToPngDataUrl, saveBoxes = UI.saveBoxes, hasPendingRegion = UI.hasPendingRegion;
 const api = API.get, post = API.post;
 /* ↓ 아래에 오는 파일(뒤에 실리는 것)을 되돌아 부른다 — 부를 때 찾는다.
    (`typeof cntSet === "function"` 같은 옛 가드가 그대로 살아 있어야 해서 이름을 둔다:
@@ -118,8 +118,7 @@ function clearTaskConfirmed(kind) {
   if (it) it[ik] = null;
   refreshCard(S.stem);                       // 0918 사이클5 ② — 카드가 «미확정» 으로 돌아온다
   if (typeof cntReload === "function") cntReload();   // 2차 검수 D-1 — 확정이 없어졌으니 개수 칸도
-  flash("확정이 풀렸습니다 — 다시 확정하세요");
-  clearTimeout(flash._t); flash._t = setTimeout(() => { $("#saveflash").textContent = ""; }, 1000);
+  flashBrief("확정이 풀렸습니다 — 다시 확정하세요");     // 0921 S2: 1초 힌트는 api.js 로 모았다
 }
 
 async function doAction(action) {
@@ -196,11 +195,16 @@ async function doAction(action) {
   // 방금 «버리고 넘어가겠다» 고 답했으면 다음 장으로 갈 때 또 묻지 않는다(두 번 묻지 않기)
   if (action !== "fixed") nextItem(discards && wasDirty);
 }
-$("#btn-ok").onclick = () => doAction("ok");
-$("#btn-ai").onclick = () => doAction("ai");
-$("#btn-save").onclick = () => doAction("fixed");
-$("#btn-flag").onclick = () => doAction("flag");
-$("#btn-exc").onclick = () => doAction("exclude");
+/* 🔴 0921 S6 — 아래 다섯 단추는 전부 이 한 길(doAction)로 서버에 쓴다. 그 길이 도는 동안에는
+   **다섯을 다 잠근다** — 한 단추만 잠그면 «저장» 이 도는 사이에 «제외» 를 눌러 두 판정이 엇갈린다.
+   내보내는 것도 감싼 쪽(`act`)이다 — keys.js 의 1~4·Ctrl+S 가 UI.doAction 을 쓰므로, 여기서
+   감싸지 않으면 키를 누른 채 있을 때 키 반복이 그대로 서버로 간다. */
+const act = UI.lockWhile(["#btn-ok", "#btn-ai", "#btn-save", "#btn-flag", "#btn-exc"], doAction);
+$("#btn-ok").onclick = () => act("ok");
+$("#btn-ai").onclick = () => act("ai");
+$("#btn-save").onclick = () => act("fixed");
+$("#btn-flag").onclick = () => act("flag");
+$("#btn-exc").onclick = () => act("exclude");
 $("#btn-revert").onclick = async () => {
   if (!S.stem) return;
   if (!confirm("저장한 수정본을 지우고 원본으로 돌아갈까요?")) return;
@@ -655,6 +659,12 @@ async function enterConfirmTask(t, m) {
   nextItem(true);
 }
 
+/* 🔴 0921 S6 — Enter(그리고 쉬움 모드의 «맞아요» 단추 #btn-confirm)도 같은 길이다.
+   Enter 를 누른 채 있으면 키 반복으로 확정이 여러 번 가고, 그 끝의 `nextItem()` 이 그만큼 돌아
+   **보지도 않은 사진을 건너뛴다**(0918 s8_guard_advance 가 옛 서버에서 잡았던 사고와 같은 모양).
+   아래 onEnterKey 와 easy.js 의 «맞아요» 는 둘 다 이 감싼 쪽(`confirmNow`)을 쓴다. */
+const confirmNow = UI.lockWhile(["#btn-confirm"], enterConfirm);
+
 function onEnterKey(e) {                    // 등록은 keys.js
   if (e.key !== "Enter") return;
   if ($("#view-edit").classList.contains("hidden")) return;
@@ -673,10 +683,12 @@ function onEnterKey(e) {                    // 등록은 keys.js
   if (S.numMode && typeof hasPendingRegion === "function" && hasPendingRegion()) return;
   if (S.boxMode && S.drag) return;
   e.preventDefault();
-  enterConfirm();
+  confirmNow();                             // 0921 S6 — 잠금을 거친 쪽
 }
 
 
 /* ── 이 파일이 내놓는 것 (다음 파일들이 쓴다) ── */
-Object.assign(UI, { confirmVerdict, markTaskConfirmed, clearTaskConfirmed, cntSet, cntReload, doAction, renderTodo, renderCntChip, showDupBox, enterConfirm, FLAG_KO, onEnterKey });
+/* 0921 S6 — `doAction`·`enterConfirm` 은 **감싼 쪽**을 같은 이름으로 내놓는다(keys.js·easy.js 가
+   이름으로 찾는다). 안쪽 원본은 이 파일 밖에서 부를 일이 없다. */
+Object.assign(UI, { confirmVerdict, markTaskConfirmed, clearTaskConfirmed, cntSet, cntReload, doAction: act, renderTodo, renderCntChip, showDupBox, enterConfirm: confirmNow, FLAG_KO, onEnterKey });
 })();

@@ -21,6 +21,9 @@ function stmt(head, end) {                     // 최상위 대입문 한 개
 }
 const CODE = [
   fn("function setTool(t) {"),
+  // 0921 U8: setTool 이 «지금 굵기 칸» 을 묻는다. 한 줄짜리라 fn() 이 못 자른다 → stmt 로 그 줄만.
+  //   (여기서 다시 짜 넣으면 사본이 된다. 적는 쪽 saveBrush·loadBrush 는 이 시험 밖이라 빈 손잡이로 준다.)
+  stmt("function sizeTool() {", "\n"),
   fn("function setNumMode(on, silent) {"),
   fn("function numKey(e) {"),
   stmt('$("#box-mode").onchange = () => {', "\n};\n"),
@@ -58,12 +61,14 @@ const win = { addEventListener: (ev, f) => { H[ev] = f; } };
 
 new Function("window", "$", "$$", "S", "flash", "log", "setNTool", "doErase", "doMerge", "doSplit", "doAdd",
   "hasPendingRegion", "clearPending", "numInfo", "prevItem", "nextItem", "paintGtLayer", "setBTool",
-  "delSelBox", "fitView", "doAction", "applyPolygon", "numUndo", "numRedo", "boxUndo", "saveInstances", "saveBoxes",
+  "delSelBox", "fitView", "doAction", "applyPolygon", "numUndo", "numRedo", "boxUndo", "boxRedo", "saveInstances", "saveBoxes",
+  "saveBrush", "loadBrush",
   CODE + "\n;global.__X = { setNumMode, setTool, numKey };")(
   win, $, $$, S, flash, log, stub("setNTool"), stub("doErase"), stub("doMerge"), stub("doSplit"), stub("doAdd"),
   () => false, stub("clearPending"), () => {}, stub("prevItem"), stub("nextItem"), stub("paintGtLayer"), stub("setBTool"),
   stub("delSelBox"), stub("fitView"), stub("doAction"), stub("applyPolygon"), stub("numUndo"), stub("numRedo"),
-  stub("boxUndo"), stub("saveInstances"), stub("saveBoxes"));
+  stub("boxUndo"), stub("boxRedo"), stub("saveInstances"), stub("saveBoxes"),
+  () => {}, () => {});                             // 0921 U8: 굵기 적기·읽기는 brushsim 이 본다
 const X = global.__X;
 
 let fails = 0, tests = 0;
@@ -149,9 +154,11 @@ L = key("s", { ctrlKey: true });
 ok(L.some((l) => /saveBoxes/.test(l)), "상자 모드: Ctrl+S = 상자 저장", L.join(" | "));
 L = key("z", { ctrlKey: true });
 ok(L.some((l) => /boxUndo/.test(l)), "상자 모드: Ctrl+Z = 상자 되돌리기", L.join(" | "));
+/* 2026-09-21 U3: 여기가 «안내만 뜬다» 였다. 상자에도 다시하기가 생겨 `boxRedo` 로 간다.
+   «마스크» 다시하기(#redo)를 0회 누르는 것은 사이클3 수정 그대로 지킨다. */
 L = key("y", { ctrlKey: true });
-ok(!L.some((l) => /click:redo/.test(l)) && L.some((l) => /flash!?:상자에는 다시 실행이 없습니다/.test(l)),
-  "상자 모드: Ctrl+Y → 안내만 뜨고 «마스크» 다시하기(#redo)를 0회 누른다 (사이클3 수정)", L.join(" | "));
+ok(!L.some((l) => /click:redo/.test(l)) && L.some((l) => /boxRedo/.test(l)),
+  "상자 모드: Ctrl+Y = 상자 다시하기 («마스크» 다시하기 #redo 는 0회)", L.join(" | "));
 X.setNumMode(true, true);
 L = key("s", { ctrlKey: true });
 ok(L.some((l) => /saveInstances/.test(l)), "번호 모드: Ctrl+S = 번호 저장", L.join(" | "));

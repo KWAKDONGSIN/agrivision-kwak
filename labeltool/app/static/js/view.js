@@ -81,10 +81,30 @@ function zoomToNote(i) {
 }
 window.zoomToNote = zoomToNote;      // ui.js 의 «후보 자리로 확대» 단추가 부른다
 
+/* 0921 U2 — 확대바의 배율 % (그림판 상태줄).
+   «지금 몇 배로 보고 있나» 는 지금까지 `#hud` 에만 있었는데, 그 칸은 **쉬움 모드에서 숨고**
+   (style.css `body.easy #hud`) 마우스를 움직여야 갱신된다(main.js mousemove). 그래서 확대 단추를
+   눌러 놓고도 «내가 얼마나 당겼는지» 를 모른다. 확대 단추 바로 옆에 늘 보이는 숫자를 둔다.
+   글자는 `#hud` 와 **같은 식**으로 만든다 — 두 자리가 다른 수를 말하면 안 된다.
+   갱신 자리를 확대하는 곳마다(휠·＋－·맞춤·후보 확대·핀치) 붙이지 않고 draw() 한 곳에 둔다.
+   배율이 바뀌면 반드시 `S.dirty = true` 가 되어 이 함수가 그 프레임에 돈다(놓치는 길이 없다).
+   값이 그대로면 화면을 한 칸도 안 건드린다(이동·붓질로 draw 가 도는 동안 DOM 을 쓰지 않는다). */
+let pctLast = null;
+function showZoomPct() {
+  const el = $("#zoompct");
+  if (!el) return;                                   // 이 칸이 없는 쪽(사용법 등)에서는 아무 일도 안 한다
+  const t = S.img ? (S.view.s * 100).toFixed(0) + "%" : "";
+  if (t === pctLast) return;
+  pctLast = t;
+  el.textContent = t;
+}
+
 function draw() {
   requestAnimationFrame(draw);
   if (!S.dirty) return;
   S.dirty = false;
+  showZoomPct();
+  applyCursor();                // 0921 U5 — 도구·자리에 맞는 커서(값이 그대로면 아무 일도 안 한다)
   const dpr = cv._dpr || 1;
   ctx.setTransform(1, 0, 0, 1, 0, 0);
   ctx.fillStyle = "#2b3138";
@@ -249,12 +269,51 @@ function renderListTask(t) {
     + " 바꾸려면 «편집» 화면 왼쪽 맨 위 세 칸에서 고르세요.";
 }
 
+/* ══ 0921 U5 — 커서가 «지금 무슨 도구인지» 를 말한다 (그림판·포토샵 관습) ══
+   지금까지 커서는 세 가지뿐이었다 — ✋이동만 `grab`, 지우개만 `cell`, **나머지 전부** `crosshair`.
+   그래서 붓·다각형·자동채움·상자를 오가도 손끝은 하나도 안 바뀌었고, 특히 상자 «고르기» 는
+   풍선말이 «끌어서 옮기거나 모서리로 크기를 바꿉니다» 라고 말만 할 뿐 **모서리가 어디까지인지**
+   화면에 아무 표시가 없었다(손잡이 판정 반경은 배율에 따라 변한다 — boxes.js bHandleR).
+
+   커서는 «무슨 손짓인가» 를 말하게 한다 — 도구 이름을 그리는 것이 아니다:
+     붓          `crosshair`  정확한 한 점에서 끌어 그린다(원 미리보기가 크기를 같이 말한다)
+     지우개      `cell`       네모 지우개 (지금 그대로)
+     다각형 둘   `copy`       누르면 점이 하나 «더해진다». 채움/빼기는 **미리보기 선 색**이 이미
+                              말한다(노랑=채움 · 빨강=빼기, draw()). 커서에 또 적지 않는다.
+     자동채움 둘 `pointer`    끌지 않고 «한 번 누르는» 도구다. 쉬움 모드 기본 도구라서 이 하나로
+                              «여기를 누르세요» 가 전해진다.
+     이동·Space  `grab`  →  실제로 끄는 동안은 `grabbing` (윈도우·포토샵 손도구)
+     상자        boxes.js boxCursor() — 그리기는 십자, 고르기는 상자 위 `move`·모서리 `↘↖`
+   ⚠ 커서를 쓰는 자리는 **이 함수 하나뿐**이다. 전에는 두 곳(mask.js setTool · syncTaskUI)이
+   각자 써서 규칙이 둘로 갈라져 있었다. 도구를 바꾸는 길은 단추·단축키·모드 전환으로 여럿이고
+   그 모두가 `S.dirty = true` 로 끝나므로, U2 의 배율 %처럼 **그림 고리 한 곳**에서 갱신한다.
+   같은 값이면 DOM 을 한 글자도 안 건드린다(붓질·이동으로 draw 가 도는 동안 style 을 안 쓴다). */
+const MASKCUR = { brush: "crosshair", erase: "cell", polyadd: "copy", polysub: "copy",
+                  smartadd: "pointer", smartsub: "pointer", pan: "grab" };
+let curShown = null;
+function cursorFor() {
+  if (S.panning) return "grabbing";                   // 끄는 중이면 어느 작업에서나 쥔 손
+  const t = curTask();
+  if (S.spaceDown || (t === "mask" && S.panTool)) return "grab";
+  if (t === "box") return UI.boxCursor();             // ↓ boxes.js (되돌아 부르는 자리)
+  if (t === "num") return "crosshair";                // 번호 편집은 지금 그대로 둔다
+  return MASKCUR[S.tool] || "crosshair";
+}
+function applyCursor() {
+  const c = cursorFor();
+  if (c === curShown) return;
+  curShown = c;
+  cv.style.cursor = c;
+}
+
 function syncTaskUI() {
   const t = curTask();
   const pan = document.querySelector('.tool[data-tool="pan"]');
-  if (pan) { pan.disabled = t !== "mask"; pan.title = t === "mask" ? "사진을 끌어서 이동합니다" : "이 작업에서는 Space를 누른 채 사진을 끌어서 이동합니다"; }
-  $("#cv").style.cursor = t === "mask" && S.panTool ? "grab" : t === "mask" && S.tool === "erase" ? "cell" : "crosshair";
-  renderListTask(t);                        // 0918 사이클5 ① — 목록 맨 위 낱말
+  // 0921 U4: 더블클릭 = 화면에 맞춤. 어디서 되는지를 이 풍선말에 적는다(index.html 의 같은 title 은
+  // 이 줄이 200ms 안에 덮어쓰므로 HTML 은 건드리지 않았다 — 기준선을 늘리지 않으려고).
+  if (pan) { pan.disabled = t !== "mask"; pan.title = t === "mask" ? "사진을 끌어서 이동합니다 — 두 번 누르면 화면에 맞춥니다(0 키와 같습니다)" : "이 작업에서는 Space를 누른 채 사진을 끌어서 이동합니다 — 사진 밖 회색 여백을 두 번 누르면 화면에 맞춥니다"; }
+  applyCursor();                            // 0921 U5 — 커서 규칙은 cursorFor() 한 곳에만 있다
+  renderListTask(t);                      // 0918 사이클5 ① — 목록 맨 위 낱말
   $$(".task").forEach((b) => {
     const mine = b.dataset.task;
     b.classList.toggle("on", mine === t);
@@ -410,6 +469,40 @@ function onViewModeKey(e) {                 // 등록은 keys.js (단축키 한 
   setVMode(VORDER[(VORDER.indexOf(vmode) + 1) % VORDER.length]);
 }
 
+/* ══ 0921 U9 — `~` 를 **누르고 있는 동안만** «원본만» (포토샵의 «레이어 잠깐 꺼 보기») ══
+   «내가 칠한 것 밑에 열매가 정말 있나» 는 검수 내내 가장 자주 하는 확인인데, 지금은 Q 를 눌러
+   «원본만» 으로 갔다가 다시 두 번 눌러 «겹쳐» 로 돌아와야 한다(세 번 · 중간에 «칠한 영역만» 을
+   지나간다). 포토샵은 눈을 누르고 있는 동안만 끄고 놓으면 저절로 돌아온다 — 손이 기억할 것이 없다.
+
+   새 상태를 만들지 않는다 — 이미 있는 «보기 전환» 을 대신 눌러 줄 뿐이다(setVMode).
+   그래서 «무엇을 끄고 어떻게 되돌리나»(vsaved · 필름 · 진하기)가 한 벌로 남는다.
+   놓을 때 «원본만» 이 아니면 아무것도 되돌리지 않는다 — 누른 채로 사람이 Q 나 3단 스위치로
+   딴 데로 갔다면 그쪽이 사람의 뜻이다.
+   창을 떠나면(알트탭) keyup 이 영영 안 온다 → blur 에서도 놓은 것으로 친다.
+   ⚠ `e.code === "Backquote"` 로 본다 — 자판 배열과 Shift 에 상관없이 그 한 키다
+   (실측: WebDriver 로 «~» 도 «`» 도 code 는 Backquote · shiftKey 는 배열마다 다르다). */
+let peekBack = null;                        // 누르기 전에 보던 모드 · null = 지금 안 누르고 있다
+function peekOn() {
+  if (peekBack !== null) return;            // 누르고 있으면 keydown 이 되풀이된다 — 한 번만 적는다
+  if ($("#view-edit").classList.contains("hidden")) return;
+  peekBack = vmode;
+  if (vmode !== "photo") setVMode("photo");
+}
+function peekOff() {
+  const back = peekBack;
+  peekBack = null;
+  if (back !== null && back !== "photo" && vmode === "photo") setVMode(back);
+}
+function onPeekKey(e) {                     // 등록은 keys.js (단축키 한 곳)
+  if (e.code !== "Backquote" || e.ctrlKey || e.metaKey || e.altKey) return;
+  const t = e.target.tagName;
+  if (t === "INPUT" || t === "SELECT" || t === "TEXTAREA") return;
+  e.preventDefault();
+  peekOn();
+}
+function onPeekUp(e) { if (e.code === "Backquote") peekOff(); }
+window.addEventListener("blur", peekOff);   // 알트탭 — 키를 쥔 채 창을 떠나면 keyup 이 안 온다
+
 $$(".task").forEach((b) => b.onclick = () => { setTask(b.dataset.task); b.blur(); });
 
 /* ══════════════════════════ ③ 사진 위 레이어 칩 (= 색 범례) ══════════════════════════
@@ -531,5 +624,5 @@ function syncInstErrBtn() {
 
 
 /* ── 이 파일이 내놓는 것 (다음 파일들이 쓴다) ── */
-Object.assign(UI, { cv, ctx, resizeCanvas, fitView, zoomToNote, toImg, showView, curTask, setTask, syncTaskUI, renderLegend, setSideFold, setVMode, onViewModeKey, tick, NUM_WHY });
+Object.assign(UI, { cv, ctx, resizeCanvas, fitView, zoomToNote, toImg, showView, curTask, setTask, syncTaskUI, renderLegend, setSideFold, setVMode, onViewModeKey, onPeekKey, onPeekUp, tick, NUM_WHY, cursorFor, applyCursor });
 })();

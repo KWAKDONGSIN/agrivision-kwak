@@ -310,11 +310,16 @@ async function openItem(i, force) {
           사진에서는 자동채움이 할 일이 없으므로 예전대로 «붓». 토글은 두지 않는다(yagni). */
     if (!S.numMode && !S.boxMode) setTool(S.ai ? "smartadd" : "brush");
     if (S.noteBoxes && S.noteBoxes.length) zoomToNote(0);
-    loadBoxes();
-    loadInstances();
+    const pBox = loadBoxes();            // 0921 S5: 기다리지는 않는다(전과 같다) — 약속만 붙잡아 둔다
+    const pInst = loadInstances();
     renderErrRows();
     if (UI.loadTeamSuspects) UI.loadTeamSuspects();
     if (UI.renderEasyProgress) UI.renderEasyProgress();
+    /* 🔴 2026-09-21 S5 — 저장 전 작업의 임시 백업이 있으면 «되돌릴까요» 를 묻는다.
+       상자·번호가 **다 읽힌 뒤**에 물어야 한다 — 먼저 되돌리면 뒤늦게 끝난 위 두 함수가
+       서버 값으로 덮어쓴다. 그래서 그 둘의 약속을 넘긴다(여기서 기다리지 않으므로
+       «불러오는 중» 표시가 늦게 걷히지 않는다). 백업이 없으면 곧바로 돌아온다. */
+    if (UI.backupOffer) UI.backupOffer(Promise.all([pBox, pInst]));
   } catch (e) {
     flash("불러오기 실패: " + e, true);
   } finally {
@@ -425,8 +430,12 @@ async function loadDash() {
     return;
   }
   $("#dashtime").textContent = j.generated;
-  S.progressFruit = f;
-  if (UI.renderEasyProgress) UI.renderEasyProgress();
+  // 🔴 2026-09-21 S2 검증 중 발견(별건). 여기에 `S.progressFruit = f;` 와
+  //   `if (UI.renderEasyProgress) UI.renderEasyProgress();` 두 줄이 있었다. 09-20 «쉬움 모드
+  //   진행 막대» 를 넣을 때 위 `renderCounts()` 의 두 줄이 그대로 새어 들어온 것인데, 이 함수에는
+  //   `f` 라는 이름이 없다 → `ReferenceError: f is not defined` 로 **현황 탭이 통째로 안 그려졌다**
+  //   (실측: #dash 길이 0 · 콘솔 `reject: ReferenceError: f is not defined`).
+  //   `S.progressFruit` 는 목록 화면의 `renderCounts()` 가 이미 올바르게 채운다 — 두 줄을 지운다.
   const ko = { unreviewed: "아직 안 봄", ok: "원본 OK", fixed: "수정함", flag: "문제 있음", exclude: "제외" };
   let h = "<h3>과일별 진행</h3><table class='d'><tr><th class='l'>과일</th><th>전체</th>"
     + Object.values(ko).map((k) => `<th>${k}</th>`).join("") + "<th>수정본 파일</th><th class='l'>진행률</th></tr>";

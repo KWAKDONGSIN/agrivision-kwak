@@ -14,7 +14,13 @@
   ② 도움말 «단축키 한 장» 절의 `<kbd>` 키가 표에 다 들어 있다(설명용 낱말 몇 개는 빼고)
   ③ 표가 «어느 파일에 손잡이가 있다»(at) 고 적은 그 파일에 «있어야 하는 글자»(src)가 정말 있다
   ④ 표에 같은 키가 두 번 나오지 않는다
+  ⑤ **keys.js 가 진짜로 받는 키가 표에 빠짐없이 있다** (2026-09-21 편의 U7 에서 더함)
 쪼개기 전(js/ 폴더가 없을 때)에는 **건너뛴다**(그때는 표가 없는 것이 정상이다).
+
+⑤ 를 왜 뒤늦게 더했나 — ①②③ 은 전부 «표에 적힌 것» 에서 출발한다. 그래서 표에 **안 적고**
+  손잡이만 더하면(`case "w":` 한 줄) 세 검사 모두 조용히 통과했다. F1 겹창을 «표 한 장» 으로
+  내놓는 이상, 그 표에 없는 키가 코드에 살아 있으면 표가 거짓말을 하는 것이다. 그래서 반대
+  방향 — 코드의 `case "…"` 와 Ctrl 갈래에서 키를 긁어 **표에 다 있는지** 를 본다.
 """
 import io
 import subprocess
@@ -32,6 +38,9 @@ JS = os.path.join(STATIC, "js")
 # 도움말 표에 «키가 아닌 것» 으로 들어 있는 kbd 낱말 — 조합키의 조각과 화면 단추 기호
 NOT_KEYS = {"Ctrl", "Alt", "Shift", "Meta", "Cmd", "▸", "◂", "◀", "▶"}
 
+# 손잡이 코드가 쓰는 글자 → 표가 쓰는 이름 (표에는 사람이 읽는 짧은 이름을 적는다)
+CODE_ALIAS = {"Escape": "Esc", "Delete": "Del", "Backspace": "Del"}
+
 
 def keys_table(src):
     """keys.js 의 `const KEYS = [ {…}, … ]` 를 읽는다(파이썬 쪽에서 JS 를 돌리지 않는다)."""
@@ -42,6 +51,28 @@ def keys_table(src):
     for row in re.finditer(r"\{\s*key:\s*\"((?:[^\"\\]|\\.)*)\",\s*ko:\s*\"((?:[^\"\\]|\\.)*)\","
                            r"\s*at:\s*\"([^\"]+)\",\s*\n?\s*src:\s*'((?:[^'\\]|\\.)*)'", m.group(1)):
         out.append(dict(key=row.group(1), ko=row.group(2), at=row.group(3), src=row.group(4)))
+    return out
+
+
+def handled_keys(src):
+    """keys.js 의 손잡이가 **정말 받는** 키를 긁는다 — switch 의 `case "…"` · Ctrl 갈래 · 나머지.
+    표가 쓰는 이름으로 바꿔서 돌려준다(한 글자는 대문자 · Escape→Esc · Delete/Backspace→Del)."""
+    def name(k):
+        return CODE_ALIAS.get(k, k.upper() if len(k) == 1 else k)
+    # ⚠ 표(KEYS) 자체를 긁으면 안 된다 — `src:` 칸에 손잡이 글자가 그대로 적혀 있어서
+    #   «코드가 받는 키» 가 아니라 «표가 적은 키» 를 되읽게 된다(첫 판이 여기서 헛돌았다).
+    t = re.search(r"const KEYS = \[.*?\n\];", src, re.S)
+    if t:
+        src = src[t.end():]
+    out = set(name(k) for k in re.findall(r'case "([^"]+)":', src))
+    # Ctrl 갈래는 «Ctrl+무엇» 으로 적힌다 — 그 블록만 따로 떼어 본다
+    m = re.search(r"if \(e\.ctrlKey \|\| e\.metaKey\) \{(.*?)\n  \}", src, re.S)
+    if m:
+        out |= set("Ctrl+" + k.upper() for k in re.findall(r'e\.key === "([A-Za-z])"', m.group(1)))
+    rest = (src[:m.start()] + src[m.end():]) if m else src
+    out |= set(name(k) for k in re.findall(r'e\.key === "([^"]+)"', rest))    # F1 · Escape …
+    if 'e.code === "Space"' in src:
+        out.add("Space")
     return out
 
 
@@ -103,6 +134,13 @@ def main():
         body = cache[r["at"]]
         L.chk("손잡이가 표가 적은 자리에 있다: %s → %s" % (r["key"], r["at"]),
               bool(body) and r["src"] in body, r["src"])
+
+    # ⑤ 반대 방향 — 코드가 받는 키가 표에 다 있는가 (①②③ 은 전부 표에서 출발한다)
+    code = handled_keys(src)
+    names = set(r["key"] for r in rows)
+    orphan = sorted(k for k in code if k not in names)
+    L.chk("keys.js 가 받는 키 %d개가 표에 빠짐없이 있다" % len(code), not orphan,
+          ("표에 없는 키 %s" % orphan) if orphan else " ".join(sorted(code)))
     return L.summary("u7_keys_doc")
 
 

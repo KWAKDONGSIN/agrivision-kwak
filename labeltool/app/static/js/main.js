@@ -11,7 +11,7 @@
 
 (function () {
 /* ── 먼저 온 파일에서 가져오는 것 (위에서 아래로) ── */
-const $ = UI.$, $$ = UI.$$, flash = UI.flash, ensureWho = UI.ensureWho, cv = UI.cv, showView = UI.showView, toImg = UI.toImg, resizeCanvas = UI.resizeCanvas, tick = UI.tick, setTask = UI.setTask, confirmLeave = UI.confirmLeave, pushUndo = UI.pushUndo, strokeTo = UI.strokeTo, flushDirty = UI.flushDirty, applyPolygon = UI.applyPolygon, smart = UI.smart, boxMouseDown = UI.boxMouseDown, boxMouseMove = UI.boxMouseMove, boxMouseUp = UI.boxMouseUp, numMouseDown = UI.numMouseDown, numMouseMove = UI.numMouseMove, numMouseUp = UI.numMouseUp, loadFruits = UI.loadFruits;
+const $ = UI.$, $$ = UI.$$, flash = UI.flash, flashBrief = UI.flashBrief, ensureWho = UI.ensureWho, cv = UI.cv, showView = UI.showView, toImg = UI.toImg, resizeCanvas = UI.resizeCanvas, fitView = UI.fitView, tick = UI.tick, setTask = UI.setTask, confirmLeave = UI.confirmLeave, pushUndo = UI.pushUndo, strokeTo = UI.strokeTo, flushDirty = UI.flushDirty, applyPolygon = UI.applyPolygon, smart = UI.smart, boxMouseDown = UI.boxMouseDown, boxMouseMove = UI.boxMouseMove, boxMouseUp = UI.boxMouseUp, numMouseDown = UI.numMouseDown, numMouseMove = UI.numMouseMove, numMouseUp = UI.numMouseUp, loadFruits = UI.loadFruits;
 const api = API.get, post = API.post;
 
 $$(".tab").forEach((b) => b.onclick = () => {
@@ -39,8 +39,7 @@ cv.addEventListener("mousedown", (e) => {
   // 같은 문구로, 같은 1초짜리 힌트로 막는다 — 서버에 갈 일이 아니다.
   if ((S.tool === "smartadd" || S.tool === "smartsub")
       && (x < 0 || y < 0 || x >= S.W || y >= S.H)) {
-    flash("사진 밖입니다 — 격자 무늬 밖으로는 칠할 수 없습니다", true);
-    clearTimeout(flash._t); flash._t = setTimeout(() => { $("#saveflash").textContent = ""; }, 1000);
+    flashBrief("사진 밖입니다 — 격자 무늬 밖으로는 칠할 수 없습니다", true);   // 0921 S2: 1초 힌트는 api.js 로 모았다
     return;
   }
   // 0920 «그림판처럼»: 오른쪽 버튼은 «반대로». 자동채움에서 오른쪽 = 자동지움,
@@ -58,8 +57,7 @@ cv.addEventListener("mousedown", (e) => {
   // 0918 사이클2 (사이클1 3차 판정 ②-4): 여백을 눌러도 아무 일이 없으니 «왜 안 칠해지지» 가 된다.
   // 1초짜리 힌트를 띄운다(딱지·되돌리기 규칙은 그대로 — 위 주석의 N1 수정 그대로).
   if (x < 0 || y < 0 || x >= S.W || y >= S.H) {
-    flash("사진 밖입니다 — 격자 무늬 밖으로는 칠할 수 없습니다", true);
-    clearTimeout(flash._t); flash._t = setTimeout(() => { $("#saveflash").textContent = ""; }, 1000);
+    flashBrief("사진 밖입니다 — 격자 무늬 밖으로는 칠할 수 없습니다", true);   // 0921 S2: 위와 같은 1초 힌트
   }
   const wasDirty = S.edDirty;
   pushUndo();
@@ -102,6 +100,32 @@ cv.addEventListener("wheel", (e) => {
   S.view.ty = my - (my - S.view.ty) * (ns / S.view.s);
   S.view.s = ns; S.dirty = true;
 }, { passive: false });
+
+/* ══ 0921 U4 — 더블클릭 = 화면에 맞춤 (윈도우 사진 뷰어·포토샵 손도구 관습) ══
+   휠로 당겨 놓고 **되돌아오는 길**을 모르는 사람이 많다(0 키도 «맞춤» 단추도 눈에 안 띈다).
+   그래서 «두 번 누르면 처음 크기» 라는 관습을 얹는다 — 하는 일은 0 키·«맞춤» 단추와 똑같은
+   `fitView()` 하나다(세 번째 확대 방식을 만들지 않는다).
+
+   ⚠ **사진 위에서는 그리기가 먼저다.** 캔버스 어디서나 맞춤을 걸면, 자동채움을 두 번 눌러
+   본 사람(응답이 1~2초라 흔하다)·붓으로 점을 두 개 콕콕 찍은 사람의 **확대가 말없이 풀린다**.
+   plan.md 의 «새 기능은 있어도 방해 안 되는 것만» 에 어긋난다. 그래서 «지금 그리는 중이 아님»
+   이 글자 그대로 보장되는 두 자리에서만 듣는다:
+     ① 사진 **밖**(회색 격자) — 어느 작업·어느 도구에서나. 거기는 오늘도 아무것도 안 그려진다.
+     ② ✋이동 도구나 Space — 보기만 하는 손짓이다(쉬움 모드에도 ✋ 는 그대로 있다).
+   다각형을 찍는 중(마스크·번호)이거나 상자를 끌던 중이면 손대지 않는다 — 그 두 가지는 사진
+   밖에서도 점이 찍히고(main.js·instances.js), 화면이 갑자기 움직이면 찍던 자리를 잃는다.
+   휴대폰은 touchstart 가 `preventDefault()` 를 불러 dblclick 자체가 안 온다(mobile.js) —
+   두 손가락 확대와 겹칠 일이 없다. */
+cv.addEventListener("dblclick", (e) => {
+  if (!S.img) return;
+  const [x, y] = toImg(e);
+  const outside = x < 0 || y < 0 || x >= S.W || y >= S.H;
+  const viewing = S.spaceDown || (S.panTool && !S.numMode && !S.boxMode);
+  if (!outside && !viewing) return;
+  if (S.poly.length || (S.numPoly && S.numPoly.length) || S.drag) return;
+  fitView();
+  flashBrief("화면에 맞췄습니다 (0 키와 같습니다)");
+});
 
 /* ------------------------------------------------------------- 시작 */
 $("#who").value = localStorage.getItem("who") || "";

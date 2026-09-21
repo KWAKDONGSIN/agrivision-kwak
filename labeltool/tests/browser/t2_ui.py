@@ -54,6 +54,18 @@ def unfocus(b):
 
 
 def task(b, t):
+    # 🔴 2026-09-21: ③ 번호 단추는 `/instances` 그림이 다 실린 뒤에야 켜진다
+    #   (view.js «b.disabled = !S.inst»). `open_exact()` 가 자는 1초로는 모자랄 때가 있다 —
+    #   데이터를 갓 복사한 «차가운» 모래상자에서 실측 **2.17초**. 잠긴 단추를 누르면 아무 일도
+    #   없이 지나가서 나-0~나-3 이 한꺼번에 진다(원인은 화면 코드가 아니라 이 기다림이었다).
+    #   → 켜질 때까지 기다렸다 누른다. 번호본이 없는 사진이면 끝까지 잠겨 있고, 그것은
+    #     부르는 쪽(나-4)이 `disabled` 를 직접 읽어 본다.
+    if t == "num":
+        try:
+            b.wait_js("const x=[...document.querySelectorAll('.task')].find(e=>e.dataset.task==='num');"
+                      "return !!x && !x.disabled;", timeout=20)
+        except Exception:
+            pass
     b.js("[...document.querySelectorAll('.task')].find(x=>x.dataset.task===arguments[0]).click()", t)
     time.sleep(0.8)
 

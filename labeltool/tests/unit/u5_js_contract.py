@@ -43,7 +43,7 @@ CUTS = [("function bpush()", "function boxInfo(extra)"),
 FN_HEADS = ["function setTool(t) {", "function setNumMode(on, silent) {", "function numKey(e) {"]
 STMT_HEADS = ['$("#box-mode").onchange = () => {', 'window.addEventListener("keydown", (e) => {']
 # ④ 시뮬이 이름으로 꺼내 쓰는 것
-NAMES = ["bpush", "boxUndo", "boxInfo", "hitBox", "hitBoxesAt", "hitHandle", "bHandleR", "bcommit",
+NAMES = ["bpush", "boxUndo", "boxRedo", "boxInfo", "hitBox", "hitBoxesAt", "hitHandle", "bHandleR", "bcommit",
          "boxMouseDown", "boxMouseMove", "boxMouseUp", "saveBoxes", "PICKTOL",
          "setTool", "setNumMode", "numKey", "delSelBox", "fitView", "doAction", "applyPolygon",
          "numUndo", "numRedo", "saveInstances", "seedBoxes", "drawBoxes"]

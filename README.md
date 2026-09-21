@@ -32,3 +32,10 @@
 ## 2026-09-21 MOBILE 갱신
 
 폰 판정·현황·간단 상자/번호 편집을 지원합니다. 정밀 편집은 PC에서 합니다. 최신 검증은 labeltool/reviews/mobile_260921/stage3_final.md, 사용법은 labeltool/app/static/how_to.html입니다. 실기기 검증은 하지 못했습니다.
+
+## 2026-09-21 편의·안정성 갱신
+
+그림판·포토샵·윈도우 관습을 따라 편의 10가지와 안정성 6가지를 더하고, 무채색 토큰 한 벌로
+색을 접었습니다. 요소 id·단축키·API 규칙은 바꾸지 않았습니다.
+최신 검증은 labeltool/reviews/편의_260921/checklist.md, 결정과 까닭은 같은 폴더
+context-notes.md 입니다. 실제 휴대폰 확인은 아직 못 했습니다.

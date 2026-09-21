@@ -29,10 +29,22 @@ const BCOL = { fruit: "#ffcc33", bunch: "#33ccff", other: "#ff77cc" };
 const BKO = { fruit: "과실·알", bunch: "송이", other: "기타" };
 const HANDLE = 7;                                    // 모서리 손잡이 크기(화면 픽셀)
 
-function bpush() { S.bundo.push(JSON.stringify(S.boxes)); if (S.bundo.length > 30) S.bundo.shift(); S.bDirty = true; }
+function bpush() { S.bundo.push(JSON.stringify(S.boxes)); if (S.bundo.length > 30) S.bundo.shift(); S.bredo.length = 0; S.bDirty = true; }
 function boxUndo() {
   if (!S.bundo.length) return flash("되돌릴 상자 작업이 없습니다", true);
+  bredoPush(JSON.stringify(S.boxes));                // 0921 U3: 되돌리기 전 모습을 Ctrl+Y 몫으로 남긴다
   S.boxes = JSON.parse(S.bundo.pop()); S.bsel = -1; S.dirty = true; boxInfo();
+}
+/* 0921 U3 — 상자 «다시하기»(Ctrl+Y). 마스크(`S.redo`)와 번호(`S.numRedoStack`)에는 있는데
+   상자에만 없어서, Ctrl+Z 를 한 번 더 누른 사람은 방금 친 네모를 다시 칠 수밖에 없었다.
+   ⚠ 여기서 `bpush()` 를 부르면 **안 된다** — bpush 는 «새 작업» 이라서 다시하기 갈래를 버리고
+   `bDirty` 도 올린다. 다시하기는 되돌리기의 거울이므로 두 칸을 그대로 맞바꾸기만 한다
+   (`bDirty` 는 양쪽 다 건드리지 않는다 — 되돌리기가 예전부터 그랬고, 둘이 서로의 반대라야 한다). */
+function bredoPush(s) { S.bredo.push(s); if (S.bredo.length > 30) S.bredo.shift(); }
+function boxRedo() {
+  if (!S.bredo.length) return flash("다시 실행할 상자 작업이 없습니다", true);
+  S.bundo.push(JSON.stringify(S.boxes)); if (S.bundo.length > 30) S.bundo.shift();
+  S.boxes = JSON.parse(S.bredo.pop()); S.bsel = -1; S.dirty = true; boxInfo();
 }
 function boxInfo(extra) {
   const n = S.boxes.length;
@@ -43,6 +55,7 @@ function boxInfo(extra) {
     + (S.bDirty ? " · 저장 안 됨" : "") + (extra ? " · " + extra : "");
 }
 function drawBoxes() {
+  drawBoxGuide();                                    // 0921 U10 — 십자 안내선은 상자 «밑»에 깔린다
   const lw = Math.max(1, 1.6 / S.view.s);
   S.boxes.forEach((b, i) => {
     const [x1, y1, x2, y2] = b.xyxy;
@@ -66,6 +79,47 @@ function drawBoxes() {
     ctx.setLineDash([]);
   }
 }
+/* ══ 0921 U10 — 십자 안내선 (그림판의 «눈금»·CAD 의 crosshair) ══
+   네모의 **위 변을 옆 네모의 위 변과 맞추는** 일이 상자 작업의 대부분인데, 지금 화면에는 기준선이
+   하나도 없다. 커서가 어느 줄·어느 칸에 있는지는 오른쪽 `#hud` 의 «(x, y)» 숫자로만 알 수 있어서
+   눈이 사진과 숫자 사이를 오간다. 커서를 지나는 가로·세로 한 줄을 사진 끝까지 그어 두면,
+   손을 대기 **전에** 어디에 걸리는지가 눈으로 보인다.
+
+   무엇을 안 했나 — 새 단추·새 단축키·새 상태를 하나도 만들지 않았다(끄고 켜는 칸도 없다).
+   방해가 될 만한 자리에서는 아예 안 그리는 쪽을 골랐다:
+     · «고르기·옮기기»(`S.btool !== "draw"`)에서는 안 그린다. 거기서는 손이 네모를 잡는 중이라
+       선이 보탬이 안 되고, 커서도 U5 에서 `move`·`↘↖` 로 이미 딴말을 하고 있다.
+     · 커서가 **사진 밖**이면 안 그린다. 거기에는 상자가 놓일 수 없다(clampX·clampY).
+     · «원본만» 보기(`S.hideBox`)·마스크·번호 작업에서는 `drawBoxes()` 자체가 안 불린다(view.js).
+
+   ⚠ 굵기를 `Math.max(1, …)` 로 묶지 않는다. 상자 테두리는 «사진의 1화소» 를 바닥으로 삼지만
+   (drawBoxes 의 lw), 안내선을 그렇게 묶으면 30배로 당겼을 때 화면에서 30화소짜리 띠가 되어
+   맞추려던 그 변을 덮어 버린다. 배율이 얼마든 **화면에서 늘 1 CSS 화소**가 되게 나눈다.
+   ⚠ 자리는 `Math.round()` 한 정수다 — 저장되는 상자 좌표가 정수이므로(boxMouseUp 의 Math.round)
+   «안내선이 가리킨 줄» 과 «실제로 놓이는 변» 이 어긋나지 않는다.
+   ⚠ 흰 실선 위에 검은 점선을 겹친다. 상자 모드는 흰 필름(기본 25%)이 깔린 밝은 바탕이지만
+   필름을 0 으로 내리면 어두운 사진이 그대로 나온다 — 한 색으로는 둘 다 못 이긴다.
+   ⚠ 새 다시그리기를 부르지 않는다. 상자 모드는 원래 마우스가 움직일 때마다 다시 그린다
+   (main.js mousemove → boxMouseMove 의 `S.dirty = true`) — 이 선은 그 그림에 얹힐 뿐이다.
+   커서가 캔버스를 벗어나도 마지막 자리에 남는데, 붓 원형 미리보기(view.js)가 예전부터 그랬다. */
+const GUIDEDASH = 5;                                 // 점선 한 칸(화면 CSS 화소)
+function drawBoxGuide() {
+  if (S.btool !== "draw" || !S.cursor) return;
+  const [cx, cy] = S.cursor;
+  if (cx < 0 || cy < 0 || cx > S.W || cy > S.H) return;
+  const x = Math.round(cx), y = Math.round(cy), px = 1 / S.view.s;
+  ctx.beginPath();
+  ctx.moveTo(x, 0); ctx.lineTo(x, S.H);
+  ctx.moveTo(0, y); ctx.lineTo(S.W, y);
+  ctx.lineWidth = px;
+  ctx.strokeStyle = "rgba(255,255,255,.55)";         // 어두운 사진(필름 0%)에서 보이는 밑줄
+  ctx.stroke();
+  ctx.setLineDash([GUIDEDASH * px, GUIDEDASH * px]);
+  ctx.strokeStyle = "rgba(0,0,0,.6)";                // 흰 필름·밝은 사진에서 보이는 겉줄
+  ctx.stroke();
+  ctx.setLineDash([]);                               // 뒤에 오는 그림(상자·다각형)에 점선이 새지 않게
+}
+
 const norm = (a, b, c, d) => [Math.min(a, c), Math.min(b, d), Math.max(a, c), Math.max(b, d)];
 const clampX = (v) => Math.max(0, Math.min(S.W, v));
 const clampY = (v) => Math.max(0, Math.min(S.H, v));
@@ -78,6 +132,7 @@ function bcommit(before) {
   if (typeof before !== "string" || JSON.stringify(S.boxes) === before) return false;
   S.bundo.push(before);
   if (S.bundo.length > 30) S.bundo.shift();
+  S.bredo.length = 0;                                // 0921 U3: 새로 손댔으면 «다시하기» 갈래는 버린다
   S.bDirty = true;
   return true;
 }
@@ -119,6 +174,24 @@ function hitHandle(i, x, y) {
   if (near(x1, y1)) return "nw"; if (near(x2, y1)) return "ne";
   if (near(x1, y2)) return "sw"; if (near(x2, y2)) return "se";
   return null;
+}
+/* 0921 U5 — 상자 모드의 커서. view.js cursorFor() 가 그림 고리에서 부른다.
+   «고르기·옮기기» 는 풍선말로만 «모서리로 크기를 바꿉니다» 라고 말할 뿐, 손잡이가 어디까지인지
+   화면에 아무 표시가 없었다 — 판정 반경 `bHandleR()` 은 배율과 상자 크기에 따라 변해서 눈으로는
+   가늠이 안 된다. 그래서 **판정에 쓰는 바로 그 함수**로 커서를 고른다(둘이 어긋날 수 없다).
+   ⚠ 겹친 상자를 도는 `hitBox()` 가 아니라 `hitBoxesAt()` 을 쓴다 — hitBox 는 «같은 자리를 다시
+   눌렀나»(S.bpick)를 보는 **고르는 규칙**이고, 여기는 그냥 «상자 위인가» 만 알면 된다.
+   자리는 마지막 마우스 자리(`S.cursor`, main.js 가 매 mousemove 에 적는다)를 그대로 쓴다. */
+const CORNERCUR = { nw: "nwse-resize", se: "nwse-resize", ne: "nesw-resize", sw: "nesw-resize" };
+function boxCursor() {
+  if (S.drag) return S.drag.mode === "resize" ? (CORNERCUR[S.drag.corner] || "crosshair")
+    : S.drag.mode === "move" ? "move" : "crosshair";
+  if (S.btool !== "pick") return "crosshair";          // 그리기 — 빈 곳에서 끌어 네모를 만든다
+  if (!S.cursor) return "default";
+  const [x, y] = S.cursor;
+  const h = hitHandle(S.bsel, x, y);
+  if (h) return CORNERCUR[h];
+  return hitBoxesAt(x, y).length ? "move" : "default";
 }
 function boxMouseDown(e, x, y) {
   if (e.button !== 0) return;
@@ -194,7 +267,7 @@ function teamBoxWords(team) {
 }
 function boxSeedSrc() { const e = $("#boxseedsrc"); return e ? e.value : "mask"; }
 async function loadBoxes() {
-  S.boxes = []; S.bsel = -1; S.bundo = []; S.bDirty = false; S.teamBoxes = null;
+  S.boxes = []; S.bsel = -1; S.bundo = []; S.bredo = []; S.bDirty = false; S.teamBoxes = null;
   if (!S.stem) return;
   const stem = S.stem;
   const j = await api(`/api/boxes?fruit=${encodeURIComponent(S.fruit)}&stem=${encodeURIComponent(S.stem)}`);
@@ -349,7 +422,13 @@ $("#boxseed").onclick = seedBoxes;
 })();
 $("#boxdel").onclick = delSelBox;
 $("#boxundo").onclick = boxUndo;
-$("#boxsave").onclick = saveBoxes;
+/* 0921 U3: «다시하기» 단추는 만들지 않는다 — 번호 편집도 `#numundo` 하나뿐이고 다시하기는
+   Ctrl+Y 로만 한다. 상자만 단추를 더하면 오히려 셋이 서로 다른 모양이 된다. */
+/* 🔴 0921 S6 — 상자 저장이 도는 동안 단추를 잠근다. 두 번 보내면 늦게 온 두 번째 응답이
+   첫 번째가 맞춰 놓은 화면을 다시 덮어(서버가 id 를 1부터 **또** 붙인다) 고른 상자·되돌리기
+   기록이 어긋난다. 감싸는 자리를 `saveBoxes()` 밖에 둔 까닭은 api.js lockWhile 주석에. */
+const boxSave = UI.lockWhile(["#boxsave"], saveBoxes);
+$("#boxsave").onclick = boxSave;
 $("#boxexport").onclick = exportBoxes;
 $("#boxclear").onclick = () => { if (!S.boxes.length || !confirm("상자를 전부 지울까요? Ctrl+Z로 되돌릴 수 있습니다.")) return; bpush(); S.boxes = []; S.bsel = -1; S.dirty = true; boxInfo(); };
 // D4 와 같은 뜻: 고른 상자의 종류가 «정말» 달라질 때만 기록한다(같은 것을 다시 고르면 아무것도 안 함).
@@ -360,5 +439,7 @@ $("#boxcls").onchange = () => {
 
 
 /* ── 이 파일이 내놓는 것 (다음 파일들이 쓴다) ── */
-Object.assign(UI, { bpush, boxUndo, boxInfo, drawBoxes, delSelBox, setBTool, loadBoxes, saveBoxes, seedBoxes, exportBoxes, seedSrcKo, boxMouseDown, boxMouseMove, boxMouseUp, hitBox, hitBoxesAt, hitHandle, bHandleR, bcommit, PICKTOL });
+/* 0921 S6 — `saveBoxes` 는 **감싼 쪽**(boxSave)을 같은 이름으로 내놓는다. keys.js 의 Ctrl+S 와
+   counts.js 의 «상자 Enter 확정»(enterConfirmTask)이 이름으로 찾아 쓰므로 그 둘도 함께 잠긴다. */
+Object.assign(UI, { bpush, boxUndo, boxRedo, boxInfo, drawBoxes, delSelBox, setBTool, loadBoxes, saveBoxes: boxSave, seedBoxes, exportBoxes, seedSrcKo, boxMouseDown, boxMouseMove, boxMouseUp, hitBox, hitBoxesAt, hitHandle, bHandleR, bcommit, PICKTOL, boxCursor });
 })();

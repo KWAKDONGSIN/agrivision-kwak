@@ -295,19 +295,35 @@ $$(".tool").forEach((b) => b.onclick = () => setTool(b.dataset.tool));
 function setTool(t) {
   // 번호 편집과 0/255 브러시가 섞이면 저장 규칙이 꼬인다(지시서 §3-1) → 모드가 켜져 있으면 막는다
   if (S.numMode) { flash("번호 편집 모드가 켜져 있어 브러시·다각형이 잠겨 있습니다 (K 로 끄기)", true); return; }
+  const wasSize = sizeTool();                  // 0921 U8: 건너가기 **전**의 굵기 칸
   S.tool = t; S.panTool = t === "pan"; S.poly = [];
-  $("#cv").style.cursor = S.panTool ? "grab" : t === "erase" ? "cell" : "crosshair";
+  // 0921 U8: 붓 ↔ 지우개로 건너가면 굵기 칸을 바꿔 준다 — 쓰던 값을 제 칸에 넣고 새 칸을 꺼낸다.
+  if (sizeTool() !== wasSize) { saveBrush(wasSize); loadBrush(); }
+  // 0921 U5: 커서를 여기서 쓰지 않는다 — 규칙이 두 곳으로 갈라져 있었다(여기와 syncTaskUI).
+  // 아래 `S.dirty = true` 로 다음 프레임에 view.js 의 applyCursor() 가 도구에 맞게 바꾼다.
   $$(".tool").forEach((b) => b.classList.toggle("on", b.dataset.tool === t));
   S.dirty = true;
 }
 /* ─── 0918 사이클4 결정 2-① «붓 크기 기억»(과일별) ───
    사과는 알이 작아 붓 6, 복숭아는 크게 — 사진을 바꿀 때마다 [ ] 를 열 번씩 두드리고 있었다.
    과일마다 마지막 값을 localStorage 에 적어 두고, 과일을 고를 때 되돌린다. 끄는 토글은 없다(yagni). */
-function brushKey() { return "brush:" + (S.fruit || "-"); }
-function saveBrush() { try { localStorage.setItem(brushKey(), String(S.brush)); } catch (e) {} }
-function loadBrush() {
+/* ─── 0921 U8 «도구마다 따로» (포토샵) ───
+   포토샵·그림판은 붓과 지우개의 굵기를 **각자** 기억한다. 여기는 칸이 하나뿐이라 붓 8 로 알을
+   다듬다가 지우개로 크게 쓸어내고 붓으로 돌아오면 8 이 아니라 60 이었다 — [ ] 를 또 두드린다.
+   `S.brush` 를 보는 도구는 **붓과 지우개 둘뿐**이므로(strokeTo · view.js 커서 원) 칸도 둘만 둔다:
+   나머지 도구(다각형·자동채움·✋)는 굵기를 안 쓰니 붓 칸에 같이 둔다(칸을 늘리지 않는다).
+   지우개에만 이름 뒤에 `:erase` 를 붙인다 — 붓 칸은 `brush:<과일>` 그대로여서 0918부터 쌓인
+   값이 옮겨 심기 없이 그대로 «붓 굵기» 로 살아난다.
+   처음 지우개를 고르면 적힌 값이 없으니 **쓰던 붓 굵기를 물려받는다**(없는 기본값을 지어내지
+   않는다). 거기서 굵기를 바꾸면 그때부터 지우개 칸이 따로 산다.
+   번호 편집(`#numshape=brush`)도 `S.brush` 를 보지만 그 모드에서는 setTool 이 막혀 도구가
+   안 바뀐다 → 지금 동작 그대로 둔다. */
+function sizeTool() { return S.tool === "erase" ? "erase" : "brush"; }
+function brushKey(tool) { return "brush:" + (S.fruit || "-") + ((tool || sizeTool()) === "erase" ? ":erase" : ""); }
+function saveBrush(tool) { try { localStorage.setItem(brushKey(tool), String(S.brush)); } catch (e) {} }
+function loadBrush(tool) {
   let v = null;
-  try { v = localStorage.getItem(brushKey()); } catch (e) {}
+  try { v = localStorage.getItem(brushKey(tool)); } catch (e) {}
   const n = Math.max(2, Math.min(200, +v || 0));
   if (!v || !n) return;
   S.brush = n; $("#brush").value = n; $("#brushv").textContent = n; S.dirty = true;

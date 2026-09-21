@@ -154,9 +154,17 @@ if want browser && [ "$WANT_BROWSER" = 1 ]; then
   note "6. 진짜 파이어폭스 — 스크린샷은 ~/ff_shots/tests_260920 에만"
   ( cd "$HERE/browser" && run1 "browser/prep_sandbox" browser_prep \
       "$PY" -c "import sandbox as L; L.sync(); L.reset_status(); print('모래상자 준비 끝')" ) || FAILED=1
-  for f in b1_browser t2_ui; do
-    [ -f "$HERE/browser/$f.py" ] || continue
-    ( cd "$HERE/browser" && run1 "browser/$f" "browser_$f" "$PY" -u "$HERE/browser/$f.py" ) || FAILED=1
+  # 🔴 2026-09-21 Z2: 여기에 `b1_browser t2_ui` **둘만** 적혀 있었다. 그 사이 화면 시험이
+  #   b3~b24 로 늘어 스물넷이 됐는데 아무도 이 줄을 안 고쳤다 → `--browser` 가 초록이어도
+  #   이 사이클이 만든 S1~S6·U1~U10·G1~G7 의 증거는 **한 줄도 안 돌고 있었다**(2/24).
+  #   그래서 이름을 적지 않고 **글롭으로** 집는다 — 시험을 더해도 여기를 고칠 일이 없다.
+  #   `api`·`sim` 이 글롭을 피한 까닭(묶음이 조용히 늘면 기준선 ③ 이 «다르다» 가 된다)은
+  #   여기엔 없다: ③ 은 `browser/` 줄을 **아예 안 읽는다**(`baseline/snapshot.py:503`).
+  #   «`b*.py` 는 시험, 자(도구)는 다른 이름» 은 이미 있는 규칙이다(`browser/shots12.py` 머리말)
+  #   → `helpfigs.py`·`shots12.py` 는 이 글롭에 안 걸린다.
+  for f in $(cd "$HERE/browser" && ls b*.py t2_ui.py 2>/dev/null | sort -V); do
+    b="${f%.py}"
+    ( cd "$HERE/browser" && run1 "browser/$b" "browser_$b" "$PY" -u "$HERE/browser/$f" ) || FAILED=1
   done
 elif want browser; then
   printf '\n══ 6. 진짜 파이어폭스 — 건너뜀(`--browser` 를 주면 돌립니다)\n'
