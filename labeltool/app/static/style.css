@@ -476,6 +476,7 @@ button.big { text-align: center; }
 .sw { width: 13px; height: 13px; border-radius: 3px; display: inline-block; border: 1px solid #99a; }
 .sw.red { background: #e8443a; } .sw.blue { background: #2f7de1; }
 .sw.green { background: #2fb562; }
+.sw.orig { background: #ff8c00; }
 .sw.diff { background: linear-gradient(90deg,#ffd400 50%,#ff35d0 50%); }
 .sw.inst { background: linear-gradient(90deg,#e8443a 25%,#4ad16b 25% 50%,#3d8bff 50% 75%,#f2c11a 75%); }
 .sw.num { background: conic-gradient(#e8443a,#f2c11a,#4ad16b,#3d8bff,#c46bff,#e8443a); }

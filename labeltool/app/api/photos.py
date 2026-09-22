@@ -15,8 +15,8 @@ from PIL import Image
 from api import counts as _counts
 from api import instances as _instances
 from core.paths import (APP_DIR, CACHE_DIR, DATASET, DATA_DIR, FRUITS, box_set, check,
-                        fixed_path, fixed_set, gt_path, has_proposals, img_path,
-                        n_boxes_of, proposal_path, _prop_names, stem_set, stems_of)
+                        fixed_path, fixed_set, gt_path, has_orig_gt, has_proposals, img_path,
+                        n_boxes_of, orig_gt_path, proposal_path, _prop_names, stem_set, stems_of)
 from core.status_store import read_status
 from core.util import as_int, err_json, now_str
 from domain import dupes as DUP
@@ -293,6 +293,7 @@ def register(app: Any, ctx: Any) -> None:
             "has_gt": os.path.exists(gt_path(fruit, stem)),
             "has_proposal": os.path.exists(proposal_path(fruit, stem)),
             "has_fixed": os.path.exists(fixed_path(fruit, stem)),
+            "has_orig": has_orig_gt(fruit, stem),      # 0922: «검수 전 원본» 레이어를 보여 줄 수 있나
             "scores": scores, "inspection": insp,
             "dup_group": gi,
             "dup_members": members,
@@ -326,7 +327,7 @@ def register(app: Any, ctx: Any) -> None:
 
     @app.route("/mask")
     def serve_mask():
-        """layer = gt | ai | fixed. 항상 0/255 L 모드 PNG 로 변환해서 준다."""
+        """layer = gt | ai | fixed | orig(검수 전 원본, 0922). 항상 0/255 L 모드 PNG 로 변환해서 준다."""
         fruit = request.args.get("fruit", "")
         stem = request.args.get("stem", "")
         layer = request.args.get("layer", "gt")
@@ -337,6 +338,8 @@ def register(app: Any, ctx: Any) -> None:
             p = proposal_path(fruit, stem)
         elif layer == "fixed":
             p = fixed_path(fruit, stem)
+        elif layer == "orig":
+            p = orig_gt_path(fruit, stem)
         else:
             abort(400, "bad layer")
         if not os.path.exists(p):

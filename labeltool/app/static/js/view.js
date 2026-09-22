@@ -134,6 +134,7 @@ function draw() {
   const edOn = $("#l-ed").checked && S.lay.ed;
   ctx.globalAlpha = edOn ? S.alpha * 0.35 : S.alpha;
   if ($("#l-gt").checked && S.lay.gt) ctx.drawImage(S.lay.gt.cv, 0, 0);
+  if ($("#l-orig") && $("#l-orig").checked && S.lay.orig) ctx.drawImage(S.lay.orig.cv, 0, 0);   // 0922 검수 전 원본(주황)
   if ($("#l-ai").checked && S.lay.ai) ctx.drawImage(S.lay.ai.cv, 0, 0);
   ctx.globalAlpha = S.alpha;
   if (edOn) ctx.drawImage(S.lay.ed.cv, 0, 0);
@@ -370,7 +371,7 @@ const VTIP = {
   box:  "상자만 — 사진을 흰 필름으로 덮고 네모만 봅니다.",
   num:  "번호만 — 사진을 어둡게 덮고 열매 번호 색·숫자만 봅니다."
 };
-const VLAYERS = ["l-gt", "l-ai", "l-ed", "l-diff", "l-num", "l-numtext"];
+const VLAYERS = ["l-gt", "l-orig", "l-ai", "l-ed", "l-diff", "l-num", "l-numtext"];
 const DIM = 0.78;                 // 사진을 얼마나 어둡게 덮을지(0 = 그대로)
 /* 0918 사이클2 (사이클1 3차 판정 ②-5): 번호가 1~2개뿐인 사진의 «번호만» 이 새까만 빈 화면이
    됐다. 번호를 볼 때는 사진을 **30% 밝기**로 남긴다(0.70 을 덮으면 30% 가 남는다). */
@@ -421,7 +422,7 @@ function applyVMode() {
     S.dim = 0; S.hideBox = false;
   } else {
     if (!vsaved) vsaved = snapshotChecks();
-    const OFF = { "l-gt": false, "l-ai": false, "l-ed": false, "l-diff": false,
+    const OFF = { "l-gt": false, "l-orig": false, "l-ai": false, "l-ed": false, "l-diff": false,
                   "l-num": false, "l-numtext": false };
     if (vmode === "photo") {
       setChecks(OFF);
@@ -520,6 +521,7 @@ $$(".task").forEach((b) => b.onclick = () => { setTask(b.dataset.task); b.blur()
 
 const CHIP = [
   ["l-gt",   "#e8443a", "원본", "빨강 = 원본 라벨(GT). 원래 데이터셋에 있던 것 — 이것이 맞는지 보는 게 검수입니다.", () => true],
+  ["l-orig", "#ff8c00", "검수 전", "주황 = 검수 전 진짜 원본(팀 표준 원본 폴더). 복숭아·포도의 «원본» 은 09-16 AI 검수가 고친 판이라 따로 둡니다.", () => !!S.orig],
   ["l-ai",   "#2f7de1", "AI",   "파랑 = AI 제안. AI 가 1차로 그린 것입니다.", () => !!S.ai],
   ["l-ed",   "#00e5ff", "수정", "하늘색(시안) = 내 수정본. «저장» 을 눌러야 파일로 남습니다.",
     () => !!(S.edDirty || (S.item && S.item.has_fixed))],

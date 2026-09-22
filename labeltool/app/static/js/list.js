@@ -267,11 +267,13 @@ async function openItem(i, force) {
     const imgP = new Promise((res, rej) => {
       const im = new Image(); im.onload = () => res(im); im.onerror = rej; im.src = "/img?" + q;
     });
-    const [img, gtRaw, ai, fx] = await Promise.all([
+    const [img, gtRaw, ai, fx, orig] = await Promise.all([
       imgP,
       fetchMaskRaw("/mask?" + q + "&layer=gt_raw", S.W, S.H),
       meta.has_proposal ? fetchMaskBits("/mask?" + q + "&layer=ai", S.W, S.H) : Promise.resolve(null),
-      meta.has_fixed ? fetchMaskBits("/mask?" + q + "&layer=fixed", S.W, S.H) : Promise.resolve(null)
+      meta.has_fixed ? fetchMaskBits("/mask?" + q + "&layer=fixed", S.W, S.H) : Promise.resolve(null),
+      // 0922: 검수 전 진짜 원본(복숭아·포도만 — 서버가 has_orig 로 알려 준다). 옛 서버는 칸이 없어 null.
+      meta.has_orig ? fetchMaskBits("/mask?" + q + "&layer=orig", S.W, S.H) : Promise.resolve(null)
     ]);
     S.img = img;
     S.gtRaw = gtRaw || new Uint8Array(S.W * S.H);
@@ -283,6 +285,7 @@ async function openItem(i, force) {
     S.gt = new Uint8Array(S.gtRaw.length);
     for (let i = 0; i < S.gtRaw.length; i++) S.gt[i] = S.gtRaw[i] ? 1 : 0;
     S.ai = ai;
+    S.orig = orig || null;
     S.ed = fx ? fx : S.gt.slice();       // 수정본이 없으면 원본 GT 에서 시작
     S.undo = []; S.redo = []; S.edDirty = false;
     S.lay = {};
@@ -291,6 +294,8 @@ async function openItem(i, force) {
     paintGtLayer();
     paintLayerFull("ed", S.ed, COL.ed);
     if (S.ai) { makeLayer("ai", S.W, S.H); paintLayerFull("ai", S.ai, COL.ai); }
+    if (S.orig) { makeLayer("orig", S.W, S.H); paintLayerFull("orig", S.orig, COL.orig); }
+    if ($("#row-orig")) $("#row-orig").style.display = S.orig ? "" : "none";   // 0922: 있을 때만 칸을 보인다
     paintDiffFull();
     $("#l-ai").disabled = !S.ai;
     // AI 제안이 없으면 «차이 보기» 는 의미가 없다(원본 전체가 삭제 후보로 보임)

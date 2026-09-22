@@ -331,6 +331,7 @@ function loadBrush(tool) {
 $("#brush").oninput = (e) => { S.brush = +e.target.value; $("#brushv").textContent = S.brush; S.dirty = true; saveBrush(); };
 $("#alpha").oninput = (e) => { S.alpha = +e.target.value / 100; $("#alphav").textContent = e.target.value + "%"; S.dirty = true; };
 ["#l-gt", "#l-ai", "#l-ed", "#l-diff"].forEach((s) => $(s).onchange = () => { S.dirty = true; });
+if ($("#l-orig")) $("#l-orig").onchange = () => { S.dirty = true; };     // 0922 검수 전 원본(없는 화면·시험 스텁도 있어 지킨다)
 $("#l-inst").onchange = () => { paintGtLayer(); S.dirty = true; };
 $("#fromgt").onclick = () => { if (!S.gt) return; pushUndo(); applyBits(S.gt.slice()); flash("원본 GT 를 수정본으로 복사"); };
 $("#fromai").onclick = () => { if (!S.ai) return; pushUndo(); applyBits(S.ai.slice()); flash("AI 제안을 수정본으로 복사"); };

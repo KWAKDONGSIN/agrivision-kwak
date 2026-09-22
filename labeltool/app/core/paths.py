@@ -69,6 +69,17 @@ def gt_path(fruit: str, stem: str) -> str:
     return os.path.join(dataset_for(fruit), fruit, "masks", stem + ".png")
 
 
+def orig_gt_path(fruit: str, stem: str) -> str:
+    """검수 **전** 원본 마스크(팀 표준 원본 폴더 `DEFAULT_DATASET`). 0922 사용자 요청 «검수 전 진짜 원본도
+    보여 달라» — 툴이 검수판 폴더(`datasets_reviewed_*`)를 보고 있을 때만 뜻이 있다(복숭아·포도)."""
+    return os.path.join(DEFAULT_DATASET, fruit, "masks", stem + ".png")
+
+
+def has_orig_gt(fruit: str, stem: str) -> bool:
+    """«검수 전 원본» 레이어를 보여 줄 수 있나 — 지금 보는 원본이 검수판이고, 진짜 원본 파일이 있을 때만."""
+    return dataset_for(fruit) != DEFAULT_DATASET and os.path.exists(orig_gt_path(fruit, stem))
+
+
 def fixed_path(fruit: str, stem: str) -> str:
     """사람이 고친 이진 마스크의 저장 경로를 돌려준다."""
     return os.path.join(DATA_DIR, fruit, "masks_fixed", stem + ".png")
