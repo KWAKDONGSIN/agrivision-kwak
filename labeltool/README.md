@@ -8,3 +8,5 @@ app/README.md에서 시작합니다. 최신 쉬움 개선과 배포 검증은 re
 최신 모바일 대응은 reviews/mobile_260921/stage3_final.md와 app/static/mobile_done.html을 읽으세요.
 
 2026-09-21 편의·안정성 갱신: reviews/편의_260921/checklist.md 를 읽으세요.
+
+2026-09-22 기술설명 갱신: reviews/기술설명_260922/checklist.md 와 ../docs/260922_툴_기술설명.md 를 읽으세요.
