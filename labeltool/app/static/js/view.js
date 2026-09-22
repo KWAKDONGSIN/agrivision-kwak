@@ -127,14 +127,22 @@ function draw() {
   // 0918 «보기 전환»(ui.js 가 S.dim 을 넣는다) — 사진**만** 어둡게 덮어 마스크·번호만 보이게 한다.
   // S.dim 이 0/undefined 면(기본) 아무 일도 하지 않는다 — 그림 순서와 저장에는 영향이 없다.
   if (S.dim) { ctx.globalAlpha = S.dim; ctx.fillStyle = "#000"; ctx.fillRect(0, 0, S.W, S.H); }
-  ctx.globalAlpha = S.alpha;
+  // 0922 «지우개가 안 지워진다»(사용자 보고) — 원본(빨강)·AI(파랑)·내 수정본(하늘색)이 같은 진하기로
+  // 겹쳐 있어, 지우개로 수정본을 지워도 그 **밑의 빨강·파랑이 그대로** 보였다(모래상자 실측: 데이터
+  // S.ed 는 0 이 됐는데 화면 색은 그대로). 저장되는 것은 수정본 하나뿐이므로 수정본이 켜져 있을 때는
+  // 원본·AI 를 참고용으로 흐리게(0.35배) 깐다. 수정본을 끄면 예전처럼 제 진하기로 보인다.
+  const edOn = $("#l-ed").checked && S.lay.ed;
+  ctx.globalAlpha = edOn ? S.alpha * 0.35 : S.alpha;
   if ($("#l-gt").checked && S.lay.gt) ctx.drawImage(S.lay.gt.cv, 0, 0);
   if ($("#l-ai").checked && S.lay.ai) ctx.drawImage(S.lay.ai.cv, 0, 0);
-  if ($("#l-ed").checked && S.lay.ed) ctx.drawImage(S.lay.ed.cv, 0, 0);
+  ctx.globalAlpha = S.alpha;
+  if (edOn) ctx.drawImage(S.lay.ed.cv, 0, 0);
   if ($("#l-diff").checked && S.lay.diff) { ctx.globalAlpha = Math.min(1, S.alpha + 0.35); ctx.drawImage(S.lay.diff.cv, 0, 0); }
   ctx.globalAlpha = 1;
   if (S.inst && S.lay.num && $("#l-num").checked) {
-    ctx.globalAlpha = S.numAlpha;
+    // 0922: 번호 덩어리(복숭아 등)도 수정본 위에 0.6 으로 덮여 지운 자리를 가렸다. 번호 편집 모드가
+    // 아니고 수정본이 켜져 있으면 번호도 참고용으로 흐리게(0.35배). 번호 편집(K)에서는 예전 그대로.
+    ctx.globalAlpha = (S.numMode || !edOn) ? S.numAlpha : S.numAlpha * 0.35;
     ctx.drawImage(S.lay.num.cv, 0, 0);
     ctx.globalAlpha = 1;
   }
