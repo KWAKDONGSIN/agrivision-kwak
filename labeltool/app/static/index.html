@@ -40,6 +40,11 @@
 <!-- ─────────────────────────── 목록 화면 ─────────────────────────── -->
 <section id="view-list" class="view">
   <div class="bar">
+    <select id="f-src" style="display:none" title="사과는 두 데이터셋(MinneApple · PApple RGB-D)을 합친 것입니다. 출처로 걸러 봅니다 (0922)">
+      <option value="">출처 전체</option>
+      <option value="MinneApple">MinneApple</option>
+      <option value="PApple">PApple (front·back)</option>
+    </select>
     <select id="f-status" title="검수 상태로 걸러 봅니다">
       <option value="all">상태 전체</option>
       <option value="unreviewed">아직 안 봄</option>
@@ -194,7 +199,9 @@
              (app.js 의 K 키·회귀 시험이 이 체크박스를 그대로 쓴다). -->
         <label class="dupsw"><input type="checkbox" id="num-mode"> 번호 편집 모드 (K)</label>
         <div class="tools">
-          <button class="ntool on" data-ntool="erase" title="지우기 — 지울 덩어리를 클릭해 «고른 뒤» D 키를 누릅니다(클릭만으로는 안 지워집니다)">
+          <button class="ntool on" data-ntool="click" title="클릭으로 붙이기 — 칠해진 열매(내 수정본, 없으면 원본 마스크)를 클릭하면 그 덩어리에 새 번호가 바로 붙습니다. 이미 번호가 있으면 알려 줍니다. 칠해져 있지 않으면 «붓으로 붙이기» 로 칠한 뒤 N">
+            <span class="ti">➕</span><span class="tw">붙이기</span><span class="tk">N</span></button>
+          <button class="ntool" data-ntool="erase" title="지우기 — 지울 덩어리를 클릭해 «고른 뒤» D 키를 누릅니다(클릭만으로는 안 지워집니다)">
             <span class="ti">🗑</span><span class="tw">지우기</span><span class="tk">D</span></button>
           <button class="ntool" data-ntool="merge" title="합치기 — 한 알이 두 번호로 쪼개졌을 때. A·B 를 차례로 클릭해 «고른 뒤» M 키">
             <span class="ti">🔗</span><span class="tw">합치기</span><span class="tk">M</span></button>

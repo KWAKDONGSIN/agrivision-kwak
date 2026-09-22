@@ -181,6 +181,11 @@ function flushDirty() {
 function stamp(cx, cy, r, val) {
   const W = S.W, H = S.H, d = S.lay.ed.pix.data, ed = S.ed;
   const [cr, cg, cb] = COL.ed;
+  // 0922 사용자 «지우개로 모든 라벨을 지울 수 있게»: 일반 모드의 지우개(val=0)는 열매 번호(S.inst)도 함께 지운다.
+  // 바로 0 으로 만들고 이전 값을 S.eraseInstMap 에 남긴다 → 마우스를 떼면 instances.js 의 applyEraseInst 가
+  // 되돌리기 한 단계로 묶고 번호 겹을 다시 칠한다(저장은 Ctrl+S 가 마스크 뒤에 번호도 이어서 한다).
+  const instE = (val === 0 && !S.numMode && S.inst) ? S.inst : null;
+  if (instE && !S.eraseInstMap) S.eraseInstMap = new Map();
   const y0 = Math.max(0, Math.floor(cy - r)), y1 = Math.min(H - 1, Math.ceil(cy + r));
   const r2 = r * r;
   let bx0 = W, by0 = H, bx1 = 0, by1 = 0, touched = false;
@@ -189,6 +194,7 @@ function stamp(cx, cy, r, val) {
     const x0 = Math.max(0, Math.floor(cx - w)), x1 = Math.min(W - 1, Math.ceil(cx + w));
     for (let x = x0; x <= x1; x++) {
       const i = y * W + x;
+      if (instE && instE[i] !== 0) { if (!S.eraseInstMap.has(i)) S.eraseInstMap.set(i, instE[i]); instE[i] = 0; touched = true; }
       if (ed[i] === val) continue;
       ed[i] = val;
       const p = i * 4;

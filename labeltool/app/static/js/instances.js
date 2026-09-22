@@ -395,7 +395,7 @@ function setNumMode(on, silent) {
   $("#fromai").disabled = lock || !hasProp;
   $("#btn-ai").disabled = lock || !hasProp;
   const np = $("#numpanel"); if (np) np.classList.toggle("numlock", lock);
-  if (lock) { S.poly = []; }
+  if (lock) { S.poly = []; setNTool("click"); }      // 0922: 켤 때마다 «클릭으로 붙이기» 가 기본
   S.numSel = []; clearPending();
   if (!silent) {
     flash(lock ? "번호 편집 모드 — 브러시·다각형·수정본 저장이 잠깁니다 (K 로 끄기)"
@@ -433,6 +433,18 @@ function pushNumUndo(ch, kind) {
   if (S.numUndoStack.length > 40) S.numUndoStack.shift();   // 지시서 요구 10단계 이상
   S.numRedoStack.length = 0;
   S.numDirty = true;
+}
+/* 0922: 일반 모드 지우개가 지운 번호 화소(mask.js stamp 가 S.eraseInstMap 에 모아 둠)를 되돌리기 한 단계로 묶는다 */
+function applyEraseInst() {
+  const m = S.eraseInstMap;
+  if (!m || !m.size) { S.eraseInstMap = null; return; }
+  const ch = mkChanges();
+  m.forEach((prev, i) => { ch.idx.push(i); ch.prev.push(prev); ch.next.push(0); });
+  S.eraseInstMap = null;
+  pushNumUndo(ch, "erase");
+  S.numCounts.erase = (S.numCounts.erase || 0) + 1;
+  repaintNum(); numInfo();
+  flash(`지우개가 열매 번호 화소 ${ch.idx.length.toLocaleString()}개도 지웠습니다 — Ctrl+S 로 저장하면 번호도 함께 저장됩니다`);
 }
 function numUndo() {
   if (!S.numUndoStack.length) return flash("되돌릴 번호 편집이 없습니다", true);
@@ -520,8 +532,41 @@ function doAdd() {
 }
 
 /* ------------------------------------------------------------- 마우스 (번호 편집 모드) */
+/* 0922 팀 요청(성문·성후): «칠한 열매를 클릭하면 번호가 붙게» — 클릭한 자리의 칠해진 덩어리(4-연결)를 찾는다.
+   기준은 내 수정본(S.ed), 없으면 원본 마스크(S.gt). 이미 번호가 있는 화소는 넣지 않는다. */
+function floodMaskPx(bits, inst, x0, y0) {
+  const W = S.W, H = S.H, seen = new Uint8Array(W * H), out = [], st = [y0 * W + x0];
+  seen[st[0]] = 1;
+  while (st.length) {
+    const i = st.pop();
+    if (!bits[i] || inst[i] !== 0) continue;
+    out.push(i);
+    const x = i % W, y = (i - x) / W;
+    if (x > 0 && !seen[i - 1]) { seen[i - 1] = 1; st.push(i - 1); }
+    if (x < W - 1 && !seen[i + 1]) { seen[i + 1] = 1; st.push(i + 1); }
+    if (y > 0 && !seen[i - W]) { seen[i - W] = 1; st.push(i - W); }
+    if (y < H - 1 && !seen[i + W]) { seen[i + W] = 1; st.push(i + W); }
+  }
+  return out;
+}
+function clickAdd(x, y) {
+  const xi = Math.floor(x), yi = Math.floor(y);
+  if (xi < 0 || yi < 0 || xi >= S.W || yi >= S.H) return;
+  const id = idAt(x, y);
+  if (id) { S.numSel = [id]; numInfo(); flash(`여기는 이미 번호 ${id} 입니다 — 지우려면 D, 나누려면 X(선 드래그 뒤 X), 합치려면 다른 열매를 클릭한 뒤 M`, true); return; }
+  const bits = S.ed || S.gt;
+  if (!bits || !bits[yi * S.W + xi]) {
+    flash("칠해진 곳이 아닙니다 — «붓으로 붙이기» 로 칠한 뒤 N 을 누르거나, K 를 끄고 붓(B)으로 칠해 저장한 뒤 다시 K", true); return;
+  }
+  const px = floodMaskPx(bits, S.inst, xi, yi);
+  const r = opAdd(S.inst, px, S.instMax + 1);
+  runNumOp(r, "add", r && r.ok ? `새 번호 ${r.newId} 를 붙였습니다 (클릭한 덩어리 ${r.n.toLocaleString()} 화소) — 저장은 Ctrl+S` : "");
+  numInfo();
+}
+
 function numMouseDown(e, x, y) {
   if (!S.inst) return;
+  if (S.ntool === "click") { if (e.button === 0) clickAdd(x, y); return; }
   if (S.ntool === "split") {
     if (e.button !== 0) return;
     S.numLine = { x0: x, y0: y, x1: x, y1: y, drag: true };
@@ -889,5 +934,5 @@ if ($("#num-mode")) {
 
 /* ── 이 파일이 내놓는 것 (다음 파일들이 쓴다) ── */
 /* 0921 S6 — `saveInstances` 는 **감싼 쪽**(numSave)을 같은 이름으로 내놓는다(keys.js 의 Ctrl+S). */
-Object.assign(UI, { loadInstances, setNumMode, setNTool, numKey, numUndo, numRedo, saveInstances: numSave, revertInstances, numReload, repaintNum, drawNumOverlay, drawErrBoxes, drawNoteBoxes, noteBoxes, ensureErrRows, renderErrRows, hasPendingRegion, clearPending, numMouseDown, numMouseMove, numMouseUp, instStats, VERDICT_KO });
+Object.assign(UI, { applyEraseInst, loadInstances, setNumMode, setNTool, numKey, numUndo, numRedo, saveInstances: numSave, revertInstances, numReload, repaintNum, drawNumOverlay, drawErrBoxes, drawNoteBoxes, noteBoxes, ensureErrRows, renderErrRows, hasPendingRegion, clearPending, numMouseDown, numMouseMove, numMouseUp, instStats, VERDICT_KO });
 })();

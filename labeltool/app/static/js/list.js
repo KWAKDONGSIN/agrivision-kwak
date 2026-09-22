@@ -156,23 +156,38 @@ function cardFace(it) {
   return { cls: "card s-" + shown, tags: tags.join("") };
 }
 
+/* 0922 팀(성문): «사과는 두 데이터셋을 합친 거네» — 파일 이름으로 출처를 가른다.
+   `2015MMDD_HHMMSS_imageN` = MinneApple(670장) · `datasetN_front/back_N` = PApple RGB-D(331장). 데이터 분리는 교수님 결정. */
+function appleSrc(stem) {
+  if (/^\d{8}_/.test(stem)) return "MinneApple";
+  if (/^dataset\d+_(front|back)_/.test(stem)) return "PApple";
+  return "";
+}
 function renderGrid() {
   const g = $("#grid");
   g.innerHTML = "";
   if (!S.items.length) { g.innerHTML = '<div class="muted">조건에 맞는 사진이 없습니다.</div>'; return; }
   const frag = document.createDocumentFragment();
+  const wantSrc = (S.fruit === "apple" && $("#f-src")) ? $("#f-src").value : "";
+  let shown = 0;
   S.items.forEach((it, i) => {
+    const src = S.fruit === "apple" ? appleSrc(it.stem) : "";
+    if (wantSrc && src !== wantSrc) return;            // 출처 필터(화면에서만 거른다 — 서버·번호 순서는 그대로)
+    shown++;
     const d = document.createElement("div");
     const f = cardFace(it);
     d.className = f.cls;
+    const srcTag = src ? `<span class="tag" title="이 사진의 출처 데이터셋">${src}</span>` : "";
     d.innerHTML = `<img data-src="/thumb?fruit=${encodeURIComponent(S.fruit)}&stem=${encodeURIComponent(it.stem)}" alt="">
-      <div class="cap">${escapeHtml(it.stem)}<div class="tags">${f.tags}</div></div>`;
+      <div class="cap">${escapeHtml(it.stem)}<div class="tags">${srcTag}${f.tags}</div></div>`;
     d.onclick = () => openItem(i);
     frag.appendChild(d);
   });
   g.appendChild(frag);
+  { const li = $("#listinfo"); if (li) { const base = li.textContent.split(" · 이 쪽에서")[0]; li.textContent = base + (wantSrc ? ` · 이 쪽에서 ${wantSrc} ${shown}장` : ""); } }
   lazyImages(g);
 }
+if ($("#f-src")) $("#f-src").onchange = () => renderGrid();
 
 /* 0918 사이클5(총괄) ② — 확정·저장·되돌리기 직후 **그 카드 하나만** 다시 그린다.
    목록 전체를 다시 읽지 않는다(2,400장 목록에서 스크롤이 맨 위로 튀기 때문 — 2차가 (나)를
@@ -216,7 +231,8 @@ function lazyImages(root) {
   root.querySelectorAll("img[data-src]").forEach((im) => io.observe(im));
 }
 
-$("#fruit").onchange = () => { if (!confirmLeave()) { $("#fruit").value = S.fruit; return; } showView("list"); S.stem = null; S.item = null; S.img = null; S.ed = null; S.inst = null; S.boxes = []; S.edDirty = false; S.bDirty = false; S.numDirty = false; S.fruit = $("#fruit").value; localStorage.setItem("fruit", S.fruit); loadBrush(); loadList(); };
+$("#fruit").onchange = () => { if (!confirmLeave()) { $("#fruit").value = S.fruit; return; }
+  if ($("#f-src")) { $("#f-src").style.display = $("#fruit").value === "apple" ? "" : "none"; if ($("#fruit").value !== "apple") $("#f-src").value = ""; } /* 0922 출처 필터는 사과에서만 */ showView("list"); S.stem = null; S.item = null; S.img = null; S.ed = null; S.inst = null; S.boxes = []; S.edDirty = false; S.bDirty = false; S.numDirty = false; S.fruit = $("#fruit").value; localStorage.setItem("fruit", S.fruit); loadBrush(); loadList(); };
 ["#f-status", "#f-sort", "#f-dup", "#f-suspect", "#f-prop"].forEach((s) => $(s).onchange = () => loadList());
 $("#f-q").onkeydown = (e) => { if (e.key === "Enter") loadList(); };
 $("#prevpage").onclick = () => { if (S.page > 1) { S.page--; loadList(true); } };

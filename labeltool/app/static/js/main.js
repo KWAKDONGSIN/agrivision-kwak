@@ -83,7 +83,7 @@ window.addEventListener("mousemove", (e) => {
   if (S.drawing) { if (strokeTo(x, y, (S.tool === "erase" || S.rightErase) ? 0 : 1)) S.edDirty = true; flushDirty(); }
   else S.dirty = true;
 });
-window.addEventListener("mouseup", () => { numMouseUp(); boxMouseUp(); S.drawing = false; S.rightErase = false; S.panning = false; S.lastPt = null; flushDirty(); });
+window.addEventListener("mouseup", () => { numMouseUp(); boxMouseUp(); if (UI.applyEraseInst) UI.applyEraseInst(); S.drawing = false; S.rightErase = false; S.panning = false; S.lastPt = null; flushDirty(); });
 cv.addEventListener("wheel", (e) => {
   e.preventDefault();
   if (!S.img) return;

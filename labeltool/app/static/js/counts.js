@@ -158,6 +158,8 @@ async function doAction(action) {
   // 마스크를 실제로 저장한 것은 «수정본 저장»(fixed) 과 «AI 제안으로 교체»(ai) 뿐이다.
   // 그 두 가지가 성공했을 때만 «저장 안 한 수정» 표시를 지운다.
   if (action === "fixed" || action === "ai") S.edDirty = false;
+  // 0922: 일반 모드 지우개가 열매 번호도 지웠으면(S.numDirty) 마스크 저장 뒤 번호도 이어서 저장한다.
+  if (action === "fixed" && S.numDirty && S.inst && UI.saveInstances) { await UI.saveInstances(); }
   flash({ ok: "원본 그대로 OK 로 저장", ai: "AI 제안으로 교체 저장", fixed: "수정본 저장 완료",
           flag: "문제 있음 표시", exclude: "제외 표시" }[action]);
   // 0918 UI사이클5 N-C: «제외» 사진에 마스크를 저장해도 판정은 «제외» 로 남는다(서버가 정한다).

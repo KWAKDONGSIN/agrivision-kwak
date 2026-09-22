@@ -46,7 +46,7 @@ Object.assign(S, { boxMode: false, film: 0.25, boxes: [], bsel: -1,
 
 Object.assign(S, {
   inst: null, instOrig: null, instSrc: null, instMax: 0, instN: 0,
-  numMode: false, ntool: "erase", numAlpha: 0.6, numSel: [],
+  numMode: false, ntool: "click", numAlpha: 0.6, numSel: [],
   numUndoStack: [], numRedoStack: [], numDirty: false,
   numCounts: { erase: 0, merge: 0, split: 0, add: 0 },
   numLine: null, numPoly: [], numBrushPx: null, numBrushPath: null, numCents: null,
