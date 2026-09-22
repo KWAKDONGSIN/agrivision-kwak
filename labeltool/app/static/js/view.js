@@ -519,17 +519,35 @@ $$(".task").forEach((b) => b.onclick = () => { setTask(b.dataset.task); b.blur()
    자리는 **오른쪽 위**다 — 왼쪽 위는 붓질을 시작하는 자리라 비워 둔다(사이클4 N8·사이클5 N-I 가
    왼쪽 위에서 붓질이 안 먹는 문제를 끝내 못 없앴다). */
 
+/* 0922 사용자: «어떤 데이터가 성문 씨 것인지 알게 해 달라» — 겹 이름에 **출처**를 붙인다(글자는 함수로, 사진마다 다르다). */
+const NUMSRC_KO = { "human_fixed": "내가 고침", "team:박성문": "박성문 초벌", "certh_gt": "CERTH 정답", "gt_numbers": "원본 번호", "cc4": "자동 계산" };
+// 서버는 이름(`team:박성문`)을 줄 때도, 종류(`seed`·`fixed`·`gt`)만 줄 때도 있다 — 둘 다 받는다.
+const KIND_KO = { fixed: "내가 고침", seed: () => (S.fruit === "grape" ? "CERTH 정답" : "박성문 초벌"), gt: "원본 번호", none: "자동 계산" };
+const numSrcKo = () => { const v = NUMSRC_KO[S.instSrc] || KIND_KO[S.instSrc]; return typeof v === "function" ? v() : (v || (S.instSrc ? String(S.instSrc) : "출처 모름")); };
 const CHIP = [
-  ["l-gt",   "#e8443a", "원본", "빨강 = 원본 라벨(GT). 원래 데이터셋에 있던 것 — 이것이 맞는지 보는 게 검수입니다.", () => true],
-  ["l-orig", "#ff8c00", "검수 전", "주황 = 검수 전 진짜 원본(팀 표준 원본 폴더). 복숭아·포도의 «원본» 은 09-16 AI 검수가 고친 판이라 따로 둡니다.", () => !!S.orig],
-  ["l-ai",   "#2f7de1", "AI",   "파랑 = AI 제안. AI 가 1차로 그린 것입니다.", () => !!S.ai],
+  ["l-gt",   "#e8443a", () => S.orig ? "원본(AI 검수판)" : "원본(데이터셋)", "빨강 = 원본 라벨(GT). 원래 데이터셋에 있던 것 — 이것이 맞는지 보는 게 검수입니다. 복숭아·포도는 09-16 AI 검수가 고친 판입니다.", () => true],
+  ["l-orig", "#ff8c00", "검수 전 원본(팀 원본 폴더)", "주황 = 검수 전 진짜 원본(팀 표준 원본 폴더). 복숭아·포도의 «원본» 은 09-16 AI 검수가 고친 판이라 따로 둡니다.", () => !!S.orig],
+  ["l-ai",   "#2f7de1", "AI 제안(09-16 검수)",   "파랑 = AI 제안. AI 가 1차로 그린 것입니다.", () => !!S.ai],
   ["l-ed",   "#00e5ff", "수정", "하늘색(시안) = 내 수정본. «저장» 을 눌러야 파일로 남습니다.",
     () => !!(S.edDirty || (S.item && S.item.has_fixed))],
   ["l-diff", "linear-gradient(90deg,#ffd400 50%,#ff35d0 50%)", "차이",
     "노랑 = AI 만 찾은 곳(라벨 누락 후보) · 분홍 = 원본에만 있는 곳 (D 키)", () => !!S.ai],
-  ["l-num",  "conic-gradient(#e8443a,#f2c11a,#4ad16b,#3d8bff,#c46bff,#e8443a)", "번호",
-    "알록달록 = 열매 번호 (J 키)", () => !!S.inst]
+  ["l-num",  "conic-gradient(#e8443a,#f2c11a,#4ad16b,#3d8bff,#c46bff,#e8443a)", () => "번호(" + numSrcKo() + ")",
+    "알록달록 = 열매 번호 (J 키). 괄호 안이 출처 — 복숭아·블루베리는 박성문 님 워터셰드 초벌이 초기값입니다.", () => !!S.inst]
 ];
+
+/* 0922 사용자: «성문 씨가 색을 칠해 둔 것 말고 진짜 원본 데이터가 어떻게 생겼는지 보고 싶다» */
+let rawSaved = null;
+function rawOnly(on) {
+  const btn = $("#rawonly");
+  if (on) {
+    if (!rawSaved) { rawSaved = {}; VLAYERS.forEach((id) => { const e = $("#" + id); if (e) rawSaved[id] = e.checked; }); }
+    setChecks({ "l-gt": !S.orig, "l-orig": !!S.orig, "l-ai": false, "l-ed": false, "l-diff": false, "l-num": false, "l-numtext": false });
+  } else if (rawSaved) { setChecks(rawSaved); rawSaved = null; }
+  if (btn) btn.classList.toggle("on", !!on);
+  S.dirty = true;
+}
+if ($("#rawonly")) $("#rawonly").onclick = () => rawOnly(!rawSaved);
 
 function renderLegend() {
   const el = $("#legend");
@@ -541,7 +559,7 @@ function renderLegend() {
     if (!cb || cb.disabled || !when()) return;
     it.push('<span class="i' + (cb.checked ? "" : " off") + '" data-tgl="' + id
       + '" title="' + escapeHtml(tip + "\n(누르면 이 겹을 껐다 켭니다)") + '">'
-      + '<i style="background:' + style + '"></i>' + label + "</span>");
+      + '<i style="background:' + style + '"></i>' + (typeof label === "function" ? label() : label) + "</span>");
   });
   if (S.boxMode) it.push('<span class="i" title="노란 네모 = 상자 (흰 필름 위)">'
     + '<i style="background:#ffcc33"></i>상자</span>');
@@ -634,5 +652,5 @@ function syncInstErrBtn() {
 
 
 /* ── 이 파일이 내놓는 것 (다음 파일들이 쓴다) ── */
-Object.assign(UI, { cv, ctx, resizeCanvas, fitView, zoomToNote, toImg, showView, curTask, setTask, syncTaskUI, renderLegend, setSideFold, setVMode, onViewModeKey, onPeekKey, onPeekUp, tick, NUM_WHY, cursorFor, applyCursor });
+Object.assign(UI, { rawOnly, cv, ctx, resizeCanvas, fitView, zoomToNote, toImg, showView, curTask, setTask, syncTaskUI, renderLegend, setSideFold, setVMode, onViewModeKey, onPeekKey, onPeekUp, tick, NUM_WHY, cursorFor, applyCursor });
 })();

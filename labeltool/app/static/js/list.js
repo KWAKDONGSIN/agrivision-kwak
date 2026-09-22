@@ -296,6 +296,8 @@ async function openItem(i, force) {
     if (S.ai) { makeLayer("ai", S.W, S.H); paintLayerFull("ai", S.ai, COL.ai); }
     if (S.orig) { makeLayer("orig", S.W, S.H); paintLayerFull("orig", S.orig, COL.orig); }
     if ($("#row-orig")) $("#row-orig").style.display = S.orig ? "" : "none";   // 0922: 있을 때만 칸을 보인다
+    if ($("#fromorig")) $("#fromorig").style.display = S.orig ? "" : "none";
+    if (UI.rawOnly) UI.rawOnly(false);                                        // 0922: 새 사진에서는 «진짜 원본만» 을 풀고 시작한다
     paintDiffFull();
     $("#l-ai").disabled = !S.ai;
     // AI 제안이 없으면 «차이 보기» 는 의미가 없다(원본 전체가 삭제 후보로 보임)

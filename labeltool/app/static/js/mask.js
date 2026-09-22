@@ -335,6 +335,8 @@ if ($("#l-orig")) $("#l-orig").onchange = () => { S.dirty = true; };     // 0922
 $("#l-inst").onchange = () => { paintGtLayer(); S.dirty = true; };
 $("#fromgt").onclick = () => { if (!S.gt) return; pushUndo(); applyBits(S.gt.slice()); flash("원본 GT 를 수정본으로 복사"); };
 $("#fromai").onclick = () => { if (!S.ai) return; pushUndo(); applyBits(S.ai.slice()); flash("AI 제안을 수정본으로 복사"); };
+// 0922: AI 검수가 고친 «원본» 을 무르고 싶을 때 — 검수 전 진짜 원본을 수정본으로(복숭아·포도만 S.orig 가 있다)
+if ($("#fromorig")) $("#fromorig").onclick = () => { if (!S.orig) return; pushUndo(); applyBits(S.orig.slice()); flash("검수 전 원본을 수정본으로 복사 — 저장은 Ctrl+S"); };
 $("#clearall").onclick = () => { if (!S.ed || !confirm("칠한 영역을 전부 지울까요? Ctrl+Z로 되돌릴 수 있습니다.")) return; pushUndo(); applyBits(new Uint8Array(S.W * S.H)); flash("수정본을 전부 지웠습니다"); };
 
 /* ------------------------------------------------------------- 저장 */
