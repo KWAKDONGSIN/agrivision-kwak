@@ -195,13 +195,18 @@ function opMerge(inst, a, b) {
 function opAdd(inst, pxIdx, newId) {
   const ch = mkChanges();
   let skipped = 0;
+  const hit = {};                                   // 0922: 어느 번호와 겹쳤나(사용자 «번호가 안 붙는다» — 이유를 번호로 말해 준다)
   for (let k = 0; k < pxIdx.length; k++) {
     const i = pxIdx[k];
     if (i < 0 || i >= inst.length) continue;
-    if (inst[i] !== 0) { skipped++; continue; }
+    if (inst[i] !== 0) { skipped++; hit[inst[i]] = (hit[inst[i]] || 0) + 1; continue; }
     chSet(ch, inst, i, newId);
   }
-  if (!ch.idx.length) return { ok: false, reason: "그린 영역이 모두 기존 번호와 겹칩니다(겹친 화소는 덮지 않습니다)", skipped: skipped };
+  if (!ch.idx.length) {
+    const ids = Object.keys(hit).sort((a, b) => hit[b] - hit[a]).slice(0, 3).join(", ");
+    return { ok: false, skipped: skipped,
+      reason: "그린 곳에 이미 번호 " + ids + " 이(가) 있어 새 번호를 못 붙였습니다 — 옆 열매와 같이 묶여 있으면 X 로 나누고, 따로 세려면 D 로 지운 뒤 다시 N, 한 열매로 합치려면 M" };
+  }
   return { ok: true, ch: ch, n: ch.idx.length, skipped: skipped, newId: newId };
 }
 
@@ -665,6 +670,14 @@ function drawNumOverlay() {
     ctx.lineWidth = Math.max(1, 2 / s);
     ctx.strokeStyle = "#00e5ff";
     ctx.stroke();
+    // 0922 사용자 «다각형을 그렸는데 번호가 안 붙는다» — 확정 전이라는 것을 그림 옆에 적어 준다(알림은 금방 사라진다)
+    const hint = S.numPoly.length >= 3 ? "N 또는 Enter 를 눌러 번호 붙이기 (오른쪽 클릭도 됨)" : "점을 3개 이상 찍고 N";
+    const hx = S.numPoly[S.numPoly.length - 1][0], hy = S.numPoly[S.numPoly.length - 1][1];
+    const hs = Math.max(12, 16 / s);
+    ctx.font = `bold ${hs}px sans-serif`;
+    ctx.lineWidth = Math.max(2, 4 / s); ctx.strokeStyle = "rgba(0,0,0,.85)"; ctx.fillStyle = "#00e5ff";
+    ctx.textAlign = "left"; ctx.textBaseline = "top";
+    ctx.strokeText(hint, hx + 8 / s, hy + 8 / s); ctx.fillText(hint, hx + 8 / s, hy + 8 / s);
   }
   if (S.numBrushPath && S.numBrushPath.length) {
     ctx.fillStyle = "rgba(0,229,255,.45)";
