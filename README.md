@@ -51,3 +51,10 @@ docs/260922_툴_기술설명.md (같은 이름 PDF) 에 적었습니다. 감시�
 툴을 어떤 기술로 어떻게 만들었는지, 언제 저장되는지, 팀원이 어떻게 고치는지를
 docs/260922_툴_기술설명.md (같은 이름 PDF) 에 적었습니다. 감시자(scripts/watchdog.sh)에
 팀원용 재시작 신호 `app/logs/restart.flag` 를 더했습니다. 요소 id·단축키·API 규칙은 바꾸지 않았습니다.
+
+## 2026-09-23 그림판 갱신
+
+첫 화면(/)을 윈도 그림판 모양의 새 라벨 화면으로 바꿨습니다(labeltool/app/static/paint/). 색 하나 = 열매 하나,
+저장 한 번에 마스크·번호·상자. ✨ 클릭 칠하기(SAM2.1 도우미, labeltool/ai_helper/sam_server.py) ·
+모델 초벌(YOLO11m-seg, labeltool/ai_helper/draft/) · 번호를 원본 정답으로 나누기. 옛 화면은 /old.
+AI 판정은 화면에서 뺐습니다(파일은 보존). 사용법 docs/260923_그림판툴_사용법.md · 현황 docs/260923_인스턴스_현황과_선택지.md

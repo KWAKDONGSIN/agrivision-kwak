@@ -254,7 +254,7 @@ def part_new():
         #    코드 경로는 똑같다. 실제 사람의 브라우저는 프로필이 남으므로 창을 닫아도 유지된다.
         chars = L.count_text(b, "#view-edit")["chars"]
         shot(b, "c4_04_mask_convenience")
-        b.go("/")
+        b.go("/old")  # 0923: 옛 툴은 /old
         b.wait("return !!document.querySelector('#fruit option')", 60)
         time.sleep(1.5)
         open_exact(b, FR, stems[4])

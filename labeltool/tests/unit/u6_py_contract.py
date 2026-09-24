@@ -96,14 +96,16 @@ def main():
               "%r → %r" % (want["values"][k], got["values"].get(k)))
 
     # ③ 기존 주소 보존 + 사용자 승인한 읽기 전용 팀원 자료 주소 두 개.
-    added = {("/api/team_review", "team_review", ("GET",)), ("/team_photo/grape/<stem>", "team_photo", ("GET",))}
-    L.chk("u6-3 기존%d개와 승인한 읽기 주소2개" % len(want["routes"]),
+    added = {("/api/team_review", "team_review", ("GET",)), ("/team_photo/grape/<stem>", "team_photo", ("GET",)),
+             ("/old", "index_old", ("GET",)),   # 0923: 첫 화면을 그림판으로 바꾸고 옛 툴은 /old 로 옮김
+             ("/api/sam", "api_sam", ("POST",)), ("/draft", "serve_draft", ("GET",))}   # 0923: 그림판 AI 도움
+    L.chk("u6-3 기존%d개와 승인한 주소5개" % len(want["routes"]),
           len(want["routes"]) + len(added) == len(got["routes"]),
           "%d → %d" % (len(want["routes"]), len(got["routes"])))
     wr = {(r["rule"], r["endpoint"], tuple(r["methods"])) for r in want["routes"]}
     gr = {(r["rule"], r["endpoint"], tuple(r["methods"])) for r in got["routes"]}
     L.chk("u6-3b 사라진 주소가 없다", not (wr - gr), sorted(wr - gr))
-    L.chk("u6-3c 추가는 승인한 읽기 주소2개뿐", gr - wr == added, sorted(gr - wr))
+    L.chk("u6-3c 추가는 승인한 주소5개뿐", gr - wr == added, sorted(gr - wr))
 
     # ④ 모듈 별칭은 경고만
     for mod in sorted(want.get("aliases") or {}):

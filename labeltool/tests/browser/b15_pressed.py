@@ -304,8 +304,8 @@ def main():
                   [lk["dis"], lk["lock"]])
             L.chk("⑪ 잠겨도 눌린 칸의 바탕은 지금 그대로 짙은 파랑이다 (%s)" % lk["bg"],
                   rgb(lk["bg"]) == rgb(on["bg"]), [lk["bg"], on["bg"]])
-            ne = b.js(FACE, '.ntool[data-ntool="erase"]')
-            L.chk("⑪ 번호 도구 «지우기» 가 눌려 있고 같은 그림자를 입는다",
+            ne = b.js(FACE, '.ntool[data-ntool="click"]')   # 0922: 기본 번호 도구가 «클릭으로 붙이기» 로 바뀜
+            L.chk("⑪ 번호 도구 «클릭으로 붙이기» 가 눌려 있고 같은 그림자를 입는다",
                   ne["on"] is True and ne["sh"] == on["sh"], [ne["on"], ne["sh"]])
             nm = b.js(FACE, '.ntool[data-ntool="merge"]')
             b.click('.ntool[data-ntool="merge"]')

@@ -184,7 +184,7 @@ def main():
 
         # ── ⑧ 새로고침해도 도구별로 남는다 ──────────────────────────────────
         L.run(b, "S.edDirty = false; S.bDirty = false; S.numDirty = false;")
-        b.go("/")
+        b.go("/old")  # 0923: 옛 툴은 /old
         b.wait("return !!document.querySelector('#fruit option')", 60)
         time.sleep(1.2)
         L.close_tour(b)

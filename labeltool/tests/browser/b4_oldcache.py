@@ -95,7 +95,7 @@ def main():
         errs = b.js("return (window.__errs || []).slice()")
         L.chk("콘솔 오류 0", not errs, errs)
         # 새 index.html 로 들어오면 다리는 아예 불리지 않는다(두 번 실리지 않는다)
-        b.go("/")
+        b.go("/old")  # 0923: 옛 툴은 /old
         time.sleep(2.0)
         n = b.js("return document.querySelectorAll('script[src*=\"/static/app.js\"]').length")
         L.chk("새 index.html 은 옛 app.js 를 부르지 않는다(두 번 실릴 일이 없다)", n == 0, n)

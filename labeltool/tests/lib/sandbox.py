@@ -378,6 +378,9 @@ def browser(w=1366, h=768, base=None, pw=None, skip_tour=True, login=True):
         b.go("/login")
         b.type("input[name=password]", PW if pw is None else pw)
         b.click("button, input[type=submit]")
+        b.go("/old")          # 0923: 첫 화면(/)은 새 그림판 — 옛 툴 시험은 /old 에서
+        if not b.js("return !!document.querySelector('#fruit')"):
+            b.go("/")         # /old 가 없는 옛 판 코드(보관본 비교 시험)는 / 가 옛 툴이다
         b.wait("return !!document.querySelector('#fruit option')")
         if skip_tour:
             close_tour(b)

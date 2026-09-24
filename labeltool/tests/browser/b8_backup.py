@@ -83,7 +83,7 @@ def reload_as_crash(b):
        (깃발을 내리는 것은 S4 의 창 닫기 경고를 피하기 위한 것이다. 화면 상태는 어차피 다 사라지고,
         서버에는 저장하지 않았으므로 정말 죽은 것과 같은 자리에서 다시 시작한다.)"""
     L.run(b, "S.edDirty = false; S.bDirty = false; S.numDirty = false")
-    b.go("/")
+    b.go("/old")  # 0923: 옛 툴은 /old
     b.wait("return !!document.querySelector('#fruit option')", 60)
     L.close_tour(b)
     b.js(HOOK)

@@ -83,6 +83,7 @@ class Browser:
     def login(self):
         pw = [l.split("=", 1)[1].strip() for l in open(os.path.expanduser("~/.council/labeltool.env")) if l.startswith("LABELTOOL_PASSWORD=")][0]
         self.go("/login"); self.type("input[name=password]", pw); self.click("button, input[type=submit]")
+        self.go("/old")       # 0923: 첫 화면(/)은 새 그림판 — 옛 툴은 /old
         self.wait("return !!document.querySelector('#fruit option')")
 
     def open_photo(self, fruit, stem=None, index=0):

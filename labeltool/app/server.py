@@ -24,6 +24,7 @@ import os
 from flask import Flask
 from PIL import Image
 
+from api import ai as api_ai
 from api import boxes as api_boxes
 from api import counts as api_counts
 from api import dashboard as api_dashboard
@@ -70,7 +71,7 @@ CTX = {
 auth.register(app, CTX)
 util.register_errors(app)
 for _mod in (api_photos, api_masks, api_boxes, api_instances, api_counts,
-             api_dupes, api_export, api_dashboard, api_team_review):
+             api_dupes, api_export, api_dashboard, api_team_review, api_ai):
     _mod.register(app, CTX)
 
 

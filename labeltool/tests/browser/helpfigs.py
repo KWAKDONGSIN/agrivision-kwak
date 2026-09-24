@@ -214,7 +214,7 @@ def fig_howto(b):           # 6. 다 끝나면 — 이 사용법 화면으로 �
 
 
 def fig_team_grape(b):      # 팀 자료 — 데이터 정리의 «포도 삭제대상 목록»
-    b.go("/")
+    b.go("/old")  # 0923: 옛 툴은 /old
     b.wait("return !!document.querySelector('#fruit option')", 60)
     L.close_tour(b)
     _fruit(b, "grape")

@@ -49,6 +49,13 @@ def register(app: Any, ctx: Any) -> None:
     # ---------------------------------------------------------------- 정적 파일
     @app.route("/")
     def index():
+        """0923 «그림판» 으로 다시 만들기(0922 랩미팅·레퍼런스1·2): 첫 화면은 새 그림판이다."""
+        return send_from_directory(os.path.join(APP_DIR, "static", "paint"), "index.html")
+
+
+    @app.route("/old")
+    def index_old():
+        """옛 툴(데이터 정리·내보내기·AI 검수 화면). 데이터·저장 규칙은 그림판과 같다."""
         return send_from_directory(os.path.join(APP_DIR, "static"), "index.html")
 
 
