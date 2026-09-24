@@ -152,7 +152,15 @@ function renderList(keepStem) {
   renderProgress();
   const want = keepStem && shown.some((it) => it.stem === keepStem) ? keepStem : (shown[0] || {}).stem;
   if (want) { sel.value = want; if (want !== S.stem || !S.L) openPhoto(want); }
-  else say("조건에 맞는 사진이 없습니다.");
+  else { clearPhoto(); say("조건에 맞는 사진이 없습니다. «이름 찾기» 칸을 비우거나 «안 한 것만» 을 끄세요."); }
+}
+/* 보여 줄 사진이 없으면 그림판을 비운다 — 다른 과일의 사진이 남아 있으면 그 위에 칠하고 엉뚱한 곳에 저장하려 하게 된다 */
+function clearPhoto() {
+  S.gen++;
+  Object.assign(S, { stem: "", L: null, img: null, undo: [], redo: [], idsCache: null, draftIds: new Set() });
+  imgC.width = ovC.width = 0; world.style.width = world.style.height = "0px";
+  centers = []; setDirty(false); drawHud();
+  $("#t-name").textContent = "사진을 고르세요"; $("#swatches").innerHTML = ""; $("#count").textContent = "";
 }
 
 /* ── 한 장 열기 ── */
@@ -351,6 +359,9 @@ function pushUndo(before, x0, y0, x1, y1) {
   }
   if (same) return;
   S.undo.push({ x0, y0, w, h, data }); if (S.undo.length > UNDO_MAX) S.undo.shift();
+  // 전체 사진 크기 기록(초벌·나누기·전부 지우기)이 쌓여도 약 120MB 를 넘지 않게 오래된 것부터 버린다
+  let bytes = 0; for (const r of S.undo) bytes += r.data.byteLength;
+  while (bytes > 120e6 && S.undo.length > 1) bytes -= S.undo.shift().data.byteLength;
   S.redo = [];
   changed();
 }
@@ -408,6 +419,22 @@ function fillAt(x, y, val) {
   paintRect(bx0, by0, bx1 - bx0 + 1, by1 - by0 + 1);
   pushUndo(before, bx0, by0, bx1 + 1, by1 + 1);
   say(val === 0 ? "그 덩어리를 지웠습니다." : `그 덩어리를 ${val}번으로 칠했습니다.`);
+  return true;
+}
+
+/* ✨ 오른쪽 클릭: 누른 열매 번호를 통째로(떨어진 조각까지) 지운다. 회색·빈 곳은 채우기통과 같이 덩어리만 */
+function eraseId(x, y) {
+  const v = S.L[y * S.W + x];
+  if (v === 0 || v === HOLE) return fillAt(x, y, 0);
+  const L = S.L, W = S.W, before = snapshot();
+  let x0 = W, y0 = S.H, x1 = -1, y1 = -1;
+  for (let i = 0; i < L.length; i++) if (L[i] === v) {
+    L[i] = 0; const px = i % W, py = (i / W) | 0;
+    if (px < x0) x0 = px; if (px > x1) x1 = px; if (py < y0) y0 = py; if (py > y1) y1 = py;
+  }
+  paintRect(x0, y0, x1 - x0 + 1, y1 - y0 + 1);
+  pushUndo(before, x0, y0, x1 + 1, y1 + 1);
+  say(`${v}번 열매를 통째로 지웠습니다. (Ctrl+Z 로 되돌리기)`);
   return true;
 }
 
@@ -633,6 +660,7 @@ function idsNow() {
   return { ids, hole };
 }
 function newNumber() {
+  if (!S.L) return;
   S.lastNew = Math.max(maxId(), S.lastNew) + 1;
   setCur(S.lastNew);
   say(`새 번호 ${S.cur}번. 이 색으로 열매 하나를 칠하세요.`);
@@ -682,7 +710,7 @@ function setTool(t) {
       `<label><input type="radio" name="fm" value="same"${S.fillNew ? "" : " checked"}> 지금 색 그대로 (가려진 조각 합치기)</label>`,
     lasso: "열매 테두리를 따라 그리고 손을 떼면 안이 칠해집니다.<br>오른쪽 = 그 안 지우기" + protect,
     pick: "열매를 누르면 그 색(번호)을 집습니다.",
-    sam: "열매를 누르면 AI 가 모양대로 칠합니다.<br>같은 자리를 <b>다시 누르면</b> 다른 모양(작게/크게).<br><b>끌어서 네모</b> = 그 안의 열매 하나<br><b>Shift+클릭</b> = 방금 칠한 것에서 «여기는 아님»<br>오른쪽 = 덩어리 지우기" +
+    sam: "열매를 누르면 AI 가 모양대로 칠합니다.<br>같은 자리를 <b>다시 누르면</b> 다른 모양(작게/크게).<br><b>끌어서 네모</b> = 그 안의 열매 하나<br><b>Shift+클릭</b> = 방금 칠한 것에서 «여기는 아님»<br>오른쪽 = 그 열매 통째로 지우기" +
       `<label><input type="radio" name="fm" value="new"${S.fillNew ? " checked" : ""}> 누를 때마다 새 번호</label>` +
       `<label><input type="radio" name="fm" value="same"${S.fillNew ? "" : " checked"}> 지금 색 그대로</label>` + protect,
     zoom: "왼쪽 = 확대 · 오른쪽 = 축소<br>(휠로도 됩니다)",
@@ -726,7 +754,7 @@ stage.addEventListener("mousedown", (e) => {
   }
   if (S.tool === "sam") {
     if (!inside) return;
-    if (right) { fillAt(ix, iy, 0); return; }
+    if (right) { eraseId(ix, iy); return; }
     drag = { kind: "sam", sx: p.sx, sy: p.sy, x: p.x, y: p.y, ex: p.x, ey: p.y, shift: e.shiftKey };   // 떼는 순간 클릭/네모를 가린다
     return;
   }
@@ -908,7 +936,10 @@ $("#save").onclick = save;
 $("#orig").onclick = () => ACTS.orig();
 $("#prev").onclick = () => go(-1);
 $("#next").onclick = () => go(1);
-$("#fruit").onchange = async () => { if (await leaveOk()) { setDirty(false); S.stem = ""; loadList(); } };
+$("#fruit").onchange = async () => {
+  if (await leaveOk()) { setDirty(false); S.stem = ""; loadList(); }
+  else $("#fruit").value = S.fruit;              // 취소하면 목록 표시도 지금 과일로 되돌린다
+};
 $("#photo").onchange = async () => {
   const want = $("#photo").value;
   if (await leaveOk()) openPhoto(want); else $("#photo").value = S.stem;
