@@ -87,3 +87,12 @@ button.w95, #nav button, #tools button, .optbtn { background: var(--face); borde
 button:focus-visible, select:focus-visible, input:focus-visible, a:focus-visible { outline: 2px dotted #000; outline-offset: -4px; }
 #pos { width: 120px; }
 #who { width: 130px; cursor: pointer; }
+
+/* 오른쪽 아래 확대 단추 */
+#zoombar { position: absolute; right: 8px; bottom: 8px; display: flex; gap: 2px; padding: 2px; background: var(--face);
+  border: 2px solid; border-color: var(--hi) var(--dk) var(--dk) var(--hi); cursor: default; z-index: 5; }
+#zoombar button { min-width: 36px; height: 32px; font: inherit; font-weight: bold; background: var(--face); cursor: pointer;
+  border: 2px solid; border-color: var(--hi) var(--dk) var(--dk) var(--hi); font-variant-numeric: tabular-nums; }
+#zoombar button:active { border-color: var(--dk) var(--hi) var(--hi) var(--dk); }
+#zoombar #zpct { min-width: 60px; font-weight: normal; }
+#zoombar .fitbtn { padding: 0 10px; }

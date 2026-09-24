@@ -243,23 +243,46 @@ function paintRect(x0, y0, w, h) {
 }
 function applyView() {
   world.style.transform = `translate(${S.ox}px,${S.oy}px) scale(${S.z})`;
+  $("#zpct").textContent = Math.round(S.z * 100) + "%";
   const show = S.showColor && !S.peek;         // peek = ` 키를 누르고 있는 동안
   ovC.style.opacity = show ? S.alpha : 0;
   const ob = document.querySelector("#orig");
   if (ob) { ob.classList.toggle("on", !show); ob.textContent = show ? "👁 원본 보기" : "🎨 색 다시 보기"; }
   drawHud();
 }
-function fit() {
-  const r = stage.getBoundingClientRect();
-  S.z = Math.min(r.width / S.W, r.height / S.H) * 0.98;
-  S.ox = (r.width - S.W * S.z) / 2; S.oy = (r.height - S.H * S.z) / 2;
-  applyView();
+/* 확대·옮기기는 «목표» 로 부드럽게 다가간다(약 0.15초). 목표가 없으면 지금 값이 목표다.
+   연달아 휠을 굴리면 목표에 이어서 쌓이므로 빨리 굴려도 끊기지 않는다. */
+let anim = null;
+function viewTarget() { return anim ? anim.to : { z: S.z, ox: S.ox, oy: S.oy }; }
+function stopAnim() { if (anim) { cancelAnimationFrame(anim.raf); anim = null; } }
+function animateTo(to, smooth) {
+  stopAnim();
+  if (!smooth || matchMedia("(prefers-reduced-motion: reduce)").matches) { Object.assign(S, to); applyView(); return; }
+  const from = { z: S.z, ox: S.ox, oy: S.oy }, t0 = performance.now(), dur = 150;
+  anim = { to };
+  const step = (now) => {
+    const t = Math.min(1, (now - t0) / dur), e = 1 - Math.pow(1 - t, 3);      // 끝에서 천천히 멈춤
+    // 확대율은 곱셈으로 섞어야 가까이 갈수록 속도가 고르다
+    const z = from.z * Math.pow(to.z / from.z, e);
+    // 화면에서 한 점이 제자리에 머물도록 ox 는 확대율에 맞춰 섞는다
+    const k = to.z === from.z ? e : (z - from.z) / (to.z - from.z);
+    S.z = z; S.ox = from.ox + (to.ox - from.ox) * k; S.oy = from.oy + (to.oy - from.oy) * k;
+    applyView();
+    if (t < 1) anim.raf = requestAnimationFrame(step); else anim = null;
+  };
+  anim.raf = requestAnimationFrame(step);
 }
+function fitView() {
+  const r = stage.getBoundingClientRect(), z = Math.min(r.width / S.W, r.height / S.H) * 0.98;
+  return { z, ox: (r.width - S.W * z) / 2, oy: (r.height - S.H * z) / 2 };
+}
+function fit(smooth) { animateTo(fitView(), smooth); }
 function zoomAt(sx, sy, k) {
-  const nz = Math.max(0.05, Math.min(40, S.z * k));
-  S.ox = sx - (sx - S.ox) * nz / S.z; S.oy = sy - (sy - S.oy) * nz / S.z; S.z = nz;
-  applyView();
+  const t = viewTarget(), nz = Math.max(0.05, Math.min(40, t.z * k));
+  animateTo({ z: nz, ox: sx - (sx - t.ox) * nz / t.z, oy: sy - (sy - t.oy) * nz / t.z }, true);
 }
+/* 화면 가운데를 기준으로 확대·축소(단추·+/- 키) */
+function zoomCenter(k) { const r = stage.getBoundingClientRect(); zoomAt(r.width / 2, r.height / 2, k); }
 
 /* 번호 글자·붓 동그라미·올가미 선 — 화면 크기 캔버스에 그린다 */
 let centers = [], mouse = null, lassoPts = null;
@@ -681,9 +704,9 @@ function toImg(e) {
 }
 stage.addEventListener("contextmenu", (e) => e.preventDefault());
 stage.addEventListener("mousedown", (e) => {
-  if (!S.L || S.busy) return;
+  if (!S.L || S.busy || e.target.closest("#zoombar")) return;      // 확대 단추를 누를 때 그림에 칠해지지 않게
   const p = toImg(e), right = e.button === 2;
-  if (e.button === 1 || spaceDown || S.tool === "hand") { drag = { kind: "pan", sx: p.sx, sy: p.sy, ox: S.ox, oy: S.oy }; stage.style.cursor = "grabbing"; return; }
+  if (e.button === 1 || spaceDown || S.tool === "hand") { stopAnim(); drag = { kind: "pan", sx: p.sx, sy: p.sy, ox: S.ox, oy: S.oy }; stage.style.cursor = "grabbing"; return; }
   const ix = Math.floor(p.x), iy = Math.floor(p.y), inside = ix >= 0 && iy >= 0 && ix < S.W && iy < S.H;
   if (S.tool === "zoom") { zoomAt(p.sx, p.sy, right ? 1 / 1.6 : 1.6); return; }
   if (S.tool === "pick") {
@@ -752,7 +775,8 @@ window.addEventListener("mouseup", () => {
 });
 stage.addEventListener("wheel", (e) => {
   e.preventDefault(); if (!S.L) return;
-  const p = toImg(e); zoomAt(p.sx, p.sy, e.deltaY < 0 ? 1.2 : 1 / 1.2);
+  const dy = e.deltaY * (e.deltaMode === 1 ? 33 : e.deltaMode === 2 ? 400 : 1);
+  const p = toImg(e); zoomAt(p.sx, p.sy, Math.exp(-Math.max(-300, Math.min(300, dy)) * 0.0014));
 }, { passive: false });
 stage.addEventListener("mouseleave", () => { mouse = null; drawHud(); });
 
@@ -861,7 +885,10 @@ const ACTS = {
   "toggle-color": () => { S.showColor = !S.showColor; applyView(); },
   orig: () => { S.showColor = !S.showColor; applyView(); },
   "toggle-nums": () => { S.showNums = !S.showNums; drawHud(); },
-  fit: () => S.L && fit(),
+  fit: () => S.L && fit(true),
+  "zoom-in": () => S.L && zoomCenter(1.25),
+  "zoom-out": () => S.L && zoomCenter(1 / 1.25),
+  "zoom-100": () => S.L && zoomCenter(1 / viewTarget().z),
   "draft-add": () => loadDraft(true),
   "split-gt": () => splitBy("gt"),
   "split-draft": () => splitBy("draft"),
@@ -915,6 +942,9 @@ document.addEventListener("keydown", (e) => {
   if (k === "v") return ACTS["toggle-color"]();
   if (k === "t") return ACTS["toggle-nums"]();
   if (k === "0") return ACTS.fit();
+  if (e.key === "+" || e.key === "=") return ACTS["zoom-in"]();
+  if (e.key === "-" || e.key === "_") return ACTS["zoom-out"]();
+  if (k === "1") return ACTS["zoom-100"]();
   if (k === "a" || e.key === "ArrowLeft") return go(-1);
   if (k === "d" || e.key === "ArrowRight") return go(1);
 });

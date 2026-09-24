@@ -43,7 +43,10 @@
       <div class="drop">
         <button data-act="toggle-color">원본 보기(색 숨기기/보이기) <kbd>V</kbd></button>
         <button data-act="toggle-nums">번호 글자 숨기기/보이기 <kbd>T</kbd></button>
-        <button data-act="fit">화면에 맞추기 <kbd>0</kbd></button>
+        <button data-act="zoom-in">확대 <kbd>+</kbd></button>
+        <button data-act="zoom-out">축소 <kbd>-</kbd></button>
+        <button data-act="zoom-100">실제 크기(100%) <kbd>1</kbd></button>
+        <button data-act="fit">가운데로 원래대로(화면에 맞추기) <kbd>0</kbd></button>
         <label class="row">색 진하기 <input id="alpha" type="range" min="10" max="90" value="50"></label>
       </div>
     </div>
@@ -58,7 +61,7 @@
         <kbd>Z</kbd> 돋보기 · <kbd>H</kbd> 손(끌어서 옮기기) ·
         <kbd>S</kbd> ✨클릭 칠하기(열매를 누르면 AI 가 모양대로 칠함 · 같은 자리를 다시 누르면 다른 모양 · 끌어서 네모 = 그 안의 열매 · Shift+클릭 = 여기는 아님)</p>
         <p><b>원본 보기</b> = 위 «👁 원본 보기» 단추 또는 <kbd>V</kbd> · <kbd>`</kbd>(1 왼쪽) 을 누르고 있는 동안만 사진만 보기</p>
-        <p>오른쪽 클릭 = 지우기(붓·올가미·채우기통 모두) · 마우스 휠 = 확대/축소 · 스페이스를 누른 채 끌기 = 옮기기</p>
+        <p>오른쪽 클릭 = 지우기(붓·올가미·채우기통 모두) · 마우스 휠·<kbd>+</kbd><kbd>-</kbd> = 확대/축소 · <kbd>0</kbd> 또는 오른쪽 아래 «⤢ 가운데로» = 사진 전체를 가운데로 · 스페이스를 누른 채 끌기 = 옮기기</p>
         <p><kbd>N</kbd> 새 번호 · <kbd>[</kbd> <kbd>]</kbd> 붓 크기 · <kbd>Ctrl+Z</kbd> 되돌리기 · <kbd>Ctrl+S</kbd> 저장 · <kbd>Ctrl+Enter</kbd> 저장하고 다음 · <kbd>Esc</kbd> 메뉴 닫기·올가미 취소 · <kbd>A</kbd>/<kbd>D</kbd> 이전/다음 사진</p>
         <b>회색</b>
         <p>원본에 칠해져 있지만 번호가 없는 곳입니다. 채우기통으로 누르면 번호가 붙습니다.</p>
@@ -95,6 +98,12 @@
       <div id="world"><canvas id="img"></canvas><canvas id="ov"></canvas></div>
       <canvas id="hud"></canvas>
       <div id="loading">불러오는 중…</div>
+      <div id="zoombar">
+        <button data-act="zoom-out" title="축소 (- 키 · 휠 아래로)">－</button>
+        <button data-act="zoom-100" id="zpct" title="눌러서 실제 크기(100%) · 1 키">100%</button>
+        <button data-act="zoom-in" title="확대 (+ 키 · 휠 위로)">＋</button>
+        <button data-act="fit" class="fitbtn" title="사진 전체를 가운데에 맞추기 (0 키)">⤢ 가운데로</button>
+      </div>
     </div>
   </div>
 
