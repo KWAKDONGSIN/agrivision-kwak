@@ -149,6 +149,7 @@ function renderList(keepStem) {
   const sel = $("#photo");
   sel.innerHTML = shown.map((it, i) => `<option value="${it.stem}">${itemMark(it)}${i + 1}. ${it.stem}</option>`).join("");
   sel.title = `전체 ${S.items.length}장 · 저장함 ${done}장 · 지금 목록 ${shown.length}장`;
+  renderProgress();
   const want = keepStem && shown.some((it) => it.stem === keepStem) ? keepStem : (shown[0] || {}).stem;
   if (want) { sel.value = want; if (want !== S.stem || !S.L) openPhoto(want); }
   else say("조건에 맞는 사진이 없습니다.");
@@ -263,11 +264,18 @@ function zoomAt(sx, sy, k) {
 /* 번호 글자·붓 동그라미·올가미 선 — 화면 크기 캔버스에 그린다 */
 let centers = [], mouse = null, lassoPts = null;
 function computeCenters() {
+  // 한 번 훑어서 가운데·번호 목록·회색 여부를 같이 구한다(칠할 때마다 사진 전체를 여러 번 훑던 것을 한 번으로)
   const sx = new Float64Array(65536), sy = new Float64Array(65536), n = new Uint32Array(65536);
-  const L = S.L, W = S.W;
-  for (let i = 0; i < L.length; i++) { const v = L[i]; if (v && v !== HOLE) { n[v]++; sx[v] += i % W; sy[v] += (i / W) | 0; } }
-  centers = [];
-  for (let v = 1; v < HOLE; v++) if (n[v]) centers.push([v, sx[v] / n[v], sy[v] / n[v], n[v]]);
+  const L = S.L, W = S.W, H = S.H;
+  let hole = false;
+  for (let y = 0, i = 0; y < H; y++) for (let x = 0; x < W; x++, i++) {
+    const v = L[i]; if (!v) continue;
+    if (v === HOLE) { hole = true; continue; }
+    n[v]++; sx[v] += x; sy[v] += y;
+  }
+  centers = []; const ids = [];
+  for (let v = 1; v < HOLE; v++) if (n[v]) { centers.push([v, sx[v] / n[v], sy[v] / n[v], n[v]]); ids.push(v); }
+  S.idsCache = { ids, hole };
 }
 function drawHud() {
   const r = stage.getBoundingClientRect();
@@ -613,7 +621,7 @@ function setCur(v) {
   document.querySelectorAll(".sw").forEach((e) => e.classList.toggle("on", +e.dataset.id === v));
 }
 function renderPalette() {
-  const { ids, hole } = idsNow();
+  const { ids, hole } = S.idsCache || idsNow();
   const box = $("#swatches");
   let h = `<div class="sw erase" data-id="0" title="배경색(지우기). 이 색으로 칠하면 지워집니다">지우기</div>`;
   h += `<div class="sw new" data-act="new" title="새 번호 (N)">＋</div>`;
@@ -624,8 +632,13 @@ function renderPalette() {
   setCur(S.cur);
 }
 function renderCount() {
-  const { ids, hole } = idsNow();
+  const { ids, hole } = S.idsCache || idsNow();
   $("#count").textContent = `열매 ${ids.length}개` + (hole ? " · 회색(번호 없음) 있음" : "");
+}
+/* 진행: 이 과일에서 저장(✓)·뺌(✕)한 사진 수 */
+function renderProgress() {
+  const n = S.items.length, done = S.items.filter((it) => itemMark(it) !== "　").length;
+  $("#prog").textContent = n ? `진행 ${done}/${n} (${Math.round(done * 100 / n)}%)` : "";
 }
 
 /* ── 도구·옵션 상자 ── */
@@ -797,6 +810,7 @@ async function save() {
 function markOption() {
   const it = S.items.find((x) => x.stem === S.stem), o = $("#photo").selectedOptions[0];
   if (it && o) o.textContent = itemMark(it) + o.textContent.slice(2);
+  renderProgress();
 }
 async function setExclude(on) {
   if (!S.L || S.busy) return;
@@ -835,6 +849,7 @@ window.addEventListener("beforeunload", (e) => { if (S.dirty) { e.preventDefault
 /* ── 단추·메뉴·단축키 연결 ── */
 const ACTS = {
   save, undo, redo, new: newNumber,
+  "save-next": async () => { if (await save()) go(1, true); },
   prev: () => go(-1), next: () => go(1),
   exclude: () => setExclude(true), unexclude: () => setExclude(false),
   "reload-orig": () => { if (confirm("원본(처음 받은 라벨)을 다시 불러올까요? 저장하기 전까지는 파일이 안 바뀝니다.")) openPhoto(S.stem, true); },
@@ -879,9 +894,15 @@ window.addEventListener("resize", () => S.L && applyView());
 window.addEventListener("blur", () => { if (S.peek) { S.peek = false; applyView(); } });   // 키를 뗀 걸 못 받아도 풀리게
 
 document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") {
+    document.querySelectorAll(".menu.open").forEach((m) => m.classList.remove("open"));
+    if (drag && (drag.kind === "lasso" || drag.kind === "sam")) { drag = null; lassoPts = null; drawHud(); say("취소했습니다."); }
+    return;
+  }
   if (e.target.matches("input, select, textarea")) return;
   const k = e.key.toLowerCase();
   if ((e.ctrlKey || e.metaKey) && k === "s") { e.preventDefault(); save(); return; }
+  if ((e.ctrlKey || e.metaKey) && e.key === "Enter") { e.preventDefault(); ACTS["save-next"](); return; }
   if ((e.ctrlKey || e.metaKey) && k === "z") { e.preventDefault(); e.shiftKey ? redo() : undo(); return; }
   if ((e.ctrlKey || e.metaKey) && k === "y") { e.preventDefault(); redo(); return; }
   if (e.ctrlKey || e.metaKey || e.altKey) return;

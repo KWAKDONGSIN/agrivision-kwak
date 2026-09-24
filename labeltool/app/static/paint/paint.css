@@ -80,6 +80,10 @@ button.w95, #nav button, #tools button, .optbtn { background: var(--face); borde
 #msg { flex: 1; }
 #msg.err { color: #b00000; font-weight: bold; }
 #msg.ok { color: #006000; font-weight: bold; }
+#prog { width: 150px; }
 #count { width: 220px; }
+#prog, #count, #pos, .sw { font-variant-numeric: tabular-nums; }
+/* 키보드로 옮겨 다닐 때만 보이는 테두리(마우스 클릭에는 안 보임) */
+button:focus-visible, select:focus-visible, input:focus-visible, a:focus-visible { outline: 2px dotted #000; outline-offset: -4px; }
 #pos { width: 120px; }
 #who { width: 130px; cursor: pointer; }
