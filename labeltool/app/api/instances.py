@@ -15,8 +15,10 @@ server.py 가 register(app, ctx) 를 부른다. 번호 마스크 규칙(어디�
 from __future__ import annotations
 from typing import Any
 import base64
+import hashlib
 import io
 import json
+import math
 import os
 import threading
 import time
@@ -389,6 +391,33 @@ def start_count(fruit: str) -> Any:
     return True
 
 
+# ══════════════════ /instances 응답 캐시 — 2026-09-25 업그레이드 C07 ══════════════════
+# 전에는 사진을 열 때마다 번호 PNG 를 다시 읽고 자르고 인코딩했다(0.2~0.3초 · 문서/260925_그림판_감사.md §2).
+#   · 지문 = load_inst 가 읽을 수 있는 파일 **전부**(고친 번호·팀 초벌·원본 번호·고친 이진·원본 이진)의
+#     경로+inode+mtime_ns+크기(C19 · 두번째의견 §2-1). 하나라도 바뀌면 다른 지문 → 새로 만든다.
+#   · 같은 지문이면 ETag 가 같아 브라우저가 304 를 받고, 다른 브라우저라도 메모리에 둔 PNG 를 준다.
+#   · ⚠ **저장 경로(api_save_instances 의 load_inst)는 이 캐시를 쓰지 않는다** — 늘 파일을 새로 읽는다.
+_INST_CACHE_MAX = 48          # 한 장 수십~수백 KB → 최대 수십 MB
+_inst_cache = {}              # {(fruit, stem, layer): (etag, png bytes, src)}  (넣은 순서 = 오래된 순)
+_inst_cache_guard = threading.Lock()
+
+
+def inst_etag(fruit: str, stem: str, layer: str) -> str:
+    """이 사진·layer 의 /instances 응답 지문(파일을 열지 않고 stat 만 한다)."""
+    d = SEED_DIRS.get(fruit)
+    ps = (inst_fixed_path(fruit, stem), d and os.path.join(d, stem + ".png"),
+          os.path.join(DUP.dataset_for(fruit), fruit, "masks", stem + ".png"),
+          os.path.join(DUP.DATA_DIR, fruit, "masks_fixed", stem + ".png"))
+    parts = [layer]
+    for p in ps:
+        try:
+            st = os.stat(p) if p else None
+            parts.append("%s:%d:%d:%d" % (p, st.st_ino, st.st_mtime_ns, st.st_size) if st else "-")
+        except OSError:
+            parts.append("-")
+    return hashlib.sha1("|".join(parts).encode("utf-8")).hexdigest()[:20]
+
+
 def register(app: Any, ctx: Any) -> None:
     """Flask 앱에 이 모듈의 주소와 처리 함수를 등록한다."""
     check = ctx["check"]
@@ -414,14 +443,30 @@ def register(app: Any, ctx: Any) -> None:
         # 번호 마스크인 척 200 으로 줬다(복숭아·포도에서만 가능). 지금은 404 다 — 번호가 없는 게 맞다.
         if layer == "fixed" and not os.path.exists(inst_fixed_path(fruit, stem)):
             return err_json("이 사진에는 열매 번호 마스크가 없습니다.", 404)
-        try:
-            arr, src, _ = load_inst(fruit, stem, allow_fixed=(layer != "gt"))
-        except ValueError as e:
-            return err_json(str(e), 400)
-        if arr is None:
-            return err_json("이 사진에는 열매 번호 마스크가 없습니다.", 404)
-        return Response(png_u16_bytes(arr), mimetype="image/png",
-                        headers={"X-Instance-Source": src})
+        # C07: 지문이 같으면 304(브라우저 캐시) 또는 메모리의 PNG. no-cache = «쓰기 전에 늘 지문을 물어라».
+        key = (fruit, stem, layer)
+        etag = inst_etag(fruit, stem, layer)
+        with _inst_cache_guard:
+            hit = _inst_cache.get(key)
+        if hit and hit[0] == etag:
+            body, src = hit[1], hit[2]
+        else:
+            try:
+                arr, src, _ = load_inst(fruit, stem, allow_fixed=(layer != "gt"))
+            except ValueError as e:
+                return err_json(str(e), 400)
+            if arr is None:
+                return err_json("이 사진에는 열매 번호 마스크가 없습니다.", 404)
+            body = png_u16_bytes(arr)
+            with _inst_cache_guard:
+                _inst_cache.pop(key, None)
+                _inst_cache[key] = (etag, body, src)
+                while len(_inst_cache) > _INST_CACHE_MAX:
+                    _inst_cache.pop(next(iter(_inst_cache)))
+        r = Response(body, mimetype="image/png",
+                     headers={"X-Instance-Source": src, "Cache-Control": "private, no-cache"})
+        r.set_etag(etag)
+        return r.make_conditional(request)
 
     @app.route("/api/instance_info")
     def api_instance_info():
@@ -615,6 +660,35 @@ def register(app: Any, ctx: Any) -> None:
             cleared, st = ctx["clear_confirm"](fruit, stem, "instances")
         return jsonify({"ok": True, "removed": removed, "changed": True,
                         "restored": bool(prev), "status": st, "confirmed_cleared": cleared})
+
+    # 0925 C18: 사진당 작업 시간·수정 횟수 — 논문의 «라벨링 시간 절감» 측정용.
+    # app/logs/worklog.jsonl 에 한 줄씩 덧붙이기만 한다(data/·status.json 은 건드리지 않는다).
+    # 모래상자는 app/ 을 통째로 복사해 돌므로 시험 기록은 실서버 로그에 섞이지 않는다.
+    worklog = os.path.join(paths.APP_DIR, "logs", "worklog.jsonl")
+    wl_nums = ("active_s", "wall_s", "edits", "undos", "redos", "sam", "n_open", "n_save")
+
+    @app.route("/api/worklog", methods=["POST"])
+    def api_worklog():
+        d = request.get_json(force=True, silent=True) or {}
+        fruit, stem = d.get("fruit", ""), d.get("stem", "")
+        check(fruit, stem)
+        if d.get("action") not in ("save", "exclude"):
+            return err_json("action 은 save 나 exclude 입니다.", 400)
+        row = {"at": now_str(), "fruit": fruit, "stem": stem, "action": d["action"],
+               "by": str(d.get("by") or "익명")[:rules.NAME_MAX]}
+        for k in wl_nums:
+            try:
+                v = float(d.get(k) or 0)
+            except (TypeError, ValueError):
+                v = 0.0
+            # 0925 C24: NaN·Infinity 는 0 으로(NaN 은 min/max 를 빠져나가 int() 500·비표준 JSON 이 된다)
+            v = min(max(v, 0.0), 1e6) if math.isfinite(v) else 0.0     # 이상한 값은 0~1e6 으로 자른다
+            row[k] = round(v, 1) if k.endswith("_s") else int(v)   # 초는 소수 한 자리, 횟수·번호 수는 정수
+        os.makedirs(os.path.dirname(worklog), exist_ok=True)
+        with lock_for("worklog"):
+            with open(worklog, "a", encoding="utf-8") as f:
+                f.write(json.dumps(row, ensure_ascii=False) + "\n")
+        return jsonify({"ok": True})
 
     @app.route("/api/instance_errors")
     def api_instance_errors():

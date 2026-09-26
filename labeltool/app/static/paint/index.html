@@ -13,7 +13,7 @@
   <div id="title"><span id="t-name">사진을 고르세요</span> - 라벨 그림판<span id="t-dirty"></span></div>
 
   <div id="menubar">
-    <div class="menu"><button class="mbtn">파일</button>
+    <div class="menu"><button class="mbtn" aria-haspopup="true" aria-expanded="false">파일</button>
       <div class="drop">
         <button data-act="save">저장 <kbd>Ctrl+S</kbd></button>
         <button data-act="save-next">저장하고 다음 사진 <kbd>Ctrl+Enter</kbd></button>
@@ -32,7 +32,7 @@
         <a href="/old" target="_blank">옛 툴 열기 (데이터 정리·내보내기)</a>
       </div>
     </div>
-    <div class="menu"><button class="mbtn">편집</button>
+    <div class="menu"><button class="mbtn" aria-haspopup="true" aria-expanded="false">편집</button>
       <div class="drop">
         <button data-act="undo">되돌리기 <kbd>Ctrl+Z</kbd></button>
         <button data-act="redo">다시 하기 <kbd>Ctrl+Y</kbd></button>
@@ -40,10 +40,11 @@
         <button data-act="clear-all">전부 지우기</button>
       </div>
     </div>
-    <div class="menu"><button class="mbtn">보기</button>
+    <div class="menu"><button class="mbtn" aria-haspopup="true" aria-expanded="false">보기</button>
       <div class="drop">
         <button data-act="toggle-color">원본 보기(색 숨기기/보이기) <kbd>V</kbd></button>
         <button data-act="toggle-nums">번호 글자 숨기기/보이기 <kbd>T</kbd></button>
+        <button data-act="toggle-crop">512 크롭 네모 보이기/숨기기 <kbd>C</kbd></button>
         <button data-act="zoom-in">확대 <kbd>+</kbd></button>
         <button data-act="zoom-out">축소 <kbd>-</kbd></button>
         <button data-act="zoom-100">실제 크기(100%) <kbd>1</kbd></button>
@@ -51,54 +52,61 @@
         <label class="row">색 진하기 <input id="alpha" type="range" min="10" max="90" value="50"></label>
       </div>
     </div>
-    <div class="menu"><button class="mbtn">도움말</button>
+    <div class="menu"><button class="mbtn" aria-haspopup="true" aria-expanded="false">도움말</button>
       <div class="drop wide" id="help">
         <b>기본 규칙</b>
         <p>색 하나 = 열매 하나. 같은 열매는 같은 색으로 칠합니다.<br>
         잎에 가려 두 조각이 된 열매도 <b>같은 색</b>으로 칠하면 상자는 하나로 저장됩니다.</p>
+        <p>사과·포도는 규칙 일부가 아직 <b>미정</b>입니다(교수님 답 대기). 그 과일을 고르면 메뉴 아래 노란 줄에 한 줄로 나옵니다.</p>
         <b>도구</b>
         <p><kbd>B</kbd> 붓 · <kbd>E</kbd> 지우개 · <kbd>F</kbd> 채우기통(칠한 덩어리 클릭 → 지금 색) ·
         <kbd>L</kbd> 올가미(테두리를 그리면 안을 칠함) · <kbd>I</kbd> 스포이트(색 집기) ·
         <kbd>Z</kbd> 돋보기 · <kbd>H</kbd> 손(끌어서 옮기기) ·
-        <kbd>S</kbd> ✨클릭 칠하기(열매를 누르면 AI 가 모양대로 칠함 · 같은 자리를 다시 누르면 다른 모양 · 끌어서 네모 = 그 안의 열매 · Shift+클릭 = 여기는 아님)</p>
+        <kbd>S</kbd> ✨클릭 칠하기(열매를 누르면 AI 가 모양대로 칠함 · 같은 자리를 다시 누르면 다른 모양 · 끌어서 네모 = 그 안의 열매 · Shift+클릭 = 여기는 아님) ·
+        <kbd>G</kbd> 비슷한 열매 한꺼번에 찾기(지금 색 열매와 크기·모양·색이 비슷한 것을 노란 테두리로 → 틀린 것은 눌러서 빼고 <kbd>Enter</kbd> 모두 받기 · <kbd>Esc</kbd> 취소)</p>
         <p><b>원본 보기</b> = 위 «👁 원본 보기» 단추 또는 <kbd>V</kbd> · <kbd>`</kbd>(1 왼쪽) 을 누르고 있는 동안만 사진만 보기</p>
         <p>오른쪽 클릭 = 지우기(붓·올가미·채우기통 모두) · 마우스 휠·<kbd>+</kbd><kbd>-</kbd> = 확대/축소 · <kbd>0</kbd> 또는 오른쪽 아래 «⤢ 가운데로» = 사진 전체를 가운데로 · 스페이스를 누른 채 끌기 = 옮기기</p>
-        <p><kbd>N</kbd> 새 번호 · <kbd>[</kbd> <kbd>]</kbd> 붓 크기 · <kbd>Ctrl+Z</kbd> 되돌리기 · <kbd>Ctrl+S</kbd> 저장 · <kbd>Ctrl+Enter</kbd> 저장하고 다음 · <kbd>Esc</kbd> 메뉴 닫기·올가미 취소 · <kbd>A</kbd>/<kbd>D</kbd> 이전/다음 사진</p>
+        <p><kbd>N</kbd> 새 번호 · <kbd>[</kbd> <kbd>]</kbd> 붓 크기 · <kbd>Ctrl+Z</kbd> 되돌리기 · <kbd>Ctrl+S</kbd> 저장 · <kbd>Ctrl+Enter</kbd> 저장하고 다음 · <kbd>Esc</kbd> 메뉴 닫기·올가미 취소 · <kbd>A</kbd>/<kbd>D</kbd> 이전/다음 사진 · <kbd>C</kbd> 512 크롭 네모(AI 가 한 번에 보는 크기, 빨간색)</p>
         <b>회색</b>
         <p>원본에 칠해져 있지만 번호가 없는 곳입니다. 채우기통으로 누르면 번호가 붙습니다.</p>
       </div>
     </div>
     <div id="nav">
-      <select id="fruit" title="과일"></select>
+      <select id="fruit" title="과일" aria-label="과일"></select>
       <button id="prev" title="이전 사진 (A)">◀</button>
-      <select id="photo" title="사진"></select>
+      <select id="photo" title="사진" aria-label="사진"></select>
       <button id="next" title="다음 사진 (D)">▶</button>
-      <input id="q" placeholder="이름 찾기" size="10">
+      <input id="q" placeholder="이름 찾기" size="10" aria-label="사진 이름 찾기 (Enter)">
       <label class="chk"><input type="checkbox" id="only-todo"> 안 한 것만</label>
-      <button id="orig" title="원본 보기: 색·번호를 숨기고 사진만 봅니다 (` 키를 누르고 있는 동안만 보기도 됩니다)">👁 원본 보기</button>
+      <label class="chk" title="카운팅 벤치마크용 표본(과일마다 늘 같은 100장, 이름으로 정해짐)만 보기"><input type="checkbox" id="only-sample"> 표본 100장만</label>
+      <select id="sort" aria-label="사진 순서" title="헷갈리는 순: 사람이 아직 확정 안 한 사진을 앞에, 그 안에서 «초벌 모델이 확신한 열매 수와 라벨 열매 수의 차이» 와 «초벌이 헷갈린 정도» 가 큰 사진부터"><option value="name">이름 순</option><option value="unc">헷갈리는 순</option></select>
+      <div class="menu" id="dupmenu" hidden><button class="mbtn" id="dupbtn" aria-haspopup="true" aria-expanded="false" title="거의 같은 사진(연속 스냅샷) 묶음 — 눌러서 보기·«대표만 남기기»"></button>
+        <div class="drop" id="dupdrop"></div></div>
+      <button id="orig" aria-pressed="false" title="원본 보기: 색·번호를 숨기고 사진만 봅니다 (` 키를 누르고 있는 동안만 보기도 됩니다)">👁 원본 보기</button>
       <button id="save" class="primary" title="Ctrl+S">저장</button>
     </div>
   </div>
+  <div id="rule" hidden></div>
 
   <div id="body">
     <div id="toolbox">
       <div id="tools">
-        <button data-tool="lasso" title="올가미 (L): 테두리를 그리면 안을 칠함">➰<span>올가미</span></button>
-        <button data-tool="zoom" title="돋보기 (Z): 클릭 확대 · 오른쪽 클릭 축소">🔍<span>돋보기</span></button>
-        <button data-tool="eraser" title="지우개 (E)">🧽<span>지우개</span></button>
-        <button data-tool="fill" title="채우기통 (F): 칠한 덩어리를 누르면 지금 색이 됨">🪣<span>채우기</span></button>
-        <button data-tool="pick" title="스포이트 (I): 누른 열매의 색을 집음">💧<span>스포이트</span></button>
-        <button data-tool="hand" title="손 (H): 끌어서 옮기기">✋<span>손</span></button>
-        <button data-tool="brush" title="붓 (B)">🖌️<span>붓</span></button>
+        <button aria-pressed="false" data-tool="lasso" title="올가미 (L): 테두리를 그리면 안을 칠함">➰<span>올가미</span></button>
+        <button aria-pressed="false" data-tool="zoom" title="돋보기 (Z): 클릭 확대 · 오른쪽 클릭 축소">🔍<span>돋보기</span></button>
+        <button aria-pressed="false" data-tool="eraser" title="지우개 (E)">🧽<span>지우개</span></button>
+        <button aria-pressed="false" data-tool="fill" title="채우기통 (F): 칠한 덩어리를 누르면 지금 색이 됨">🪣<span>채우기</span></button>
+        <button aria-pressed="false" data-tool="pick" title="스포이트 (I): 누른 열매의 색을 집음">💧<span>스포이트</span></button>
+        <button aria-pressed="false" data-tool="hand" title="손 (H): 끌어서 옮기기">✋<span>손</span></button>
+        <button aria-pressed="false" data-tool="brush" title="붓 (B)">🖌️<span>붓</span></button>
         <button data-act="new" title="새 번호 (N)">＋<span>새 번호</span></button>
-        <button data-tool="sam" class="wide" title="클릭 칠하기 (S): 열매를 누르면 모양대로 칠함 · 같은 자리를 다시 누르면 다른 모양">✨<span>클릭 칠하기</span></button>
+        <button aria-pressed="false" data-tool="sam" class="wide" title="클릭 칠하기 (S): 열매를 누르면 모양대로 칠함 · 같은 자리를 다시 누르면 다른 모양">✨<span>클릭 칠하기</span></button>
       </div>
       <div id="options"></div>
     </div>
     <div id="stage">
       <div id="world"><canvas id="img"></canvas><canvas id="ov"></canvas></div>
       <canvas id="hud"></canvas>
-      <div id="loading">불러오는 중…</div>
+      <div id="loading" role="status" aria-live="polite">불러오는 중…</div>
       <div id="zoombar">
         <button data-act="zoom-out" title="축소 (- 키 · 휠 아래로)">－</button>
         <button data-act="zoom-100" id="zpct" title="눌러서 실제 크기(100%) · 1 키">100%</button>
@@ -109,16 +117,17 @@
   </div>
 
   <div id="palette">
-    <div id="curbox" title="지금 색"><div id="cur-sw"></div><div id="cur-txt"></div></div>
+    <div id="curbox" role="button" tabindex="0" title="지금 색 — 누르면 팔레트의 그 칸으로 갑니다"><div id="cur-sw"></div><div id="cur-txt"></div></div>
     <div id="swatches"></div>
   </div>
 
   <div id="statusbar">
-    <div id="msg">도움말은 위 «도움말» 을 누르세요.</div>
-    <div id="prog" title="이 과일에서 저장(✓)하거나 뺀(✕) 사진 수"></div>
+    <div id="msg" role="status" aria-live="polite">도움말은 위 «도움말» 을 누르세요.</div>
+    <div id="prog" title="이 과일에서 저장(✓)하거나 뺀(✕) 사진 수 · 표본 = 카운팅 표본 100장 중 저장(✓)한 수"></div>
+    <div id="expinfo" title="재학습 준비: 이 과일에서 사람이 확정(✓)한 사진 수와 마지막으로 데이터셋을 내보낸 시각 · «내보내기 ↗» 는 옛 툴의 «데이터 정리» 탭을 새 창으로 엽니다"><span id="exp-txt"></span> <a id="exp-link" href="/old#exp" target="_blank">내보내기 ↗</a></div>
     <div id="count"></div>
     <div id="pos"></div>
-    <div id="who" title="눌러서 이름 바꾸기"></div>
+    <div id="who" role="button" tabindex="0" title="눌러서 이름 바꾸기"></div>
   </div>
 </div>
 <script src="/static/paint/paint.js"></script>

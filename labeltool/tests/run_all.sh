@@ -136,7 +136,8 @@ if want api; then
   note "4. API 회귀 — 모래상자 서버에 대고(빈 포트 · 내 PID 만 끈다)"
   # t3_login_rate·t4_flag 는 2026-09-20 구조 사이클 2 가 더한 것(로그인 429 · 판정 flag 갈래).
   #   글롭을 쓰지 않는다 — 폴더에 떨어진 것이 조용히 묶음을 늘리지 않게(2차 검수 §8-2 와 같은 이유).
-  for f in t1_api regress_all t3_login_rate t4_flag; do
+  # t5_inst_cache 는 2026-09-25 C07(/instances ETag·메모리 캐시 — 저장·되돌림 뒤 새 번호) · 포트 5441 고정.
+  for f in t1_api regress_all t3_login_rate t4_flag t5_inst_cache; do
     [ -f "$HERE/api/$f.py" ] || continue
     ( cd "$HERE/api" && run1 "api/$f" "api_$f" "$PY" -u "$HERE/api/$f.py" ) || FAILED=1
   done

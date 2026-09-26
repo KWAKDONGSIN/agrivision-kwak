@@ -52,5 +52,11 @@ chk("상자 좌표 = 번호 바깥 네모", ok_box == len(ids), "%d/%d" % (ok_bo
 
 st = json.load(open(os.path.join(d, "status.json"), encoding="utf-8")).get(stem, {})
 chk("status 사람 확정", bool(st), json.dumps(st, ensure_ascii=False)[:200])
+# C18 작업 기록: 모래상자 app/logs/worklog.jsonl 에 이 사진 저장 줄(수정 1번 이상)과 빼기 줄이 있다
+wl = os.path.join(sb, "app", "logs", "worklog.jsonl")
+rows = [json.loads(x) for x in open(wl, encoding="utf-8")] if os.path.exists(wl) else []
+sv = [r for r in rows if r["stem"] == stem and r["action"] == "save"]
+chk("C18 작업 기록 저장 줄", bool(sv) and sv[0]["edits"] >= 1 and sv[0]["active_s"] > 0 and sv[0]["n_save"] >= 1, sv[:1])
+chk("C18 작업 기록 빼기 줄", any(r["action"] == "exclude" for r in rows), len(rows))
 print("%s 디스크 대조: %s" % (br, "통과" if not fails else "실패 %d" % fails))
 sys.exit(1 if fails else 0)

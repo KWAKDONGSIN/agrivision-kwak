@@ -319,6 +319,9 @@ def register(app: Any, ctx: Any) -> None:
             "n_inst": cnt["instances"],               # 옛 칸 — counts.instances 와 **같은 값**(위 주석)
             # 0919 «개수 세기» 사이클1 — 하단 «개수» 칸(상자·번호·팀원)과 사람 확정 개수
             "counts": cnt,
+            # 2026-09-25 C19 — 번호·이진 마스크 파일 지문(/instances 의 ETag 와 같은 값, stat 만).
+            # 그림판 미리 받기가 «그새 파일이 바뀌었나» 를 at(초 단위) 말고 이것으로도 본다.
+            "file_sig": _instances.inst_etag(fruit, stem, "auto"),
         })
 
 

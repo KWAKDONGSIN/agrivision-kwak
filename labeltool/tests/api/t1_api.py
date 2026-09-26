@@ -34,6 +34,22 @@ def conf_of(rec, kind):
     return ((rec or {}).get(key) or {}).get("status")
 
 
+# 🔴 2026-09-25 C00: 실자료에 사람이 이미 확정한 사진이 있다(09-24 20:06 사과 첫 장 그림판 저장).
+# 모래상자는 그 실자료를 복사하므로 «확정 0 에서 시작» 을 가정하면 안 된다 → 시작 전 것을 세어 더한다.
+PRE = {}
+
+
+def take_pre():
+    st = L.status_of(FR)
+    box_dir = os.path.join(L.SB, "data", FR, "boxes")
+    files = sorted(n[:-5] for n in os.listdir(box_dir) if n.endswith(".json")) \
+        if os.path.isdir(box_dir) else []
+    PRE.update({k: sorted(s for s, r in st.items() if conf_of(r, k))
+                for k in ("mask", "boxes", "instances")})
+    PRE["box_files"] = files
+    OUT["pre_existing"] = dict(PRE)
+
+
 # ═════════════════════════════ [가] 상자 확정 ═════════════════════════════
 def t_boxes(a):
     print("\n[가] 상자 확정 — Enter(맞다) · 저장(수정함) · 마스크 확정과 독립")
@@ -85,7 +101,8 @@ def t_boxes(a):
     # ③ 과일 집계
     f = [x for x in a.get("/api/fruits")["fruits"] if x["fruit"] == FR][0]
     L.chk("가-5 /api/fruits 에 종류별 확정 집계가 있다",
-          f.get("n_confirmed_boxes") == 2 and f.get("n_confirmed") == 1,
+          f.get("n_confirmed_boxes") == len(PRE["boxes"]) + 2
+          and f.get("n_confirmed") == len(PRE["mask"]) + 1,
           {k: f.get(k) for k in ("n_confirmed", "n_confirmed_boxes", "n_confirmed_instances")})
     OUT["fruits_counts"] = {k: f.get(k) for k in
                             ("n_confirmed", "n_confirmed_boxes", "n_confirmed_instances")}
@@ -144,7 +161,7 @@ def t_queue(a, s_box, s_inst):
     c_mask = a.get("/api/list?fruit=%s&sort=queue&confirmed=0&page_size=500" % FR)["total"]
     c_box = a.get("/api/list?fruit=%s&sort=queue&confirmed=0&mode=boxes&page_size=500" % FR)["total"]
     L.chk("다-5 «미확정만» 도 모드를 따른다(마스크 1장 · 상자 2장 확정했으므로 장수가 다르다)",
-          c_mask == n - 1 and c_box == n - 2, "mask %d · boxes %d · 전체 %d" % (c_mask, c_box, n))
+          c_mask == n - 1 - len(PRE["mask"]) and c_box == n - 2 - len(PRE["boxes"]), "mask %d · boxes %d · 전체 %d" % (c_mask, c_box, n))
     OUT["queue"] = {"n": n, "conf0_mask": c_mask, "conf0_boxes": c_box}
 
 
@@ -154,14 +171,15 @@ def t_export(a, s_box, s_boxfix):
     import time
     caps = a.get("/api/export_plan?fruit=%s" % FR)["caps"]
     L.chk("라-0 export_caps 에 종류별 확정 장수가 있다",
-          caps.get("n_confirmed_boxes_out") == 2 and caps.get("n_confirmed_instances_out") == 1,
+          caps.get("n_confirmed_boxes_out") == len(PRE["boxes"]) + 2
+          and caps.get("n_confirmed_instances_out") == len(PRE["instances"]) + 1,
           {k: caps.get(k) for k in ("n_confirmed_out", "n_confirmed_boxes_out",
                                     "n_confirmed_instances_out")})
     OUT["caps"] = {k: caps.get(k) for k in ("n_confirmed_out", "n_confirmed_boxes_out",
                                             "n_confirmed_instances_out", "n_box_images")}
     # 확정되지 않은 상자를 한 장 더 만들어 둔다 — 그 장은 나가면 안 된다
     other = [x["stem"] for x in all_items(a, FR)
-             if x["stem"] not in (s_box, s_boxfix)][0]
+             if x["stem"] not in [s_box, s_boxfix] + PRE["box_files"]][0]
     a.post("/api/boxes", {"fruit": FR, "stem": other, "by": "곽동신",
                           "boxes": [{"xyxy": [5, 5, 40, 40]}]})
     # 저장이 곧 확정이므로 일부러 확정을 지운다(«옛 자료 = 확정 칸이 없음» 을 흉내낸다)
@@ -181,7 +199,9 @@ def t_export(a, s_box, s_boxfix):
         time.sleep(0.5)
     out = L.SB + "/exports/" + job
     txt = sorted(n[:-4] for n in os.listdir(out + "/boxes") if n.endswith(".txt"))
-    L.chk("라-2 ❗확정한 상자 사진만 txt 가 나온다", txt == sorted([s_box, s_boxfix]), txt)
+    pre_conf_box = [s for s in PRE["boxes"] if s in PRE["box_files"]]
+    L.chk("라-2 ❗확정한 상자 사진만 txt 가 나온다",
+          txt == sorted(set([s_box, s_boxfix] + pre_conf_box)), txt)
     L.chk("라-3 ❗확정 없는 사진의 txt 는 안 나간다", other not in txt, other)
     OUT["box_export_confirmed"] = {"txt": txt, "unconfirmed": other}
 
@@ -199,7 +219,7 @@ def t_export(a, s_box, s_boxfix):
     txt2 = sorted(n[:-4] for n in os.listdir(L.SB + "/exports/" + job2 + "/boxes")
                   if n.endswith(".txt"))
     L.chk("라-4 «AI 제안 포함» 이면 저장된 상자 전부가 나간다(예전 그대로)",
-          txt2 == sorted([s_box, s_boxfix, other]), txt2)
+          txt2 == sorted(set([s_box, s_boxfix, other] + PRE["box_files"])), txt2)
     OUT["box_export_all"] = txt2
 
 
@@ -227,6 +247,7 @@ def main():
     L.sync()
     L.reset_status()
     L.clear_exports()
+    take_pre()
     p = L.start()
     try:
         a = L.Api()

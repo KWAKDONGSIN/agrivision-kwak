@@ -23,7 +23,7 @@ for ci, f in enumerate(FR):
     todo = [s for s in stems_of(f) if force or not os.path.exists(os.path.join(out, s + ".png"))]
     for k in range(0, len(todo), 8):
         chunk = todo[k:k + 8]
-        rs = model.predict([img_path(f, s) for s in chunk], imgsz=1280, conf=0.25, retina_masks=True,
+        rs = model.predict([img_path(f, s) for s in chunk], imgsz=int(os.environ.get("IMGSZ", 1280)), conf=0.25, retina_masks=True,
                            classes=[ci], verbose=False, max_det=1000)
         for s, r in zip(chunk, rs):
             H, W = r.orig_shape

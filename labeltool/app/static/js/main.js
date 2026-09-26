@@ -130,7 +130,10 @@ cv.addEventListener("dblclick", (e) => {
 /* ------------------------------------------------------------- 시작 */
 $("#who").value = localStorage.getItem("who") || "";
 $("#who").onchange = () => localStorage.setItem("who", $("#who").value);
-loadFruits();
+/* 0925 C03: 그림판 «내보내기 ↗» 링크(/old#exp=과일)는 그 과일로 곧장 «데이터 정리» 탭을 연다 */
+const expHash = /^#exp(?:=(\w+))?$/.exec(location.hash);
+if (expHash && expHash[1]) localStorage.setItem("fruit", expHash[1]);    // 없는 과일이면 loadFruits 가 첫 과일로 되돌린다
+loadFruits().then(() => { if (expHash) showView("exp"); });
 
 setInterval(tick, 200);
 tick();
